@@ -1,0 +1,95 @@
+version: '3'
+services:
+
+  db:
+    image: "postgres:9.6"
+    volumes:
+    - "dbdata:/var/lib/postgresql/data"
+    env_file:
+    - postgres/.env.production
+    networks:
+    - db_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  backend:
+    build: backend
+    env_file:
+    - backend/.env.production
+    networks:
+    - db_network
+    - web_network
+    depends_on:
+    - db
+
+  backoffice_steam:
+    build: backend
+    env_file:
+    - backend/.env.production
+    networks:
+    - db_network
+    depends_on:
+    - db
+    command: flask fetch_providers --daemon --provider steam
+
+  backoffice_bitskins:
+    build: backend
+    env_file:
+    - backend/.env.production
+    networks:
+    - db_network
+    depends_on:
+    - db
+    command: flask fetch_providers --daemon --provider bitskins
+
+  backoffice_csgoshop:
+    build: backend
+    env_file:
+    - backend/.env.production
+    networks:
+    - db_network
+    depends_on:
+    - db
+    command: flask fetch_providers --daemon --provider csgoshop
+
+  backoffice_lootbear:
+    build: backend
+    env_file:
+    - backend/.env.production
+    networks:
+    - db_network
+    depends_on:
+    - db
+    command: flask fetch_providers --daemon --provider lootbear
+
+  frontend:
+    build: frontend
+    env_file:
+    - frontend/.env.production
+    networks:
+    - web_network
+    depends_on:
+    - backend
+
+  nginx:
+    image: "nginx:1.15"
+    ports:
+    - "127.0.0.1:10080:80"
+    volumes:
+    - ./nginx/conf.d:/etc/nginx/conf.d
+    networks:
+    - web_network
+    depends_on:
+    - backend
+    - frontend
+
+networks:
+  db_network:
+    driver: bridge
+  web_network:
+    driver: bridge
+volumes:
+  dbdata:

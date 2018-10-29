@@ -1,0 +1,27 @@
+@font-face {
+    font-family: 'fontello';
+    src: url('../fonts/fontello.eot?38368684');
+    src: url('../fonts/fontello.eot?38368684#iefix') format('embedded-opentype'),
+    url('../fonts/fontello.woff2?38368684') format('woff2'),
+    url('../fonts/fontello.woff?38368684') format('woff'),
+    url('../fonts/fontello.ttf?38368684') format('truetype'),
+    url('../fonts/fontello.svg?38368684#fontello') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.icon.fontello {
+    font-family: fontello;
+}
+
+.icon.bitskins:before {
+    content: '\e800';
+}
+
+.icon.lootbear:before {
+    content: '\e801';
+}
+
+.icon.csgoshop:before {
+    content: '\e802';
+}

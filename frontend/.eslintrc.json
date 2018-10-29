@@ -1,0 +1,20 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "standard",
+    "standard-react"
+  ],
+  "env": {
+    "es6": true,
+    "jest": true,
+    "browser": true
+  },
+  "plugins": [
+    "react",
+    "flow",
+    "graphql",
+    "jsx-a11y",
+    "promise",
+    "standard"
+  ]
+}

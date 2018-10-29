@@ -1,0 +1,27 @@
+flask
+flask_sqlalchemy
+Flask-Migrate
+Flask-JWT-extended
+flask-cors
+click
+sqlalchemy
+graphql-core==2.0.0  # 2.1 is broken
+graphene==2.1.2  # 2.1.3 requires graphql-core 2.1
+graphene_sqlalchemy==2.0.0  # 2.1.0 requires graphene 2.1.3
+flask_graphql==1.4.1  # 2.0.0 requires graphql-core 2.1
+psycopg2-binary
+python-slugify
+
+python-dotenv
+
+requests
+ratelimit
+
+# bitskins
+pyotp
+
+# csgoshop
+beautifulsoup4
+
+# deployment
+gunicorn
