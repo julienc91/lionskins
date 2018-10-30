@@ -33,7 +33,7 @@ services:
     - db_network
     depends_on:
     - db
-    command: flask fetch_providers --daemon --provider steam
+    command: flask fetch-providers --daemon --provider steam
 
   backoffice_bitskins:
     build: backend
@@ -43,7 +43,7 @@ services:
     - db_network
     depends_on:
     - db
-    command: flask fetch_providers --daemon --provider bitskins
+    command: flask fetch-providers --daemon --provider bitskins
 
   backoffice_csgoshop:
     build: backend
@@ -53,7 +53,7 @@ services:
     - db_network
     depends_on:
     - db
-    command: flask fetch_providers --daemon --provider csgoshop
+    command: flask fetch-providers --daemon --provider csgoshop
 
   backoffice_lootbear:
     build: backend
@@ -63,7 +63,7 @@ services:
     - db_network
     depends_on:
     - db
-    command: flask fetch_providers --daemon --provider lootbear
+    command: flask fetch-providers --daemon --provider lootbear
 
   frontend:
     build: frontend
