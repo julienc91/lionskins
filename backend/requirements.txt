@@ -1,7 +1,6 @@
 flask
 flask_sqlalchemy
 Flask-Migrate
-Flask-JWT-extended
 flask-cors
 click
 sqlalchemy

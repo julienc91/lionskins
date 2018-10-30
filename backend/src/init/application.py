@@ -4,7 +4,7 @@ import os
 
 from flask import Flask
 
-from . import sqlalchemy, jwt, migrate, cors
+from . import sqlalchemy, migrate, cors
 
 
 def create_application():
@@ -21,7 +21,6 @@ def create_application():
     )
 
     sqlalchemy.init_app(application)
-    jwt.init_app(application)
     migrate.init_app(application, sqlalchemy)
     cors.init_app(application)
 
