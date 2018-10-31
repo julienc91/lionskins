@@ -24,7 +24,7 @@ class TrackedLink extends Component {
     const { href, children } = this.props
     const trackedLink = `${href}?src=${fingerprint}`
     return (
-      <a href={trackedLink} target='_blank'>{children}</a>
+      <a href={trackedLink} rel='noopener noreferrer' target='_blank'>{children}</a>
     )
   }
 }
