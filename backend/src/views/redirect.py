@@ -14,7 +14,7 @@ def redirect_view(provider, skin_id):
 
     tracker = request.args.get('src')
 
-    Redirect(skin=skin, provider=provider, tracker=tracker)
+    Redirect.create(skin=skin, provider=provider, tracker=tracker)
 
     url = provider.get_skin_url(skin)
     return redirect(url, code=302)

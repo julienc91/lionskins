@@ -68,7 +68,7 @@ class ContactMessage(graphene.Mutation):
     @classmethod
     def mutate(cls, *args, **kwargs):
         if Contact.check_captcha(kwargs.get('captcha')):
-            res = Contact(name=kwargs.get('name'), email=kwargs.get('email'), message=kwargs['message'])
+            res = Contact.create(name=kwargs.get('name'), email=kwargs.get('email'), message=kwargs['message'])
             return cls(message_id=res.id)
         return cls(message_id=None)
 
