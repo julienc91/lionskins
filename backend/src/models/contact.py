@@ -1,27 +1,26 @@
 # -*- coding: utf-8 -*-
 
 import os
-import uuid
 from datetime import datetime
 
 import requests
+import mongoengine
 from flask import request
 
-from ..init import sqlalchemy as db
 from .model_mixin import ModelMixin
 
 
-class Contact(ModelMixin, db.Model):
+class Contact(ModelMixin, mongoengine.Document):
 
-    __tablename__ = 'contact'
+    name = mongoengine.StringField()
+    email = mongoengine.EmailField()
+    message = mongoengine.StringField(required=True)
 
-    id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    creation_date = mongoengine.DateTimeField(required=True, default=datetime.now)
 
-    name = db.Column(db.String(127))
-    email = db.Column(db.String(127))
-    message = db.Column(db.Text)
-
-    creation_date = db.Column(db.DateTime, default=datetime.now, nullable=False, index=True)
+    meta = {
+        'indexes': ['creation_date']
+    }
 
     @staticmethod
     def check_captcha(response):

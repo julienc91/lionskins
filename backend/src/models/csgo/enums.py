@@ -10,6 +10,25 @@ class Qualities(enum.Enum):
     well_worn = "Well-Worn"
     battle_scarred = "Battle-Scarred"
 
+    @classmethod
+    def from_int(cls, i):
+        return {
+            1: cls.factory_new,
+            2: cls.minimal_wear,
+            3: cls.field_tested,
+            4: cls.well_worn,
+            5: cls.battle_scarred,
+        }[i]
+
+    def to_int(self):
+        return {
+            self.factory_new: 1,
+            self.minimal_wear: 2,
+            self.field_tested: 3,
+            self.well_worn: 4,
+            self.battle_scarred: 5,
+        }[self]
+
 
 class Rarities(enum.Enum):
     consumer_grade = "Consumer Grade"

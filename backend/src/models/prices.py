@@ -2,19 +2,27 @@
 
 from datetime import datetime
 
-from ..init import sqlalchemy as db
+import mongoengine
+
 from .model_mixin import ModelMixin
+from .enums import Providers
 
 
-class Price(ModelMixin, db.Model):
+class Price(ModelMixin, mongoengine.EmbeddedDocument):
 
-    __tablename__ = 'prices'
+    _provider = mongoengine.StringField(db_field="provider", choices=Providers, required=True, unique=True)
+    price = mongoengine.FloatField(required=True)
+    creation_date = mongoengine.DateTimeField(required=True, default=datetime.now)
+    update_date = mongoengine.DateTimeField(requured=True, default=datetime.now)
 
-    skin_id = db.Column(db.ForeignKey('skins.id'), primary_key=True)
-    provider_id = db.Column(db.ForeignKey('providers.id'), primary_key=True)
+    meta = {
+        'indexes': ['price']
+    }
 
-    price = db.Column(db.Float(), index=True)
-    creation_date = db.Column(db.DateTime, default=datetime.now, nullable=False)
+    @property
+    def provider(self):
+        return Providers[self._provider]
 
-    skin = db.relationship('models.skins.Skin')
-    provider = db.relationship('models.providers.Provider')
+    @provider.setter
+    def provider(self, value):
+        self._provider = value.name

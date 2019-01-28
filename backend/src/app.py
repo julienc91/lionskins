@@ -9,7 +9,6 @@ from flask_graphql import GraphQLView
 from .application import app
 from .api import schema
 from .views.redirect import redirect_view
-from . import commands  # noqa
 
 
 logging.basicConfig(level=logging.INFO)

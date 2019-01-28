@@ -1,23 +1,31 @@
 # -*- coding: utf-8 -*-
 
-import uuid
 from datetime import datetime
 
-from ..init import sqlalchemy as db
+import mongoengine
+
 from .model_mixin import ModelMixin
+from .enums import Providers
+from .skins import Skin
 
 
-class Redirect(ModelMixin, db.Model):
+class Redirect(ModelMixin, mongoengine.Document):
 
-    __tablename__ = 'redirects'
+    skin = mongoengine.ReferenceField(Skin, required=True)
+    _provider = mongoengine.StringField(db_field="provider", choices=Providers, required=True)
 
-    id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    tracker = mongoengine.StringField()
 
-    skin_id = db.Column(db.ForeignKey('skins.id'), nullable=False)
-    provider_id = db.Column(db.ForeignKey('providers.id'), nullable=False)
+    creation_date = mongoengine.DateTimeField(required=True, default=datetime.now)
 
-    tracker = db.Column(db.String(127), index=True)
-    creation_date = db.Column(db.DateTime, default=datetime.now, nullable=False, index=True)
+    meta = {
+        'indexes': ['creation_date', 'tracker']
+    }
 
-    skin = db.relationship('models.skins.Skin')
-    provider = db.relationship('models.providers.Provider')
+    @property
+    def provider(self):
+        return Providers[self._provider]
+
+    @provider.setter
+    def provider(self, value):
+        self._provider = value.name

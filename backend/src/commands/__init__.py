@@ -9,7 +9,7 @@ from ..application import app
 from ..models.enums import Providers
 
 
-@app.cli.command()
+@app.cli.command('fetch_providers')
 @click.option('--daemon', is_flag=True)
 @click.option('--provider', type=click.Choice([p.name for p in Providers]))
 def fetch_providers(daemon, provider):
@@ -27,12 +27,6 @@ def fetch_providers(daemon, provider):
             time.sleep(3600)
     else:
         FetchProviders.run(provider)
-
-
-@app.cli.command()
-def init_csgo():
-    from .init_csgo import InitCSGO
-    InitCSGO.run()
 
 
 @app.cli.command()

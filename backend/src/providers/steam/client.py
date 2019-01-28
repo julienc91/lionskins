@@ -5,7 +5,6 @@ import re
 import requests
 from ratelimit import limits, sleep_and_retry
 
-from ...init import sqlalchemy as db
 from ...models import Apps, Providers
 from ..abstract_provider import AbstractProvider
 
@@ -76,6 +75,5 @@ class Client(AbstractProvider):
 
                     if item_price > 0:
                         yield (skin, item_price)
-            db.session.commit()
 
             start += count

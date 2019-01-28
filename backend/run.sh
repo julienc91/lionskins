@@ -1,3 +1,3 @@
 #!/bin/bash
 
-/usr/bin/env python main.py
+/usr/bin/env python app.py

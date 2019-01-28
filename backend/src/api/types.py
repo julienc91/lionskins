@@ -1,28 +1,30 @@
 # -*- coding: utf-8 -*-
 
 import graphene
-from graphene_sqlalchemy import SQLAlchemyObjectType
 
 from .. import models
 
 
-class TypePrice(SQLAlchemyObjectType):
+class TypeProvider(graphene.Enum):
     class Meta:
-        model = models.Price
-        only_fields = ('provider', 'price', 'creation_date', 'currency', )
+        enum = models.enums.Providers
 
-    provider = graphene.String()
+
+class TypePrice(graphene.ObjectType):
+
+    provider = TypeProvider()
     currency = graphene.String()
-
-    def resolve_provider(self, info):
-        return self.provider.id.name
+    price = graphene.Float()
 
     def resolve_currency(self, info):
         return models.enums.Currencies.usd.name
 
 
-class BaseTypeSkin(SQLAlchemyObjectType):
+class BaseTypeSkin(graphene.ObjectType):
     class Meta:
-        model = models.Skin
-        only_fields = ('id', 'name', 'image_url', 'prices', )
         interfaces = (graphene.relay.Node, )
+
+    name = graphene.String()
+    slug = graphene.String()
+    image_url = graphene.String()
+    prices = graphene.List(TypePrice)

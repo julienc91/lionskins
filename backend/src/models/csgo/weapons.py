@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from ...init import sqlalchemy as db
+import mongoengine
+
 from ..model_mixin import ModelMixin
 from .enums import Categories, Weapons
 
@@ -29,13 +30,48 @@ WEAPONS = {
 }
 
 
-class Weapon(ModelMixin, db.Model):
+class Weapon(ModelMixin, mongoengine.Document):
 
-    __tablename__ = 'csgo_weapons'
+    _name = mongoengine.StringField(db_field="name", choices=Weapons, primary_key=True)
+    _category = mongoengine.StringField(db_field="category", choices=Categories)
 
-    id = db.Column(db.Enum(Weapons, name="type_csgo_weapons"), primary_key=True)
-    category = db.Column(db.Enum(Categories, name="type_csgo_categories"), index=True)
+    meta = {
+        'indexes': ['_category']
+    }
+
+    def __repr__(self):
+        return f'<Weapon name={self._name}>'
+
+    def __str__(self):
+        return f'<Weapon {self._name}>'
 
     @property
     def name(self):
-        return self.id.value
+        return Weapons[self._name]
+
+    @name.setter
+    def name(self, value):
+        self._name = value.name
+
+    @property
+    def category(self):
+        return Categories[self._category]
+
+    @category.setter
+    def category(self, value):
+        self._category = value.name
+
+    @classmethod
+    def get(cls, **kwargs):
+        try:
+            return super().get(**kwargs)
+        except cls.DoesNotExist:
+            if 'name' not in kwargs:
+                raise
+
+            for category, weapons in WEAPONS.items():
+                for weapon in weapons:
+                    if weapon == kwargs['name']:
+                        kwargs['category'] = category
+                        break
+            return cls.create(**kwargs)

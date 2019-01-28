@@ -2,23 +2,16 @@ version: '3'
 services:
 
   db:
-    image: "postgres:9.6"
+    image: "mongo:4"
     volumes:
-    - "dbdata:/var/lib/postgresql/data"
-    env_file:
-    - postgres/.env.production
+    - "dbdata:/data/db"
     networks:
     - db_network
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 5s
-      timeout: 5s
-      retries: 20
 
   backend:
     build: backend
     env_file:
-    - backend/.env.production
+    - backend/.env.${ENVIRONMENT:-production}
     networks:
     - db_network
     - web_network
@@ -28,47 +21,47 @@ services:
   backoffice_steam:
     build: backend
     env_file:
-    - backend/.env.production
+    - backend/.env.${ENVIRONMENT:-production}
     networks:
     - db_network
     depends_on:
     - db
-    command: flask fetch-providers --daemon --provider steam
+    command: ../fetch_providers --daemon --provider steam
 
   backoffice_bitskins:
     build: backend
     env_file:
-    - backend/.env.production
+    - backend/.env.${ENVIRONMENT:-production}
     networks:
     - db_network
     depends_on:
     - db
-    command: flask fetch-providers --daemon --provider bitskins
+    command: ../fetch_providers --daemon --provider bitskins
 
   backoffice_csgoshop:
     build: backend
     env_file:
-    - backend/.env.production
+    - backend/.env.${ENVIRONMENT:-production}
     networks:
     - db_network
     depends_on:
     - db
-    command: flask fetch-providers --daemon --provider csgoshop
+    command: ../fetch_providers --daemon --provider csgoshop
 
   backoffice_lootbear:
     build: backend
     env_file:
-    - backend/.env.production
+    - backend/.env.${ENVIRONMENT:-production}
     networks:
     - db_network
     depends_on:
     - db
-    command: flask fetch-providers --daemon --provider lootbear
+    command: ../fetch_providers --daemon --provider lootbear
 
   frontend:
     build: frontend
     env_file:
-    - frontend/.env.production
+    - frontend/.env.${ENVIRONMENT:-production}
     networks:
     - web_network
     depends_on:

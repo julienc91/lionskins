@@ -44,8 +44,8 @@ class Parser:
         except (ValueError, AttributeError):
             return None
 
-        weapon = Weapon.query.filter_by(id=weapon).first()
+        weapon = Weapon.get(name=weapon)
         skin_name = right_split.replace('(' + quality.value + ')', '').strip()
 
         return Skin.get_or_create(name=skin_name, app=Apps.csgo, weapon=weapon, quality=quality,
-                                  stat_trak=stat_trak, souvenir=souvenir, defaults={'image_url': ''})
+                                  stat_trak=stat_trak, souvenir=souvenir)

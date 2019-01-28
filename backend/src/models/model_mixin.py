@@ -1,28 +1,81 @@
 # -*- coding: utf-8 -*-
 
-from ..init.application import sqlalchemy as db
+from enum import Enum
+
+import mongoengine
+
+
+string_field_init = mongoengine.StringField.__init__
+
+
+def patched_init(*args, **kwargs):
+    if 'choices' in kwargs:
+        try:
+            if issubclass(kwargs['choices'], Enum):
+                kwargs['choices'] = [(e.name, e.value) for e in kwargs['choices']]
+        except TypeError:
+            pass
+    string_field_init(*args, **kwargs)
+
+
+mongoengine.StringField.__init__ = patched_init
 
 
 class ModelMixin:
 
     def __init__(self, **kwargs):
-        for name, value in kwargs.items():
-            setattr(self, name, value)
-        db.session.add(self)
+        super().__init__(**self._parse_kwargs(kwargs))
+
+    @classmethod
+    def _parse_kwargs(cls, kwargs):
+        new_kwargs = {}
+        for k, v in kwargs.items():
+            if isinstance(v, Enum):
+                if ("_" + k) in cls._fields:
+                    k = "_" + k
+                v = v.name
+            new_kwargs[k] = v
+        return new_kwargs
+
+    @classmethod
+    def get(cls, **kwargs):
+        if issubclass(cls, mongoengine.EmbeddedDocument):
+            raise NotImplementedError
+        else:
+            return cls.objects.get(**cls._parse_kwargs(kwargs))
+
+    @classmethod
+    def filter(cls, **kwargs):
+        if issubclass(cls, mongoengine.EmbeddedDocument):
+            raise NotImplementedError
+        else:
+            return cls.objects(**cls._parse_kwargs(kwargs))
+
+    @classmethod
+    def count(cls, **kwargs):
+        return cls.objects(**cls._parse_kwargs(kwargs)).count()
+
+    @classmethod
+    def create(cls, **kwargs):
+        if issubclass(cls, mongoengine.EmbeddedDocument):
+            return cls(**kwargs)
+        else:
+            return cls.objects.create(**cls._parse_kwargs(kwargs))
 
     @classmethod
     def get_or_create(cls, defaults=None, **kwargs):
 
-        res = cls.query.filter_by(**kwargs)
+        kwargs = cls._parse_kwargs(kwargs)
+        res = cls.filter(**kwargs)
         assert res.count() <= 1
         res = res.first()
         if res:
             return res
-        return cls(**kwargs, **(defaults or {}))
+        return cls.create(**kwargs, **(defaults or {}))
 
     @classmethod
     def create_or_update(cls, data=None, **kwargs):
-        res = cls.query.filter_by(**kwargs)
+        res = cls.filter(**kwargs)
         assert res.count() <= 1
         res = res.first()
         if res:
@@ -30,4 +83,4 @@ class ModelMixin:
                 for k, v in data.items():
                     setattr(res, k, v)
             return res
-        return cls(**kwargs, **(data or {}))
+        return cls.create(**kwargs, **(data or {}))

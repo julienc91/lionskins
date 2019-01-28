@@ -22,7 +22,7 @@ class GenerateSitemap:
     def run(cls):
         urls = [url for url in cls.base_urls]
 
-        all_skins = Skin.query.all()
+        all_skins = Skin.objects.all()
         for skin in all_skins:
             weapon_slug = slugify(skin.weapon.name)
             row = [

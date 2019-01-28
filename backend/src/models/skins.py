@@ -1,30 +1,30 @@
 # -*- coding: utf-8 -*-
 
-import uuid
 from datetime import datetime
 
+import mongoengine
 from slugify import slugify
 
-from ..init import sqlalchemy as db
 from ..models.enums import Apps
 from .model_mixin import ModelMixin
+from .prices import Price
 
 
-class Skin(ModelMixin, db.Model):
+class Skin(ModelMixin, mongoengine.Document):
 
-    __tablename__ = 'skins'
+    _app = mongoengine.StringField(db_field="app", choices=Apps, required=True)
+    slug = mongoengine.StringField(required=True)
 
-    id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
-    app = db.Column(db.Enum(Apps, name="type_apps"), index=True)
-    slug = db.Column(db.String(255), index=True, nullable=False)
+    name = mongoengine.StringField(required=True)
+    image_url = mongoengine.URLField()
+    creation_date = mongoengine.DateTimeField(required=True, default=datetime.now)
 
-    name = db.Column(db.String(127), index=True, nullable=False)
-    image_url = db.Column(db.String(511), nullable=False)
-    creation_date = db.Column(db.DateTime, default=datetime.now, nullable=False)
+    prices = mongoengine.EmbeddedDocumentListField(Price)
 
-    prices = db.relationship('models.prices.Price')
-
-    __mapper_args__ = {'polymorphic_on': app}
+    meta = {
+        'indexes': ['_app', 'slug', 'name'],
+        'allow_inheritance': True,
+    }
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -42,3 +42,21 @@ class Skin(ModelMixin, db.Model):
 
     def generate_slug(self):
         return slugify(self.name)
+
+    @property
+    def app(self):
+        return Apps[self._app]
+
+    @app.setter
+    def app(self, value):
+        self._app = value.name
+
+    def add_price(self, provider, price):
+        for price_ in self.prices:
+            if price_.provider == provider:
+                price_.price = price
+                price_.update_date = datetime.now()
+                break
+        else:
+            self.prices.append(Price(price=price, provider=provider))
+        self.save()

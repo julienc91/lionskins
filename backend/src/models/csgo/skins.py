@@ -1,39 +1,41 @@
 # -*- coding: utf-8 -*-
 
+import mongoengine
+
 from ..enums import Apps
 from ..skins import Skin as BaseSkin
-from ...init import sqlalchemy as db
 from .enums import Rarities, Qualities, Categories
+from .weapons import Weapon
 
 
 class Skin(BaseSkin):
 
-    __tablename__ = 'csgo_skins'
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.app = Apps.csgo
 
-    id = db.Column(db.String(36), db.ForeignKey('skins.id'), primary_key=True)
-    weapon_id = db.Column(db.ForeignKey('csgo_weapons.id'))
+    weapon = mongoengine.ReferenceField(Weapon, required=True)
 
-    stat_trak = db.Column(db.Boolean(), index=True)
-    souvenir = db.Column(db.Boolean(), index=True)
-    quality = db.Column(db.Enum(Qualities, name="type_csgo_qualities"), index=True)
-    rarity = db.Column(db.Enum(Rarities, name="type_csgo_rarities"), index=True)
+    stat_trak = mongoengine.BooleanField(required=True)
+    souvenir = mongoengine.BooleanField(required=True)
+    _quality = mongoengine.IntField(db_field="quality", required=True)
+    _rarity = mongoengine.StringField(db_field="rarity", choices=Rarities)
 
-    weapon = db.relationship('models.csgo.weapons.Weapon')
-
-    __mapper_args__ = {'polymorphic_identity': Apps.csgo}
+    meta = {
+        'indexes': ['stat_trak', 'souvenir', '_quality', '_rarity']
+    }
 
     @property
     def fullname(self):
         res = ""
         if self.stat_trak:
             res += "StatTrak "
-        res += self.weapon.id.value
+        res += self.weapon.pk
         if self.souvenir:
             res += " (Souvenir)"
         res += " | " + self.name + " "
         res += "(" + self.quality.value + ")"
         return res
-
 
     @property
     def market_hash_name(self):
@@ -46,3 +48,31 @@ class Skin(BaseSkin):
             res += 'StatTrak™ '
         res += self.weapon.name + " | " + self.name
         return res
+
+    @property
+    def quality(self):
+        return Qualities.from_int(self._quality)
+
+    @quality.setter
+    def quality(self, value):
+        self._quality = value.to_int()
+
+    @property
+    def rarity(self):
+        try:
+            return Rarities[self._rarity]
+        except KeyError:
+            return None
+
+    @rarity.setter
+    def rarity(self, value):
+        self._rarity = value.name
+
+    @classmethod
+    def _parse_kwargs(cls, kwargs):
+        if 'quality' in kwargs:
+            try:
+                kwargs['_quality'] = kwargs.pop('quality').to_int()
+            except AttributeError:
+                pass
+        return super()._parse_kwargs(kwargs)
