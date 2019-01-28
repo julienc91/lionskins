@@ -24,7 +24,7 @@ class GenerateSitemap:
 
         all_skins = Skin.objects.all()
         for skin in all_skins:
-            weapon_slug = slugify(skin.weapon.name)
+            weapon_slug = slugify(skin.weapon.name.value)
             row = [
                 f"https://lionskins.co/counter-strike-global-offensive/{weapon_slug}/{skin.slug}/",
                 "daily",

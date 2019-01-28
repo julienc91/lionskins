@@ -46,7 +46,7 @@ class Skin(BaseSkin):
             res += 'Souvenir '
         elif self.stat_trak:
             res += 'StatTrak™ '
-        res += self.weapon.name + " | " + self.name
+        res += self.weapon.name.value + " | " + self.name
         return res
 
     @property
