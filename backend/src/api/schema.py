@@ -53,6 +53,10 @@ class Query(graphene.ObjectType):
             'quality'
         )
 
+        # force caching the queryset length to avoid horrible performances when a `len`
+        # is called on the queryset later on in graphql_relay.connection.arrayconnection.connection_from_list
+        # http://docs.mongoengine.org/guide/querying.html#counting-results
+        query.count(with_limit_and_skip=True)
         return query
 
 
