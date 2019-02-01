@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+import http
+
+import user_agents
 from flask import redirect, request
 from graphql_relay.node.node import from_global_id
 
@@ -14,7 +17,9 @@ def redirect_view(provider, skin_id):
 
     tracker = request.args.get('src')
 
-    Redirect.create(skin=skin, provider=provider, tracker=tracker)
+    user_agent = request.headers.get('User-Agent')
+    if user_agent and not user_agents.parse(user_agent).is_bot:
+        Redirect.create(skin=skin, provider=provider, tracker=tracker)
 
     url = provider.get_skin_url(skin)
-    return redirect(url, code=302)
+    return redirect(url, code=http.HTTPStatus.FOUND)
