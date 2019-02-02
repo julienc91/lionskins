@@ -14,7 +14,6 @@ class Client(AbstractProvider):
 
     provider = Providers.bitskins
     base_url = "https://bitskins.com/api/v1/"
-    max_requests_per_second = 5  # real limit is 8, but no need to reach it
 
     def __init__(self, app):
         super().__init__(app)

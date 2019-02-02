@@ -49,9 +49,9 @@ class Skin extends Component {
         </Card.Content>
         <Card.Content extra>
           <div className='prices'>
-            {skin.prices.map(price => {
+            {skin.prices.sort((p1, p2) => p1.provider > p2.provider).map(price => {
               return (
-                <div key={price.provider}>
+                <div className="price" key={price.provider}>
                   <TrackedLink href={getSkinUrlFromProvider(skin, price.provider)}>
                     {getIconFromProvider(price.provider)}
                     <FormattedNumber value={price.price} style='currency' currency={price.currency} />

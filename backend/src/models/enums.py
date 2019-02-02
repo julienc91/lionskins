@@ -15,6 +15,7 @@ class Providers(enum.Enum):
     bitskins = "BitSkins"
     csgoshop = "CSGOShop"
     lootbear = "LootBear"
+    skinbaron = "SkinBaron"
 
     def get_skin_url(self, skin):
         base_url = ''
@@ -46,11 +47,21 @@ class Providers(enum.Enum):
             elif self == self.steam:
                 base_url = 'https://steamcommunity.com/market/listings/730/'
                 base_url += skin.market_hash_name + " (" + skin.quality.value + ")"
+            elif self == self.skinbaron:
+                base_url = "https://skinbaron.de/#!"
+                parameters = {
+                    'appId': 730,
+                    'wf': (skin.quality.to_int() - 1),
+                    'tli': 8,
+                    'souvenir': 1 if skin.souvenir else 0,
+                    'statTrak': 1 if skin.stat_trak else 0,
+                    'sort': 'CF',
+                    'str': skin.market_hash_name
+                }
 
         if parameters:
             base_url += "?" + urllib.parse.urlencode(parameters)
         return base_url
-
 
 
 class Currencies(enum.Enum):

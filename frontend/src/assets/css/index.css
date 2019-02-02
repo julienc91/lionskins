@@ -126,7 +126,13 @@ body {
       right: 5px;
       top: 5px; }
     #root .skin-list-container .skin-list .skin .extra.content {
-      height: 100px; }
+      height: 100px;
+      overflow: hidden; }
+      #root .skin-list-container .skin-list .skin .extra.content .prices {
+        display: flex;
+        flex-flow: row wrap; }
+        #root .skin-list-container .skin-list .skin .extra.content .prices .price {
+          width: 50%; }
   #root .skin-list-container .skin-list .loader {
     margin-top: 10vh;
     z-index: 1; }

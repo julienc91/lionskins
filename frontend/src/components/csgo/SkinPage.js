@@ -262,7 +262,7 @@ SkinSummary.propTypes = {
 }
 
 class SkinPrices extends React.Component {
-  providers = ['steam', 'bitskins', 'csgoshop', 'lootbear']
+  providers = ['steam', 'bitskins', 'csgoshop', 'lootbear', 'skinbaron']
   qualities = ['factory_new', 'minimal_wear', 'field_tested', 'well_worn', 'battle_scarred']
 
   render () {

@@ -58,6 +58,16 @@ services:
     - db
     command: ../fetch_providers --daemon --provider lootbear
 
+  backoffice_skinbaron:
+    build: backend
+    env_file:
+      - backend/.env.${ENVIRONMENT:-production}
+    networks:
+      - db_network
+    depends_on:
+      - db
+    command: ../fetch_providers --daemon --provider skinbaron
+
   frontend:
     build: frontend
     env_file:

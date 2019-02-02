@@ -11,7 +11,6 @@ class Client(AbstractProvider):
 
     provider = Providers.lootbear
     base_url = "https://app.lootbear.com/api/lootbear/v1/"
-    max_requests_per_second = 5  # real limit is 8, but no need to reach it
 
     @staticmethod
     def get_parser(app):

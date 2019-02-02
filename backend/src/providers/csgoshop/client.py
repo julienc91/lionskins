@@ -10,7 +10,6 @@ from ..abstract_provider import AbstractProvider
 class Client(AbstractProvider):
 
     provider = Providers.csgoshop
-    base_url = "https://bitskins.com/api/v1/"
 
     @staticmethod
     def get_parser(app):

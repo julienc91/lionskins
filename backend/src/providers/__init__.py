@@ -3,8 +3,9 @@
 from .bitskins import Bitskins
 from .csgoshop import CSGOShop
 from .lootbear import Lootbear
+from .skinbaron import SkinBaron
 from .steam import Steam
 
-clients = [Bitskins, CSGOShop, Lootbear, Steam]
+clients = [Bitskins, CSGOShop, Lootbear, SkinBaron, Steam]
 
-# TODO: skinbaron, gameflip.com, skinxchange.com, dmarket.com
+# TODO: gameflip.com, skinxchange.com, dmarket.com
