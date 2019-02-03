@@ -239,12 +239,16 @@ body {
   @media only screen and (min-width: 1024px) {
     #root .skin-page .main-content .left-panel {
       float: left;
-      width: 400px; }
+      width: 400px;
+      margin-right: 20px; }
     #root .skin-page .main-content .right-panel {
-      float: right; } }
+      float: right;
+      max-width: calc(100% - 420px); } }
   @media only screen and (min-width: 1440px) {
     #root .skin-page .main-content .left-panel {
-      width: 500px; } }
+      width: 500px; }
+    #root .skin-page .main-content .right-panel {
+      max-width: calc(100% - 520px); } }
 #root .contact-form .grecaptcha-badge {
   margin-bottom: 1rem; }
 #root .page {

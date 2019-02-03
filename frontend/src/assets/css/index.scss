@@ -370,14 +370,19 @@ $xlarge-down: "only screen and (max-width : 1439px)" !default;
         .left-panel {
           float: left;
           width: 400px;
+          margin-right: 20px;
         }
         .right-panel {
           float: right;
+          max-width: calc(100% - 420px);
         }
       }
       @media #{$xlarge-up} {
         .left-panel {
           width: 500px;
+        }
+        .right-panel {
+          max-width: calc(100% - 520px);
         }
       }
     }
