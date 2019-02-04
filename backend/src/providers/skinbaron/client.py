@@ -6,7 +6,9 @@ import requests
 from ratelimit import limits, sleep_and_retry
 
 from ...models import Apps, Providers
+from ...models.enums import Currencies
 from ...models.csgo.enums import Weapons
+from ...utils import CurrencyConverter
 from ..abstract_provider import AbstractProvider
 
 
@@ -61,4 +63,5 @@ class Client(AbstractProvider):
             for item_name, item_price in prices.items():
                 skin = self.parser.get_skin_from_item_name(item_name)
                 if skin and item_price > 0:
+                    item_price = CurrencyConverter.convert(item_price, Currencies.euros, Currencies.usd)
                     yield (skin, item_price)
