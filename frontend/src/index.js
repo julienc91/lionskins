@@ -6,20 +6,15 @@ import 'semantic-ui-css/semantic.min.css'
 import { Router } from 'react-router-dom'
 import { IntlProvider } from 'react-intl'
 import { ApolloProvider } from 'react-apollo'
-import { ApolloClient } from 'apollo-client'
-import { HttpLink } from 'apollo-link-http'
-import { InMemoryCache } from 'apollo-cache-inmemory'
+import ApolloClient from 'apollo-boost'
 import createHistory from 'history/createBrowserHistory'
 import * as serviceWorker from './serviceWorker'
 
 import App from './components/App'
 import Tracker from './components/Tracker'
 
-const httpLink = new HttpLink({ uri: `${process.env.REACT_APP_REDIRECT_DOMAIN}/graphql` })
-
 const client = new ApolloClient({
-  link: httpLink,
-  cache: new InMemoryCache()
+  uri: `${process.env.REACT_APP_REDIRECT_DOMAIN}/graphql`
 })
 
 const history = createHistory()
@@ -36,4 +31,4 @@ ReactDOM.render(
   document.getElementById('root')
 )
 
-serviceWorker.unregister();
+serviceWorker.unregister()
