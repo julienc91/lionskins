@@ -19,11 +19,12 @@ class FetchProviders:
         for count, (skin, price) in enumerate(client.get_prices(), start=1):
             skin.add_price(provider=client.provider, price=price)
             logging.debug("{} - {}: {}".format(client.provider.name, skin.fullname, price))
+            break
 
         # delete prices that were not updated
         (Skin
          .filter(prices__update_date__lt=start_date, __raw__={'prices.provider': client.provider.name})
-         .update(__raw__={'$pull': {'prices': {'provider': client.provider.name}}}))
+         .update(pull__prices___provider=client.provider.name))
 
         logging.info("Fetching finished, created or updated {} skins".format(count))
 
