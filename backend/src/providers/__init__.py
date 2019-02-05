@@ -8,4 +8,4 @@ from .steam import Steam
 
 clients = [Bitskins, CSGOShop, Lootbear, SkinBaron, Steam]
 
-# TODO: gameflip.com, skinxchange.com, dmarket.com
+# TODO: gameflip.com, skinxchange.com, dmarket.com, stonefire.io
