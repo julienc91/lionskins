@@ -23,13 +23,19 @@ class GenerateSitemap:
         urls = [url for url in cls.base_urls]
 
         all_skins = Skin.objects.all()
+        already_done = set()
         for skin in all_skins:
             weapon_slug = slugify(skin.weapon.name.value)
+            url = f"https://lionskins.co/counter-strike-global-offensive/{weapon_slug}/{skin.slug}/"
             row = [
-                f"https://lionskins.co/counter-strike-global-offensive/{weapon_slug}/{skin.slug}/",
+                url,
                 "daily",
                 0.7
             ]
+            if url in already_done:
+                continue
+
+            already_done.add(url)
             urls.append(row)
 
         res = """<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">"""
