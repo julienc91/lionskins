@@ -65,5 +65,5 @@ class Providers(enum.Enum):
 
 
 class Currencies(enum.Enum):
-    euros = "€"
+    eur = "€"
     usd = "$"

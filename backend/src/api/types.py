@@ -22,9 +22,6 @@ class TypePrice(graphene.ObjectType):
     currency = TypeCurrency()
     price = graphene.Float()
 
-    def resolve_price(self, info):
-        return self.price
-
 
 class BaseTypeSkin(graphene.ObjectType):
     class Meta:

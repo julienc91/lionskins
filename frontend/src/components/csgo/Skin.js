@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { withTranslation } from 'react-i18next'
 import { Card, Label } from 'semantic-ui-react'
 import { Qualities, Weapons } from './enums'
-import { FormattedNumber, injectIntl } from 'react-intl'
 import { getColorFromRarity, getIconFromProvider, getSkinUrlFromProvider } from './utils'
 import slugify from 'slugify'
 import Img from 'react-image'
 import PropTypes from 'prop-types'
-import TrackedLink from '../TrackedLink'
+import TrackedLink from '../tools/TrackedLink'
 
 const importAll = (r) => {
   let images = {}
@@ -19,8 +19,8 @@ const defaultWeaponImages = importAll(require.context('../../assets/images/csgo/
 
 class Skin extends Component {
   render () {
-    const { skin } = this.props
-    const weaponSlug = slugify(Weapons[skin.weapon.name], { lower: true })
+    const { skin, t } = this.props
+    const weaponSlug = slugify(skin.weapon.name.replace('_', '-'), { lower: true })
     const internalUrl = `/counter-strike-global-offensive/${weaponSlug}/${skin.slug}/`
     const defaultWeaponImage = defaultWeaponImages[`default_skin_${skin.weapon.name}.png`]
     let imageUrls = [defaultWeaponImage]
@@ -34,27 +34,27 @@ class Skin extends Component {
           src={imageUrls} className='ui image'
           onClick={this.props.onImageClicked} alt={`${skin.weapon.name} - ${skin.name}`} />
         {skin.statTrak && (
-          <Label className='stattrak' color='orange'>StatTrak</Label>
+          <Label className='stattrak' color='orange'>{t('csgo.skin.stat_trak')}</Label>
         )}
         {skin.souvenir && (
-          <Label className='souvenir' color='yellow'>Souvenir</Label>
+          <Label className='souvenir' color='yellow'>{t('csgo.skin.souvenir')}</Label>
         )}
         <Card.Content>
           <Card.Header>
-            <Link to={internalUrl}>{Weapons[skin.weapon.name]} - {skin.name}</Link>
+            <Link to={internalUrl}>{t(Weapons[skin.weapon.name])} - {skin.name}</Link>
           </Card.Header>
           <Card.Meta>
-            {Qualities[skin.quality]}
+            {t(Qualities[skin.quality])}
           </Card.Meta>
         </Card.Content>
         <Card.Content extra>
           <div className='prices'>
             {skin.prices.sort((p1, p2) => p1.provider > p2.provider).map(price => {
               return (
-                <div className="price" key={price.provider}>
+                <div className='price' key={price.provider}>
                   <TrackedLink href={getSkinUrlFromProvider(skin, price.provider)}>
                     {getIconFromProvider(price.provider)}
-                    <FormattedNumber value={price.price} style='currency' currency={price.currency} />
+                    {t(`currency.${price.currency}`, { price: price.price })}
                   </TrackedLink>
                 </div>
               )
@@ -67,6 +67,7 @@ class Skin extends Component {
 }
 
 Skin.propTypes = {
+  t: PropTypes.func.isRequired,
   skin: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -90,4 +91,4 @@ Skin.propTypes = {
   onImageClicked: PropTypes.func
 }
 
-export default injectIntl(Skin)
+export default withTranslation()(Skin)

@@ -1,39 +1,16 @@
-import React, { Component } from 'react'
+import React from 'react'
+import Slider from 'react-slick/lib'
 import { Link } from 'react-router-dom'
-import { Image, Header } from 'semantic-ui-react'
-import Slider from 'react-slick'
-
-import logo from '../assets/images/logo.svg'
+import { Image } from 'semantic-ui-react'
 import csgoCarousel from '../assets/images/carousel/csgo.jpg'
 import pubgCarousel from '../assets/images/carousel/pubg.jpg'
 import dota2Carousel from '../assets/images/carousel/dota2.jpg'
-import 'slick-carousel/slick/slick-theme.css'
-import 'slick-carousel/slick/slick.css'
+import { withTranslation } from 'react-i18next'
+import PropTypes from 'prop-types'
 
-class Homepage extends Component {
-  componentDidMount () {
-    document.title = 'Lion Skins - Compare prices of thousands of skins'
-  }
-
+class Carousel extends React.Component {
   render () {
-    return (
-      <div className='homepage'>
-        <Image src={logo} alt='' className='logo' />
-        <Header as='h1'>Lion Skins</Header>
-        <Header as='h2'>
-          Compare prices of thousands of skins<br />
-          among the most trusted marketplaces
-        </Header>
-        <Carousel />
-      </div>
-    )
-  }
-}
-
-export default Homepage
-
-class Carousel extends Component {
-  render () {
+    const { t } = this.props
     const settings = {
       dots: false,
       infinite: true,
@@ -67,12 +44,18 @@ class Carousel extends Component {
         <div className='soon'>
           <Image
             src={pubgCarousel} alt="PlayerUnknown's Battlegrounds"
-            label={{ content: 'Soon', ribbon: true }} />
+            label={{ content: t('carousel.soon'), ribbon: true }} />
         </div>
         <div className='soon'>
-          <Image src={dota2Carousel} alt='Dota 2' label={{ content: 'Soon', ribbon: true }} />
+          <Image src={dota2Carousel} alt='Dota 2' label={{ content: t('carousel.soon'), ribbon: true }} />
         </div>
       </Slider>
     )
   }
 }
+
+Carousel.propTypes = {
+  t: PropTypes.func.isRequired
+}
+
+export default withTranslation()(Carousel)

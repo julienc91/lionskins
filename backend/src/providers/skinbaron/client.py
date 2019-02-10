@@ -63,5 +63,5 @@ class Client(AbstractProvider):
             for item_name, item_price in prices.items():
                 skin = self.parser.get_skin_from_item_name(item_name)
                 if skin and item_price > 0:
-                    item_price = CurrencyConverter.convert(item_price, Currencies.euros, Currencies.usd)
+                    item_price = CurrencyConverter.convert(item_price, Currencies.eur, Currencies.usd)
                     yield (skin, item_price)

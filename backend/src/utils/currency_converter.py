@@ -41,7 +41,7 @@ class CurrencyConverter:
         updated_rates = res.json()['rates']
         cls.__rate = {
             Currencies.usd: {
-                Currencies.euros: updated_rates['EUR'],
+                Currencies.eur: updated_rates['EUR'],
                 Currencies.usd: 1.
             }
         }

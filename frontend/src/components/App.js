@@ -1,15 +1,17 @@
 import React from 'react'
 import Script from 'react-load-script'
 import { Switch, Route, Link } from 'react-router-dom'
-import SkinList from './csgo/SkinList'
-import SkinPage from './csgo/SkinPage'
+import { withTranslation } from 'react-i18next'
+import SkinList from '../views/csgo/SkinList'
+import SkinPage from '../views/csgo/SkinPage'
 import Header from './Header'
-import Homepage from './Homepage'
-import About from './About'
-import Contact from './Contact'
-import Faq from './Faq'
-import PrivacyPolicy from './PrivacyPolicy'
-import PageNotFound from './PageNotFound'
+import Homepage from '../views/Homepage'
+import About from '../views/About'
+import Contact from '../views/Contact'
+import Faq from '../views/Faq'
+import PrivacyPolicy from '../views/PrivacyPolicy'
+import PageNotFound from '../views/PageNotFound'
+import PropTypes from 'prop-types'
 
 class App extends React.Component {
   static getCopyright () {
@@ -22,6 +24,7 @@ class App extends React.Component {
   }
 
   render () {
+    const { t } = this.props
     return [
       <Header key='header' />,
       <main key='main'>
@@ -39,20 +42,16 @@ class App extends React.Component {
       <footer key='footer'>
         <ul>
           <li>
-            <Link to='/about/'>
-              About</Link>
+            <Link to='/about/'>{t('footer.about')}</Link>
           </li>
           <li>
-            <Link to='/contact/'>
-              Contact Us</Link>
+            <Link to='/contact/'>{t('footer.contact')}</Link>
           </li>
           <li>
-            <Link to='/faq/'>
-              FAQ</Link>
+            <Link to='/faq/'>{t('footer.faq')}</Link>
           </li>
           <li>
-            <Link to='/privacy-policy/'>
-              Privacy Policy</Link>
+            <Link to='/privacy-policy/'>{t('footer.privacy_policy')}</Link>
           </li>
         </ul>
         <div>© {App.getCopyright()} - Lion Skins</div>
@@ -62,4 +61,8 @@ class App extends React.Component {
   }
 }
 
-export default App
+App.propTypes = {
+  t: PropTypes.func.isRequired
+}
+
+export default withTranslation()(App)

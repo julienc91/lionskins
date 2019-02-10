@@ -1,0 +1,234 @@
+{
+  "about": {
+    "page_title": "Lion Skins - About",
+    "breadcrumb": "About",
+    "title": "About",
+    "subtitle": "Let's get to know each other",
+    "part1": {
+      "title": "Who we are",
+      "content1": "Lion Skins was made by gamers and for gamers.",
+      "content2": "The purpose of our service is to provide easy access to trusted marketplaces for you to buy the skins of your dreams for your favorite video games at the best price available.",
+      "content3": "We are not affiliated to any of the marketplaces we suggest, we just consider them to be trustworthy.",
+      "content4": "If you have any question, don't hesite to drop us a message from the <1>contact form</1>!"
+    }
+  },
+  "breadcrumb": {
+    "home": "Home"
+  },
+  "carousel": {
+    "soon": "Soon"
+  },
+  "contact": {
+    "page_title": "Lion Skins - Contact us",
+    "breadcrumb": "Contact",
+    "title": "Contact Us",
+    "subtitle1": "A question? A suggestion?",
+    "subtitle2": "Feel free to contact us!",
+    "error": {
+      "title": "Something went wrong...",
+      "content": "Your message was not sent, sorry for that. Can you try one more time?"
+    },
+    "success": {
+      "title": "Your message has been sent",
+      "content": "Have a nice day!"
+    },
+    "name_label": "Your name, alias, or whatever you want to be called",
+    "email_label": "Your email address, if you want us to get back to you",
+    "message_label": "Your message",
+    "submit": "Submit"
+  },
+  "csgo": {
+    "categories": {
+      "pistols": "Pistols",
+      "heavy": "Heavy",
+      "smgs": "SMGs",
+      "rifles": "Rifles",
+      "knives": "Knives"
+    },
+    "filters": {
+      "all": "All",
+      "none": "None",
+      "stat_trak": "StatTrak",
+      "souvenir": "Souvenir",
+      "weapon_label": "Weapon",
+      "quality_label": "Quality",
+      "rarity_label": "Rarity",
+      "stat_trak_souvenir_label": "StatTrak/Souvenir",
+      "search_label": "Search"
+    },
+    "qualities": {
+      "factory_new": "Factory New",
+      "minimal_wear": "Minimal Wear",
+      "field_tested": "Field-Tested",
+      "well_worn": "Well-Worn",
+      "battle_scarred": "Battle-Scarred"
+    },
+    "rarities": {
+      "consumer_grade": "Consumer Grade",
+      "industrial_grade": "Industrial Grade",
+      "mil_spec": "Mil-Spec",
+      "restricted": "Restricted",
+      "classified": "Classified",
+      "covert": "Covert",
+      "contraband": "Contraband"
+    },
+    "skin": {
+      "summary": "Summary",
+      "rarity": "Rarity",
+      "quality": "Quality",
+      "vanilla": "Vanilla",
+      "stat_trak": "StatTrak",
+      "souvenir": "Souvenir",
+      "price_range": "Price Range"
+    },
+    "weapons": {
+      "glock_18": "Glock-18",
+      "usp_s": "USP-S",
+      "p2000": "P2000",
+      "p250": "P250",
+      "cz75_auto": "CZ75-Auto",
+      "five_seven": "Five-SeveN",
+      "tec_9": "Tec-9",
+      "dual_berettas": "Dual Berettas",
+      "desert_eagle": "Desert Eagle",
+      "r8_revolver": "R8 Revolver",
+      "sawed_off": "Sawed-Off",
+      "mag_7": "MAG-7",
+      "nova": "Nova",
+      "xm1014": "XM1014",
+      "m249": "M249",
+      "negev": "Negev",
+      "mac_10": "MAC-10",
+      "mp9": "MP9",
+      "pp_bizon": "PP-Bizon",
+      "mp7": "MP7",
+      "mp5_sd": "MP5-SD",
+      "ump_45": "UMP-45",
+      "p90": "P90",
+      "galil_ar": "Galil AR",
+      "famas": "FAMAS",
+      "ak_47": "AK-47",
+      "m4a4": "M4A4",
+      "m4a1_s": "M4A1-S",
+      "sg_553": "SG 553",
+      "aug": "AUG",
+      "g3sg1": "G3SG1",
+      "scar_20": "SCAR-20",
+      "ssg_08": "SSG 08",
+      "awp": "AWP",
+      "bayonet": "Bayonet",
+      "bowie_knife": "Bowie Knife",
+      "butterfly_knife": "Butterfly Knife",
+      "falchion_knife": "Falchion Knife",
+      "flip_knife": "Flip Knife",
+      "gut_knife": "Gut Knife",
+      "huntsman_knife": "Huntsman Knife",
+      "karambit": "Karambit",
+      "m9_bayonet": "M9 Bayonet",
+      "navaja_knife": "Navaja Knife",
+      "shadow_daggers": "Shadow Daggers",
+      "stiletto_knife": "Stiletto Knife",
+      "talon_knife": "Talon Knife",
+      "ursus_knife": "Ursus Knife"
+    }
+  },
+  "currency": {
+    "eur": "{{price, eur}}",
+    "usd": "{{price, usd}}"
+  },
+  "faq": {
+    "page_title": "Lion Skins - FAQ",
+    "breadcrumb": "FAQ",
+    "title": "FAQ",
+    "subtitle": "Any question?",
+    "part1": {
+      "title": "Why don't you propose this one game?",
+      "content": "We'll try to add new games progressively, but it takes time!"
+    },
+    "part2": {
+      "title": "Why don't you propose this one marketplace?",
+      "content": "We're sure that this service is super great, but we cannot include every marketplace that exists. But maybe if you are numerous enough to suggest this, we'll have a look one day or another!"
+    },
+    "part3": {
+      "title": "The price you showed was not right!",
+      "content": "Even though we aim for real-time pricing updates, we are technically not able to do so at the moment; which is why you may notice inconsistencies between the prices we show and the effective prices in the marketplaces."
+    },
+    "part4": {
+      "title": "Are you affiliated with this or that marketplace?",
+      "content": "No, we're not."
+    },
+    "part5": {
+      "title": "Can I suggest you something?",
+      "content": "We'd love to hear about your ideas so that we make Lion Skins better! Drop us a message from the <1>contact form</1>."
+    }
+  },
+  "footer": {
+    "about": "About",
+    "contact": "Contact Us",
+    "faq": "FAQ",
+    "privacy_policy": "Privacy Policy"
+  },
+  "header": {
+    "settings": {
+      "menu": "Settings",
+      "language": "Language",
+      "language_en": "English",
+      "language_fr": "Français",
+      "currency": "Currency",
+      "currency_usd": "US Dollar",
+      "currency_eur": "Euros"
+    }
+  },
+  "homepage": {
+    "page_title": "Lion Skins - Compare prices of thousands of skins",
+    "title": "Lion Skins",
+    "subtitle1": "Compare prices of thousands of skins",
+    "subtitle2": "among the most trusted marketplaces"
+  },
+  "not_found": {
+    "title": "Page not found",
+    "subtitle": "The page you were looking for cannot be found",
+    "homepage": "Home"
+  },
+  "privacy_policy": {
+    "page_title": "Lion Skins - Privacy Policy",
+    "breadcrumb": "Privacy Policy",
+    "title": "Privacy Policy",
+    "subtitle": "Because we value your privacy",
+    "part1": {
+      "title": "Who we are",
+      "content1": "Lion Skins was made by gamers and for gamers. We are pleased to see you use our service, and you can be sure that we wil never use any of your personal data for profit or for anything that does not involve a better user experience.",
+      "content2": "If you have any question regarding this privacy policy, feel free to <1>contact us</1>."
+    },
+    "part2": {
+      "title": "What we collect",
+      "content1": "Not much actually...",
+      "item1": {
+        "name": "Your e-mail address",
+        "description": ": only if you want to contact us from the contact form and expect an answer"
+      },
+      "item2": {
+        "name": "Your clicks on links to marketplaces' websites",
+        "description": ": everytime you click on one of the links that redirects you to a skin marketplace, we generate a unique and totally random id in order to have a rough idea of how our visitors interact with the marketplaces we suggest. This id is automatically deleted at the end of your visit, and cannot be linked back to your device or your person"
+      }
+    },
+    "part3": {
+      "title": "Third party services we use",
+      "content1": "We also use third-party services to make our site work like we want it to. Here's the list:",
+      "item1": {
+        "name": "Matomo",
+        "description": ": an open-source analytics platform that is known for being especially privacy-protection friendly. We need this tool to know how our visitors interact with our service in order to continuously improve their experience"
+      },
+      "item2": {
+        "name": "Recaptcha",
+        "description": ": Google's captcha solution. This is only used on the contact form to prevent spam"
+      }
+    }
+  },
+  "skin_list": {
+    "no_results": {
+      "title": "No results",
+      "subtitle": "We didn't find anything matching your criteria"
+    }
+  }
+}

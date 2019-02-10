@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
 import { Container, Header, Form, Button, Loader, Message } from 'semantic-ui-react'
+import { withTranslation } from 'react-i18next'
 import ReCAPTCHA from 'react-google-recaptcha'
 import gql from 'graphql-tag'
 import { Mutation } from 'react-apollo'
-import Breadcrumb from './Breadcrumb'
+import Breadcrumb from '../components/tools/Breadcrumb'
+import PropTypes from 'prop-types'
 
 class Contact extends Component {
-  breadcrumb = [
-    { 'name': 'Contact' }
-  ]
   query = gql`
   mutation contact($name: String, $email: String, $message: String!, $captcha: String!) {
     contact(name: $name, email: $email, message: $message, captcha: $captcha) {
@@ -39,7 +38,8 @@ class Contact extends Component {
   }
 
   componentDidMount () {
-    document.title = 'Lion Skins - Contact us'
+    const { t } = this.props
+    document.title = t('contact.page_title')
     this.captcha && this.captcha.execute()
   }
 
@@ -85,14 +85,15 @@ class Contact extends Component {
   }
 
   render () {
+    const { t } = this.props
     const { name, email, message, state, error } = this.state
 
     return (
       <Container className='page contact-form'>
-        <Breadcrumb items={this.breadcrumb} />
+        <Breadcrumb items={[{ 'name': t('contact.breadcrumb') }]} />
         <Header as='h1' textAlign='center'>
-          Contact Us
-          <Header.Subheader>A question? A suggestion?<br />Feel free to contact us!</Header.Subheader>
+          {t('contact.title')}
+          <Header.Subheader>{t('contact.subtitle1')}<br />{t('contact.subtitle2')}</Header.Subheader>
         </Header>
 
         <Container>
@@ -101,8 +102,8 @@ class Contact extends Component {
               if (state === this.STATE_SENT) {
                 return (
                   <Message positive>
-                    <Message.Header>Your message has been sent</Message.Header>
-                    <p>Have a nice day!</p>
+                    <Message.Header>{t('contact.success.title')}</Message.Header>
+                    <p>{t('contact.success.content')}</p>
                   </Message>
                 )
               } else if (state === this.STATE_SENDING) {
@@ -112,17 +113,17 @@ class Contact extends Component {
                   <Form onSubmit={(e) => this.handleSubmit(e, contact)}>
                     {error &&
                     <Message negative>
-                      <Message.Header>Something went wrong...</Message.Header>
-                      <p>Your message was not sent, sorry for that. Can you try one more time?</p>
+                      <Message.Header>{t('contact.error.title')}</Message.Header>
+                      <p>{t('contact.error.content')}</p>
                     </Message>}
                     <Form.Input
-                      label='Your name, alias, or whatever you want to be called' value={name}
+                      label={t('contact.name_label')} value={name}
                       onChange={(e) => this.setState({ name: e.target.value })} />
                     <Form.Input
-                      label='Your email address, if you want us to get back to you' type='email' value={email}
+                      label={t('contact.email_label')} type='email' value={email}
                       onChange={(e) => this.setState({ email: e.target.value })} />
                     <Form.TextArea
-                      label='Your message' minLength={50} maxLength={10000} required value={message}
+                      label={t('contact.message_label')} minLength={50} maxLength={10000} required value={message}
                       onChange={(e) => this.setState({ message: e.target.value })} />
                     <ReCAPTCHA
                       ref={(el) => { this.captcha = el }}
@@ -130,7 +131,7 @@ class Contact extends Component {
                       size='invisible' badge='inline'
                       onChange={this.handleCaptchaChanged}
                     />
-                    <Button type='submit'>Submit</Button>
+                    <Button type='submit'>{t('contact.submit')}</Button>
                   </Form>
                 )
               }
@@ -143,4 +144,8 @@ class Contact extends Component {
   }
 }
 
-export default Contact
+Contact.propTypes = {
+  t: PropTypes.func.isRequired
+}
+
+export default withTranslation()(Contact)

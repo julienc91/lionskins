@@ -1,33 +1,33 @@
 import 'react-app-polyfill/ie9'
-import React from 'react'
+import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom'
 import './assets/css/index.css'
 import 'semantic-ui-css/semantic.min.css'
-import { Router } from 'react-router-dom'
-import { IntlProvider } from 'react-intl'
+import { ConnectedRouter } from 'connected-react-router'
 import { ApolloProvider } from 'react-apollo'
-import ApolloClient from 'apollo-boost'
-import createHistory from 'history/createBrowserHistory'
+import { Provider } from 'react-redux'
 import * as serviceWorker from './serviceWorker'
 
+import configureStore, { history } from './configureStore'
+import client from './apollo'
 import App from './components/App'
-import Tracker from './components/Tracker'
+import Tracker from './components/tools/Tracker'
 
-const client = new ApolloClient({
-  uri: `${process.env.REACT_APP_REDIRECT_DOMAIN}/graphql`
-})
+import './i18n'
 
-const history = createHistory()
+const store = configureStore()
 const tracker = new Tracker()
 
 ReactDOM.render(
-  <IntlProvider locale='en'>
-    <Router history={tracker.connectToHistory(history)}>
+  <Provider store={store}>
+    <ConnectedRouter history={tracker.connectToHistory(history)}>
       <ApolloProvider client={client}>
-        <App />
+        <Suspense fallback={<div>Loading</div>}>
+          <App />
+        </Suspense>
       </ApolloProvider>
-    </Router>
-  </IntlProvider>,
+    </ConnectedRouter>
+  </Provider>,
   document.getElementById('root')
 )
 

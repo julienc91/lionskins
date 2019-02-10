@@ -15,6 +15,11 @@ body {
   #root > nav .item img {
     height: 2.5rem;
     width: auto; }
+  #root > nav .menu-settings {
+    min-width: 150px; }
+    #root > nav .menu-settings .dropdown {
+      width: 100%;
+      justify-content: center; }
 #root > main {
   padding-top: 60px;
   min-height: calc(100vh - 90px); }

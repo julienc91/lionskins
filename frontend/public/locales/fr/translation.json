@@ -1,0 +1,234 @@
+{
+  "about": {
+    "page_title": "Lion Skins - À propos",
+    "breadcrumb": "À propos",
+    "title": "À propos",
+    "subtitle": "Faisons connaissance",
+    "part1": {
+      "title": "Qui sommes-nous",
+      "content1": "Lion Skins est un outil fait par des joueurs, pour des joueurs.",
+      "content2": "Nous proposons un accès facilité à des plateformes de confiance pour que vous puissiez acheter les skins dont vous rêvez pour vos jeux préférés au meilleur prix.",
+      "content3": "Nous ne sommes affiliés à aucune des marketplaces que nous suggérons, nous les considérons simplement comme dignes de confiance.",
+      "content4": "Si vous avez la moindre question, n'hésitez pas à nous envoyer un message depuis la <1>page contact</1>\u00A0!"
+    }
+  },
+  "breadcrumb": {
+    "home": "Accueil"
+  },
+  "carousel": {
+    "soon": "Bientôt"
+  },
+  "contact": {
+    "page_title": "Lion Skins - Nous contacter",
+    "breadcrumb": "Contact",
+    "title": "Nous contacter",
+    "subtitle1": "Une question\u00A0? Une suggestion\u00A0?",
+    "subtitle2": "N'hésitez pas à nous joindre\u00A0!",
+    "error": {
+      "title": "Quelque chose s'est mal passé...",
+      "content": "Votre message n'a pas été envoyé, navré. Pourriez-vous réessayer une nouvelle fois\u00A0?"
+    },
+    "success": {
+      "title": "Votre message a été envoyé",
+      "content": "Passez une bonne journée\u00A0!"
+    },
+    "name_label": "Votre nom, pseudo, ou ce que vous souhaitez",
+    "email_label": "Votre adresse email, si vous voulez une réponse",
+    "message_label": "Votre message",
+    "submit": "Envoyer"
+  },
+  "csgo": {
+    "categories": {
+      "pistols": "Pistolets",
+      "heavy": "Lourdes",
+      "smgs": "PMs",
+      "rifles": "Fusils",
+      "knives": "Knives"
+    },
+    "filters": {
+      "all": "Tout",
+      "none": "Aucun",
+      "stat_trak": "StatTrak",
+      "souvenir": "Souvenir",
+      "weapon_label": "Arme",
+      "quality_label": "Qualité",
+      "rarity_label": "Rareté",
+      "stat_trak_souvenir_label": "StatTrak/Souvenir",
+      "search_label": "Chercher"
+    },
+    "qualities": {
+      "factory_new": "Neuve",
+      "minimal_wear": "Très peu usée",
+      "field_tested": "Testée sur le terrain",
+      "well_worn": "Usée",
+      "battle_scarred": "Marquée par les combats"
+    },
+    "rarities": {
+      "consumer_grade": "Qualité artisanale",
+      "industrial_grade": "Qualité industrielle",
+      "mil_spec": "Qualité Mil-Spec",
+      "restricted": "Limitée",
+      "classified": "Classifiée",
+      "covert": "Secret",
+      "contraband": "Contrebande"
+    },
+    "skin": {
+      "summary": "Résumé",
+      "rarity": "Rareté",
+      "quality": "Qualité",
+      "vanilla": "Vanilla",
+      "stat_trak": "StatTrak",
+      "souvenir": "Souvenir",
+      "price_range": "Gamme de prix"
+    },
+    "weapons": {
+      "glock_18": "Glock-18",
+      "usp_s": "USP-S",
+      "p2000": "P2000",
+      "p250": "P250",
+      "cz75_auto": "CZ75-Auto",
+      "five_seven": "Five-SeveN",
+      "tec_9": "Tec-9",
+      "dual_berettas": "Dual Berettas",
+      "desert_eagle": "Desert Eagle",
+      "r8_revolver": "Revolver R8",
+      "sawed_off": "Sawed-Off",
+      "mag_7": "MAG-7",
+      "nova": "Nova",
+      "xm1014": "XM1014",
+      "m249": "M249",
+      "negev": "Negev",
+      "mac_10": "MAC-10",
+      "mp9": "MP9",
+      "pp_bizon": "PP-Bizon",
+      "mp7": "MP7",
+      "mp5_sd": "MP5-SD",
+      "ump_45": "UMP-45",
+      "p90": "P90",
+      "galil_ar": "Galil AR",
+      "famas": "FAMAS",
+      "ak_47": "AK-47",
+      "m4a4": "M4A4",
+      "m4a1_s": "M4A1-S",
+      "sg_553": "SG 553",
+      "aug": "AUG",
+      "g3sg1": "G3SG1",
+      "scar_20": "SCAR-20",
+      "ssg_08": "SSG 08",
+      "awp": "AWP",
+      "bayonet": "Baïonnette",
+      "bowie_knife": "Couteau Bowie",
+      "butterfly_knife": "Couteau papillon",
+      "falchion_knife": "Couteau fauchon",
+      "flip_knife": "Couteau pliant",
+      "gut_knife": "Couteau à éviscérer",
+      "huntsman_knife": "Couteau de chasseur",
+      "karambit": "Karambit",
+      "m9_bayonet": "Baïonnette M9",
+      "navaja_knife": "Navaja",
+      "shadow_daggers": "Dagues sombres",
+      "stiletto_knife": "Stylet",
+      "talon_knife": "Canif",
+      "ursus_knife": "Ursus"
+    }
+  },
+  "currency": {
+    "eur": "{{price, eur}}",
+    "usd": "{{price, usd}}"
+  },
+  "faq": {
+    "page_title": "Lion Skins - FAQ",
+    "breadcrumb": "FAQ",
+    "title": "FAQ",
+    "subtitle": "Une question\u00A0?",
+    "part1": {
+      "title": "Pourquoi n'y a t-il pas ce jeu\u00A0?",
+      "content": "Nous essayons d'intégrer de nouveaux jeux progressivement, mais ça prend du temps\u00A0!"
+    },
+    "part2": {
+      "title": "Pourquoi n'y a t-il pas cette marketplace\u00A0?",
+      "content": "Ce site est probablement génial, mais nous ne pouvons pas intégrer toutes les plateformes qui existent. Mais si vous êtes suffisamment nombreux à nous le réclamer, nous y jetterons un œil\u00A0!"
+    },
+    "part3": {
+      "title": "Le prix indiqué est faux\u00A0!",
+      "content": "Même si nous visons une mise à jour en temps réel des prix, nous sommes techniquement dans l'incapacité de le faire pour le moment. C'est pour cette raison que certains prix affichés ne sont pas forcément les mêmes que ceux proposés par le site indiqué."
+    },
+    "part4": {
+      "title": "Est-ce que vous êtes affilié à tel ou tel site\u00A0?",
+      "content": "Non."
+    },
+    "part5": {
+      "title": "Je peux proposer un truc\u00A0?",
+      "content": "Nous serions très heureux de lire vos suggestions pour nous aider à améliorer Lion Skins\u00A0! Laissez-nous un message depuis la <1>page contact</1>."
+    }
+  },
+  "footer": {
+    "about": "À propos",
+    "contact": "Contact",
+    "faq": "FAQ",
+    "privacy_policy": "Politique de confidentialité"
+  },
+  "header": {
+    "settings": {
+      "menu": "Paramètres",
+      "language": "Langue",
+      "language_en": "English",
+      "language_fr": "Français",
+      "currency": "Devise",
+      "currency_usd": "Dollar",
+      "currency_eur": "Euros"
+    }
+  },
+  "homepage": {
+    "page_title": "Lion Skins - Comparez les prix de milliers de skins",
+    "title": "Lion Skins",
+    "subtitle1": "Comparez les prix de milliers de skins",
+    "subtitle2": "parmi les meilleures marketplaces"
+  },
+  "not_found": {
+    "title": "Page non trouvée",
+    "subtitle": "La page que vous cherchez n'a pas été trouvée",
+    "homepage": "Accueil"
+  },
+  "privacy_policy": {
+    "page_title": "Lion Skins - Politique de confidentialité",
+    "breadcrumb": "Politique de confidentialité",
+    "title": "Politique de confidentialité",
+    "subtitle": "Parce que votre privée est importante",
+    "part1": {
+      "title": "Qui nous sommes",
+      "content1": "Lion Skins a été conçu par des joueurs et pour des joueurs. Nous sommes heureux que vous utilisiez notre service, et nous pouvons vous assurer que jamais nous n'utiliserons vos données personnelles à des fins financières ou pour toute autre raison qui ne serait pas dans l'objectif d'une meilleure expérience utilisateur.",
+      "content2": "Pour toute question concernant cette politique de confidentialité, n'hésitez pas à <1>nous contacter</1>."
+    },
+    "part2": {
+      "title": "Ce que nous collectons",
+      "content1": "Pas grand chose...",
+      "item1": {
+        "name": "Votre adresse mail",
+        "description": "\u00A0: seulement si vous nous envoyez un message depuis le formulaire de contact et que vous souhaitez une réponse"
+      },
+      "item2": {
+        "name": "Vos clics sur les liens des différentes marketplaces",
+        "description": "\u00A0: à chaque fois que vous cliquer sur un lien vous redirigeant vers une marketplace, nous générons un identifiant unique et totalement aléatoire dans le but d'avoir une estimation approximative de la manière dont nos visiteurs interagissent avec les marketplaces que nous suggérons. Cet identifiant est automatiquement supprimé à la fin de votre visite, et ne peut être utilisé pour retrouver vous-même ou votre appareil"
+      }
+    },
+    "part3": {
+      "title": "Les services tiers que nous utilisons",
+      "content1": "Nous utilisons des services tiers pour que notre site fonctionne comme nous le souhaitons. En voici la liste\u00A0:",
+      "item1": {
+        "name": "Matomo",
+        "description": "\u00A0: un outil d'analyse de données open-source particulièrement connu pour son respect de la vie privée. Nous utilisons ce logiciel pour savoir comment nos visiteurs interagissent avec notre service afin d'améliorer continuellement leur expérience"
+      },
+      "item2": {
+        "name": "Recaptcha",
+        "description": "\u00A0: la solution de protection contre le spam par Google, utilisée uniquement sur le formulaire de contact"
+      }
+    }
+  },
+  "skin_list": {
+    "no_results": {
+      "title": "Aucun résultat",
+      "subtitle": "Nous n'avons rien trouvé avec les critères sélectionnés"
+    }
+  }
+}

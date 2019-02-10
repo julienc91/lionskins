@@ -7,8 +7,8 @@ const Providers = Object.freeze({
 })
 
 const Currencies = Object.freeze({
-  euros: '€',
-  usd: '$'
+  eur: 'eur',
+  usd: 'usd'
 })
 
 export {
