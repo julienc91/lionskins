@@ -29,7 +29,7 @@ def fetch_providers(daemon, provider):
         FetchProviders.run(provider)
 
 
-@app.cli.command()
+@app.cli.command('generate_sitemap')
 def generate_sitemap():
     from .generate_sitemap import GenerateSitemap
     GenerateSitemap.run()
