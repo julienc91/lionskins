@@ -73,6 +73,7 @@
       "contraband": "Contraband"
     },
     "skin": {
+      "page_title": "Lion Skins",
       "summary": "Summary",
       "rarity": "Rarity",
       "quality": "Quality",
@@ -80,6 +81,9 @@
       "stat_trak": "StatTrak",
       "souvenir": "Souvenir",
       "price_range": "Price Range"
+    },
+    "skin_list": {
+      "page_title": "Lion Skins - Counter-Strike: Global Offensive Skins"
     },
     "weapons": {
       "glock_18": "Glock-18",
@@ -168,6 +172,10 @@
     "faq": "FAQ",
     "privacy_policy": "Privacy Policy"
   },
+  "head": {
+    "title": "Lion Skins - Compare prices of thousands of skins for your favorite games",
+    "description": "Compare prices of thousands of skins for your favorite video games among the most trusted marketplaces"
+  },
   "header": {
     "settings": {
       "menu": "Settings",
@@ -180,7 +188,7 @@
     }
   },
   "homepage": {
-    "page_title": "Lion Skins - Compare prices of thousands of skins",
+    "page_title": "Lion Skins - Compare prices of thousands of skins for your favorite games",
     "title": "Lion Skins",
     "subtitle1": "Compare prices of thousands of skins",
     "subtitle2": "among the most trusted marketplaces"

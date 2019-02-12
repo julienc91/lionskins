@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Helmet } from 'react-helmet'
 import gql from 'graphql-tag'
 import { withApollo } from 'react-apollo'
 import { connect } from 'react-redux'
@@ -12,6 +13,7 @@ import slugify from 'slugify'
 import PropTypes from 'prop-types'
 import Breadcrumb from '../../components/tools/Breadcrumb'
 import PageNotFound from '../PageNotFound'
+import { getSkinInternalUrl } from '../../tools'
 import { withTranslation } from 'react-i18next'
 
 const importAll = (r) => {
@@ -65,7 +67,6 @@ class SkinPage extends Component {
   }
 
   componentDidMount () {
-    document.title = 'Lion Skins - Counter-Strike: Global Offensive'
     this.executeQuery()
   }
 
@@ -118,8 +119,6 @@ class SkinPage extends Component {
       skins,
       images
     })
-
-    document.title = `Lion Skins - Counter-Strike: Global Offensive - ${t(Weapons[skins[0].weapon.name])} - ${skins[0].name}`
   }
 
   render () {
@@ -132,13 +131,19 @@ class SkinPage extends Component {
       return <div />
     }
 
-    const weapon = t(Weapons[skins[0].weapon.name])
-    const skinName = skins[0].name
+    const skin = skins[0]
+    const weapon = t(Weapons[skin.weapon.name])
+    const skinName = skin.name
     const hasStatTrak = skins.some(s => s.statTrak)
     const hasSouvenir = skins.some(s => s.souvenir)
 
     return (
       <Container className='skin-page'>
+        <Helmet>
+          <title>{t('csgo.skin.page_title')} - {t(Weapons[skin.weapon.name])} - {skin.name}</title>
+          <link rel='canonical' href={`https://lionskins.co${getSkinInternalUrl(skin)}`} />
+        </Helmet>
+
         <Breadcrumb items={breadcrumb} />
         <Header as='h1'>{weapon} - {skinName}</Header>
 
@@ -151,10 +156,10 @@ class SkinPage extends Component {
 
             <div className='skin-image'>
               <div className='placeholder'>
-                <Img src={defaultWeaponImages[`default_skin_${skins[0].weapon.name}.png`]} alt='' />
+                <Img src={defaultWeaponImages[`default_skin_${skin.weapon.name}.png`]} alt='' />
               </div>
               <div className='effective'>
-                <Img src={images[quality]} alt={`${weapon} - ${skins[0].name}`} />
+                <Img src={images[quality]} alt={`${weapon} - ${skin.name}`} />
               </div>
             </div>
 

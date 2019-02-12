@@ -19,6 +19,7 @@
     "react-app-polyfill": "0.2.1",
     "react-dom": "16.8.1",
     "react-google-recaptcha": "1.0.5",
+    "react-helmet": "5.2.0",
     "react-i18next": "10.0.5",
     "react-image": "2.0.0",
     "react-images": "0.5.19",

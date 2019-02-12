@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Helmet } from 'react-helmet'
 import { Container, Header, Form, Button, Loader, Message } from 'semantic-ui-react'
 import { withTranslation } from 'react-i18next'
 import ReCAPTCHA from 'react-google-recaptcha'
@@ -38,8 +39,6 @@ class Contact extends Component {
   }
 
   componentDidMount () {
-    const { t } = this.props
-    document.title = t('contact.page_title')
     this.captcha && this.captcha.execute()
   }
 
@@ -90,6 +89,11 @@ class Contact extends Component {
 
     return (
       <Container className='page contact-form'>
+        <Helmet>
+          <title>{t('contact.page_title')}</title>
+          <link rel='canonical' href='https://lionskins.co/contact/' />
+        </Helmet>
+
         <Breadcrumb items={[{ 'name': t('contact.breadcrumb') }]} />
         <Header as='h1' textAlign='center'>
           {t('contact.title')}

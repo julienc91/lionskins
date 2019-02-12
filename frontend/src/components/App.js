@@ -1,5 +1,6 @@
 import React from 'react'
 import Script from 'react-load-script'
+import { Helmet } from 'react-helmet'
 import { Switch, Route, Link } from 'react-router-dom'
 import { withTranslation } from 'react-i18next'
 import SkinList from '../views/csgo/SkinList'
@@ -26,6 +27,14 @@ class App extends React.Component {
   render () {
     const { t } = this.props
     return [
+      <Helmet key='helmet'>
+        <title>{t('head.title')}</title>
+        <link rel='canonical' href='https://lionskins.co/' />
+        <meta name='description' content={t('head.description')} />
+        <meta property='og:title' content={t('head.title')} />
+        <meta property='og:description' content={t('head.decription')} />
+        <meta property='og:image' content='https://lionskins.co/logo.png' />
+      </Helmet>,
       <Header key='header' />,
       <main key='main'>
         <Switch>

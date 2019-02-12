@@ -1,4 +1,5 @@
 import React from 'react'
+import { Helmet } from 'react-helmet'
 import { withTranslation } from 'react-i18next'
 import { connect } from 'react-redux'
 import * as actions from '../../actions'
@@ -24,7 +25,6 @@ class SkinList extends React.Component {
     const { getSkinList, resetSkinList } = this.props
     resetSkinList()
     getSkinList()
-    document.title = 'Lion Skins - Counter-Strike: Global Offensive Skins'
   }
 
   renderChild (skin) {
@@ -45,6 +45,10 @@ class SkinList extends React.Component {
 
     return (
       <div className={'skin-list-container'}>
+        <Helmet>
+          <title>{t('csgo.skin_list.page_title')}</title>
+          <link rel='canonical' href='https://lionskins.co/counter-strike-global-offensive/' />
+        </Helmet>
 
         <div className={'skin-list-filter' + (expandFilter ? ' expanded' : '')}>
           <Filter />

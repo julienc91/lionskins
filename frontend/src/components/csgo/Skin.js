@@ -4,9 +4,9 @@ import { withTranslation } from 'react-i18next'
 import { Card, Label } from 'semantic-ui-react'
 import { Qualities, Weapons } from './enums'
 import { getColorFromRarity, getIconFromProvider, getSkinUrlFromProvider } from './utils'
-import slugify from 'slugify'
 import Img from 'react-image'
 import PropTypes from 'prop-types'
+import { getSkinInternalUrl } from '../../tools'
 import TrackedLink from '../tools/TrackedLink'
 
 const importAll = (r) => {
@@ -20,8 +20,7 @@ const defaultWeaponImages = importAll(require.context('../../assets/images/csgo/
 class Skin extends Component {
   render () {
     const { skin, t } = this.props
-    const weaponSlug = slugify(skin.weapon.name.replace('_', '-'), { lower: true })
-    const internalUrl = `/counter-strike-global-offensive/${weaponSlug}/${skin.slug}/`
+    const internalUrl = getSkinInternalUrl(skin)
     const defaultWeaponImage = defaultWeaponImages[`default_skin_${skin.weapon.name}.png`]
     let imageUrls = [defaultWeaponImage]
     if (skin.imageUrl) {

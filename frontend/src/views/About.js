@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Helmet } from 'react-helmet'
 import { Link } from 'react-router-dom'
 import { Trans, withTranslation } from 'react-i18next'
 import { Container, Header } from 'semantic-ui-react'
@@ -6,15 +7,15 @@ import Breadcrumb from '../components/tools/Breadcrumb'
 import PropTypes from 'prop-types'
 
 class About extends Component {
-  componentDidMount () {
-    const { t } = this.props
-    document.title = t('about.page_title')
-  }
-
   render () {
     const { t } = this.props
     return (
       <Container className='page about'>
+        <Helmet>
+          <title>{t('about.page_title')}</title>
+          <link rel='canonical' href='https://lionskins.co/about/' />
+        </Helmet>
+
         <Breadcrumb items={[{ 'name': t('about.breadcrumb') }]} />
 
         <Header as='h1' textAlign='center'>
