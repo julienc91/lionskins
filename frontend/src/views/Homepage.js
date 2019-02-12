@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Helmet } from 'react-helmet'
 import { withTranslation } from 'react-i18next'
 import { Image, Header } from 'semantic-ui-react'
 import Carousel from '../components/carousel'
@@ -14,11 +13,6 @@ class Homepage extends Component {
     const { t } = this.props
     return (
       <div className='homepage'>
-        <Helmet>
-          <title>{t('homepage.page_title')}</title>
-          <link rel='canonical' href='https://lionskins.co/' />
-        </Helmet>
-
         <Image src={logo} alt='' className='logo' />
         <Header as='h1'>{t('homepage.title')}</Header>
         <Header as='h2'>
