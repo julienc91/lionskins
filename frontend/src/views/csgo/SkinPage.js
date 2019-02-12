@@ -33,6 +33,7 @@ class SkinPage extends Component {
           node {
             id
             name
+            slug
             imageUrl
             statTrak
             quality
