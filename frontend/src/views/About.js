@@ -11,9 +11,9 @@ class About extends Component {
     const { t } = this.props
     return (
       <Container className='page about'>
-        <Helmet>
-          <title>{t('about.page_title')}</title>
-        </Helmet>
+        <Helmet
+          title={t('about.page_title')}
+        />
 
         <Breadcrumb items={[{ 'name': t('about.breadcrumb') }]} />
 

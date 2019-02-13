@@ -89,9 +89,9 @@ class Contact extends Component {
 
     return (
       <Container className='page contact-form'>
-        <Helmet>
-          <title>{t('contact.page_title')}</title>
-        </Helmet>
+        <Helmet
+          title={t('contact.page_title')}
+        />
 
         <Breadcrumb items={[{ 'name': t('contact.breadcrumb') }]} />
         <Header as='h1' textAlign='center'>

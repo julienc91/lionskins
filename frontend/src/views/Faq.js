@@ -11,9 +11,9 @@ class Faq extends Component {
     const { t } = this.props
     return (
       <Container className='page faq'>
-        <Helmet>
-          <title>{t('faq.page_title')}</title>
-        </Helmet>
+        <Helmet
+          title={t('faq.page_title')}
+        />
 
         <Breadcrumb items={[{ 'name': t('faq.breadcrumb') }]} />
 

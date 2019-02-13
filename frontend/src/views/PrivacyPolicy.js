@@ -11,9 +11,9 @@ class PrivacyPolicy extends Component {
     const { t } = this.props
     return (
       <Container className='page privacy-policy'>
-        <Helmet>
-          <title>{t('privacy_policy.page_title')}</title>
-        </Helmet>
+        <Helmet
+          title={t('privacy_policy.page_title')}
+        />
 
         <Breadcrumb items={[{ 'name': t('privacy_policy.breadcrumb') }]} />
 

@@ -139,9 +139,9 @@ class SkinPage extends Component {
 
     return (
       <Container className='skin-page'>
-        <Helmet>
-          <title>{t('csgo.skin.page_title')} - {t(Weapons[skin.weapon.name])} - {skin.name}</title>
-        </Helmet>
+        <Helmet
+          title={`${t('csgo.skin.page_title')} - ${t(Weapons[skin.weapon.name])} - ${skin.name}`}
+        />
 
         <Breadcrumb items={breadcrumb} />
         <Header as='h1'>{weapon} - {skinName}</Header>

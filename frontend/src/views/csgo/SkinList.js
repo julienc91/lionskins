@@ -45,9 +45,9 @@ class SkinList extends React.Component {
 
     return (
       <div className={'skin-list-container'}>
-        <Helmet>
-          <title>{t('csgo.skin_list.page_title')}</title>
-        </Helmet>
+        <Helmet
+          title={t('csgo.skin_list.page_title')}
+        />
 
         <div className={'skin-list-filter' + (expandFilter ? ' expanded' : '')}>
           <Filter />

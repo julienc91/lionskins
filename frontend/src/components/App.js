@@ -27,13 +27,16 @@ class App extends React.Component {
   render () {
     const { t } = this.props
     return [
-      <Helmet key='helmet'>
-        <title>{t('head.title')}</title>
-        <meta name='description' content={t('head.description')} />
-        <meta property='og:title' content={t('head.title')} />
-        <meta property='og:description' content={t('head.decription')} />
-        <meta property='og:image' content='https://lionskins.co/logo.png' />
-      </Helmet>,
+      <Helmet
+        key='helmet'
+        title={t('head.title')}
+        meta={[
+          { name: 'description', content: t('head.description') },
+          { property: 'og:title', content: t('head.title') },
+          { property: 'og:description', content: t('head.decription') },
+          { property: 'og:image', content: 'https://lionskins.co/logo.png' }
+        ]}
+      />,
       <Header key='header' />,
       <main key='main'>
         <Switch>
