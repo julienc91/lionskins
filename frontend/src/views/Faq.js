@@ -13,7 +13,6 @@ class Faq extends Component {
       <Container className='page faq'>
         <Helmet>
           <title>{t('faq.page_title')}</title>
-          <link rel='canonical' href='https://lionskins.co/faq/' />
         </Helmet>
 
         <Breadcrumb items={[{ 'name': t('faq.breadcrumb') }]} />

@@ -29,7 +29,6 @@ class App extends React.Component {
     return [
       <Helmet key='helmet'>
         <title>{t('head.title')}</title>
-        <link rel='canonical' href='https://lionskins.co/' />
         <meta name='description' content={t('head.description')} />
         <meta property='og:title' content={t('head.title')} />
         <meta property='og:description' content={t('head.decription')} />

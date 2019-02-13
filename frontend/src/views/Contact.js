@@ -91,7 +91,6 @@ class Contact extends Component {
       <Container className='page contact-form'>
         <Helmet>
           <title>{t('contact.page_title')}</title>
-          <link rel='canonical' href='https://lionskins.co/contact/' />
         </Helmet>
 
         <Breadcrumb items={[{ 'name': t('contact.breadcrumb') }]} />

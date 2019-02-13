@@ -13,7 +13,6 @@ class PrivacyPolicy extends Component {
       <Container className='page privacy-policy'>
         <Helmet>
           <title>{t('privacy_policy.page_title')}</title>
-          <link rel='canonical' href='https://lionskins.co/privacy-policy/' />
         </Helmet>
 
         <Breadcrumb items={[{ 'name': t('privacy_policy.breadcrumb') }]} />

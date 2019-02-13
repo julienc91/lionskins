@@ -13,7 +13,6 @@ import slugify from 'slugify'
 import PropTypes from 'prop-types'
 import Breadcrumb from '../../components/tools/Breadcrumb'
 import PageNotFound from '../PageNotFound'
-import { getSkinInternalUrl } from '../../tools'
 import { withTranslation } from 'react-i18next'
 
 const importAll = (r) => {
@@ -142,7 +141,6 @@ class SkinPage extends Component {
       <Container className='skin-page'>
         <Helmet>
           <title>{t('csgo.skin.page_title')} - {t(Weapons[skin.weapon.name])} - {skin.name}</title>
-          <link rel='canonical' href={`https://lionskins.co${getSkinInternalUrl(skin)}`} />
         </Helmet>
 
         <Breadcrumb items={breadcrumb} />

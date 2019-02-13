@@ -13,7 +13,6 @@ class About extends Component {
       <Container className='page about'>
         <Helmet>
           <title>{t('about.page_title')}</title>
-          <link rel='canonical' href='https://lionskins.co/about/' />
         </Helmet>
 
         <Breadcrumb items={[{ 'name': t('about.breadcrumb') }]} />
