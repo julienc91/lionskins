@@ -16,7 +16,6 @@ class Homepage extends Component {
       <div className='homepage'>
         <Helmet>
           <title>{t('homepage.page_title')}</title>
-          <link rel='canonical' href='https://lionskins.co/' />
         </Helmet>
 
         <Image src={logo} alt='' className='logo' />
