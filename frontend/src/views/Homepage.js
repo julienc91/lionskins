@@ -14,9 +14,9 @@ class Homepage extends Component {
     const { t } = this.props
     return (
       <div className='homepage'>
-        <Helmet>
-          <title>{t('homepage.page_title')}</title>
-        </Helmet>
+        <Helmet
+          title={t('homepage.page_title')}
+        />
 
         <Image src={logo} alt='' className='logo' />
         <Header as='h1'>{t('homepage.title')}</Header>
