@@ -2,24 +2,24 @@
 
 from datetime import datetime
 
-import mongoengine
 from slugify import slugify
 
+from ..init import db
 from ..models.enums import Apps
 from .model_mixin import ModelMixin
 from .prices import Price
 
 
-class Skin(ModelMixin, mongoengine.Document):
+class Skin(ModelMixin, db.Document):
 
-    _app = mongoengine.StringField(db_field="app", choices=Apps, required=True)
-    slug = mongoengine.StringField(required=True)
+    _app = db.StringField(db_field="app", choices=Apps, required=True)
+    slug = db.StringField(required=True)
 
-    name = mongoengine.StringField(required=True)
-    image_url = mongoengine.URLField()
-    creation_date = mongoengine.DateTimeField(required=True, default=datetime.now)
+    name = db.StringField(required=True)
+    image_url = db.URLField()
+    creation_date = db.DateTimeField(required=True, default=datetime.now)
 
-    prices = mongoengine.EmbeddedDocumentListField(Price)
+    prices = db.EmbeddedDocumentListField(Price)
 
     meta = {
         'indexes': ['_app', 'slug', 'name'],

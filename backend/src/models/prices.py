@@ -2,18 +2,17 @@
 
 from datetime import datetime
 
-import mongoengine
-
+from ..init import db
 from .model_mixin import ModelMixin
 from .enums import Providers
 
 
-class Price(ModelMixin, mongoengine.EmbeddedDocument):
+class Price(ModelMixin, db.EmbeddedDocument):
 
-    _provider = mongoengine.StringField(db_field="provider", choices=Providers, required=True, unique=True)
-    price = mongoengine.FloatField(required=True)
-    creation_date = mongoengine.DateTimeField(required=True, default=datetime.now)
-    update_date = mongoengine.DateTimeField(requured=True, default=datetime.now)
+    _provider = db.StringField(db_field="provider", choices=Providers, required=True, unique=True)
+    price = db.FloatField(required=True)
+    creation_date = db.DateTimeField(required=True, default=datetime.now)
+    update_date = db.DateTimeField(requured=True, default=datetime.now)
 
     meta = {
         'indexes': ['price']

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import mongoengine
-
+from ...init import db
 from ..enums import Apps
 from ..skins import Skin as BaseSkin
 from .enums import Rarities, Qualities, Categories
@@ -14,12 +13,12 @@ class Skin(BaseSkin):
         super().__init__(**kwargs)
         self.app = Apps.csgo
 
-    weapon = mongoengine.ReferenceField(Weapon, required=True)
+    weapon = db.ReferenceField(Weapon, required=True)
 
-    stat_trak = mongoengine.BooleanField(required=True)
-    souvenir = mongoengine.BooleanField(required=True)
-    _quality = mongoengine.IntField(db_field="quality", required=True)
-    _rarity = mongoengine.StringField(db_field="rarity", choices=Rarities)
+    stat_trak = db.BooleanField(required=True)
+    souvenir = db.BooleanField(required=True)
+    _quality = db.IntField(db_field="quality", required=True)
+    _rarity = db.StringField(db_field="rarity", choices=Rarities)
 
     meta = {
         'indexes': ['stat_trak', 'souvenir', '_quality', '_rarity']

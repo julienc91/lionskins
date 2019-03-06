@@ -6,7 +6,7 @@ import logging
 
 from flask import Flask
 
-from . import cors
+from . import cors, db
 
 
 def create_application():
@@ -19,10 +19,16 @@ def create_application():
         application.config.update(
             DEBUG=os.environ.get('FLASK_DEBUG', False),
             SECRET_KEY=os.environ.get('FLASK_SECRET_KEY', ''),
+            MONGODB_SETTINGS={
+                'db': os.environ['MONGO_DBNAME'],
+                'host': os.environ['MONGO_HOSTNAME'],
+                'port': int(os.environ['MONGO_PORT'])
+            }
         )
     except KeyError as e:
         logging.error(f"Bad configuration, some environment variables are not set: {e.args[0]}")
         sys.exit(2)
 
+    db.init_app(application)
     cors.init_app(application)
     return application

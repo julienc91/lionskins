@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import mongoengine
-
+from ...init import db
 from ..model_mixin import ModelMixin
 from .enums import Categories, Weapons
 
@@ -30,10 +29,10 @@ WEAPONS = {
 }
 
 
-class Weapon(ModelMixin, mongoengine.Document):
+class Weapon(ModelMixin, db.Document):
 
-    _name = mongoengine.StringField(db_field="name", choices=Weapons, primary_key=True)
-    _category = mongoengine.StringField(db_field="category", choices=Categories)
+    _name = db.StringField(db_field="name", choices=Weapons, primary_key=True)
+    _category = db.StringField(db_field="category", choices=Categories)
 
     meta = {
         'indexes': ['_category']

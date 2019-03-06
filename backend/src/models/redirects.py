@@ -2,21 +2,20 @@
 
 from datetime import datetime
 
-import mongoengine
-
+from ..init import db
 from .model_mixin import ModelMixin
 from .enums import Providers
 from .skins import Skin
 
 
-class Redirect(ModelMixin, mongoengine.Document):
+class Redirect(ModelMixin, db.Document):
 
-    skin = mongoengine.ReferenceField(Skin, required=True)
-    _provider = mongoengine.StringField(db_field="provider", choices=Providers, required=True)
+    skin = db.ReferenceField(Skin, required=True)
+    _provider = db.StringField(db_field="provider", choices=Providers, required=True)
 
-    tracker = mongoengine.StringField()
+    tracker = db.StringField()
 
-    creation_date = mongoengine.DateTimeField(required=True, default=datetime.now)
+    creation_date = db.DateTimeField(required=True, default=datetime.now)
 
     meta = {
         'indexes': ['creation_date', 'tracker']

@@ -2,10 +2,10 @@
 
 from enum import Enum
 
-import mongoengine
+from ..init import db
 
 
-string_field_init = mongoengine.StringField.__init__
+string_field_init = db.StringField.__init__
 
 
 def patched_init(*args, **kwargs):
@@ -18,7 +18,7 @@ def patched_init(*args, **kwargs):
     string_field_init(*args, **kwargs)
 
 
-mongoengine.StringField.__init__ = patched_init
+db.StringField.__init__ = patched_init
 
 
 class ModelMixin:
@@ -39,14 +39,14 @@ class ModelMixin:
 
     @classmethod
     def get(cls, **kwargs):
-        if issubclass(cls, mongoengine.EmbeddedDocument):
+        if issubclass(cls, db.EmbeddedDocument):
             raise NotImplementedError
         else:
             return cls.objects.get(**cls._parse_kwargs(kwargs))
 
     @classmethod
     def filter(cls, **kwargs):
-        if issubclass(cls, mongoengine.EmbeddedDocument):
+        if issubclass(cls, db.EmbeddedDocument):
             raise NotImplementedError
         else:
             return cls.objects(**cls._parse_kwargs(kwargs))
@@ -57,7 +57,7 @@ class ModelMixin:
 
     @classmethod
     def create(cls, **kwargs):
-        if issubclass(cls, mongoengine.EmbeddedDocument):
+        if issubclass(cls, db.EmbeddedDocument):
             return cls(**kwargs)
         else:
             return cls.objects.create(**cls._parse_kwargs(kwargs))
