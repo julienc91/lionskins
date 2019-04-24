@@ -3,6 +3,7 @@ import {
 } from '../constants'
 import { Currencies } from '../components/enums'
 
+// get the currency to use based on potentially previously set value
 const getDefaultCurrency = () => {
   let currency = localStorage.getItem('currency')
   if (!Currencies[currency]) {

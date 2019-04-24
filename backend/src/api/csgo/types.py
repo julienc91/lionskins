@@ -2,7 +2,7 @@
 
 import graphene
 
-from ..types import BaseTypeSkin
+from ..skins import BaseTypeSkin
 from ... import models
 
 
