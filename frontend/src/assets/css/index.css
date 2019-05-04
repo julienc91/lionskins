@@ -100,12 +100,12 @@ body {
   background-color: #010204;
   z-index: 100; }
   #root .skin-list-container .skin-list-filter .field label {
-    color: #E4E9EC; }
+    color: #E4E9EC !important; }
   #root .skin-list-container .skin-list-filter .expand-button {
     display: none; }
 #root .skin-list-container .skin-list {
   max-width: 1800px;
-  margin: auto;
+  margin: 0 auto 30px auto;
   padding: 0; }
   #root .skin-list-container .skin-list .skin {
     width: 100%;

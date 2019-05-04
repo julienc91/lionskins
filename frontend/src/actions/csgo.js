@@ -1,17 +1,24 @@
 import gql from 'graphql-tag'
 import client from '../apollo'
 import {
+  CSGO_LOAD_SKINS,
   CSGO_RESET_SKINS,
   CSGO_SET_FILTERS,
   CSGO_SET_SKINS
 } from '../constants'
 
+const hasFilterChanged = (oldFilters, newFilters) => {
+  const keys = ['search', 'weapon', 'category', 'quality', 'rarity', 'statTrak', 'souvenir']
+  return keys.some(key => (
+    oldFilters[key] !== newFilters[key]
+  ))
+}
+
 export const changeFilter = filters => (dispatch, getState) => {
-  const currentStringFilters = JSON.stringify(getState().csgo.filters)
+  const oldFilters = getState().csgo.filters
   dispatch({ type: CSGO_SET_FILTERS, filters })
   filters = getState().csgo.filters
-  const newStringFilters = JSON.stringify(filters)
-  if (currentStringFilters !== newStringFilters) {
+  if (hasFilterChanged(oldFilters, filters)) {
     const hashParameters = {
       search: '',
       weapon: null,
@@ -43,12 +50,18 @@ export const resetSkinList = () => (dispatch) => {
 
 export const getSkinList = () => (dispatch, getState) => {
   const { csgo, main } = getState()
+  if (csgo.loading) {
+    return
+  }
+
+  dispatch({ type: CSGO_LOAD_SKINS })
+
   const variables = {
     ...csgo.filters,
     after: csgo.nextCursor,
     currency: main.currency
   }
-  const currentFilters = JSON.stringify(csgo.filters)
+  const oldFilters = csgo.filters
 
   const query = gql`
   query ($first: Int, $after: String, $weapon: CSGOWeapons, $category: CSGOCategories,
@@ -89,8 +102,7 @@ export const getSkinList = () => (dispatch, getState) => {
     query,
     variables
   }).then(response => {
-    const newFilters = JSON.stringify(getState().csgo.filters)
-    if (currentFilters === newFilters) {
+    if (!hasFilterChanged(oldFilters, getState().csgo.filters)) {
       dispatch({
         type: CSGO_SET_SKINS,
         skins: response.data.csgo.edges.map(e => e.node),

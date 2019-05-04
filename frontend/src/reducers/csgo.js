@@ -1,4 +1,5 @@
 import {
+  CSGO_LOAD_SKINS,
   CSGO_RESET_SKINS,
   CSGO_SET_FILTERS,
   CSGO_SET_SKINS
@@ -6,7 +7,7 @@ import {
 
 const getInitialFilters = () => {
   const params = window.location.hash.substr(1).split('&')
-  const allowedFilters = ['statTrak', 'souvenir', 'search', 'rarity', 'quality', 'weapon', 'category']
+  const allowedFilters = ['statTrak', 'souvenir', 'search', 'rarity', 'quality', 'weapon', 'category', 'group']
   const res = {}
 
   params.forEach(param => {
@@ -36,16 +37,23 @@ const initialState = {
     quality: null,
     weapon: null,
     category: null,
+    group: true,
     ...getInitialFilters(),
     first: 50
   },
   skins: [],
+  loading: false,
   hasNextPage: true,
   nextCursor: null
 }
 
 const csgo = (state = initialState, action) => {
   switch (action.type) {
+    case CSGO_LOAD_SKINS:
+      return {
+        ...state,
+        loading: true
+      }
     case CSGO_SET_FILTERS:
       return {
         ...state,
@@ -62,6 +70,7 @@ const csgo = (state = initialState, action) => {
       return {
         ...state,
         skins: [...state.skins, ...action.skins],
+        loading: false,
         hasNextPage: action.hasNextPage,
         nextCursor: action.nextCursor
       }

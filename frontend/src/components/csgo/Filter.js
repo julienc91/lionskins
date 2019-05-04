@@ -2,7 +2,7 @@ import React from 'react'
 import { withTranslation } from 'react-i18next'
 import { connect } from 'react-redux'
 import * as actions from '../../actions'
-import { Form, Select } from 'semantic-ui-react'
+import { Checkbox, Form, Select } from 'semantic-ui-react'
 import SearchInput from '../forms/SearchInput'
 import { WeaponsByCategories, Rarities, Qualities, Weapons, Categories } from './enums'
 import PropTypes from 'prop-types'
@@ -148,6 +148,22 @@ class Filter extends React.Component {
     )
   }
 
+  renderGroupSimilar () {
+    const { changeFilter, group, t } = this.props
+    return (
+      <Form.Field>
+        <Checkbox
+          toggle
+          checked={group}
+          label={t('csgo.filters.group_similar_label')}
+          onChange={(e, { checked }) => {
+            changeFilter({ group: checked })
+          }}
+        />
+      </Form.Field>
+    )
+  }
+
   render () {
     return (
       <Form>
@@ -157,6 +173,7 @@ class Filter extends React.Component {
           {this.renderRarity()}
           {this.renderStatTrakSouvenir()}
           {this.renderSearch()}
+          {this.renderGroupSimilar()}
         </Form.Group>
       </Form>
     )
@@ -171,6 +188,7 @@ Filter.propTypes = {
   quality: PropTypes.string,
   weapon: PropTypes.string,
   category: PropTypes.string,
+  group: PropTypes.bool,
   changeFilter: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired
 }
@@ -183,7 +201,8 @@ const mapStateToProps = state => {
     rarity: state.csgo.filters.rarity,
     quality: state.csgo.filters.quality,
     weapon: state.csgo.filters.weapon,
-    category: state.csgo.filters.category
+    category: state.csgo.filters.category,
+    group: state.csgo.filters.group
   }
 }
 

@@ -22,9 +22,8 @@ class SkinList extends React.Component {
   }
 
   componentDidMount () {
-    const { getSkinList, resetSkinList } = this.props
+    const { resetSkinList } = this.props
     resetSkinList()
-    getSkinList()
   }
 
   renderChild (skin) {
@@ -39,9 +38,47 @@ class SkinList extends React.Component {
     }
   }
 
+  prepareSkins () {
+    const { groupSimilar, hasNextPage, skins } = this.props
+    let skinList = []
+    if (groupSimilar) {
+      skins.forEach(skin => {
+        const lastGroupedSkin = (!skinList.length) ? null : skinList[skinList.length - 1]
+        if (lastGroupedSkin && lastGroupedSkin.slug === skin.slug && lastGroupedSkin.weapon.name === skin.weapon.name) {
+          lastGroupedSkin.souvenir = lastGroupedSkin.souvenir || skin.souvenir
+          lastGroupedSkin.statTrak = lastGroupedSkin.statTrak || skin.statTrak
+          lastGroupedSkin.rarity = lastGroupedSkin.rarity || skin.rarity
+          lastGroupedSkin.imageUrl = lastGroupedSkin.imageUrl || skin.imageUrl
+          const prices = {}
+          lastGroupedSkin.prices.forEach(price => {
+            prices[price.provider] = price
+          })
+          skin.prices.forEach(price => {
+            if (!prices[price.provider] || prices[price.provider].price > price.price) {
+              prices[price.provider] = price
+            }
+          })
+          lastGroupedSkin.prices = Object.values(prices)
+        } else {
+          skin = { ...skin }
+          skin.quality = ''
+          skinList.push(skin)
+        }
+      })
+      if (hasNextPage) {
+        skinList.pop()
+      }
+    } else {
+      skinList = skins
+    }
+    return skinList
+  }
+
   render () {
-    const { getSkinList, hasNextPage, skins, t } = this.props
+    const { getSkinList, hasNextPage, t } = this.props
     const { expandFilter, lightboxSkins } = this.state
+
+    const skins = this.prepareSkins()
 
     return (
       <div className={'skin-list-container'}>
@@ -64,7 +101,7 @@ class SkinList extends React.Component {
 
           {(skins.length || hasNextPage) ? (
             <InfiniteScroll
-              initialLoad={false}
+              initialLoad
               loadMore={getSkinList}
               hasMore={hasNextPage}
               loader={<Loader active inline='centered' key='loader' />}
@@ -107,13 +144,23 @@ SkinList.propTypes = {
   getSkinList: PropTypes.func.isRequired,
   resetSkinList: PropTypes.func.isRequired,
   hasNextPage: PropTypes.bool.isRequired,
+  groupSimilar: PropTypes.bool.isRequired,
   skins: PropTypes.arrayOf(
     PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      slug: PropTypes.string.isRequired,
+      imageUrl: PropTypes.string,
+      quality: PropTypes.string.isRequired,
       rarity: PropTypes.string,
       statTrak: PropTypes.bool.isRequired,
       souvenir: PropTypes.bool.isRequired,
+      weapon: PropTypes.shape({
+        name: PropTypes.string.isRequired
+      }),
       prices: PropTypes.arrayOf(
         PropTypes.shape({
+          provider: PropTypes.string.isRequired,
           price: PropTypes.number.isRequired,
           currency: PropTypes.string.isRequired
         })
@@ -126,7 +173,8 @@ SkinList.propTypes = {
 const mapStateToProps = state => {
   return {
     skins: state.csgo.skins,
-    hasNextPage: state.csgo.hasNextPage
+    hasNextPage: state.csgo.hasNextPage,
+    groupSimilar: state.csgo.filters.group
   }
 }
 

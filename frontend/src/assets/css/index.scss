@@ -170,7 +170,7 @@ $xlarge-down: "only screen and (max-width : 1439px)" !default;
       background-color: $color0;
       z-index: 100;
       .field label {
-        color: $color5;
+        color: $color5 !important; // override semantic-ui
       }
       .expand-button {
         display: none;
@@ -179,7 +179,7 @@ $xlarge-down: "only screen and (max-width : 1439px)" !default;
 
     .skin-list {
       max-width: 1800px;
-      margin: auto;
+      margin: 0 auto 30px auto;
       padding: 0;
 
       .skin {

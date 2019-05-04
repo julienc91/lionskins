@@ -47,6 +47,7 @@
     },
     "filters": {
       "all": "Tout",
+      "group_similar_label": "Regrouper les skins similaires",
       "none": "Aucun",
       "stat_trak": "StatTrak",
       "souvenir": "Souvenir",
