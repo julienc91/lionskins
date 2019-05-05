@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/browser'
 import 'react-app-polyfill/ie9'
 import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom'
@@ -14,6 +15,10 @@ import App from './components/App'
 import Tracker from './components/tools/Tracker'
 
 import './i18n'
+
+if (process.env.SENTRY_DSN && process.env.NODE_ENV === 'production') {
+  Sentry.init({ dsn: process.env.SENTRY_DSN })
+}
 
 const store = configureStore()
 const tracker = new Tracker()
