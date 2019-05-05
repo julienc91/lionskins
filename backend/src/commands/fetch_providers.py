@@ -21,9 +21,16 @@ class FetchProviders:
             logging.debug("{} - {}: {}".format(client.provider.name, skin.fullname, price))
 
         # delete prices that were not updated
-        (Skin
-         .filter(prices__update_date__lt=start_date, __raw__={'prices.provider': client.provider.name})
-         .update(pull__prices___provider=client.provider.name))
+        Skin.filter(__raw__={
+            "prices": {
+                "$elemMatch": {
+                    "provider": client.provider.name,
+                    "update_date": {
+                        "$lt": start_date
+                    }
+                }
+            }
+        }).update(pull__prices___provider=client.provider.name)
 
         logging.info("Fetching finished, created or updated {} skins".format(count))
 
