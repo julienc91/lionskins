@@ -23,7 +23,7 @@ class FetchProviders:
         # delete prices that were not updated
         (Skin
          .filter(prices__update_date__lt=start_date, __raw__={'prices.provider': client.provider.name})
-         .update_one(pull__prices___provider=client.provider.name))
+         .update(pull__prices___provider=client.provider.name))
 
         logging.info("Fetching finished, created or updated {} skins".format(count))
 
