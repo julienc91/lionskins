@@ -16,8 +16,8 @@ import Tracker from './components/tools/Tracker'
 
 import './i18n'
 
-if (process.env.SENTRY_DSN && process.env.NODE_ENV === 'production') {
-  Sentry.init({ dsn: process.env.SENTRY_DSN })
+if (process.env.REACT_APP_SENTRY_DSN && process.env.NODE_ENV === 'production') {
+  Sentry.init({ dsn: process.env.REACT_APP_SENTRY_DSN })
 }
 
 const store = configureStore()
