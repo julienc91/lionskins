@@ -1,4 +1,4 @@
-FROM node:9
+FROM node:12
 
 WORKDIR /opt/services/frontend/
 COPY package.json .
