@@ -1,4 +1,5 @@
 import React from 'react'
+import * as Sentry from '@sentry/browser';
 import Script from 'react-load-script'
 import { Helmet } from 'react-helmet'
 import { Switch, Route, Link } from 'react-router-dom'
@@ -22,6 +23,15 @@ class App extends React.Component {
       return `${startYear}-${currentYear}`
     }
     return startYear
+  }
+
+  componentDidCatch (error, errorInfo) {
+    if (process.env.REACT_APP_SENTRY_DSN && process.env.NODE_ENV === 'production') {
+      Sentry.withScope(scope => {
+        scope.setExtras(errorInfo)
+        Sentry.captureException(error)
+      })
+    }
   }
 
   render () {
