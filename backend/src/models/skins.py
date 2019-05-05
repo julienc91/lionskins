@@ -64,5 +64,5 @@ class Skin(ModelMixin, db.Document):
         else:
             self.prices.append(Price(price=price, provider=provider))
         if create_history:
-            History.create(skin=self, provider=provider, price=price)
+            History.create(skin=self.id, provider=provider, price=price)
         self.save()
