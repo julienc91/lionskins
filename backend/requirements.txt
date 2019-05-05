@@ -21,3 +21,6 @@ beautifulsoup4==4.7.1
 
 # deployment
 gunicorn==19.9.0
+
+# sentry
+sentry-sdk[flask]==0.7.14

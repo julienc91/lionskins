@@ -4,12 +4,19 @@ import os
 import sys
 import logging
 
+import sentry_sdk
 from flask import Flask
+from sentry_sdk.integrations.flask import FlaskIntegration
 
 from . import cors, db
 
 
 def create_application():
+    if os.environ.get('SENTRY_DSN'):
+        sentry_sdk.init(
+            dsn=os.environ['SENTRY_DSN'],
+            integrations=[FlaskIntegration()]
+        )
 
     static_folder = os.path.join('..', 'static')
     template_folder = os.path.join('..', 'templates')
