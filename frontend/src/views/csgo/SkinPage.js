@@ -42,9 +42,8 @@ class SkinPage extends Component {
               name
               category
             }
-            prices (currency: $currency) {
-              price
-              currency
+            prices {
+              price (currency: $currency)
               provider
             }
           }

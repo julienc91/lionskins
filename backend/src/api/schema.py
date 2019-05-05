@@ -4,9 +4,10 @@ import graphene
 
 from . import contact
 from . import csgo
+from . import history
 
 
-class Query(csgo.Query, graphene.ObjectType):
+class Query(csgo.Query, history.Query, graphene.ObjectType):
     pass
 
 

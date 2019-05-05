@@ -161,8 +161,7 @@ SkinList.propTypes = {
       prices: PropTypes.arrayOf(
         PropTypes.shape({
           provider: PropTypes.string.isRequired,
-          price: PropTypes.number.isRequired,
-          currency: PropTypes.string.isRequired
+          price: PropTypes.number.isRequired
         })
       )
     })

@@ -88,9 +88,8 @@ export const getSkinList = () => (dispatch, getState) => {
             name
             category
           }
-          prices (currency: $currency) {
-            price
-            currency
+          prices {
+            price (currency: $currency)
             provider
           }
         }

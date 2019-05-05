@@ -19,8 +19,14 @@ class TypeCurrency(graphene.Enum):
 class TypePrice(graphene.ObjectType):
 
     provider = TypeProvider()
-    currency = TypeCurrency()
-    price = graphene.Float()
+    price = graphene.Float(currency=TypeCurrency())
+
+    def resolve_price(self, info, **args):
+        currency = args.get('currency') or models.enums.Currencies.usd.value
+        currency = models.enums.Currencies(currency)
+        if currency != models.enums.Currencies.usd:
+            return CurrencyConverter.convert(self.price, models.enums.Currencies.usd, currency)
+        return self.price
 
 
 class BaseTypeSkin(graphene.ObjectType):
@@ -30,13 +36,4 @@ class BaseTypeSkin(graphene.ObjectType):
     name = graphene.String()
     slug = graphene.String()
     image_url = graphene.String()
-    prices = graphene.List(TypePrice, currency=TypeCurrency())
-
-    def resolve_prices(self, info, **args):
-        currency = args.get('currency') or models.enums.Currencies.usd.value
-        currency = models.enums.Currencies(currency)
-        for price in self.prices:
-            price.currency = currency
-            if currency != models.enums.Currencies.usd:
-                price.price = CurrencyConverter.convert(price.price, models.enums.Currencies.usd, currency)
-        return self.prices
+    prices = graphene.List(TypePrice)

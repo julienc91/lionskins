@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 import { withTranslation } from 'react-i18next'
 import { Card, Label } from 'semantic-ui-react'
 import { Qualities, Weapons } from './enums'
 import { getColorFromRarity, getIconFromProvider, getSkinUrlFromProvider } from './utils'
 import Img from 'react-image'
 import PropTypes from 'prop-types'
+import * as actions from '../../actions'
 import { getSkinInternalUrl } from '../../tools'
 import TrackedLink from '../tools/TrackedLink'
 
@@ -19,7 +21,7 @@ const defaultWeaponImages = importAll(require.context('../../assets/images/csgo/
 
 class Skin extends Component {
   render () {
-    const { skin, t } = this.props
+    const { currency, skin, t } = this.props
     const internalUrl = getSkinInternalUrl(skin)
     const defaultWeaponImage = defaultWeaponImages[`default_skin_${skin.weapon.name}.png`]
     let imageUrls = [defaultWeaponImage]
@@ -53,7 +55,7 @@ class Skin extends Component {
                 <div className='price' key={price.provider}>
                   <TrackedLink href={getSkinUrlFromProvider(skin, price.provider)}>
                     {getIconFromProvider(price.provider)}
-                    {t(`currency.${price.currency}`, { price: price.price })}
+                    {t(`currency.${currency}`, { price: price.price })}
                   </TrackedLink>
                 </div>
               )
@@ -67,6 +69,7 @@ class Skin extends Component {
 
 Skin.propTypes = {
   t: PropTypes.func.isRequired,
+  currency: PropTypes.string.isRequired,
   skin: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -82,12 +85,22 @@ Skin.propTypes = {
     prices: PropTypes.arrayOf(
       PropTypes.shape({
         provider: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        currency: PropTypes.string.isRequired
+        price: PropTypes.number.isRequired
       })
     )
   }),
   onImageClicked: PropTypes.func
 }
 
-export default withTranslation()(Skin)
+const mapStateToProps = state => {
+  return {
+    currency: state.main.currency
+  }
+}
+
+export default withTranslation()(
+  connect(
+    mapStateToProps,
+    actions
+  )(Skin)
+)

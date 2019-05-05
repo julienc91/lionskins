@@ -3,14 +3,15 @@ import { Rarities } from './enums'
 import { Icon, Table } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 import { withTranslation } from 'react-i18next'
+import { connect } from 'react-redux'
+import * as actions from '../../actions'
 
 class SkinSummary extends React.Component {
   render () {
-    const { skins, t } = this.props
+    const { currency, skins, t } = this.props
     const rarity = t(Rarities[skins.find(s => s.rarity).rarity])
     const hasStatTrak = skins.some(s => s.statTrak)
     const hasSouvenir = skins.some(s => s.souvenir)
-    const currency = skins[0].prices[0].currency
 
     const allPrices = []
 
@@ -57,6 +58,7 @@ class SkinSummary extends React.Component {
 
 SkinSummary.propTypes = {
   t: PropTypes.func.isRequired,
+  currency: PropTypes.string.isRequired,
   skins: PropTypes.arrayOf(
     PropTypes.shape({
       rarity: PropTypes.string,
@@ -64,12 +66,22 @@ SkinSummary.propTypes = {
       souvenir: PropTypes.bool.isRequired,
       prices: PropTypes.arrayOf(
         PropTypes.shape({
-          price: PropTypes.number.isRequired,
-          currency: PropTypes.string.isRequired
+          price: PropTypes.number.isRequired
         })
       )
     })
   ).isRequired
 }
 
-export default withTranslation()(SkinSummary)
+const mapStateToProps = state => {
+  return {
+    currency: state.main.currency
+  }
+}
+
+export default withTranslation()(
+  connect(
+    mapStateToProps,
+    actions
+  )(SkinSummary)
+)

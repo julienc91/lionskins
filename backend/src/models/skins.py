@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from slugify import slugify
 
 from ..init import db
 from ..models.enums import Apps
+from .history import History
 from .model_mixin import ModelMixin
 from .prices import Price
 
@@ -52,11 +53,16 @@ class Skin(ModelMixin, db.Document):
         self._app = value.name
 
     def add_price(self, provider, price):
+        create_history = True
         for price_ in self.prices:
             if price_.provider == provider:
+                now = datetime.now()
+                create_history = (now - price_.update_date >= timedelta(hours=24))
                 price_.price = price
-                price_.update_date = datetime.now()
+                price_.update_date = now
                 break
         else:
             self.prices.append(Price(price=price, provider=provider))
+        if create_history:
+            History.create(skin=self, provider=provider, price=price)
         self.save()

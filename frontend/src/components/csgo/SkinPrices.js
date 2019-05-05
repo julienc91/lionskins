@@ -1,10 +1,12 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Table } from 'semantic-ui-react'
 import { getIconFromProvider, getSkinUrlFromProvider } from './utils'
 import { Providers } from '../enums'
 import { Qualities } from './enums'
 import TrackedLink from '../tools/TrackedLink'
 import PropTypes from 'prop-types'
+import * as actions from '../../actions'
 import { withTranslation } from 'react-i18next'
 
 class SkinPrices extends React.Component {
@@ -12,7 +14,7 @@ class SkinPrices extends React.Component {
   qualities = ['factory_new', 'minimal_wear', 'field_tested', 'well_worn', 'battle_scarred']
 
   render () {
-    const { skins, statTrak, souvenir, t } = this.props
+    const { currency, skins, statTrak, souvenir, t } = this.props
 
     return (
       <Table unstackable celled singleLine textAlign='center'>
@@ -51,7 +53,7 @@ class SkinPrices extends React.Component {
                     positive={price && price.price === minPrice}
                     negative={price && minPrice < maxPrice && price.price === maxPrice}>
                     {price
-                      ? <TrackedLink href={url}>{t(`currency.${price.currency}`, { price: price.price })}</TrackedLink>
+                      ? <TrackedLink href={url}>{t(`currency.${currency}`, { price: price.price })}</TrackedLink>
                       : ''}
                   </Table.Cell>
                 )
@@ -66,6 +68,7 @@ class SkinPrices extends React.Component {
 
 SkinPrices.propTypes = {
   t: PropTypes.func.isRequired,
+  currency: PropTypes.string.isRequired,
   skins: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -75,8 +78,7 @@ SkinPrices.propTypes = {
       prices: PropTypes.arrayOf(
         PropTypes.shape({
           provider: PropTypes.string.isRequired,
-          price: PropTypes.number.isRequired,
-          currency: PropTypes.string.isRequired
+          price: PropTypes.number.isRequired
         })
       )
     })
@@ -85,4 +87,15 @@ SkinPrices.propTypes = {
   souvenir: PropTypes.bool.isRequired
 }
 
-export default withTranslation()(SkinPrices)
+const mapStateToProps = state => {
+  return {
+    currency: state.main.currency
+  }
+}
+
+export default withTranslation()(
+  connect(
+    mapStateToProps,
+    actions
+  )(SkinPrices)
+)
