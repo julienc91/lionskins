@@ -106,8 +106,13 @@ class SkinList extends React.Component {
               hasMore={hasNextPage}
               loader={<Loader active inline='centered' key='loader' />}
             >
-              <Card.Group>
+              <Card.Group className='skin-list-inner'>
                 {skins.map((skin) => this.renderChild(skin))}
+                <div className='padding-item' />
+                <div className='padding-item' />
+                <div className='padding-item' />
+                <div className='padding-item' />
+                <div className='padding-item' />
               </Card.Group>
             </InfiniteScroll>
           ) : (

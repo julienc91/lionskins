@@ -51,6 +51,10 @@ $xlarge-down: "only screen and (max-width : 1439px)" !default;
       .dropdown {
         width: 100%;
         justify-content: center;
+        .item {
+          display: flex;
+          align-items: center;
+        }
       }
     }
   }
@@ -182,48 +186,52 @@ $xlarge-down: "only screen and (max-width : 1439px)" !default;
       margin: 0 auto 30px auto;
       padding: 0;
 
-      .skin {
-        width: 100%;
-        margin: 1rem;
+      .skin-list-inner {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
 
-        @media #{$medium-up} {
-          width: calc(50% - 2rem);
-        }
-        @media #{$large-up} {
-          width: calc(33.333% - 2rem);
-        }
-        @media #{$xlarge-up} {
-          width: calc(25% - 2rem);
-        }
-        @media #{$xxlarge-up} {
-          width: calc(16.6666% - 2rem);
-        }
+        .skin {
+          margin: 1rem;
 
-        .header {
-          a {
-            color: $color0;
-          }
-        }
-
-        img {
-          cursor: pointer;
-        }
-
-        .stattrak, .souvenir {
-          position: absolute;
-          right: 5px;
-          top: 5px;
-        }
-        .extra.content {
-          height: 100px;
-          overflow: hidden;
-          .prices {
-            display: flex;
-            flex-flow: row wrap;
-            .price {
-              width: 50%;
+          .header {
+            a {
+              color: $color0;
             }
           }
+
+          img {
+            cursor: pointer;
+          }
+
+          .stattrak, .souvenir {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+          }
+
+          .extra.content {
+            height: 100px;
+            overflow: hidden;
+
+            .prices {
+              display: flex;
+              flex-flow: row wrap;
+
+              .price {
+                width: 50%;
+              }
+            }
+          }
+        }
+
+        .padding-item {
+          height: 0;
+        }
+
+        .skin, .padding-item {
+          flex: 1 1 250px;
+          margin: 1rem;
         }
       }
 
@@ -310,25 +318,25 @@ $xlarge-down: "only screen and (max-width : 1439px)" !default;
       position: relative;
       margin-top: 30px;
       max-width: 500px;
-      min-height: 400px;
-      img {
-        width: 100%;
-        height: 400px;
-      }
       .placeholder {
         img {
           visibility: hidden;
+          max-width: 100%;
         }
       }
       .effective {
         position: absolute;
         top: 0;
+        img {
+          max-width: 100%;
+        }
       }
     }
     .select-quality {
       display: flex;
       text-align: center;
       margin-top: 10px;
+      flex-flow: row wrap;
       align-items: center;
       justify-content: center;
 
@@ -338,6 +346,7 @@ $xlarge-down: "only screen and (max-width : 1439px)" !default;
         padding: 0.2rem 0.5rem;
         font-size: 0.9rem;
         margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
         border-radius: 4px;
         cursor: pointer;
         &.active {

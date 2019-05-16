@@ -20,6 +20,9 @@ body {
     #root > nav .menu-settings .dropdown {
       width: 100%;
       justify-content: center; }
+      #root > nav .menu-settings .dropdown .item {
+        display: flex;
+        align-items: center; }
 #root > main {
   padding-top: 60px;
   min-height: calc(100vh - 90px); }
@@ -107,37 +110,33 @@ body {
   max-width: 1800px;
   margin: 0 auto 30px auto;
   padding: 0; }
-  #root .skin-list-container .skin-list .skin {
-    width: 100%;
-    margin: 1rem; }
-    @media only screen and (min-width: 640px) {
-      #root .skin-list-container .skin-list .skin {
-        width: calc(50% - 2rem); } }
-    @media only screen and (min-width: 1024px) {
-      #root .skin-list-container .skin-list .skin {
-        width: calc(33.333% - 2rem); } }
-    @media only screen and (min-width: 1440px) {
-      #root .skin-list-container .skin-list .skin {
-        width: calc(25% - 2rem); } }
-    @media only screen and (min-width: 1800px) {
-      #root .skin-list-container .skin-list .skin {
-        width: calc(16.6666% - 2rem); } }
-    #root .skin-list-container .skin-list .skin .header a {
-      color: #010204; }
-    #root .skin-list-container .skin-list .skin img {
-      cursor: pointer; }
-    #root .skin-list-container .skin-list .skin .stattrak, #root .skin-list-container .skin-list .skin .souvenir {
-      position: absolute;
-      right: 5px;
-      top: 5px; }
-    #root .skin-list-container .skin-list .skin .extra.content {
-      height: 100px;
-      overflow: hidden; }
-      #root .skin-list-container .skin-list .skin .extra.content .prices {
-        display: flex;
-        flex-flow: row wrap; }
-        #root .skin-list-container .skin-list .skin .extra.content .prices .price {
-          width: 50%; }
+  #root .skin-list-container .skin-list .skin-list-inner {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between; }
+    #root .skin-list-container .skin-list .skin-list-inner .skin {
+      margin: 1rem; }
+      #root .skin-list-container .skin-list .skin-list-inner .skin .header a {
+        color: #010204; }
+      #root .skin-list-container .skin-list .skin-list-inner .skin img {
+        cursor: pointer; }
+      #root .skin-list-container .skin-list .skin-list-inner .skin .stattrak, #root .skin-list-container .skin-list .skin-list-inner .skin .souvenir {
+        position: absolute;
+        right: 5px;
+        top: 5px; }
+      #root .skin-list-container .skin-list .skin-list-inner .skin .extra.content {
+        height: 100px;
+        overflow: hidden; }
+        #root .skin-list-container .skin-list .skin-list-inner .skin .extra.content .prices {
+          display: flex;
+          flex-flow: row wrap; }
+          #root .skin-list-container .skin-list .skin-list-inner .skin .extra.content .prices .price {
+            width: 50%; }
+    #root .skin-list-container .skin-list .skin-list-inner .padding-item {
+      height: 0; }
+    #root .skin-list-container .skin-list .skin-list-inner .skin, #root .skin-list-container .skin-list .skin-list-inner .padding-item {
+      flex: 1 1 250px;
+      margin: 1rem; }
   #root .skin-list-container .skin-list .loader {
     margin-top: 10vh;
     z-index: 1; }
@@ -199,20 +198,20 @@ body {
   #root .skin-page .skin-image {
     position: relative;
     margin-top: 30px;
-    max-width: 500px;
-    min-height: 400px; }
-    #root .skin-page .skin-image img {
-      width: 100%;
-      height: 400px; }
+    max-width: 500px; }
     #root .skin-page .skin-image .placeholder img {
-      visibility: hidden; }
+      visibility: hidden;
+      max-width: 100%; }
     #root .skin-page .skin-image .effective {
       position: absolute;
       top: 0; }
+      #root .skin-page .skin-image .effective img {
+        max-width: 100%; }
   #root .skin-page .select-quality {
     display: flex;
     text-align: center;
     margin-top: 10px;
+    flex-flow: row wrap;
     align-items: center;
     justify-content: center; }
     #root .skin-page .select-quality > div {
@@ -221,6 +220,7 @@ body {
       padding: 0.2rem 0.5rem;
       font-size: 0.9rem;
       margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
       border-radius: 4px;
       cursor: pointer; }
       #root .skin-page .select-quality > div.active {
