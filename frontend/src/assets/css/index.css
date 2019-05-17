@@ -95,21 +95,27 @@ body {
     font-weight: 700; }
     #root .homepage .carousel .soon .ribbon:after {
       border-right-color: #335284; }
-#root .skin-list-container .skin-list-filter {
-  position: fixed;
+#root .skin-list-container .skin-list-filter-container {
   top: 60px;
-  padding: 20px 10px 10px 10px;
-  width: 100%;
   background-color: #010204;
-  z-index: 100; }
-  #root .skin-list-container .skin-list-filter .field label {
-    color: #E4E9EC !important; }
-  #root .skin-list-container .skin-list-filter .expand-button {
+  width: 260px;
+  overflow-x: hidden; }
+  #root .skin-list-container .skin-list-filter-container .expand-icon {
     display: none; }
+  #root .skin-list-container .skin-list-filter-container .fields {
+    width: 260px;
+    display: flex;
+    flex-flow: column;
+    padding: 10px; }
+    #root .skin-list-container .skin-list-filter-container .fields .field {
+      margin: 10px 0; }
+      #root .skin-list-container .skin-list-filter-container .fields .field label {
+        color: white !important; }
 #root .skin-list-container .skin-list {
-  max-width: 1800px;
-  margin: 0 auto 30px auto;
-  padding: 0; }
+  margin-bottom: 30px;
+  margin-left: 260px;
+  padding: 0 20px;
+  width: calc(100% - 260px); }
   #root .skin-list-container .skin-list .skin-list-inner {
     display: flex;
     flex-flow: row wrap;
@@ -141,56 +147,33 @@ body {
     margin-top: 10vh;
     z-index: 1; }
 @media only screen and (max-width: 1023px) {
-  #root .skin-list-container .skin-list-filter {
-    max-height: 30px;
-    transition: max-height 0.15s; }
-    #root .skin-list-container .skin-list-filter form {
-      display: none; }
-    #root .skin-list-container .skin-list-filter .fields {
-      flex-wrap: wrap; }
-      #root .skin-list-container .skin-list-filter .fields .field {
-        margin: 0.5rem 0; } }
-      @media only screen and (max-width: 1023px) and (max-width: 639px) {
-        #root .skin-list-container .skin-list-filter .fields .field {
-          margin: 0.5rem auto; } }
-@media only screen and (max-width: 1023px) {
-    #root .skin-list-container .skin-list-filter .expand-button {
+  #root .skin-list-container .skin-list-filter-container {
+    margin-left: -260px !important;
+    width: 320px;
+    transition: margin-left 0.2s; }
+    #root .skin-list-container .skin-list-filter-container .fields {
+      padding-right: 0; }
+    #root .skin-list-container .skin-list-filter-container .expand-icon {
       display: block;
-      position: absolute;
+      position: fixed;
+      z-index: 100;
+      margin: 0;
+      color: white;
+      top: 0;
       right: 0;
-      bottom: 0;
-      line-height: 30px;
-      height: 30px;
-      width: 30px;
+      width: 60px;
+      height: 60px;
+      line-height: 60px;
       text-align: center;
-      color: #E4E9EC;
-      cursor: pointer; }
-    #root .skin-list-container .skin-list-filter.expanded {
-      max-height: 250px; } }
-    @media only screen and (max-width: 1023px) and (max-width: 639px) {
-      #root .skin-list-container .skin-list-filter.expanded {
-        max-height: 450px; } }
-@media only screen and (max-width: 1023px) {
-      #root .skin-list-container .skin-list-filter.expanded form {
-        display: block;
-        margin-bottom: 20px; }
+      cursor: pointer;
+      font-size: 20px; }
+    #root .skin-list-container .skin-list-filter-container.active {
+      margin-left: 0 !important; }
+      #root .skin-list-container .skin-list-filter-container.active .expand-icon {
+        transform: rotate(180deg); }
   #root .skin-list-container .skin-list {
-    margin: 1rem; } }
-@media only screen and (min-width: 1024px) {
-  #root .skin-list-container .skin-list-filter {
-    width: 300px;
-    height: calc(100vh - 60px);
-    overflow-y: auto;
-    float: left; }
-    #root .skin-list-container .skin-list-filter .fields {
-      flex-direction: column; }
-      #root .skin-list-container .skin-list-filter .fields .field {
-        margin-bottom: 20px; }
-  #root .skin-list-container .skin-list {
-    padding-left: 300px; }
-  #root .skin-list-container .breadcrumb-container {
-    width: auto;
-    padding-left: 0.5rem; } }
+    width: calc(100% - 60px);
+    margin-left: 60px; } }
 #root .skin-page {
   max-width: 1800px;
   margin: auto;

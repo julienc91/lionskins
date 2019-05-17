@@ -30,6 +30,9 @@ $xlarge-down: "only screen and (max-width : 1439px)" !default;
   $footer-height: 90px;
   $padding-main: 30px;
 
+  $sidebar-width: 260px;
+  $sidebar-offset: 60px;
+
   > nav {
     position: fixed;
     top: 0;
@@ -166,25 +169,34 @@ $xlarge-down: "only screen and (max-width : 1439px)" !default;
 
   .skin-list-container {
 
-    .skin-list-filter {
-      position: fixed;
-      top: 60px;
-      padding: 20px 10px 10px 10px;
-      width: 100%;
+    .skin-list-filter-container {
+      top: $topbar-height;
       background-color: $color0;
-      z-index: 100;
-      .field label {
-        color: $color5 !important; // override semantic-ui
-      }
-      .expand-button {
+      width: $sidebar-width;
+      overflow-x: hidden;
+      .expand-icon {
         display: none;
+      }
+
+      .fields {
+        width: $sidebar-width;
+        display: flex;
+        flex-flow: column;
+        padding: 10px;
+        .field {
+          margin: 10px 0;
+          label {
+            color: white !important;
+          }
+        }
       }
     }
 
     .skin-list {
-      max-width: 1800px;
-      margin: 0 auto 30px auto;
-      padding: 0;
+      margin-bottom: 30px;
+      margin-left: $sidebar-width;
+      padding: 0 20px;
+      width: calc(100% - #{$sidebar-width});
 
       .skin-list-inner {
         display: flex;
@@ -242,69 +254,38 @@ $xlarge-down: "only screen and (max-width : 1439px)" !default;
     }
 
     @media #{$large-down} {
-      .skin-list-filter {
-        max-height: 30px;
-        transition: max-height 0.15s;
-        form {
-          display: none;
-        }
+      .skin-list-filter-container {
+        margin-left: -#{$sidebar-width} !important;
+        width: $sidebar-width + $sidebar-offset;
+        transition: margin-left 0.2s;
         .fields {
-          flex-wrap: wrap;
-          .field {
-            margin: 0.5rem 0;
-            @media #{$medium-down} {
-              margin: 0.5rem auto;
-            }
-          }
+          padding-right: 0;
         }
-        .expand-button {
+        .expand-icon {
           display: block;
-          position: absolute;
+          position: fixed;
+          z-index: 100;
+          margin: 0;
+          color: white;
+          top: 0;
           right: 0;
-          bottom: 0;
-          line-height: 30px;
-          height: 30px;
-          width: 30px;
+          width: $sidebar-offset;
+          height: $sidebar-offset;
+          line-height: $sidebar-offset;
           text-align: center;
-          color: $color5;
           cursor: pointer;
+          font-size: 20px;
         }
-
-        &.expanded {
-          max-height: 250px;
-          @media #{$medium-down} {
-            max-height: 450px;
-          }
-          form {
-            display: block;
-            margin-bottom: 20px;
+        &.active {
+          margin-left: 0 !important;
+          .expand-icon {
+            transform: rotate(180deg);
           }
         }
       }
       .skin-list {
-        margin: 1rem;
-      }
-    }
-
-    @media #{$large-up} {
-      .skin-list-filter {
-        width: 300px;
-        height: calc(100vh - 60px);
-        overflow-y: auto;
-        float: left;
-        .fields {
-          flex-direction: column;
-          .field {
-            margin-bottom: 20px;
-          }
-        }
-      }
-      .skin-list {
-        padding-left: 300px;
-      }
-      .breadcrumb-container {
-        width: auto;
-        padding-left: 0.5rem;
+        width: calc(100% - 60px);
+        margin-left: 60px;
       }
     }
   }

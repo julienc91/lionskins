@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import * as actions from '../../actions'
 import Skin from '../../components/csgo/Skin'
 import Filter from '../../components/csgo/Filter'
-import { Card, Header, Icon, Loader } from 'semantic-ui-react'
+import { Card, Header, Icon, Loader, Sidebar } from 'semantic-ui-react'
 import Breadcrumb from '../../components/tools/Breadcrumb'
 import InfiniteScroll from 'react-infinite-scroller'
 import Lightbox from 'react-images'
@@ -16,9 +16,13 @@ class SkinList extends React.Component {
     super(props)
 
     this.state = {
-      expandFilter: false,
+      showSidebar: false,
       lightboxSkins: null
     }
+
+    this.handleShowSidebar = this.handleShowSidebar.bind(this)
+    this.handleHideSidebar = this.handleHideSidebar.bind(this)
+    this.handleToggleSidebar = this.handleToggleSidebar.bind(this)
   }
 
   componentDidMount () {
@@ -33,7 +37,8 @@ class SkinList extends React.Component {
   handleImageClicked (skin) {
     if (skin.imageUrl) {
       this.setState({
-        lightboxSkins: skin
+        lightboxSkins: skin,
+        showSidebar: false
       })
     }
   }
@@ -74,9 +79,25 @@ class SkinList extends React.Component {
     return skinList
   }
 
+  handleShowSidebar () {
+    if (!this.state.showSidebar) {
+      this.setState({ showSidebar: true })
+    }
+  }
+
+  handleHideSidebar () {
+    if (this.state.showSidebar) {
+      this.setState({ showSidebar: false })
+    }
+  }
+
+  handleToggleSidebar () {
+    this.setState({ showSidebar: !this.state.showSidebar })
+  }
+
   render () {
     const { getSkinList, hasNextPage, t } = this.props
-    const { expandFilter, lightboxSkins } = this.state
+    const { showSidebar, lightboxSkins } = this.state
 
     const skins = this.prepareSkins()
 
@@ -86,14 +107,13 @@ class SkinList extends React.Component {
           title={t('csgo.skin_list.page_title')}
         />
 
-        <div className={'skin-list-filter' + (expandFilter ? ' expanded' : '')}>
+        <Sidebar className={'skin-list-filter-container' + (showSidebar ? ' active' : '')}
+          vertical visible onClick={this.handleShowSidebar}>
+          <Icon name='angle double right' className='expand-icon' onClick={this.handleToggleSidebar} />
           <Filter />
-          <div className='expand-button' onClick={() => this.setState({ expandFilter: !this.state.expandFilter })}>
-            <Icon name={'caret ' + (expandFilter ? 'up' : 'down')} />
-          </div>
-        </div>
+        </Sidebar>
 
-        <div className={'skin-list'}>
+        <div className='skin-list' onClick={this.handleHideSidebar}>
 
           <div className='breadcrumb-container'>
             <Breadcrumb items={[{ name: 'Counter-Strike: Global Offensive' }]} />
