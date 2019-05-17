@@ -275,6 +275,7 @@ $xlarge-down: "only screen and (max-width : 1439px)" !default;
           text-align: center;
           cursor: pointer;
           font-size: 20px;
+          transition: transform 0.2s;
         }
         &.active {
           margin-left: 0 !important;
@@ -345,42 +346,26 @@ $xlarge-down: "only screen and (max-width : 1439px)" !default;
     }
 
     .main-content {
-      @media #{$medium-down} {
-        .skin-prices {
-          table {
-            display: block;
-            overflow-x: auto;
-            white-space: nowrap;
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+      align-items: flex-start;
+
+      .left-panel, .right-panel {
+        margin: 0 10px;
+      }
+      .left-panel {
+        flex: 1 1 400px;
+      }
+      .right-panel {
+        flex: 1 0 auto;
+        table {
+          display: block;
+          overflow-x: auto;
+          max-width: calc(100vw - 40px);
+          thead tr th:first-child {
+            width: 100%;
           }
-        }
-      }
-      @media #{$large-down} {
-        .skin-image {
-          margin-left: auto;
-          margin-right: auto;
-          min-height: auto;
-          img {
-            height: auto;
-          }
-        }
-      }
-      @media #{$large-up} {
-        .left-panel {
-          float: left;
-          width: 400px;
-          margin-right: 20px;
-        }
-        .right-panel {
-          float: right;
-          max-width: calc(100% - 420px);
-        }
-      }
-      @media #{$xlarge-up} {
-        .left-panel {
-          width: 500px;
-        }
-        .right-panel {
-          max-width: calc(100% - 520px);
         }
       }
     }

@@ -191,8 +191,6 @@ class SkinPage extends Component {
 
         </div>
 
-        <div style={{ clear: 'both' }} />
-
       </Container>
     )
   }

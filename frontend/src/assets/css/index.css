@@ -166,7 +166,8 @@ body {
       line-height: 60px;
       text-align: center;
       cursor: pointer;
-      font-size: 20px; }
+      font-size: 20px;
+      transition: transform 0.2s; }
     #root .skin-list-container .skin-list-filter-container.active {
       margin-left: 0 !important; }
       #root .skin-list-container .skin-list-filter-container.active .expand-icon {
@@ -212,31 +213,23 @@ body {
         margin-right: 0; }
   #root .skin-page .left-panel h3, #root .skin-page .right-panel h3 {
     margin-top: 30px; }
-  @media only screen and (max-width: 639px) {
-    #root .skin-page .main-content .skin-prices table {
-      display: block;
-      overflow-x: auto;
-      white-space: nowrap; } }
-  @media only screen and (max-width: 1023px) {
-    #root .skin-page .main-content .skin-image {
-      margin-left: auto;
-      margin-right: auto;
-      min-height: auto; }
-      #root .skin-page .main-content .skin-image img {
-        height: auto; } }
-  @media only screen and (min-width: 1024px) {
+  #root .skin-page .main-content {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: flex-start; }
+    #root .skin-page .main-content .left-panel, #root .skin-page .main-content .right-panel {
+      margin: 0 10px; }
     #root .skin-page .main-content .left-panel {
-      float: left;
-      width: 400px;
-      margin-right: 20px; }
+      flex: 1 1 400px; }
     #root .skin-page .main-content .right-panel {
-      float: right;
-      max-width: calc(100% - 420px); } }
-  @media only screen and (min-width: 1440px) {
-    #root .skin-page .main-content .left-panel {
-      width: 500px; }
-    #root .skin-page .main-content .right-panel {
-      max-width: calc(100% - 520px); } }
+      flex: 1 0 auto; }
+      #root .skin-page .main-content .right-panel table {
+        display: block;
+        overflow-x: auto;
+        max-width: calc(100vw - 40px); }
+        #root .skin-page .main-content .right-panel table thead tr th:first-child {
+          width: 100%; }
 #root .contact-form .grecaptcha-badge {
   margin-bottom: 1rem; }
 #root .page {
