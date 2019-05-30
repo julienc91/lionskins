@@ -4,7 +4,7 @@ import graphene
 
 from ... import models
 from ...utils import CurrencyConverter
-from ..skins import TypeCurrency, TypeProvider, BaseTypeSkin
+from ..skins import TypeCurrency, TypeProvider
 
 
 class TypeHistory(graphene.ObjectType):
@@ -28,8 +28,7 @@ class TypeHistory(graphene.ObjectType):
         return self.price
 
     def resolve_skin(self, info, **args):
-        # TODO: make this generic
-        return graphene.Node.to_global_id('TypeCSGOSkin', self.skin.id)
+        return self.skin.id
 
 
 class HistoryConnection(graphene.relay.Connection):

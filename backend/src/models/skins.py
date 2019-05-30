@@ -53,16 +53,16 @@ class Skin(ModelMixin, db.Document):
         self._app = value.name
 
     def add_price(self, provider, price):
-        create_history = True
+        now = datetime.now()
         for price_ in self.prices:
             if price_.provider == provider:
-                now = datetime.now()
-                create_history = (now - price_.update_date >= timedelta(hours=24))
                 price_.price = price
                 price_.update_date = now
                 break
         else:
             self.prices.append(Price(price=price, provider=provider))
-        if create_history:
+
+        history_threshold_date = now - timedelta(hours=24)
+        if not History.count(skin=self.id, provider=provider, creation_date__gte=history_threshold_date):
             History.create(skin=self.id, provider=provider, price=price)
         self.save()
