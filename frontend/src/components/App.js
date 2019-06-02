@@ -1,5 +1,5 @@
 import React from 'react'
-import * as Sentry from '@sentry/browser';
+import * as Sentry from '@sentry/browser'
 import Script from 'react-load-script'
 import { Helmet } from 'react-helmet'
 import { Switch, Route, Link } from 'react-router-dom'

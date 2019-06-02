@@ -24,16 +24,18 @@ class Skin extends Component {
     const { currency, skin, t } = this.props
     const internalUrl = getSkinInternalUrl(skin)
     const defaultWeaponImage = defaultWeaponImages[`default_skin_${skin.weapon.name}.png`]
-    let imageUrls = [defaultWeaponImage]
-    if (skin.imageUrl) {
-      imageUrls = [skin.imageUrl, ...imageUrls]
-    }
+
+    const alt = `${skin.weapon.name} - ${skin.name}`
+    const defaultImage = <img src={defaultWeaponImage} className='ui image' alt={alt} />
 
     return (
       <Card color={getColorFromRarity(skin.rarity)} className='skin'>
         <Img
-          src={imageUrls} className='ui image'
-          onClick={this.props.onImageClicked} alt={`${skin.weapon.name} - ${skin.name}`} />
+          src={skin.imageUrl}
+          className='ui image'
+          loader={defaultImage}
+          unloader={defaultImage}
+          onClick={this.props.onImageClicked} alt={alt} />
         {skin.statTrak && (
           <Label className='stattrak' color='orange'>{t('csgo.skin.stat_trak')}</Label>
         )}
