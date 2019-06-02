@@ -226,7 +226,7 @@ body {
       #root .skin-page .main-content .panels .left-panel, #root .skin-page .main-content .panels .right-panel {
         margin: 0 10px; }
       #root .skin-page .main-content .panels .left-panel {
-        flex: 1 1 400px; }
+        flex: 1 1 380px; }
       #root .skin-page .main-content .panels .right-panel {
         flex: 1 0 auto; }
         #root .skin-page .main-content .panels .right-panel table {
