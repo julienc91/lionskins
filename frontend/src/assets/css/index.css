@@ -181,7 +181,7 @@ body {
   padding-bottom: 30px; }
   #root .skin-page .skin-image {
     position: relative;
-    margin-top: 30px;
+    margin: 30px auto 0 auto;
     max-width: 500px; }
     #root .skin-page .skin-image .placeholder img {
       visibility: hidden;
@@ -215,21 +215,46 @@ body {
     margin-top: 30px; }
   #root .skin-page .main-content {
     display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    align-items: flex-start; }
-    #root .skin-page .main-content .left-panel, #root .skin-page .main-content .right-panel {
-      margin: 0 10px; }
-    #root .skin-page .main-content .left-panel {
-      flex: 1 1 400px; }
-    #root .skin-page .main-content .right-panel {
-      flex: 1 0 auto; }
-      #root .skin-page .main-content .right-panel table {
-        display: block;
-        overflow-x: auto;
-        max-width: calc(100vw - 40px); }
-        #root .skin-page .main-content .right-panel table thead tr th:first-child {
-          width: 100%; }
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: center; }
+    #root .skin-page .main-content .panels {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+      align-items: flex-start; }
+      #root .skin-page .main-content .panels .left-panel, #root .skin-page .main-content .panels .right-panel {
+        margin: 0 10px; }
+      #root .skin-page .main-content .panels .left-panel {
+        flex: 1 1 400px; }
+      #root .skin-page .main-content .panels .right-panel {
+        flex: 1 0 auto; }
+        #root .skin-page .main-content .panels .right-panel table {
+          display: block;
+          overflow-x: auto;
+          max-width: calc(100vw - 40px); }
+          #root .skin-page .main-content .panels .right-panel table thead tr th:first-child {
+            width: 100%; }
+    #root .skin-page .main-content .bottom-panel {
+      padding: 0 10px;
+      width: 100%; }
+      #root .skin-page .main-content .bottom-panel h3 {
+        margin-top: 30px; }
+      #root .skin-page .main-content .bottom-panel .prices-history {
+        width: 100%; }
+        #root .skin-page .main-content .bottom-panel .prices-history .options {
+          display: flex;
+          flex-flow: row wrap;
+          justify-content: flex-start; }
+          #root .skin-page .main-content .bottom-panel .prices-history .options .fields {
+            flex-flow: column;
+            margin-right: 30px; }
+            #root .skin-page .main-content .bottom-panel .prices-history .options .fields .field:first-of-type {
+              margin-bottom: 10px; }
+            #root .skin-page .main-content .bottom-panel .prices-history .options .fields .field:last-of-type {
+              margin-bottom: 15px; }
+          #root .skin-page .main-content .bottom-panel .prices-history .options .skins {
+            width: 300px; }
 #root .contact-form .grecaptcha-badge {
   margin-bottom: 1rem; }
 #root .page {

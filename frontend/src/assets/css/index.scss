@@ -298,7 +298,7 @@ $xlarge-down: "only screen and (max-width : 1439px)" !default;
 
     .skin-image {
       position: relative;
-      margin-top: 30px;
+      margin: 30px auto 0 auto;
       max-width: 500px;
       .placeholder {
         img {
@@ -347,24 +347,63 @@ $xlarge-down: "only screen and (max-width : 1439px)" !default;
 
     .main-content {
       display: flex;
-      flex-flow: row wrap;
-      justify-content: center;
-      align-items: flex-start;
+      flex-flow: column;
+      justify-content: flex-start;
+      align-items: center;
 
-      .left-panel, .right-panel {
-        margin: 0 10px;
+      .panels {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        align-items: flex-start;
+
+        .left-panel, .right-panel {
+          margin: 0 10px;
+        }
+
+        .left-panel {
+          flex: 1 1 400px;
+        }
+
+        .right-panel {
+          flex: 1 0 auto;
+
+          table {
+            display: block;
+            overflow-x: auto;
+            max-width: calc(100vw - 40px);
+
+            thead tr th:first-child {
+              width: 100%;
+            }
+          }
+        }
       }
-      .left-panel {
-        flex: 1 1 400px;
-      }
-      .right-panel {
-        flex: 1 0 auto;
-        table {
-          display: block;
-          overflow-x: auto;
-          max-width: calc(100vw - 40px);
-          thead tr th:first-child {
-            width: 100%;
+      .bottom-panel {
+        padding: 0 10px;
+        width: 100%;
+        h3 {
+          margin-top: 30px;
+        }
+        .prices-history {
+          width: 100%;
+          .options {
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: flex-start;
+            .fields {
+              flex-flow: column;
+              margin-right: 30px;
+              .field:first-of-type {
+                margin-bottom: 10px;
+              }
+              .field:last-of-type {
+                margin-bottom: 15px;
+              }
+            }
+            .skins {
+              width: 300px;
+            }
           }
         }
       }

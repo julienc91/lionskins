@@ -234,6 +234,17 @@
       }
     }
   },
+  "skin": {
+    "prices_history": {
+      "header": "Historique",
+      "options": "Options",
+      "mode": "Affichage du prix",
+      "mode_average": "Prix moyen",
+      "mode_min": "Prix le plus bas",
+      "group": "Regrouper les offres",
+      "skins": "Filtrer les offres"
+    }
+  },
   "skin_list": {
     "no_results": {
       "title": "Aucun résultat",

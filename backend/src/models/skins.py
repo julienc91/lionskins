@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime, timedelta
+from datetime import date, datetime
 
 from slugify import slugify
 
@@ -62,7 +62,15 @@ class Skin(ModelMixin, db.Document):
         else:
             self.prices.append(Price(price=price, provider=provider))
 
-        history_threshold_date = now - timedelta(hours=24)
-        if not History.count(skin=self.id, provider=provider, creation_date__gte=history_threshold_date):
+        try:
+            history = History.get(skin=self.id, provider=provider, creation_date__gte=date.today())
+        except History.DoesNotExist:
             History.create(skin=self.id, provider=provider, price=price)
+        except History.MultipleObjectsReturned:
+            pass
+        else:
+            if history.price > price:
+                history.price = price
+                history.creation_date = now
+                history.save()
         self.save()

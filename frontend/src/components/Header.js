@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { withTranslation } from 'react-i18next'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
+import moment from 'moment'
+import 'moment/locale/fr'
 import { Dropdown, Icon, Image, Menu } from 'semantic-ui-react'
 import * as actions from '../actions'
 import i18n from '../i18n'
@@ -19,6 +21,7 @@ import usdIcon from '../assets/images/usd.png'
 class Header extends Component {
   static changeLanguage (language) {
     i18n.changeLanguage(language)
+    moment.locale(language)
   }
 
   changeCurrency (currency) {

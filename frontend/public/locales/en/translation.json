@@ -234,6 +234,17 @@
       }
     }
   },
+  "skin": {
+    "prices_history": {
+      "header": "History",
+      "options": "Settings",
+      "mode": "Price display",
+      "mode_average": "Average price",
+      "mode_min": "Lowest price",
+      "group": "Group offers",
+      "skins": "Filter offers"
+    }
+  },
   "skin_list": {
     "no_results": {
       "title": "No results",
