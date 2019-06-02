@@ -52,7 +52,7 @@ class PrivacyPolicy extends Component {
             </li>
             <li>
               <a href='https://www.google.com/recaptcha/' target='_blank' rel='noopener noreferrer'>{t('privacy_policy.part3.item2.name')}</a>
-              {t('privacy_policy.part3.item1.description')}
+              {t('privacy_policy.part3.item2.description')}
             </li>
           </ul>
 
