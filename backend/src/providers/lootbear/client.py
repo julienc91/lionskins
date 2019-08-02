@@ -37,6 +37,7 @@ class Client(AbstractProvider):
                 'offset': offset,
                 'renting': 0,
                 'selling': 1,
+                'gameId': 'csgo',
                 'sortBy': 'price_asc',
             })
             result = result.json()['items']
