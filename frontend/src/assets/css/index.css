@@ -20,6 +20,10 @@ body {
     #root > nav .menu-settings .dropdown {
       width: 100%;
       justify-content: center; }
+      #root > nav .menu-settings .dropdown a {
+        color: rgba(0, 0, 0, 0.87); }
+      #root > nav .menu-settings .dropdown .text {
+        display: flex; }
       #root > nav .menu-settings .dropdown .item {
         display: flex;
         align-items: center; }

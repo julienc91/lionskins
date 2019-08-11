@@ -64,7 +64,6 @@ class ModelMixin:
 
     @classmethod
     def get_or_create(cls, defaults=None, **kwargs):
-
         kwargs = cls._parse_kwargs(kwargs)
         res = cls.filter(**kwargs)
         assert res.count() <= 1

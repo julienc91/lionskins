@@ -3,34 +3,56 @@ import { Link } from 'react-router-dom'
 import { withTranslation } from 'react-i18next'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
-import moment from 'moment'
-import 'moment/locale/fr'
-import { Dropdown, Icon, Image, Menu } from 'semantic-ui-react'
+import { Dropdown, Icon, Menu } from 'semantic-ui-react'
 import * as actions from '../actions'
-import i18n from '../i18n'
-import { Currencies } from './enums'
 import PropTypes from 'prop-types'
 
 import logo from '../assets/images/logo.svg'
 import csgoLogo from '../assets/images/csgo.svg'
-import englishIcon from '../assets/images/english.png'
-import frenchIcon from '../assets/images/french.png'
-import eurIcon from '../assets/images/eur.png'
-import usdIcon from '../assets/images/usd.png'
 
 class Header extends Component {
-  static changeLanguage (language) {
-    i18n.changeLanguage(language)
-    moment.locale(language)
+  renderUserMenu () {
+    const { toggleSettingsModal, user, unsetUser, t } = this.props
+    return (
+      <Menu.Item>
+        <Dropdown item text={<><Icon name='user' />{user.username}</>}>
+          <Dropdown.Menu>
+            <Dropdown.Item onClick={() => toggleSettingsModal(true)}>
+              <Icon name='setting' />{t('header.settings')}
+            </Dropdown.Item>
+            <Dropdown.Item onClick={unsetUser}>
+              <Icon name='log out' />{t('header.logout')}
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+      </Menu.Item>
+    )
   }
 
-  changeCurrency (currency) {
-    const { changeCurrency } = this.props
-    changeCurrency(currency)
+  renderVisitorMenu () {
+    const { toggleLoginModal, toggleSettingsModal, toggleSignupModal, t } = this.props
+    return (
+      <Menu.Item>
+        <Dropdown item text={<Icon name='user' />}>
+          <Dropdown.Menu>
+            <Dropdown.Item onClick={() => toggleLoginModal(true)}>
+              <Icon name='sign in' />{t('header.login')}
+            </Dropdown.Item>
+            <Dropdown.Item onClick={() => toggleSignupModal(true)}>
+              <Icon name='signup' />{t('header.signup')}
+            </Dropdown.Item>
+            <Dropdown.Divider />
+            <Dropdown.Item onClick={() => toggleSettingsModal(true)}>
+              <Icon name='setting' />{t('header.settings')}
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+      </Menu.Item>
+    )
   }
 
   render () {
-    const { t } = this.props
+    const { user } = this.props
     return (
       <Menu as={'nav'} inverted>
         <Menu.Item>
@@ -42,29 +64,7 @@ class Header extends Component {
           </Link>
         </Menu.Item>
         <Menu.Menu position='right' className='menu-settings'>
-          <Icon name='setting' />
-          <Dropdown item text={t('header.settings.menu')}>
-            <Dropdown.Menu>
-              <Dropdown.Header>{t('header.settings.language')}</Dropdown.Header>
-              <Dropdown.Item onClick={() => Header.changeLanguage('en')}>
-                <Image src={englishIcon} inline size='mini' />
-                {t('header.settings.language_en')}
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => Header.changeLanguage('fr')}>
-                <Image src={frenchIcon} inline size='mini' />
-                {t('header.settings.language_fr')}
-              </Dropdown.Item>
-              <Dropdown.Header>{t('header.settings.currency')}</Dropdown.Header>
-              <Dropdown.Item onClick={() => this.changeCurrency(Currencies.usd)}>
-                <Image src={usdIcon} inline size='mini' />
-                {t('header.settings.currency_usd')}
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => this.changeCurrency(Currencies.eur)}>
-                <Image src={eurIcon} inline size='mini' />
-                {t('header.settings.currency_eur')}
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+          {user ? this.renderUserMenu() : this.renderVisitorMenu()}
         </Menu.Menu>
       </Menu>
     )
@@ -73,11 +73,17 @@ class Header extends Component {
 
 Header.propTypes = {
   t: PropTypes.func.isRequired,
-  changeCurrency: PropTypes.func.isRequired
+  toggleLoginModal: PropTypes.func.isRequired,
+  toggleSettingsModal: PropTypes.func.isRequired,
+  toggleSignupModal: PropTypes.func.isRequired,
+  user: PropTypes.object,
+  unsetUser: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => {
-  return {}
+  return {
+    user: state.main.user
+  }
 }
 
 export default withRouter(

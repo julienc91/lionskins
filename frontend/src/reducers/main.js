@@ -1,5 +1,9 @@
 import {
-  SET_CURRENCY
+  SET_CURRENCY,
+  SET_USER,
+  UNSET_USER,
+  SET_ACCESS_TOKEN,
+  SET_REFRESH_TOKEN
 } from '../constants'
 import { Currencies } from '../components/enums'
 
@@ -12,8 +16,15 @@ const getDefaultCurrency = () => {
   return currency
 }
 
+const getRefreshToken = () => {
+  return localStorage.getItem('refreshToken')
+}
+
 const initialState = {
-  currency: getDefaultCurrency()
+  currency: getDefaultCurrency(),
+  accessToken: null,
+  refreshToken: getRefreshToken(),
+  user: null
 }
 
 const main = (state = initialState, action) => {
@@ -22,6 +33,29 @@ const main = (state = initialState, action) => {
       return {
         ...state,
         currency: action.currency
+      }
+    case SET_ACCESS_TOKEN:
+      return {
+        ...state,
+        accessToken: action.accessToken
+      }
+    case SET_REFRESH_TOKEN:
+      return {
+        ...state,
+        refreshToken: action.refreshToken
+      }
+    case SET_USER:
+      return {
+        ...state,
+        user: action.user
+      }
+    case UNSET_USER:
+      localStorage.removeItem('refreshToken')
+      return {
+        ...state,
+        user: null,
+        accessToken: null,
+        refreshToken: null
       }
     default:
       return state

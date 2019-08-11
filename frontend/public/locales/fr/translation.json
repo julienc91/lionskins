@@ -178,21 +178,27 @@
     "description": "Comparez les prix de milliers de skins pour vos jeux vidéos favoris parmi les meilleures marketplaces"
   },
   "header": {
-    "settings": {
-      "menu": "Paramètres",
-      "language": "Langue",
-      "language_en": "English",
-      "language_fr": "Français",
-      "currency": "Devise",
-      "currency_usd": "Dollar",
-      "currency_eur": "Euros"
-    }
+    "logout": "Déconnexion",
+    "login": "Connexion",
+    "signup": "Inscription",
+    "settings": "Paramètres"
   },
   "homepage": {
     "page_title": "Lion Skins - Comparez les prix de milliers de skins",
     "title": "Lion Skins",
     "subtitle1": "Comparez les prix de milliers de skins",
     "subtitle2": "parmi les meilleures marketplaces"
+  },
+  "login": {
+    "title": "Connexion",
+    "username_label": "Nom d'utilisateur",
+    "password_label": "Mot de passe",
+    "submit": "Valider",
+    "error": {
+      "title": "Oups...",
+      "default_error": "Il y a eu un problème, veuillez réessayer",
+      "invalid_credentials": "Le nom d'utilisateur ou le mot de passe est invalide"
+    }
   },
   "not_found": {
     "title": "Page non trouvée",
@@ -232,6 +238,33 @@
         "name": "Recaptcha",
         "description": "\u00A0: la solution de protection contre le spam par Google, utilisée uniquement sur le formulaire de contact"
       }
+    }
+  },
+  "settings": {
+    "title": "Paramètres",
+    "language": {
+      "label": "Langue",
+      "en": "English",
+      "fr": "Français"
+    },
+    "currency": {
+      "label": "Devise",
+      "usd": "Dollar US",
+      "eur": "Euro"
+    }
+  },
+  "signup": {
+    "title": "Créer un compte",
+    "username_label": "Nom d'utilisateur",
+    "password_label": "Mot de passe",
+    "submit": "Valider",
+    "error": {
+      "title": "Oups...",
+      "default_error": "Il y a eu un problème, veuillez réessayer",
+      "invalid_password": "Votre mot de passe doit compter au moins 8 caractères",
+      "invalid_username": "Ce nom d'utilisateur n'est pas valide",
+      "conflict_username": "Un autre utilisateur a déjà pris ce nom",
+      "invalid_captcha": "Le captcha est incorrect, essayez de recharger la page"
     }
   },
   "skin": {

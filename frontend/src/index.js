@@ -9,7 +9,7 @@ import { ApolloProvider } from 'react-apollo'
 import { Provider } from 'react-redux'
 import * as serviceWorker from './serviceWorker'
 
-import configureStore, { history } from './configureStore'
+import store, { history } from './configureStore'
 import client from './apollo'
 import App from './components/App'
 import Tracker from './components/tools/Tracker'
@@ -20,7 +20,6 @@ if (process.env.REACT_APP_SENTRY_DSN) {
   Sentry.init({ dsn: process.env.REACT_APP_SENTRY_DSN })
 }
 
-const store = configureStore()
 const tracker = new Tracker()
 
 ReactDOM.render(

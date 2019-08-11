@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import graphene
+from graphql import GraphQLError
 from flask import request
 
 from ...models import Contact
@@ -18,10 +19,11 @@ class ContactMessage(graphene.Mutation):
 
     @classmethod
     def mutate(cls, *args, **kwargs):
-        if check_captcha(kwargs.get('captcha'), request.remote_addr):
-            res = Contact.create(name=kwargs.get('name'), email=kwargs.get('email'), message=kwargs['message'])
-            return cls(message_id=res.id)
-        return cls(message_id=None)
+        if not check_captcha(kwargs.get('captcha'), request.remote_addr):
+            raise GraphQLError("catpcha is invalid")
+
+        res = Contact.create(name=kwargs.get('name'), email=kwargs.get('email'), message=kwargs['message'])
+        return cls(message_id=res.id)
 
 
 class Mutation(graphene.ObjectType):

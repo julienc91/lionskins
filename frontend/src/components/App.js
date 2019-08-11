@@ -7,6 +7,8 @@ import { withTranslation } from 'react-i18next'
 import SkinList from '../views/csgo/SkinList'
 import SkinPage from '../views/csgo/SkinPage'
 import Header from './Header'
+import { LoginModal, SettingsModal, SignupModal } from './modals'
+import AuthenticationProcess from './AuthenticationProcess'
 import Homepage from '../views/Homepage'
 import About from '../views/About'
 import Contact from '../views/Contact'
@@ -47,6 +49,10 @@ class App extends React.Component {
           { property: 'og:image', content: 'https://lionskins.co/logo.png' }
         ]}
       />,
+      <AuthenticationProcess key='authentication-process' />,
+      <SettingsModal key='settings' />,
+      <LoginModal key='login' />,
+      <SignupModal key='signup' />,
       <Header key='header' />,
       <main key='main'>
         <Switch>

@@ -178,21 +178,27 @@
     "description": "Compare prices of thousands of skins for your favorite video games among the most trusted marketplaces"
   },
   "header": {
-    "settings": {
-      "menu": "Settings",
-      "language": "Language",
-      "language_en": "English",
-      "language_fr": "Français",
-      "currency": "Currency",
-      "currency_usd": "US Dollar",
-      "currency_eur": "Euros"
-    }
+    "logout": "Log out",
+    "login": "Log in",
+    "signup": "Sign up",
+    "settings": "Settings"
   },
   "homepage": {
     "page_title": "Lion Skins - Compare prices of thousands of skins for your favorite games",
     "title": "Lion Skins",
     "subtitle1": "Compare prices of thousands of skins",
     "subtitle2": "among the most trusted marketplaces"
+  },
+  "login": {
+    "title": "Log in ",
+    "username_label": "Username",
+    "password_label": "Password",
+    "submit": "Submit",
+    "error": {
+      "title": "Oops...",
+      "default_error": "An error occurred, please try again",
+      "invalid_credentials": "Invalid username or password"
+    }
   },
   "not_found": {
     "title": "Page not found",
@@ -232,6 +238,33 @@
         "name": "Recaptcha",
         "description": ": Google's captcha solution. This is only used on the contact form to prevent spam"
       }
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "language": {
+      "label": "Language",
+      "en": "English",
+      "fr": "Français"
+    },
+    "currency": {
+      "label": "Currency",
+      "usd": "US Dollar",
+      "eur": "Euro"
+    }
+  },
+  "signup": {
+    "title": "Sign up",
+    "username_label": "Username",
+    "password_label": "Password",
+    "submit": "Submit",
+    "error": {
+      "title": "Oops...",
+      "default_error": "An error occurred, please try again",
+      "invalid_password": "Your password must be at least 8 character long",
+      "invalid_username": "This username is not valid",
+      "conflict_username": "An other user already exists with this username",
+      "invalid_captcha": "Invalid captcha, try refreshing the page"
     }
   },
   "skin": {

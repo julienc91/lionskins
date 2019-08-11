@@ -10,11 +10,11 @@ import PropTypes from 'prop-types'
 
 class Contact extends Component {
   query = gql`
-  mutation contact($name: String, $email: String, $message: String!, $captcha: String!) {
-    contact(name: $name, email: $email, message: $message, captcha: $captcha) {
-      id 
+    mutation contact($name: String, $email: String, $message: String!, $captcha: String!) {
+      contact(name: $name, email: $email, message: $message, captcha: $captcha) {
+        id 
+      }
     }
-  }
   `
 
   STATE_NOT_SENT = 0
@@ -31,7 +31,7 @@ class Contact extends Component {
       state: this.STATE_NOT_SENT,
       error: false
     }
-    this.captcha = undefined
+    this.captcha = React.createRef()
     this.handleCaptchaChanged = this.handleCaptchaChanged.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleError = this.handleError.bind(this)
@@ -39,15 +39,15 @@ class Contact extends Component {
   }
 
   componentDidMount () {
-    this.captcha && this.captcha.execute()
+    this.captcha.current.execute()
   }
 
   handleCaptchaChanged (value) {
     this.setState({
       captcha: value
     }, () => {
-      if (!value && this.captcha) {
-        this.captcha.execute()
+      if (!value) {
+        this.captcha.current.execute()
       }
     })
   }
@@ -56,7 +56,7 @@ class Contact extends Component {
     e.preventDefault()
     const { name, email, message, captcha } = this.state
     if (!captcha) {
-      this.captcha.execute()
+      this.captcha.current.execute()
     } else {
       this.setState({
         state: this.STATE_SENDING
@@ -129,7 +129,7 @@ class Contact extends Component {
                       label={t('contact.message_label')} minLength={50} maxLength={10000} required value={message}
                       onChange={(e) => this.setState({ message: e.target.value })} />
                     <ReCAPTCHA
-                      ref={(el) => { this.captcha = el }}
+                      ref={this.captcha}
                       sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
                       size='invisible' badge='inline'
                       onChange={this.handleCaptchaChanged}
