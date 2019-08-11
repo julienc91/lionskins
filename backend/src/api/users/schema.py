@@ -7,7 +7,6 @@ from flask import request
 from flask_jwt_extended import (
     create_access_token,
     create_refresh_token,
-    get_jwt_identity,
     jwt_refresh_token_required,
     jwt_required
 )
@@ -16,6 +15,7 @@ from .types import TypeUser
 from ..exceptions import ApiError
 from ...models import User
 from ...utils.captcha import check_captcha
+from ...utils.users import get_current_user
 
 
 class Create(graphene.Mutation):
@@ -75,10 +75,9 @@ class RefreshToken(graphene.Mutation):
     @classmethod
     @jwt_refresh_token_required
     def mutate(cls, *args, **kwargs):
-        user_identity = get_jwt_identity()
-        user = User.get(id=user_identity)
+        user = get_current_user()
         user.set_last_login()
-        access_token = create_access_token(identity=user_identity)
+        access_token = create_access_token(identity=user.jwt_identity)
         return cls(access_token=access_token)
 
 
@@ -93,6 +92,5 @@ class Query(graphene.ObjectType):
 
     @jwt_required
     def resolve_current_user(self, info, **args):
-        user_identity = get_jwt_identity()
-        user = User.get(id=user_identity)
+        user = get_current_user()
         return user

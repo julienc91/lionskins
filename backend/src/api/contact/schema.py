@@ -3,9 +3,11 @@
 import graphene
 from graphql import GraphQLError
 from flask import request
+from flask_jwt_extended import jwt_optional
 
 from ...models import Contact
 from ...utils.captcha import check_captcha
+from ...utils.users import get_current_user
 
 
 class ContactMessage(graphene.Mutation):
@@ -18,11 +20,20 @@ class ContactMessage(graphene.Mutation):
     message_id = graphene.Field(graphene.String, name='id')
 
     @classmethod
+    @jwt_optional
     def mutate(cls, *args, **kwargs):
         if not check_captcha(kwargs.get('captcha'), request.remote_addr):
-            raise GraphQLError("catpcha is invalid")
+            raise GraphQLError("captcha is invalid")
 
-        res = Contact.create(name=kwargs.get('name'), email=kwargs.get('email'), message=kwargs['message'])
+        user = get_current_user()
+        params = {'message': kwargs['message']}
+        if kwargs.get('email'):
+            params['email'] = kwargs['email']
+        if kwargs.get('name'):
+            params['name'] = kwargs['name']
+        if user:
+            params['user'] = user
+        res = Contact.create(**params)
         return cls(message_id=res.id)
 
 
