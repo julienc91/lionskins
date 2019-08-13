@@ -12,7 +12,7 @@ import { getSkinInternalUrl } from '../../tools'
 import TrackedLink from '../tools/TrackedLink'
 
 const importAll = (r) => {
-  let images = {}
+  const images = {}
   r.keys().forEach((item) => { images[item.replace('./', '')] = r(item) })
   return images
 }

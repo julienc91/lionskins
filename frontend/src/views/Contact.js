@@ -8,6 +8,10 @@ import { Mutation } from 'react-apollo'
 import Breadcrumb from '../components/tools/Breadcrumb'
 import PropTypes from 'prop-types'
 
+const STATE_NOT_SENT = 0
+const STATE_SENDING = 1
+const STATE_SENT = 2
+
 class Contact extends Component {
   query = gql`
     mutation contact($name: String, $email: String, $message: String!, $captcha: String!) {
@@ -17,10 +21,6 @@ class Contact extends Component {
     }
   `
 
-  STATE_NOT_SENT = 0
-  STATE_SENDING = 1
-  STATE_SENT = 2
-
   constructor (props) {
     super(props)
     this.state = {
@@ -28,7 +28,7 @@ class Contact extends Component {
       email: '',
       message: '',
       captcha: null,
-      state: this.STATE_NOT_SENT,
+      state: STATE_NOT_SENT,
       error: false
     }
     this.captcha = React.createRef()
@@ -59,7 +59,7 @@ class Contact extends Component {
       this.captcha.current.execute()
     } else {
       this.setState({
-        state: this.STATE_SENDING
+        state: STATE_SENDING
       }, () => {
         contact({ variables: { name, email, message, captcha } })
       })
@@ -68,7 +68,7 @@ class Contact extends Component {
 
   handleError () {
     this.setState({
-      state: this.STATE_NOT_SENT,
+      state: STATE_NOT_SENT,
       error: true
     })
   }
@@ -78,7 +78,7 @@ class Contact extends Component {
       name: '',
       email: '',
       message: '',
-      state: this.STATE_SENT,
+      state: STATE_SENT,
       error: false
     })
   }
@@ -93,7 +93,7 @@ class Contact extends Component {
           title={t('contact.page_title')}
         />
 
-        <Breadcrumb items={[{ 'name': t('contact.breadcrumb') }]} />
+        <Breadcrumb items={[{ name: t('contact.breadcrumb') }]} />
         <Header as='h1' textAlign='center'>
           {t('contact.title')}
           <Header.Subheader>{t('contact.subtitle1')}<br />{t('contact.subtitle2')}</Header.Subheader>
@@ -102,14 +102,14 @@ class Contact extends Component {
         <Container>
           <Mutation mutation={this.query} onError={this.handleError} onCompleted={this.handleCompleted}>
             {(contact) => {
-              if (state === this.STATE_SENT) {
+              if (state === STATE_SENT) {
                 return (
                   <Message positive>
                     <Message.Header>{t('contact.success.title')}</Message.Header>
                     <p>{t('contact.success.content')}</p>
                   </Message>
                 )
-              } else if (state === this.STATE_SENDING) {
+              } else if (state === STATE_SENDING) {
                 return <Loader active inline='centered' />
               } else {
                 return (

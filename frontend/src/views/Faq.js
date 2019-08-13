@@ -15,7 +15,7 @@ class Faq extends Component {
           title={t('faq.page_title')}
         />
 
-        <Breadcrumb items={[{ 'name': t('faq.breadcrumb') }]} />
+        <Breadcrumb items={[{ name: t('faq.breadcrumb') }]} />
 
         <Header as='h1' textAlign='center'>
           {t('faq.title')}

@@ -10,10 +10,10 @@ import { withTranslation } from 'react-i18next'
 import { Providers } from '../enums'
 import { Qualities } from './enums'
 
-class SkinPricesHistory extends React.Component {
-  MODE_AVERAGE = 'average'
-  MODE_MIN = 'min'
+const MODE_AVERAGE = 'average'
+const MODE_MIN = 'min'
 
+class SkinPricesHistory extends React.Component {
   query = gql`
     query ($skin: String, $currency: TypeCurrency) {
       history (skin: $skin) {
@@ -34,7 +34,7 @@ class SkinPricesHistory extends React.Component {
       history: [],
       filter: 'all',
       grouped: false,
-      mode: this.MODE_MIN
+      mode: MODE_MIN
     }
 
     this.handleChangeMode = this.handleChangeMode.bind(this)
@@ -143,7 +143,7 @@ class SkinPricesHistory extends React.Component {
       const x = new Date(key)
       let y
       if (grouped) {
-        if (mode === this.MODE_AVERAGE) {
+        if (mode === MODE_AVERAGE) {
           y = groupHistory.reduce((m, current) => m + current.price, 0) / groupHistory.length
         } else {
           y = groupHistory.reduce((m, current) => m > 0 ? Math.min(m, current.price) : current.price, 0)
@@ -154,7 +154,7 @@ class SkinPricesHistory extends React.Component {
       } else {
         Object.keys(Providers).forEach(p => {
           const filteredGroupHistory = groupHistory.filter(h => h.provider === p)
-          if (mode === this.MODE_AVERAGE) {
+          if (mode === MODE_AVERAGE) {
             y = filteredGroupHistory.reduce((m, current) => m + current.price, 0) / filteredGroupHistory.length
           } else {
             y = filteredGroupHistory.reduce((m, current) => m > 0 ? Math.min(m, current.price) : current.price, 0)
@@ -240,10 +240,10 @@ class SkinPricesHistory extends React.Component {
               {t('skin.prices_history.mode')}
             </Form.Field>
             <Form.Field>
-              <Radio label={t('skin.prices_history.mode_min')} name='mode' value={this.MODE_MIN} checked={mode === this.MODE_MIN} onChange={this.handleChangeMode} />
+              <Radio label={t('skin.prices_history.mode_min')} name='mode' value={MODE_MIN} checked={mode === MODE_MIN} onChange={this.handleChangeMode} />
             </Form.Field>
             <Form.Field>
-              <Radio label={t('skin.prices_history.mode_average')} name='mode' value={this.MODE_AVERAGE} checked={mode === this.MODE_AVERAGE} onChange={this.handleChangeMode} />
+              <Radio label={t('skin.prices_history.mode_average')} name='mode' value={MODE_AVERAGE} checked={mode === MODE_AVERAGE} onChange={this.handleChangeMode} />
             </Form.Field>
           </Form.Group>
           <Form.Group className='skins'>

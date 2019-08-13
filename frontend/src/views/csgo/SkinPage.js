@@ -17,7 +17,7 @@ import { withTranslation } from 'react-i18next'
 import SkinPricesHistory from '../../components/csgo/SkinPricesHistory'
 
 const importAll = (r) => {
-  let images = {}
+  const images = {}
   r.keys().forEach((item) => { images[item.replace('./', '')] = r(item) })
   return images
 }
@@ -26,6 +26,7 @@ const defaultWeaponImages = importAll(require.context('../../assets/images/csgo/
 
 class SkinPage extends Component {
   rootName = 'csgo'
+
   query = gql`
     query ($weapon: CSGOWeapons, $slug: String, $currency: TypeCurrency) {
       csgo (weapon: $weapon, slug: $slug) {
@@ -106,7 +107,7 @@ class SkinPage extends Component {
     ]
 
     Object.keys(Qualities).forEach(quality => {
-      let defaultSkin = skins.find(s => s.quality === quality && s.imageUrl)
+      const defaultSkin = skins.find(s => s.quality === quality && s.imageUrl)
       let imageUrl = defaultWeaponImages[`default_skin_${skins[0].weapon.name}.png`]
       if (defaultSkin) {
         imageUrl = defaultSkin.imageUrl

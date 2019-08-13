@@ -15,7 +15,7 @@ class About extends Component {
           title={t('about.page_title')}
         />
 
-        <Breadcrumb items={[{ 'name': t('about.breadcrumb') }]} />
+        <Breadcrumb items={[{ name: t('about.breadcrumb') }]} />
 
         <Header as='h1' textAlign='center'>
           {t('about.title')}

@@ -10,7 +10,7 @@ import PropTypes from 'prop-types'
 class Filter extends React.Component {
   getChoicesFromEnum (enum_) {
     const { t } = this.props
-    let res = [{ key: 'all', text: t('csgo.filters.all'), value: 'all' }]
+    const res = [{ key: 'all', text: t('csgo.filters.all'), value: 'all' }]
     Object.keys(enum_).map(e =>
       res.push({
         key: e,
@@ -23,7 +23,7 @@ class Filter extends React.Component {
 
   getChoicesForWeapons () {
     const { t } = this.props
-    let res = [{ key: 'all', text: t('csgo.filters.all'), value: 'all' }]
+    const res = [{ key: 'all', text: t('csgo.filters.all'), value: 'all' }]
     Object.keys(WeaponsByCategories).map(category => {
       res.push({ key: `C${category}`, text: t(Categories[category]), value: `C${category}` })
       WeaponsByCategories[category].map(weapon => {

@@ -15,7 +15,7 @@ class PrivacyPolicy extends Component {
           title={t('privacy_policy.page_title')}
         />
 
-        <Breadcrumb items={[{ 'name': t('privacy_policy.breadcrumb') }]} />
+        <Breadcrumb items={[{ name: t('privacy_policy.breadcrumb') }]} />
 
         <Header as='h1' textAlign='center'>
           {t('privacy_policy.title')}

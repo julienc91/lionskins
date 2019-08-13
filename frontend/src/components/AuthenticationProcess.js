@@ -6,7 +6,6 @@ import * as actions from '../actions'
 import PropTypes from 'prop-types'
 
 class AuthenticationProcess extends React.Component {
-
   refreshTokenQuery = gql`
     mutation {
       refreshToken {
