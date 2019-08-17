@@ -8,7 +8,6 @@ import Filter from '../../components/csgo/Filter'
 import { Card, Header, Icon, Loader, Sidebar } from 'semantic-ui-react'
 import Breadcrumb from '../../components/tools/Breadcrumb'
 import InfiniteScroll from 'react-infinite-scroller'
-import Lightbox from 'react-images'
 import PropTypes from 'prop-types'
 
 class SkinList extends React.Component {
@@ -16,8 +15,7 @@ class SkinList extends React.Component {
     super(props)
 
     this.state = {
-      showSidebar: false,
-      lightboxSkins: null
+      showSidebar: false
     }
 
     this.handleShowSidebar = this.handleShowSidebar.bind(this)
@@ -31,16 +29,7 @@ class SkinList extends React.Component {
   }
 
   renderChild (skin) {
-    return <Skin key={skin.id} skin={skin} onImageClicked={() => this.handleImageClicked(skin)} />
-  }
-
-  handleImageClicked (skin) {
-    if (skin.imageUrl) {
-      this.setState({
-        lightboxSkins: skin,
-        showSidebar: false
-      })
-    }
+    return <Skin key={skin.id} skin={skin} />
   }
 
   prepareSkins () {
@@ -97,7 +86,7 @@ class SkinList extends React.Component {
 
   render () {
     const { getSkinList, hasNextPage, t } = this.props
-    const { showSidebar, lightboxSkins } = this.state
+    const { showSidebar } = this.state
 
     const skins = this.prepareSkins()
 
@@ -143,23 +132,6 @@ class SkinList extends React.Component {
             </Header>
           )}
         </div>
-        <Lightbox
-          images={[{
-            src: lightboxSkins ? lightboxSkins.imageUrl : '',
-            caption: lightboxSkins ? lightboxSkins.name : ''
-          }]}
-          isOpen={!!lightboxSkins}
-          onClose={() => this.setState({ lightboxSkins: null })}
-          backdropClosesModal
-          showCloseButton={false}
-          showImageCount={false}
-          className='lightbox'
-          theme={{
-            image: {
-              'background-color': '#E4E9EC'
-            }
-          }}
-        />
       </div>
     )
   }

@@ -30,12 +30,14 @@ class Skin extends Component {
 
     return (
       <Card color={getColorFromRarity(skin.rarity)} className='skin'>
-        <Img
-          src={skin.imageUrl}
-          className='ui image'
-          loader={defaultImage}
-          unloader={defaultImage}
-          onClick={this.props.onImageClicked} alt={alt} />
+        <Link to={internalUrl}>
+          <Img
+            src={skin.imageUrl}
+            className='ui image'
+            loader={defaultImage}
+            unloader={defaultImage}
+            alt={alt} />
+        </Link>
         {skin.statTrak && (
           <Label className='stattrak' color='orange'>{t('csgo.skin.stat_trak')}</Label>
         )}
@@ -90,8 +92,7 @@ Skin.propTypes = {
         price: PropTypes.number.isRequired
       })
     )
-  }),
-  onImageClicked: PropTypes.func
+  })
 }
 
 const mapStateToProps = state => {

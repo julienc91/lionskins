@@ -129,7 +129,8 @@ body {
       #root .skin-list-container .skin-list .skin-list-inner .skin .header a {
         color: #010204; }
       #root .skin-list-container .skin-list .skin-list-inner .skin img {
-        cursor: pointer; }
+        cursor: pointer;
+        background-color: rgba(0, 0, 0, 0.05); }
       #root .skin-list-container .skin-list .skin-list-inner .skin .stattrak, #root .skin-list-container .skin-list .skin-list-inner .skin .souvenir {
         position: absolute;
         right: 5px;

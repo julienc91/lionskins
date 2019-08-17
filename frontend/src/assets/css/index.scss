@@ -220,6 +220,7 @@ $xlarge-down: "only screen and (max-width : 1439px)" !default;
 
           img {
             cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.05);
           }
 
           .stattrak, .souvenir {
