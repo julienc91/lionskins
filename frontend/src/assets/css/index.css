@@ -4,6 +4,11 @@ body {
   padding: 0;
   font-family: Lato, Helvetica Neue, Arial, Helvetica, sans-serif; }
 
+.modal .ui.loader.active:before {
+  border-color: #E4E9EC !important; }
+.modal .ui.loader.active:after {
+  border-color: #527B9B transparent transparent !important; }
+
 #root > nav {
   position: fixed;
   top: 0;
@@ -264,11 +269,24 @@ body {
   margin-bottom: 1rem; }
 #root .page {
   padding-bottom: 40px; }
-  #root .page h1 .sub.header {
+  #root .page .header .inline-header {
+    display: flex;
+    flex-flow: row; }
+    #root .page .header .inline-header h1 {
+      margin-right: 20px; }
+  #root .page .header .sub.header {
     line-height: 1.7rem;
     margin-top: 15px;
     margin-bottom: 50px; }
+  #root .page .admin-actions {
+    float: right;
+    margin-top: 30px; }
 #root a {
   outline: none; }
+
+.list-management-modal .details-icon {
+  text-align: right; }
+  .list-management-modal .details-icon i {
+    margin-left: 5px; }
 
 /*# sourceMappingURL=index.css.map */

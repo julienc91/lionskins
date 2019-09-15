@@ -1,6 +1,7 @@
 import {
   SET_CURRENCY,
   SET_USER,
+  SET_LISTS,
   UNSET_USER,
   SET_ACCESS_TOKEN,
   SET_REFRESH_TOKEN
@@ -24,7 +25,8 @@ const initialState = {
   currency: getDefaultCurrency(),
   accessToken: null,
   refreshToken: getRefreshToken(),
-  user: null
+  user: null,
+  lists: null
 }
 
 const main = (state = initialState, action) => {
@@ -49,11 +51,17 @@ const main = (state = initialState, action) => {
         ...state,
         user: action.user
       }
+    case SET_LISTS:
+      return {
+        ...state,
+        lists: action.lists
+      }
     case UNSET_USER:
       localStorage.removeItem('refreshToken')
       return {
         ...state,
         user: null,
+        lists: null,
         accessToken: null,
         refreshToken: null
       }

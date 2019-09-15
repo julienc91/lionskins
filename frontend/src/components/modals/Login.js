@@ -5,28 +5,11 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Mutation } from 'react-apollo'
 import * as actions from '../../actions'
-import gql from 'graphql-tag'
 import client from '../../apollo'
+import { authenticateQuery } from '../../api/authentication'
+import { getUserQuery } from '../../api/users'
 
 class LoginModal extends Component {
-  query = gql`
-  mutation($username: String!, $password: String!) {
-    authenticate(username: $username, password: $password) {
-      accessToken,
-      refreshToken
-    }
-  }
-  `
-
-  getUserQuery = gql`
-    query {
-      currentUser {
-        id,
-        username
-      }
-    }
-  `
-
   constructor (props) {
     super(props)
     this.state = {
@@ -49,7 +32,7 @@ class LoginModal extends Component {
     setRefreshToken(refreshToken)
     setAccessToken(accessToken)
     client.query({
-      query: this.getUserQuery
+      query: getUserQuery
     }).then(response => {
       const user = response.data.currentUser
       setUser(user)
@@ -63,10 +46,8 @@ class LoginModal extends Component {
     }
     let errorMessage = t('login.error.default_error')
     const errorCode = error.graphQLErrors && error.graphQLErrors[0].code
-    switch (errorCode + '|') {
-      case '401|':
-        errorMessage = t('login.error.invalid_credentials')
-        break
+    if (errorCode + '|' === '401') {
+      errorMessage = t('login.error.invalid_credentials')
     }
 
     return (
@@ -81,7 +62,7 @@ class LoginModal extends Component {
     const { open, toggleLoginModal, user, t } = this.props
     const { password, username } = this.state
     if (user) {
-      toggleLoginModal(false)
+      open && toggleLoginModal(false)
       return null
     }
     return (
@@ -91,7 +72,7 @@ class LoginModal extends Component {
         </Modal.Header>
         <Modal.Content>
           <Mutation
-            mutation={this.query}
+            mutation={authenticateQuery}
             variables={{ username, password }}
             onError={this.handleError}
             onCompleted={this.handleCompleted}

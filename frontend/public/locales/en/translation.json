@@ -178,6 +178,7 @@
     "description": "Compare prices of thousands of skins for your favorite video games among the most trusted marketplaces"
   },
   "header": {
+    "list_management": "My lists",
     "logout": "Log out",
     "login": "Log in",
     "signup": "Sign up",
@@ -188,6 +189,32 @@
     "title": "Lion Skins",
     "subtitle1": "Compare prices of thousands of skins",
     "subtitle2": "among the most trusted marketplaces"
+  },
+  "lists": {
+    "creation": {
+      "cancel_button": "Cancel",
+      "confirm_button": "Submit",
+      "name_label": "Name",
+      "description_label": "Description",
+      "title": "New list"
+    },
+    "deletion": {
+      "confirm_description": "Are you sure you want to delete this list?",
+      "cancel_button": "Cancel",
+      "confirm_button": "Confirm"
+    },
+    "edition": {
+      "cancel_button": "Cancel",
+      "confirm_button": "Submit",
+      "name_label": "Name",
+      "description_label": "Description",
+      "title": "List edition"
+    },
+    "lists": {
+      "title": "My Lists",
+      "last_update_tooltip": "Last updated",
+      "number_of_items_tooltip": "Number of items"
+    }
   },
   "login": {
     "title": "Log in ",

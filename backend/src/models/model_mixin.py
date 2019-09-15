@@ -56,6 +56,10 @@ class ModelMixin:
         return cls.objects(**cls._parse_kwargs(kwargs)).count()
 
     @classmethod
+    def exists(cls, **kwargs):
+        return bool(cls.filter(**kwargs))
+
+    @classmethod
     def create(cls, **kwargs):
         if issubclass(cls, db.EmbeddedDocument):
             return cls(**kwargs)

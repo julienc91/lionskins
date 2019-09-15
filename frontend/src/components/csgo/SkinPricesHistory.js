@@ -2,32 +2,18 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Line } from 'react-chartjs-2'
 import { Form, Header, Radio, Select } from 'semantic-ui-react'
-import gql from 'graphql-tag'
 import { withApollo } from 'react-apollo'
 import * as actions from '../../actions'
 import PropTypes from 'prop-types'
 import { withTranslation } from 'react-i18next'
 import { Providers } from '../enums'
 import { Qualities } from './enums'
+import { getSkinHistoryQuery } from '../../api/csgo'
 
 const MODE_AVERAGE = 'average'
 const MODE_MIN = 'min'
 
 class SkinPricesHistory extends React.Component {
-  query = gql`
-    query ($skin: String, $currency: TypeCurrency) {
-      history (skin: $skin) {
-        edges {
-          node {
-            provider,
-            price (currency: $currency),
-            creationDate
-          }
-        }
-      }
-    }
-  `
-
   constructor (props) {
     super(props)
     this.state = {
@@ -50,7 +36,7 @@ class SkinPricesHistory extends React.Component {
     const { currency, skins } = this.props
     skins.forEach(async skin => {
       let result = await this.props.client.query({
-        query: this.query,
+        query: getSkinHistoryQuery,
         variables: {
           currency,
           skin: skin.id

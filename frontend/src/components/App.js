@@ -7,7 +7,7 @@ import { withTranslation } from 'react-i18next'
 import SkinList from '../views/csgo/SkinList'
 import SkinPage from '../views/csgo/SkinPage'
 import Header from './Header'
-import { LoginModal, SettingsModal, SignupModal } from './modals'
+import { ListManagementModal, LoginModal, SettingsModal, SignupModal } from './modals'
 import AuthenticationProcess from './AuthenticationProcess'
 import Homepage from '../views/Homepage'
 import About from '../views/About'
@@ -15,6 +15,7 @@ import Contact from '../views/Contact'
 import Faq from '../views/Faq'
 import PrivacyPolicy from '../views/PrivacyPolicy'
 import PageNotFound from '../views/PageNotFound'
+import UserList from '../views/UserList'
 import PropTypes from 'prop-types'
 
 class App extends React.Component {
@@ -53,6 +54,7 @@ class App extends React.Component {
       <SettingsModal key='settings' />,
       <LoginModal key='login' />,
       <SignupModal key='signup' />,
+      <ListManagementModal key='lists' />,
       <Header key='header' />,
       <main key='main'>
         <Switch>
@@ -63,6 +65,7 @@ class App extends React.Component {
           <Route exact path='/privacy-policy/' component={PrivacyPolicy} />
           <Route exact path='/counter-strike-global-offensive/' component={SkinList} />
           <Route path='/counter-strike-global-offensive/:weapon/:slug/' component={SkinPage} />
+          <Route path='/lists/:id/:slug/' component={UserList} />
           <Route component={PageNotFound} status={404} />
         </Switch>
       </main>,

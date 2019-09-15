@@ -3,24 +3,16 @@ import { Helmet } from 'react-helmet'
 import { Container, Header, Form, Button, Loader, Message } from 'semantic-ui-react'
 import { withTranslation } from 'react-i18next'
 import ReCAPTCHA from 'react-google-recaptcha'
-import gql from 'graphql-tag'
 import { Mutation } from 'react-apollo'
 import Breadcrumb from '../components/tools/Breadcrumb'
 import PropTypes from 'prop-types'
+import { contactQuery } from '../api/contact'
 
 const STATE_NOT_SENT = 0
 const STATE_SENDING = 1
 const STATE_SENT = 2
 
 class Contact extends Component {
-  query = gql`
-    mutation contact($name: String, $email: String, $message: String!, $captcha: String!) {
-      contact(name: $name, email: $email, message: $message, captcha: $captcha) {
-        id 
-      }
-    }
-  `
-
   constructor (props) {
     super(props)
     this.state = {
@@ -100,7 +92,7 @@ class Contact extends Component {
         </Header>
 
         <Container>
-          <Mutation mutation={this.query} onError={this.handleError} onCompleted={this.handleCompleted}>
+          <Mutation mutation={contactQuery} onError={this.handleError} onCompleted={this.handleCompleted}>
             {(contact) => {
               if (state === STATE_SENT) {
                 return (

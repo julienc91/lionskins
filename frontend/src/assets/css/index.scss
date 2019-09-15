@@ -24,6 +24,18 @@ $xlarge-down: "only screen and (max-width : 1439px)" !default;
 
 @import './fontello.css';
 
+.modal {
+  .ui.loader.active {
+    &:before {
+      // https://github.com/Semantic-Org/Semantic-UI-React/issues/3133
+      border-color: $color5 !important;
+    }
+    &:after {
+      border-color: $color2 transparent transparent !important;
+    }
+  }
+}
+
 #root {
 
   $topbar-height: 60px;
@@ -424,15 +436,37 @@ $xlarge-down: "only screen and (max-width : 1439px)" !default;
   }
 
   .page {
-    h1 .sub.header {
-      line-height: 1.7rem;
-      margin-top: 15px;
-      margin-bottom: 50px;
+    .header {
+      .inline-header {
+        display: flex;
+        flex-flow: row;
+        h1 {
+          margin-right: 20px;
+        }
+      }
+      .sub.header {
+        line-height: 1.7rem;
+        margin-top: 15px;
+        margin-bottom: 50px;
+      }
+    }
+    .admin-actions {
+      float: right;
+      margin-top: $padding-main;
     }
     padding-bottom: 40px;
   }
 
   a {
     outline: none;
+  }
+}
+
+.list-management-modal {
+  .details-icon {
+    text-align: right;
+    i {
+      margin-left: 5px;
+    }
   }
 }

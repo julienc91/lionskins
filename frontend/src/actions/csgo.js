@@ -1,4 +1,3 @@
-import gql from 'graphql-tag'
 import client from '../apollo'
 import {
   CSGO_LOAD_SKINS,
@@ -6,6 +5,7 @@ import {
   CSGO_SET_FILTERS,
   CSGO_SET_SKINS
 } from '../constants'
+import { getSkinsQuery } from '../api/csgo'
 
 const hasFilterChanged = (oldFilters, newFilters) => {
   const keys = ['search', 'weapon', 'category', 'quality', 'rarity', 'statTrak', 'souvenir']
@@ -63,42 +63,8 @@ export const getSkinList = () => (dispatch, getState) => {
   }
   const oldFilters = csgo.filters
 
-  const query = gql`
-  query ($first: Int, $after: String, $weapon: CSGOWeapons, $category: CSGOCategories,
-         $quality: CSGOQualities, $rarity: CSGORarities, $statTrak: Boolean, $souvenir: Boolean,
-         $search: String, $currency: TypeCurrency) {
-    csgo (first: $first, after: $after, weapon: $weapon, category: $category,
-          quality: $quality, rarity: $rarity, statTrak: $statTrak, souvenir: $souvenir,
-          search: $search) {
-      pageInfo {
-        hasNextPage
-        endCursor
-      }
-      edges {
-        node {
-          id
-          name
-          slug
-          imageUrl
-          statTrak
-          quality
-          rarity
-          souvenir
-          weapon {
-            name
-            category
-          }
-          prices {
-            price (currency: $currency)
-            provider
-          }
-        }
-      }
-    }
-  }`
-
   client.query({
-    query,
+    query: getSkinsQuery,
     variables
   }).then(response => {
     if (!hasFilterChanged(oldFilters, getState().csgo.filters)) {

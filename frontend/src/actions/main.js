@@ -1,7 +1,7 @@
 import {
   CSGO_RESET_SKINS,
   SET_ACCESS_TOKEN,
-  SET_CURRENCY,
+  SET_CURRENCY, SET_LISTS,
   SET_REFRESH_TOKEN,
   SET_USER,
   UNSET_USER
@@ -43,4 +43,8 @@ export const setUser = user => dispatch => {
 
 export const unsetUser = () => dispatch => {
   dispatch({ type: UNSET_USER })
+}
+
+export const setUserLists = lists => dispatch => {
+  dispatch({ type: SET_LISTS, lists })
 }

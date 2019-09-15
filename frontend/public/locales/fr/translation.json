@@ -178,6 +178,7 @@
     "description": "Comparez les prix de milliers de skins pour vos jeux vidéos favoris parmi les meilleures marketplaces"
   },
   "header": {
+    "list_management": "Mes listes",
     "logout": "Déconnexion",
     "login": "Connexion",
     "signup": "Inscription",
@@ -188,6 +189,32 @@
     "title": "Lion Skins",
     "subtitle1": "Comparez les prix de milliers de skins",
     "subtitle2": "parmi les meilleures marketplaces"
+  },
+  "lists": {
+    "creation": {
+      "cancel_button": "Annuler",
+      "confirm_button": "Enregistrer",
+      "name_label": "Titre",
+      "description_label": "Description",
+      "title": "Nouvelle liste"
+    },
+    "deletion": {
+      "confirm_description": "Êtes-vous sûr de vouloir supprimer cette liste\u00A0?",
+      "cancel_button": "Annuler",
+      "confirm_button": "Confirmer"
+    },
+    "edition": {
+      "cancel_button": "Annuler",
+      "confirm_button": "Enregistrer",
+      "name_label": "Titre",
+      "description_label": "Description",
+      "title": "Édition de liste"
+    },
+    "lists": {
+      "title": "Mes Listes",
+      "last_update_tooltip": "Denière modification",
+      "number_of_items_tooltip": "Nombre d'éléments"
+    }
   },
   "login": {
     "title": "Connexion",

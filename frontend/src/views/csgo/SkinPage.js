@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Helmet } from 'react-helmet'
-import gql from 'graphql-tag'
 import { withApollo } from 'react-apollo'
 import { connect } from 'react-redux'
 import * as actions from '../../actions'
@@ -15,6 +14,7 @@ import Breadcrumb from '../../components/tools/Breadcrumb'
 import PageNotFound from '../PageNotFound'
 import { withTranslation } from 'react-i18next'
 import SkinPricesHistory from '../../components/csgo/SkinPricesHistory'
+import { getSkinQuery } from '../../api/csgo'
 
 const importAll = (r) => {
   const images = {}
@@ -26,33 +26,6 @@ const defaultWeaponImages = importAll(require.context('../../assets/images/csgo/
 
 class SkinPage extends Component {
   rootName = 'csgo'
-
-  query = gql`
-    query ($weapon: CSGOWeapons, $slug: String, $currency: TypeCurrency) {
-      csgo (weapon: $weapon, slug: $slug) {
-        edges {
-          node {
-            id
-            name
-            slug
-            imageUrl
-            statTrak
-            quality
-            rarity
-            souvenir
-            weapon {
-              name
-              category
-            }
-            prices {
-              price (currency: $currency)
-              provider
-            }
-          }
-        }
-      }
-    }
-  `
 
   constructor (props) {
     super(props)
@@ -85,7 +58,7 @@ class SkinPage extends Component {
     const { currency, t } = this.props
     const { weapon, slug } = this.props.match.params
     const result = await this.props.client.query({
-      query: this.query,
+      query: getSkinQuery,
       variables: {
         weapon: Object.keys(Weapons).find(e => slugify(e.replace('_', '-'), { lower: true }) === weapon),
         currency,

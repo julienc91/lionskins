@@ -1,28 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import gql from 'graphql-tag'
 import client, { refreshClient } from '../apollo'
 import * as actions from '../actions'
 import PropTypes from 'prop-types'
+import { refreshTokenQuery } from '../api/authentication'
+import { getUserQuery } from '../api/users'
+import { getUserListsQuery } from '../api/lists'
 
 class AuthenticationProcess extends React.Component {
-  refreshTokenQuery = gql`
-    mutation {
-      refreshToken {
-        accessToken
-      }
-    }
-  `
-
-  getUserQuery = gql`
-    query {
-      currentUser {
-        id,
-        username
-      }
-    }
-  `
-
   constructor (props) {
     super(props)
     this.refreshTokenInterval = null
@@ -46,11 +31,12 @@ class AuthenticationProcess extends React.Component {
       return
     }
     refreshClient.mutate({
-      mutation: this.refreshTokenQuery
+      mutation: refreshTokenQuery
     }).then(response => {
       const { accessToken } = response.data.refreshToken
       setAccessToken(accessToken)
       this.getCurrentUser()
+      this.getCurrentUserLists()
     })
   }
 
@@ -60,10 +46,24 @@ class AuthenticationProcess extends React.Component {
       return
     }
     client.query({
-      query: this.getUserQuery
+      query: getUserQuery
     }).then(response => {
       const user = response.data.currentUser
       setUser(user)
+    })
+  }
+
+  getCurrentUserLists () {
+    const { accessToken, setUserLists } = this.props
+    if (!accessToken) {
+      return
+    }
+    client.query({
+      query: getUserListsQuery
+    }).then(response => {
+      const data = response.data.currentUserLists.edges
+      const lists = data.map(item => item.node)
+      setUserLists(lists)
     })
   }
 
@@ -76,7 +76,8 @@ AuthenticationProcess.propTypes = {
   accessToken: PropTypes.string,
   refreshToken: PropTypes.string,
   setAccessToken: PropTypes.func.isRequired,
-  setUser: PropTypes.func.isRequired
+  setUser: PropTypes.func.isRequired,
+  setUserLists: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => {

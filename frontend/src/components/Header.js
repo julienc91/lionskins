@@ -12,14 +12,18 @@ import csgoLogo from '../assets/images/csgo.svg'
 
 class Header extends Component {
   renderUserMenu () {
-    const { toggleSettingsModal, user, unsetUser, t } = this.props
+    const { toggleListManagementModal, toggleSettingsModal, user, unsetUser, t } = this.props
     return (
       <Menu.Item>
         <Dropdown item text={<><Icon name='user' />{user.username}</>}>
           <Dropdown.Menu>
+            <Dropdown.Item onClick={() => toggleListManagementModal(true)}>
+              <Icon name='list' />{t('header.list_management')}
+            </Dropdown.Item>
             <Dropdown.Item onClick={() => toggleSettingsModal(true)}>
               <Icon name='setting' />{t('header.settings')}
             </Dropdown.Item>
+            <Dropdown.Divider />
             <Dropdown.Item onClick={unsetUser}>
               <Icon name='log out' />{t('header.logout')}
             </Dropdown.Item>
@@ -73,6 +77,7 @@ class Header extends Component {
 
 Header.propTypes = {
   t: PropTypes.func.isRequired,
+  toggleListManagementModal: PropTypes.func.isRequired,
   toggleLoginModal: PropTypes.func.isRequired,
   toggleSettingsModal: PropTypes.func.isRequired,
   toggleSignupModal: PropTypes.func.isRequired,

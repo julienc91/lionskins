@@ -5,29 +5,12 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Mutation } from 'react-apollo'
 import * as actions from '../../actions'
-import gql from 'graphql-tag'
 import client from '../../apollo'
 import ReCAPTCHA from 'react-google-recaptcha'
+import { signupQuery } from '../../api/authentication'
+import { getUserQuery } from '../../api/users'
 
 class SignupModal extends Component {
-  query = gql`
-  mutation($username: String!, $password: String!, $captcha: String!) {
-    createUser(username: $username, password: $password, captcha: $captcha) {
-      accessToken,
-      refreshToken
-    }
-  }
-  `
-
-  getUserQuery = gql`
-    query {
-      currentUser {
-        id,
-        username
-      }
-    }
-  `
-
   constructor (props) {
     super(props)
     this.state = {
@@ -72,12 +55,11 @@ class SignupModal extends Component {
 
   handleCompleted (res) {
     const { setAccessToken, setRefreshToken, setUser } = this.props
-    console.log(res)
     const { accessToken, refreshToken } = res.createUser
     setRefreshToken(refreshToken)
     setAccessToken(accessToken)
     client.query({
-      query: this.getUserQuery
+      query: getUserQuery
     }).then(response => {
       const user = response.data.currentUser
       setUser(user)
@@ -105,6 +87,8 @@ class SignupModal extends Component {
       case '400|captcha':
         errorMessage = t('signup.error.invalid_captcha')
         break
+      default:
+        break
     }
 
     return (
@@ -119,7 +103,7 @@ class SignupModal extends Component {
     const { open, user, toggleSignupModal, t } = this.props
     const { captcha, password, showPassword, username } = this.state
     if (user) {
-      toggleSignupModal(false)
+      open && toggleSignupModal(false)
       return null
     }
     return (
@@ -129,7 +113,7 @@ class SignupModal extends Component {
         </Modal.Header>
         <Modal.Content>
           <Mutation
-            mutation={this.query}
+            mutation={signupQuery}
             variables={{ username, password, captcha }}
             onError={this.handleError}
             onCompleted={this.handleCompleted}>
