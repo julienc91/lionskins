@@ -11,7 +11,7 @@ from ...utils.users import get_current_user
 
 
 class ContactMessage(graphene.Mutation):
-    class Input:
+    class Arguments:
         name = graphene.String()
         email = graphene.String()
         message = graphene.String(required=True)

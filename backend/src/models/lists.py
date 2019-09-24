@@ -8,9 +8,13 @@ from ..init import db
 from .model_mixin import ModelMixin
 
 
-class ListItem(ModelMixin, db.EmbeddedDocument):
+class Item(ModelMixin, db.EmbeddedDocument):
     skin = db.ReferenceField('Skin', required=True)
     creation_date = db.DateTimeField(required=True, default=datetime.now)
+
+
+class ItemContainer(ModelMixin, db.EmbeddedDocument):
+    items = db.EmbeddedDocumentListField(Item)
 
 
 class List(ModelMixin, db.Document):
@@ -21,7 +25,7 @@ class List(ModelMixin, db.Document):
     creation_date = db.DateTimeField(required=True, default=datetime.now)
     update_date = db.DateTimeField(requured=True, default=datetime.now)
 
-    items = db.EmbeddedDocumentListField(ListItem)
+    item_containers = db.EmbeddedDocumentListField(ItemContainer)
 
     @classmethod
     def generate_slug(cls, user, name):

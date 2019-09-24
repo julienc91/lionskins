@@ -19,7 +19,7 @@ from ...utils.users import get_current_user
 
 
 class Create(graphene.Mutation):
-    class Input:
+    class Arguments:
         username = graphene.String(required=True)
         password = graphene.String(required=True)
         captcha = graphene.String(required=True)
@@ -44,7 +44,7 @@ class Create(graphene.Mutation):
 
 
 class Authenticate(graphene.Mutation):
-    class Input:
+    class Arguments:
         username = graphene.String(required=True)
         password = graphene.String(required=True)
 

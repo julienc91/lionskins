@@ -2,8 +2,26 @@
 
 import graphene
 
+from ..skins import BaseTypeSkin
 from ..users.types import TypeUser
 from ... import models
+
+
+class TypeItem(graphene.ObjectType):
+    model = models.lists.Item
+
+    skin = graphene.Field(BaseTypeSkin)
+    creation_date = graphene.DateTime()
+
+
+class TypeItemContainer(graphene.ObjectType):
+    model = models.lists.ItemContainer
+
+    items = graphene.List(TypeItem)
+    count_items = graphene.Int()
+
+    def resolve_count_items(self, info, **args):
+        return len(self.items)
 
 
 class TypeList(graphene.ObjectType):
@@ -19,10 +37,11 @@ class TypeList(graphene.ObjectType):
     creation_date = graphene.DateTime()
     update_date = graphene.DateTime()
     user = graphene.Field(TypeUser)
+    item_containers = graphene.List(TypeItemContainer)
     count_items = graphene.Int()
 
     def resolve_count_items(self, info, **args):
-        return 17
+        return len(self.item_containers)
 
 
 class ListConnection(graphene.relay.Connection):
