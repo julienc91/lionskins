@@ -30,7 +30,8 @@ def create_application():
                 'db': os.environ['MONGO_DBNAME'],
                 'host': os.environ['MONGO_HOSTNAME'],
                 'port': int(os.environ['MONGO_PORT'])
-            }
+            },
+            JWT_REFRESH_TOKEN_EXPIRES=False
         )
     except KeyError as e:
         logging.error(f"Bad configuration, some environment variables are not set: {e.args[0]}")
