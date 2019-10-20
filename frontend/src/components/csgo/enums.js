@@ -66,6 +66,7 @@ const Weapons = Object.freeze({
   bayonet: 'csgo.weapons.bayonet',
   bowie_knife: 'csgo.weapons.bowie_knife',
   butterfly_knife: 'csgo.weapons.butterfly_knife',
+  classic_knife: 'csgo.weapons.classic_knife',
   falchion_knife: 'csgo.weapons.falchion_knife',
   flip_knife: 'csgo.weapons.flip_knife',
   gut_knife: 'csgo.weapons.gut_knife',
@@ -95,7 +96,7 @@ const WeaponsByCategories = Object.freeze({
     'aug', 'g3sg1', 'scar_20', 'ssg_08', 'awp'
   ],
   knives: [
-    'bayonet', 'bowie_knife', 'butterfly_knife', 'falchion_knife',
+    'bayonet', 'bowie_knife', 'butterfly_knife', 'classic_knife', 'falchion_knife',
     'flip_knife', 'gut_knife', 'huntsman_knife', 'karambit', 'm9_bayonet',
     'navaja_knife', 'shadow_daggers', 'stiletto_knife', 'talon_knife',
     'ursus_knife'

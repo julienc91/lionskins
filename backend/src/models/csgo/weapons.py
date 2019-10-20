@@ -21,7 +21,7 @@ WEAPONS = {
         Weapons.aug, Weapons.g3sg1, Weapons.scar_20, Weapons.ssg_08, Weapons.awp
     },
     Categories.knives: {
-        Weapons.bayonet, Weapons.bowie_knife, Weapons.butterfly_knife, Weapons.falchion_knife,
+        Weapons.bayonet, Weapons.bowie_knife, Weapons.butterfly_knife, Weapons.classic_knife, Weapons.falchion_knife,
         Weapons.flip_knife, Weapons.gut_knife, Weapons.huntsman_knife, Weapons.karambit, Weapons.m9_bayonet,
         Weapons.navaja_knife, Weapons.shadow_daggers, Weapons.stiletto_knife, Weapons.talon_knife,
         Weapons.ursus_knife

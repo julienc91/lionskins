@@ -90,6 +90,7 @@ class Weapons(enum.Enum):
     bayonet = "Bayonet"
     bowie_knife = "Bowie Knife"
     butterfly_knife = "Butterfly Knife"
+    classic_knife = "Classic Knife"
     falchion_knife = "Falchion Knife"
     flip_knife = "Flip Knife"
     gut_knife = "Gut Knife"
