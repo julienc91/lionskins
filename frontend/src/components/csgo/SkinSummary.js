@@ -9,7 +9,8 @@ import * as actions from '../../actions'
 class SkinSummary extends React.Component {
   render () {
     const { currency, skins, t } = this.props
-    const rarity = t(Rarities[skins.find(s => s.rarity).rarity])
+    const hasRarity = skins.find(s => s.rarity)
+    const rarity = hasRarity ? t(Rarities[hasRarity.rarity]) : null
     const hasStatTrak = skins.some(s => s.statTrak)
     const hasSouvenir = skins.some(s => s.souvenir)
 
@@ -28,7 +29,7 @@ class SkinSummary extends React.Component {
       <Table unstackable celled textAlign='center' className='skin-summary'>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell>{t('csgo.skin.rarity')}</Table.HeaderCell>
+            {rarity && <Table.HeaderCell>{t('csgo.skin.rarity')}</Table.HeaderCell>}
             <Table.HeaderCell>{t('csgo.skin.stat_trak')}</Table.HeaderCell>
             <Table.HeaderCell>{t('csgo.skin.souvenir')}</Table.HeaderCell>
             <Table.HeaderCell>{t('csgo.skin.price_range')}</Table.HeaderCell>
@@ -37,7 +38,7 @@ class SkinSummary extends React.Component {
 
         <Table.Body>
           <Table.Row>
-            <Table.Cell>{rarity}</Table.Cell>
+            {rarity && <Table.Cell>{rarity}</Table.Cell>}
             <Table.Cell positive={hasStatTrak}>
               <Icon name={hasStatTrak ? 'check' : 'x'} />
             </Table.Cell>

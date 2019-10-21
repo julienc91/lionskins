@@ -26,6 +26,15 @@ WEAPONS = {
         Weapons.navaja_knife, Weapons.shadow_daggers, Weapons.stiletto_knife, Weapons.talon_knife,
         Weapons.ursus_knife
     },
+    Categories.gloves: {
+        Weapons.bloodhound_gloves,
+        Weapons.driver_gloves,
+        Weapons.hand_wraps,
+        Weapons.hydra_gloves,
+        Weapons.moto_gloves,
+        Weapons.specialist_gloves,
+        Weapons.sport_gloves
+    }
 }
 
 

@@ -21,7 +21,8 @@ const Categories = Object.freeze({
   heavy: 'csgo.categories.heavy',
   smgs: 'csgo.categories.smgs',
   rifles: 'csgo.categories.rifles',
-  knives: 'csgo.categories.knives'
+  knives: 'csgo.categories.knives',
+  gloves: 'csgo.categories.gloves'
 })
 
 const Weapons = Object.freeze({
@@ -77,7 +78,15 @@ const Weapons = Object.freeze({
   shadow_daggers: 'csgo.weapons.shadow_daggers',
   stiletto_knife: 'csgo.weapons.stiletto_knife',
   talon_knife: 'csgo.weapons.talon_knife',
-  ursus_knife: 'csgo.weapons.ursus_knife'
+  ursus_knife: 'csgo.weapons.ursus_knife',
+
+  bloodhound_gloves: 'csgo.weapons.bloodhound_gloves',
+  driver_gloves: 'csgo.weapons.driver_gloves',
+  hand_wraps: 'csgo.weapons.hand_wraps',
+  hydra_gloves: 'csgo.weapons.hydra_gloves',
+  moto_gloves: 'csgo.weapons.moto_gloves',
+  specialist_gloves: 'csgo.weapons.specialist_gloves',
+  sport_gloves: 'csgo.weapons.sport_gloves'
 })
 
 const WeaponsByCategories = Object.freeze({
@@ -100,6 +109,10 @@ const WeaponsByCategories = Object.freeze({
     'flip_knife', 'gut_knife', 'huntsman_knife', 'karambit', 'm9_bayonet',
     'navaja_knife', 'shadow_daggers', 'stiletto_knife', 'talon_knife',
     'ursus_knife'
+  ],
+  gloves: [
+    'bloodhound_gloves', 'driver_gloves', 'hand_wraps', 'hydra_gloves',
+    'moto_gloves', 'specialist_gloves', 'sport_gloves'
   ]
 })
 

@@ -43,7 +43,8 @@
       "heavy": "Lourdes",
       "smgs": "PMs",
       "rifles": "Fusils",
-      "knives": "Knives"
+      "knives": "Couteaux",
+      "gloves": "Gants"
     },
     "filters": {
       "all": "Tout",
@@ -135,7 +136,14 @@
       "shadow_daggers": "Dagues sombres",
       "stiletto_knife": "Stylet",
       "talon_knife": "Canif",
-      "ursus_knife": "Ursus"
+      "ursus_knife": "Ursus",
+      "bloodhound_gloves": "Gants Bloodhound",
+      "driver_gloves": "Gants de pilote",
+      "hand_wraps": "Bandages",
+      "hydra_gloves": "Gants Hydra",
+      "moto_gloves": "Gants de moto",
+      "specialist_gloves": "Gants de spécialiste",
+      "sport_gloves": "Gants de sport"
     }
   },
   "currency": {

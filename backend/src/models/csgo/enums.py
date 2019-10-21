@@ -46,6 +46,7 @@ class Categories(enum.Enum):
     smgs = "SMGs"
     rifles = "Rifles"
     knives = "Knives"
+    gloves = "Gloves"
 
 
 class Weapons(enum.Enum):
@@ -102,3 +103,11 @@ class Weapons(enum.Enum):
     stiletto_knife = "Stiletto Knife"
     talon_knife = "Talon Knife"
     ursus_knife = "Ursus Knife"
+
+    bloodhound_gloves = "Bloodhound Gloves"
+    driver_gloves = "Driver Gloves"
+    hand_wraps = "Hand Wraps"
+    hydra_gloves = "Hydra Gloves"
+    moto_gloves = "Moto Gloves"
+    specialist_gloves = "Specialist Gloves"
+    sport_gloves = "Sport Gloves"
