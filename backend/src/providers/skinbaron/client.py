@@ -39,26 +39,32 @@ class Client(AbstractProvider):
         for weapon in Weapons:
 
             prices = {}
-            result = self.__get('Search', params={
-                'appid': self.parser.app_id,
-                'search_item': weapon.value,
-            })
-            result = result.json()['sales']
-            if not result:
-                continue
 
-            for row in result:
-                if row['appid'] != self.parser.app_id:
-                    continue
+            last_id = None
+            while True:
+                result = self.__get('Search', params={
+                    'appid': self.parser.app_id,
+                    'search_item': weapon.value,
+                    'items_per_page': 500,
+                    'after_saleid': last_id
+                })
+                result = result.json()['sales']
+                if not result:
+                    break
 
-                item_name = row['market_name']
-                item_price = row['price']
-                if item_price <= 0:
-                    continue
+                for row in result:
+                    last_id = row['id']
+                    if row['appid'] != self.parser.app_id:
+                        continue
 
-                if item_name not in prices:
-                    prices[item_name] = item_price
-                prices[item_name] = min(item_price, prices[item_name])
+                    item_name = row['market_name']
+                    item_price = row['price']
+                    if item_price <= 0:
+                        continue
+
+                    if item_name not in prices:
+                        prices[item_name] = item_price
+                    prices[item_name] = min(item_price, prices[item_name])
 
             for item_name, item_price in prices.items():
                 skin = self.parser.get_skin_from_item_name(item_name)
