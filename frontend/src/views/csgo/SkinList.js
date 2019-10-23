@@ -7,6 +7,7 @@ import Skin from '../../components/csgo/Skin'
 import Filter from '../../components/csgo/Filter'
 import { Card, Header, Icon, Loader, Sidebar } from 'semantic-ui-react'
 import Breadcrumb from '../../components/tools/Breadcrumb'
+import Changelog from '../../components/Changelog'
 import InfiniteScroll from 'react-infinite-scroller'
 import PropTypes from 'prop-types'
 
@@ -98,7 +99,7 @@ class SkinList extends React.Component {
 
         <Sidebar
           className={'skin-list-filter-container' + (showSidebar ? ' active' : '')}
-          vertical visible onClick={this.handleShowSidebar}
+          visible onClick={this.handleShowSidebar}
         >
           <Icon name='angle double right' className='expand-icon' onClick={this.handleToggleSidebar} />
           <Filter />
@@ -109,6 +110,8 @@ class SkinList extends React.Component {
           <div className='breadcrumb-container'>
             <Breadcrumb items={[{ name: 'Counter-Strike: Global Offensive' }]} />
           </div>
+
+          <Changelog />
 
           {(skins.length || hasNextPage) ? (
             <InfiniteScroll

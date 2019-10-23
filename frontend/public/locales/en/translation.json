@@ -18,6 +18,11 @@
   "carousel": {
     "soon": "Soon"
   },
+  "changelog": {
+    "title": "What's new on Lion Skins:",
+    "2019_10_20_001": "The new Classic Knife was added",
+    "2019_10_21_001": "Now you can check out prices for the glove skins!"
+  },
   "contact": {
     "page_title": "Lion Skins - Contact us",
     "breadcrumb": "Contact",
@@ -150,6 +155,7 @@
     "eur": "{{price, eur}}",
     "usd": "{{price, usd}}"
   },
+  "date": "{{date, date}}",
   "faq": {
     "page_title": "Lion Skins - FAQ",
     "breadcrumb": "FAQ",

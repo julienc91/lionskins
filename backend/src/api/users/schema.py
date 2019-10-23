@@ -76,6 +76,8 @@ class RefreshToken(graphene.Mutation):
     @jwt_refresh_token_required
     def mutate(cls, *args, **kwargs):
         user = get_current_user()
+        if not user:
+            raise ApiError("invalid token", HTTPStatus.UNAUTHORIZED)
         user.set_last_login()
         access_token = create_access_token(identity=user.jwt_identity)
         return cls(access_token=access_token)
