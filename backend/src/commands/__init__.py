@@ -2,6 +2,7 @@
 
 import time
 import logging
+from threading import Thread
 
 import click
 
@@ -16,17 +17,29 @@ def fetch_providers(daemon, provider):
     from .fetch_providers import FetchProviders
 
     if provider:
-        provider = Providers[provider]
+        providers = [Providers[provider]]
+    else:
+        providers = [p for p in Providers]
 
     if daemon:
-        while True:
-            try:
-                FetchProviders.run(provider)
-            except Exception as e:
-                logging.exception(e)
-            time.sleep(3600)
+
+        def worker(p):
+            while True:
+                try:
+                    FetchProviders.run(p)
+                except Exception as e:
+                    logging.exception(e)
+                time.sleep(3600)
+
+        threads = [Thread(target=worker, args=(provider, )) for provider in providers]
+        for thread in threads:
+            thread.start()
+        for thread in threads:
+            thread.join()
+
     else:
-        FetchProviders.run(provider)
+        for provider in providers:
+            FetchProviders.run(provider)
 
 
 @app.cli.command('generate_sitemap')

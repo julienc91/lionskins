@@ -18,7 +18,7 @@ services:
     depends_on:
     - db
 
-  backoffice_steam:
+  backoffice:
     build: backend
     env_file:
     - backend/.env.${ENVIRONMENT:-production}
@@ -26,47 +26,7 @@ services:
     - db_network
     depends_on:
     - db
-    command: ../fetch_providers --daemon --provider steam
-
-  backoffice_bitskins:
-    build: backend
-    env_file:
-    - backend/.env.${ENVIRONMENT:-production}
-    networks:
-    - db_network
-    depends_on:
-    - db
-    command: ../fetch_providers --daemon --provider bitskins
-
-  backoffice_csgoshop:
-    build: backend
-    env_file:
-    - backend/.env.${ENVIRONMENT:-production}
-    networks:
-    - db_network
-    depends_on:
-    - db
-    command: ../fetch_providers --daemon --provider csgoshop
-
-  backoffice_lootbear:
-    build: backend
-    env_file:
-    - backend/.env.${ENVIRONMENT:-production}
-    networks:
-    - db_network
-    depends_on:
-    - db
-    command: ../fetch_providers --daemon --provider lootbear
-
-  backoffice_skinbaron:
-    build: backend
-    env_file:
-      - backend/.env.${ENVIRONMENT:-production}
-    networks:
-      - db_network
-    depends_on:
-      - db
-    command: ../fetch_providers --daemon --provider skinbaron
+    command: ../fetch_providers --daemon
 
   frontend:
     build: frontend
