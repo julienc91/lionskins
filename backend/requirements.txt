@@ -2,15 +2,15 @@ flask==1.1.1
 flask-cors==3.0.8
 click==7.0
 graphql-core==2.2.1
-graphene==2.1.7
+graphene==2.1.8
 flask_graphql==2.0
 flask-mongoengine==0.9.5
-flask-jwt-extended==3.21.0
+flask-jwt-extended==3.24.0
 passlib==1.7.1
-python-slugify==3.0.3
+python-slugify==4.0.0
 user-agents==2.0
 
-python-dotenv==0.10.1
+python-dotenv==0.10.3
 
 requests==2.22.0
 ratelimit==2.2.1
@@ -19,9 +19,9 @@ ratelimit==2.2.1
 pyotp==2.3.0
 
 # csgoshop
-beautifulsoup4==4.8.0
+beautifulsoup4==4.8.1
 # deployment
 gunicorn==19.9.0
 
 # sentry
-sentry-sdk[flask]==0.10.2
+sentry-sdk[flask]==0.13.0
