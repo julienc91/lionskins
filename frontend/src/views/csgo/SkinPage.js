@@ -15,12 +15,7 @@ import PageNotFound from '../PageNotFound'
 import { withTranslation } from 'react-i18next'
 import SkinPricesHistory from '../../components/csgo/SkinPricesHistory'
 import { getSkinQuery } from '../../api/csgo'
-
-const importAll = (r) => {
-  const images = {}
-  r.keys().forEach((item) => { images[item.replace('./', '')] = r(item) })
-  return images
-}
+import { importAll } from '../../tools'
 
 const defaultWeaponImages = importAll(require.context('../../assets/images/csgo/', false, /default_skin_\w+\.png/))
 

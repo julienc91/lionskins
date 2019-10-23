@@ -134,11 +134,11 @@ $xlarge-down: "only screen and (max-width : 1439px)" !default;
     padding-bottom: 32px;
     min-height: calc(100vh - #{$topbar-height} - #{$footer-height});
     .logo {
-      height: 25vh;
+      height: 20vh;
       margin: auto;
     }
     h1 {
-      font-size: 4rem;
+      font-size: 3rem;
       letter-spacing: 0.5rem;
       @media #{$medium-down} {
         font-size: 2rem;
@@ -146,8 +146,8 @@ $xlarge-down: "only screen and (max-width : 1439px)" !default;
       }
     }
     h2 {
-      font-size: 2rem;
-      line-height: 3rem;
+      font-size: 1.5rem;
+      line-height: 2.5rem;
       @media #{$medium-down} {
         font-size: 1rem;
         line-height: 1.5rem;
@@ -158,28 +158,15 @@ $xlarge-down: "only screen and (max-width : 1439px)" !default;
     }
 
     .carousel {
-      a {
-        img {
-          transition: transform 0.2s;
-          &:hover {
-            transform: scale(1.05);
-          }
-        }
+      div {
+        overflow: hidden;
       }
-      .soon {
-        img {
-          filter: grayscale(100%);
-        }
-        .ribbon {
-          z-index: 100;
-          background-color: $color2;
-          color: $color5;
-          text-transform: uppercase;
-          font-size: 1rem;
-          font-weight: 700;
-          &:after {
-            border-right-color: $color1;
-          }
+      img {
+        transition: transform 0.2s;
+        &:hover {
+          transform-origin: 50%;
+          transform: scale(1.05);
+          z-index: 10;
         }
       }
     }

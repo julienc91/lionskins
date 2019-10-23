@@ -71,39 +71,32 @@ body {
   padding-bottom: 32px;
   min-height: calc(100vh - 60px - 90px); }
   #root .homepage .logo {
-    height: 25vh;
+    height: 20vh;
     margin: auto; }
   #root .homepage h1 {
-    font-size: 4rem;
+    font-size: 3rem;
     letter-spacing: 0.5rem; }
     @media only screen and (max-width: 639px) {
       #root .homepage h1 {
         font-size: 2rem;
         letter-spacing: normal; } }
   #root .homepage h2 {
-    font-size: 2rem;
-    line-height: 3rem; }
+    font-size: 1.5rem;
+    line-height: 2.5rem; }
     @media only screen and (max-width: 639px) {
       #root .homepage h2 {
         font-size: 1rem;
         line-height: 1.5rem; } }
   #root .homepage .header {
     color: #C3CDD7; }
-  #root .homepage .carousel a img {
+  #root .homepage .carousel div {
+    overflow: hidden; }
+  #root .homepage .carousel img {
     transition: transform 0.2s; }
-    #root .homepage .carousel a img:hover {
-      transform: scale(1.05); }
-  #root .homepage .carousel .soon img {
-    filter: grayscale(100%); }
-  #root .homepage .carousel .soon .ribbon {
-    z-index: 100;
-    background-color: #527B9B;
-    color: #E4E9EC;
-    text-transform: uppercase;
-    font-size: 1rem;
-    font-weight: 700; }
-    #root .homepage .carousel .soon .ribbon:after {
-      border-right-color: #335284; }
+    #root .homepage .carousel img:hover {
+      transform-origin: 50%;
+      transform: scale(1.05);
+      z-index: 10; }
 #root .skin-list-container .skin-list-filter-container {
   top: 60px;
   background-color: #010204;

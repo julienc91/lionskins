@@ -8,14 +8,8 @@ import { getColorFromRarity, getIconFromProvider, getSkinUrlFromProvider } from 
 import Img from 'react-image'
 import PropTypes from 'prop-types'
 import * as actions from '../../actions'
-import { getSkinInternalUrl } from '../../tools'
+import { getSkinInternalUrl, importAll } from '../../tools'
 import TrackedLink from '../tools/TrackedLink'
-
-const importAll = (r) => {
-  const images = {}
-  r.keys().forEach((item) => { images[item.replace('./', '')] = r(item) })
-  return images
-}
 
 const defaultWeaponImages = importAll(require.context('../../assets/images/csgo/', false, /default_skin_\w+\.png/))
 
