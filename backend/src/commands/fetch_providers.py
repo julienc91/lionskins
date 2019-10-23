@@ -32,7 +32,7 @@ class FetchProviders:
             }
         }).update(pull__prices___provider=client.provider.name)
 
-        logging.info("Fetching finished, created or updated {} skins".format(count))
+        logging.info("Fetching finished for provider {}, created or updated {} skins".format(client.provider, count))
 
     @classmethod
     def run(cls, provider=None):
