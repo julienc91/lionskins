@@ -42,24 +42,27 @@ class SkinPrices extends React.Component {
             const minPrice = Math.min(...prices.map(price => price.price))
             const maxPrice = Math.max(...prices.map(price => price.price))
 
-            return <Table.Row key={quality}>
-              <Table.Cell>{t(Qualities[quality])}</Table.Cell>
-              {this.providers.map(provider => {
-                const price = prices.find(price => price.provider === provider)
-                const url = skin ? getSkinUrlFromProvider(skin, provider) : ''
+            return (
+              <Table.Row key={quality}>
+                <Table.Cell>{t(Qualities[quality])}</Table.Cell>
+                {this.providers.map(provider => {
+                  const price = prices.find(price => price.provider === provider)
+                  const url = skin ? getSkinUrlFromProvider(skin, provider) : ''
 
-                return (
-                  <Table.Cell
-                    key={provider}
-                    positive={price && price.price === minPrice}
-                    negative={price && minPrice < maxPrice && price.price === maxPrice}>
-                    {price
-                      ? <TrackedLink href={url}>{t(`currency.${currency}`, { price: price.price })}</TrackedLink>
-                      : ''}
-                  </Table.Cell>
-                )
-              })}
-            </Table.Row>
+                  return (
+                    <Table.Cell
+                      key={provider}
+                      positive={price && price.price === minPrice}
+                      negative={price && minPrice < maxPrice && price.price === maxPrice}
+                    >
+                      {price
+                        ? <TrackedLink href={url}>{t(`currency.${currency}`, { price: price.price })}</TrackedLink>
+                        : ''}
+                    </Table.Cell>
+                  )
+                })}
+              </Table.Row>
+            )
           })}
         </Table.Body>
       </Table>

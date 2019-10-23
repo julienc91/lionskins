@@ -58,7 +58,7 @@ class Header extends Component {
   render () {
     const { user } = this.props
     return (
-      <Menu as={'nav'} inverted>
+      <Menu as='nav' inverted>
         <Menu.Item>
           <Link to='/'><img src={logo} alt='Lion Skins' /></Link>
         </Menu.Item>

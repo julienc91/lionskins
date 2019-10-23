@@ -91,13 +91,15 @@ class SkinList extends React.Component {
     const skins = this.prepareSkins()
 
     return (
-      <div className={'skin-list-container'}>
+      <div className='skin-list-container'>
         <Helmet
           title={t('csgo.skin_list.page_title')}
         />
 
-        <Sidebar className={'skin-list-filter-container' + (showSidebar ? ' active' : '')}
-          vertical visible onClick={this.handleShowSidebar}>
+        <Sidebar
+          className={'skin-list-filter-container' + (showSidebar ? ' active' : '')}
+          vertical visible onClick={this.handleShowSidebar}
+        >
           <Icon name='angle double right' className='expand-icon' onClick={this.handleToggleSidebar} />
           <Filter />
         </Sidebar>

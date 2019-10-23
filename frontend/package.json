@@ -47,7 +47,8 @@
     "build": "react-scripts build",
     "postbuild": "./postbuild",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint src/"
   },
   "devDependencies": {
     "cypress": "^3.4.1",

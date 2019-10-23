@@ -15,8 +15,7 @@ class Breadcrumb extends Component {
           <SemanticUIBreadcrumb.Section key={item.name}>
             {item.link ? <Link to={item.link}>{item.name}</Link> : item.name}
           </SemanticUIBreadcrumb.Section>
-        ])
-        }
+        ])}
       </SemanticUIBreadcrumb>
     )
   }

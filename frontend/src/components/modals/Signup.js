@@ -116,18 +116,21 @@ class SignupModal extends Component {
             mutation={signupQuery}
             variables={{ username, password, captcha }}
             onError={this.handleError}
-            onCompleted={this.handleCompleted}>
+            onCompleted={this.handleCompleted}
+          >
             {(mutation, { loading, error }) => (
               <Form onSubmit={(e) => this.handleSubmit(e, mutation)}>
                 {this.renderError(error)}
                 <Form.Input
                   label={t('signup.username_label')} value={username} required disabled={loading}
-                  onChange={(e) => this.setState({ username: e.target.value })} />
+                  onChange={(e) => this.setState({ username: e.target.value })}
+                />
                 <Form.Input
                   label={t('signup.password_label')} type={showPassword ? 'text' : 'password'}
                   value={password} required disabled={loading}
                   action={{ icon: showPassword ? 'eye slash' : 'eye', as: 'div', onClick: this.handleShowPassword }}
-                  onChange={(e) => this.setState({ password: e.target.value })} />
+                  onChange={(e) => this.setState({ password: e.target.value })}
+                />
                 <ReCAPTCHA
                   ref={this.captcha}
                   sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}

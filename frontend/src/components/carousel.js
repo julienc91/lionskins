@@ -44,7 +44,8 @@ class Carousel extends React.Component {
         <div className='soon'>
           <Image
             src={pubgCarousel} alt="PlayerUnknown's Battlegrounds"
-            label={{ content: t('carousel.soon'), ribbon: true }} />
+            label={{ content: t('carousel.soon'), ribbon: true }}
+          />
         </div>
         <div className='soon'>
           <Image src={dota2Carousel} alt='Dota 2' label={{ content: t('carousel.soon'), ribbon: true }} />

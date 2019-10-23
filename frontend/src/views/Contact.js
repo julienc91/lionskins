@@ -107,19 +107,22 @@ class Contact extends Component {
                 return (
                   <Form onSubmit={(e) => this.handleSubmit(e, contact)}>
                     {error &&
-                    <Message negative>
-                      <Message.Header>{t('contact.error.title')}</Message.Header>
-                      <p>{t('contact.error.content')}</p>
-                    </Message>}
+                      <Message negative>
+                        <Message.Header>{t('contact.error.title')}</Message.Header>
+                        <p>{t('contact.error.content')}</p>
+                      </Message>}
                     <Form.Input
                       label={t('contact.name_label')} value={name}
-                      onChange={(e) => this.setState({ name: e.target.value })} />
+                      onChange={(e) => this.setState({ name: e.target.value })}
+                    />
                     <Form.Input
                       label={t('contact.email_label')} type='email' value={email}
-                      onChange={(e) => this.setState({ email: e.target.value })} />
+                      onChange={(e) => this.setState({ email: e.target.value })}
+                    />
                     <Form.TextArea
                       label={t('contact.message_label')} minLength={50} maxLength={10000} required value={message}
-                      onChange={(e) => this.setState({ message: e.target.value })} />
+                      onChange={(e) => this.setState({ message: e.target.value })}
+                    />
                     <ReCAPTCHA
                       ref={this.captcha}
                       sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}

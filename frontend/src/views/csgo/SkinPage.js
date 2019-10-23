@@ -142,7 +142,8 @@ class SkinPage extends Component {
                   <div
                     key={key}
                     className={quality === key ? 'active' : ''}
-                    onClick={() => this.setState({ quality: key })}>
+                    onClick={() => this.setState({ quality: key })}
+                  >
                     {t(Qualities[key])}
                   </div>
                 ))}

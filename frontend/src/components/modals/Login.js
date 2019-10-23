@@ -82,10 +82,12 @@ class LoginModal extends Component {
                 {this.renderError(error)}
                 <Form.Input
                   label={t('login.username_label')} value={username} required disabled={loading}
-                  onChange={(e) => this.setState({ username: e.target.value })} />
+                  onChange={(e) => this.setState({ username: e.target.value })}
+                />
                 <Form.Input
                   label={t('login.password_label')} type='password' value={password} required disabled={loading}
-                  onChange={(e) => this.setState({ password: e.target.value })} />
+                  onChange={(e) => this.setState({ password: e.target.value })}
+                />
                 <Button type='submit' disabled={loading}>{t('login.submit')}</Button>
               </Form>
             )}

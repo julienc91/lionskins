@@ -36,7 +36,8 @@ class Skin extends Component {
             className='ui image'
             loader={defaultImage}
             unloader={defaultImage}
-            alt={alt} />
+            alt={alt}
+          />
         </Link>
         {skin.statTrak && (
           <Label className='stattrak' color='orange'>{t('csgo.skin.stat_trak')}</Label>
