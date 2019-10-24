@@ -3,54 +3,9 @@ import Slider from 'react-slick'
 import { Link } from 'react-router-dom'
 import { Image } from 'semantic-ui-react'
 import { importAll } from '../tools'
+import carouselImagesData from '../assets/data/carousel'
 
 const carouselImages = importAll(require.context('../assets/images/carousel/', false, /.jpg/))
-const carouselImagesData = {
-  ak_47_neon_revolution: {
-    link: '/counter-strike-global-offensive/ak-47/neon-revolution/',
-    name: 'AK-47 - Neon Revolution'
-  },
-  ak_47_uncharted: {
-    link: '/counter-strike-global-offensive/ak-47/uncharted/',
-    name: 'AK-47 - Uncharted'
-  },
-  awp_asiimov: {
-    link: '/counter-strike-global-offensive/awp/asiimov/',
-    name: 'AWP - Asiimov'
-  },
-  cz75_auto_eco: {
-    link: '/counter-strike-global-offensive/cz75-auto/eco/',
-    name: 'CZ75-Auto - Eco'
-  },
-  desert_eagle_mecha_industries: {
-    link: '/counter-strike-global-offensive/desert-eagle/mecha-industries/',
-    name: 'Desert Eagle - Mecha Industries'
-  },
-  m4a4_neo_noir: {
-    link: '/counter-strike-global-offensive/m4a4/neo-noir/',
-    name: 'M4A4 - Neo-Noir'
-  },
-  mac_10_neon_rider: {
-    link: '/counter-strike-global-offensive/mac-10/neon-rider/',
-    name: 'MAC-10 - Neon Rider'
-  },
-  p90_nostalgia: {
-    link: '/counter-strike-global-offensive/p90/nostalgia/',
-    name: 'P90 - Nostalgia'
-  },
-  sawed_off_devourer: {
-    link: '/counter-strike-global-offensive/sawed-off/devourer/',
-    name: 'Sawed-Off - Devourer'
-  },
-  ump_45_moonrise: {
-    link: '/counter-strike-global-offensive/ump-45/moonrise/',
-    name: 'UMP-45 - Moonrise'
-  },
-  usp_s_cortex: {
-    link: '/counter-strike-global-offensive/usp-s/cortex/',
-    name: 'USP-S - Cortex'
-  }
-}
 
 class Carousel extends React.Component {
   constructor (props) {
