@@ -16,6 +16,4 @@ class Contact(ModelMixin, db.Document):
 
     creation_date = db.DateTimeField(required=True, default=datetime.now)
 
-    meta = {
-        'indexes': ['creation_date']
-    }
+    meta = {"indexes": ["creation_date"]}

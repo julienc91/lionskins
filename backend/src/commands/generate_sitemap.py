@@ -27,11 +27,7 @@ class GenerateSitemap:
         for skin in all_skins:
             weapon_slug = slugify(skin.weapon.name.value)
             url = f"https://lionskins.co/counter-strike-global-offensive/{weapon_slug}/{skin.slug}/"
-            row = [
-                url,
-                "daily",
-                0.7
-            ]
+            row = [url, "daily", 0.7]
             if url in already_done:
                 continue
 

@@ -9,7 +9,7 @@ from .model_mixin import ModelMixin
 
 
 class Item(ModelMixin, db.EmbeddedDocument):
-    skin = db.ReferenceField('Skin', required=True)
+    skin = db.ReferenceField("Skin", required=True)
     creation_date = db.DateTimeField(required=True, default=datetime.now)
 
 
@@ -18,7 +18,7 @@ class ItemContainer(ModelMixin, db.EmbeddedDocument):
 
 
 class List(ModelMixin, db.Document):
-    user = db.ReferenceField('User', required=True)
+    user = db.ReferenceField("User", required=True)
     name = db.StringField(required=True)
     description = db.StringField()
     slug = db.StringField(required=True)

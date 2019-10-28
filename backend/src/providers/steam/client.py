@@ -18,8 +18,9 @@ class Client(AbstractProvider):
     def get_parser(app):
         if app == Apps.csgo:
             from ..parsers.csgo import Parser
+
             return Parser
-        raise NotImplemented
+        raise NotImplementedError
 
     @sleep_and_retry
     @limits(calls=1, period=45)
@@ -32,8 +33,8 @@ class Client(AbstractProvider):
     def _app_specific_parsing(self, skin, row):
         if self.app == Apps.csgo:
             try:
-                rarity = row['asset_description']['type']
-                rarity = re.sub(r'^Souvenir', '', rarity).strip()
+                rarity = row["asset_description"]["type"]
+                rarity = re.sub(r"^Souvenir", "", rarity).strip()
                 rarity = self.parser.parse_rarity(rarity)
                 skin.rarity = rarity
             except (KeyError, AttributeError, ValueError):
@@ -44,18 +45,20 @@ class Client(AbstractProvider):
         count = 100
 
         while True:
-            result = self.__get({
-                'appid': self.parser.app_id,
-                'search_description': 0,
-                'sort_dir': 'asc',
-                'sort_column': 'name',
-                'norender': 1,
-                'count': count,
-                'currency': 3,
-                'start': start,
-            })
+            result = self.__get(
+                {
+                    "appid": self.parser.app_id,
+                    "search_description": 0,
+                    "sort_dir": "asc",
+                    "sort_column": "name",
+                    "norender": 1,
+                    "count": count,
+                    "currency": 3,
+                    "start": start,
+                }
+            )
             try:
-                result = result.json()['results']
+                result = result.json()["results"]
             except (KeyError, TypeError):
                 return
 
@@ -63,13 +66,13 @@ class Client(AbstractProvider):
                 return
 
             for row in result:
-                item_name = row['hash_name']
-                item_price = float(row['sell_price']) / 100
+                item_name = row["hash_name"]
+                item_price = float(row["sell_price"]) / 100
                 skin = self.parser.get_skin_from_item_name(item_name)
                 if skin:
-                    image_url = row.get('asset_description', {}).get('icon_url', '')
+                    image_url = row.get("asset_description", {}).get("icon_url", "")
                     if not skin.image_url and image_url:
-                        skin.image_url = f'https://steamcommunity-a.akamaihd.net/economy/image/{image_url}/720fx720f'
+                        skin.image_url = f"https://steamcommunity-a.akamaihd.net/economy/image/{image_url}/720fx720f"
 
                     self._app_specific_parsing(skin, row)
 

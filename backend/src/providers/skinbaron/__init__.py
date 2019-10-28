@@ -2,4 +2,4 @@
 
 from .client import Client as SkinBaron
 
-__all__ = ['SkinBaron']
+__all__ = ["SkinBaron"]

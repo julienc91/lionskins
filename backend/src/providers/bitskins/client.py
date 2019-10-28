@@ -17,14 +17,15 @@ class Client(AbstractProvider):
 
     def __init__(self, app):
         super().__init__(app)
-        self.__otp = pyotp.TOTP(os.environ.get('BITSKINS_2FA_KEY'))
+        self.__otp = pyotp.TOTP(os.environ.get("BITSKINS_2FA_KEY"))
 
     @staticmethod
     def get_parser(app):
         if app == Apps.csgo:
             from ..parsers.csgo import Parser
+
             return Parser
-        raise NotImplemented
+        raise NotImplementedError
 
     @property
     def __2fa_code(self):
@@ -35,17 +36,17 @@ class Client(AbstractProvider):
     def __get(self, method, params=None):
         if not params:
             params = {}
-        params['api_key'] = os.environ.get('BITSKINS_API_KEY')
-        params['code'] = self.__2fa_code
+        params["api_key"] = os.environ.get("BITSKINS_API_KEY")
+        params["code"] = self.__2fa_code
 
         return requests.get(self.base_url + method + "/", params)
 
     def get_prices(self):
-        result = self.__get('get_price_data_for_items_on_sale', params={'app_id': self.parser.app_id})
-        result = result.json()['data']['items']
+        result = self.__get("get_price_data_for_items_on_sale", params={"app_id": self.parser.app_id})
+        result = result.json()["data"]["items"]
         for row in result:
-            item_name = row['market_hash_name']
-            item_price = float(row['lowest_price'])
+            item_name = row["market_hash_name"]
+            item_price = float(row["lowest_price"])
             skin = self.parser.get_skin_from_item_name(item_name)
             if skin and item_price > 0:
                 yield (skin, item_price)

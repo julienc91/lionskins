@@ -15,16 +15,17 @@ class Client(AbstractProvider):
     def get_parser(app):
         if app == Apps.csgo:
             from ..parsers.csgo import Parser
+
             return Parser
-        raise NotImplemented
+        raise NotImplementedError
 
     def get_prices(self):
         for result in Scraper.run():
-            item_name = result['name']
-            item_price = result['price']
+            item_name = result["name"]
+            item_price = result["price"]
             skin = self.parser.get_skin_from_item_name(item_name)
             if skin and item_price > 0:
-                yield (skin, item_price)
+                yield skin, item_price
 
 
 class Scraper:
@@ -41,19 +42,16 @@ class Scraper:
     @staticmethod
     def get_page(url):
         page = requests.get(url)
-        return BeautifulSoup(page.text, 'html.parser')
+        return BeautifulSoup(page.text, "html.parser")
 
     @staticmethod
     def get_next_page_url(page):
         next_page = page.select_one('main.container .pagination li a[rel="next"]')
         if next_page:
-            return next_page['href']
+            return next_page["href"]
         return None
 
     @staticmethod
     def parse(page):
-        for item in page.select('main.container .listing-item'):
-            yield {
-                'name': item.select_one('.item-name').getText(),
-                'price': float(item.select_one('.item-price')['content']),
-            }
+        for item in page.select("main.container .listing-item"):
+            yield {"name": item.select_one(".item-name").getText(), "price": float(item.select_one(".item-price")["content"])}

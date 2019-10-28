@@ -22,7 +22,7 @@ class TypePrice(graphene.ObjectType):
     price = graphene.Float(currency=TypeCurrency())
 
     def resolve_price(self, info, **args):
-        currency = args.get('currency') or models.enums.Currencies.usd.value
+        currency = args.get("currency") or models.enums.Currencies.usd.value
         currency = models.enums.Currencies(currency)
         if currency != models.enums.Currencies.usd:
             return CurrencyConverter.convert(self.price, models.enums.Currencies.usd, currency)
@@ -31,7 +31,7 @@ class TypePrice(graphene.ObjectType):
 
 class BaseTypeSkin(graphene.ObjectType):
     class Meta:
-        interfaces = (graphene.relay.Node, )
+        interfaces = (graphene.relay.Node,)
 
     name = graphene.String()
     slug = graphene.String()

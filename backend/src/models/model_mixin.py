@@ -9,10 +9,10 @@ string_field_init = db.StringField.__init__
 
 
 def patched_init(*args, **kwargs):
-    if 'choices' in kwargs:
+    if "choices" in kwargs:
         try:
-            if issubclass(kwargs['choices'], Enum):
-                kwargs['choices'] = [(e.name, e.value) for e in kwargs['choices']]
+            if issubclass(kwargs["choices"], Enum):
+                kwargs["choices"] = [(e.name, e.value) for e in kwargs["choices"]]
         except TypeError:
             pass
     string_field_init(*args, **kwargs)
@@ -22,7 +22,6 @@ db.StringField.__init__ = patched_init
 
 
 class ModelMixin:
-
     def __init__(self, **kwargs):
         super().__init__(**self._parse_kwargs(kwargs))
 

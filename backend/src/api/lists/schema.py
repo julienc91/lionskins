@@ -19,7 +19,7 @@ def get_list_from_id(list_id):
     _, list_id = from_global_id(list_id)
     list_ = List.filter(user=user, id=list_id).first()
     if not list_:
-        raise GraphQLError('No list with this id')
+        raise GraphQLError("No list with this id")
     return list_
 
 
@@ -34,7 +34,7 @@ class CreateList(graphene.Mutation):
     @jwt_required
     def mutate(cls, *args, **kwargs):
         user = get_current_user()
-        name = kwargs['name']
+        name = kwargs["name"]
         if not name:
             raise GraphQLError("Invalid name")
         slug = List.generate_slug(user, name)
@@ -55,12 +55,12 @@ class UpdateList(graphene.Mutation):
     @classmethod
     @jwt_required
     def mutate(cls, *args, **kwargs):
-        list_ = get_list_from_id(kwargs['id'])
+        list_ = get_list_from_id(kwargs["id"])
 
-        if 'description' in kwargs:
-            list_.description = kwargs['description']
-        if kwargs.get('name') and kwargs['name'] != list_.name:
-            list_.name = kwargs['name']
+        if "description" in kwargs:
+            list_.description = kwargs["description"]
+        if kwargs.get("name") and kwargs["name"] != list_.name:
+            list_.name = kwargs["name"]
             list_.slug = List.generate_slug(list_.user, list_.name)
         list_.update_date = datetime.now()
         list_.save()
@@ -76,7 +76,7 @@ class DeleteList(graphene.Mutation):
     @classmethod
     @jwt_required
     def mutate(cls, *args, **kwargs):
-        list_ = get_list_from_id(kwargs['id'])
+        list_ = get_list_from_id(kwargs["id"])
         list_.delete()
         return cls(ok=True)
 
@@ -92,10 +92,10 @@ class AddItems(graphene.Mutation):
     @classmethod
     @jwt_required
     def mutate(cls, *args, **kwargs):
-        list_ = get_list_from_id(kwargs['id'])
+        list_ = get_list_from_id(kwargs["id"])
 
         item_ids = []
-        for item_id in kwargs['item_ids']:
+        for item_id in kwargs["item_ids"]:
             _, item_id = from_global_id(item_id)
             item_ids.append(item_id)
 
@@ -103,7 +103,7 @@ class AddItems(graphene.Mutation):
         if not skins:
             return cls(list=list_)
 
-        container_id = kwargs.get('container_id')
+        container_id = kwargs.get("container_id")
         if container_id is None:
             container = ItemContainer.create()
             for skin in skins:
@@ -132,9 +132,9 @@ class DeleteContainer(graphene.Mutation):
     @classmethod
     @jwt_required
     def mutate(cls, *args, **kwargs):
-        list_ = get_list_from_id(kwargs['id'])
+        list_ = get_list_from_id(kwargs["id"])
 
-        container_id = kwargs['container_id']
+        container_id = kwargs["container_id"]
         list_.item_containers.pop(container_id)
         list_.save()
         return cls(list=list_)
@@ -151,10 +151,10 @@ class MoveContainer(graphene.Mutation):
     @classmethod
     @jwt_required
     def mutate(cls, *args, **kwargs):
-        list_ = get_list_from_id(kwargs['id'])
+        list_ = get_list_from_id(kwargs["id"])
 
-        container_id = kwargs['container_id']
-        new_container_id = kwargs['new_container_id']
+        container_id = kwargs["container_id"]
+        new_container_id = kwargs["new_container_id"]
         container = list_.item_containers.pop(container_id)
         list_.item_containers.insert(new_container_id, container)
         list_.save()
@@ -172,14 +172,14 @@ class RemoveItems(graphene.Mutation):
     @classmethod
     @jwt_required
     def mutate(cls, *args, **kwargs):
-        list_ = get_list_from_id(kwargs['list_id'])
+        list_ = get_list_from_id(kwargs["list_id"])
 
         item_ids = []
-        for item_id in kwargs['item_ids']:
+        for item_id in kwargs["item_ids"]:
             _, item_id = from_global_id(item_id)
             item_ids.append(item_id)
 
-        container_id = kwargs['container_id']
+        container_id = kwargs["container_id"]
         container = list_.item_containers[container_id]
         items = []
         for item in container.items:
@@ -204,13 +204,11 @@ class Mutation(graphene.ObjectType):
 
 
 class Query(graphene.ObjectType):
-    current_user_lists = graphene.relay.ConnectionField(
-        ListConnection
-    )
+    current_user_lists = graphene.relay.ConnectionField(ListConnection)
     user_list = graphene.Field(TypeList, id=graphene.ID(required=True))
 
     def resolve_user_list(self, info, **kwargs):
-        _, list_id = from_global_id(kwargs['id'])
+        _, list_id = from_global_id(kwargs["id"])
         list_ = List.filter(id=list_id).first()
         return list_
 

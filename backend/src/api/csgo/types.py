@@ -38,9 +38,8 @@ class TypeCSGOWeapon(graphene.ObjectType):
 
 
 class TypeCSGOSkin(BaseTypeSkin):
-
     class Meta:
-        interfaces = (graphene.relay.Node, )
+        interfaces = (graphene.relay.Node,)
 
     class TypeDescription(graphene.ObjectType):
         en = graphene.String()
@@ -58,6 +57,5 @@ class TypeCSGOSkin(BaseTypeSkin):
 
 
 class SkinConnection(graphene.relay.Connection):
-
     class Meta:
         node = TypeCSGOSkin

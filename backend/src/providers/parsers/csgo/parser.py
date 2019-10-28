@@ -27,25 +27,26 @@ class Parser:
 
     @classmethod
     def get_skin_from_item_name(cls, item_name: str):
-        left_split, _, right_split = item_name.partition('|')
+        left_split, _, right_split = item_name.partition("|")
 
-        stat_trak = 'StatTrak' in left_split
-        souvenir = 'Souvenir' in left_split
+        stat_trak = "StatTrak" in left_split
+        souvenir = "Souvenir" in left_split
 
-        left_split = re.sub(r'^(★\s?)?(StatTrak™?)?', '', left_split).strip()
-        left_split = re.sub(r'^Souvenir', '', left_split).strip()
+        left_split = re.sub(r"^(★\s?)?(StatTrak™?)?", "", left_split).strip()
+        left_split = re.sub(r"^Souvenir", "", left_split).strip()
 
         weapon = left_split
 
         try:
             weapon = Weapons(weapon)
-            quality = re.search(r'\(([\w\s-]+)\)$', right_split).group(1)
+            quality = re.search(r"\(([\w\s-]+)\)$", right_split).group(1)
             quality = cls._parse_quality(quality)
         except (ValueError, AttributeError):
             return None
 
         weapon = Weapon.get(name=weapon)
-        skin_name = right_split.replace('(' + quality.value + ')', '').strip()
+        skin_name = right_split.replace("(" + quality.value + ")", "").strip()
 
-        return Skin.get_or_create(name=skin_name, app=Apps.csgo, weapon=weapon, quality=quality,
-                                  stat_trak=stat_trak, souvenir=souvenir)
+        return Skin.get_or_create(
+            name=skin_name, app=Apps.csgo, weapon=weapon, quality=quality, stat_trak=stat_trak, souvenir=souvenir
+        )

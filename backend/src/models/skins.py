@@ -22,20 +22,17 @@ class Skin(ModelMixin, db.Document):
 
     prices = db.EmbeddedDocumentListField(Price)
 
-    meta = {
-        'indexes': ['_app', 'slug', 'name'],
-        'allow_inheritance': True,
-    }
+    meta = {"indexes": ["_app", "slug", "name"], "allow_inheritance": True}
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.slug = self.generate_slug()
 
     def __repr__(self):
-        return f'<Skin id={self.id}, name={self.name}>'
+        return f"<Skin id={self.id}, name={self.name}>"
 
     def __str__(self):
-        return f'<Skin {self.id} - {self.name}>'
+        return f"<Skin {self.id} - {self.name}>"
 
     @property
     def fullname(self):

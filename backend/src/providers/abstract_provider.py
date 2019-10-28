@@ -4,7 +4,6 @@ from abc import abstractmethod
 
 
 class AbstractProvider:
-
     def __init__(self, app):
         self.app = app
         self.parser = self.get_parser(app)

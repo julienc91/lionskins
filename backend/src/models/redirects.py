@@ -17,9 +17,7 @@ class Redirect(ModelMixin, db.Document):
 
     creation_date = db.DateTimeField(required=True, default=datetime.now)
 
-    meta = {
-        'indexes': ['creation_date', 'tracker']
-    }
+    meta = {"indexes": ["creation_date", "tracker"]}
 
     @property
     def provider(self):

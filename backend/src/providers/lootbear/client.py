@@ -16,8 +16,9 @@ class Client(AbstractProvider):
     def get_parser(app):
         if app == Apps.csgo:
             from ..parsers.csgo import Parser
+
             return Parser
-        raise NotImplemented
+        raise NotImplementedError
 
     @sleep_and_retry
     @limits(calls=1, period=1)
@@ -32,25 +33,21 @@ class Client(AbstractProvider):
         already_done = set()  # some skins are returned multiple times
 
         while True:
-            result = self.__get('items', params={
-                'limit': limit,
-                'offset': offset,
-                'renting': 0,
-                'selling': 1,
-                'gameId': 'csgo',
-                'sortBy': 'price_asc',
-            })
-            result = result.json()['items']
+            result = self.__get(
+                "items",
+                params={"limit": limit, "offset": offset, "renting": 0, "selling": 1, "gameId": "csgo", "sortBy": "price_asc"},
+            )
+            result = result.json()["items"]
             if not result:
                 return
 
             offset += limit
             for row in result:
-                if row['steamAppId'] != self.parser.app_id:
+                if row["steamAppId"] != self.parser.app_id:
                     continue
 
-                item_name = row['name']
-                item_price = float(row['price']) / 100.
+                item_name = row["name"]
+                item_price = float(row["price"]) / 100.0
                 if item_name in already_done:
                     continue
 

@@ -8,9 +8,8 @@ from ..skins import TypeCurrency, TypeProvider
 
 
 class TypeHistory(graphene.ObjectType):
-
     class Meta:
-        interfaces = (graphene.relay.Node, )
+        interfaces = (graphene.relay.Node,)
 
     model = models.History
 
@@ -20,7 +19,7 @@ class TypeHistory(graphene.ObjectType):
     creation_date = graphene.DateTime()
 
     def resolve_price(self, info, **args):
-        currency = args.get('currency') or models.enums.Currencies.usd.value
+        currency = args.get("currency") or models.enums.Currencies.usd.value
         currency = models.enums.Currencies(currency)
         self.currency = currency
         if currency != models.enums.Currencies.usd:
@@ -32,6 +31,5 @@ class TypeHistory(graphene.ObjectType):
 
 
 class HistoryConnection(graphene.relay.Connection):
-
     class Meta:
         node = TypeHistory

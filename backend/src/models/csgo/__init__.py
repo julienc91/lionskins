@@ -4,4 +4,4 @@ from . import enums
 from .skins import Skin
 from .weapons import Weapon
 
-__all__ = ['Skin', 'Weapon', 'enums']
+__all__ = ["Skin", "Weapon", "enums"]

@@ -2,4 +2,4 @@
 
 from .client import Client as Steam
 
-__all__ = ['Steam']
+__all__ = ["Steam"]

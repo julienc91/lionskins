@@ -16,11 +16,9 @@ class User(ModelMixin, db.Document):
     creation_date = db.DateTimeField(required=True, default=datetime.now)
     last_login = db.DateTimeField(required=True, default=datetime.now)
 
-    TEMPORARY_PASSWORD = '!'
+    TEMPORARY_PASSWORD = "!"
 
-    meta = {
-        'indexes': ['username']
-    }
+    meta = {"indexes": ["username"]}
 
     @property
     def jwt_identity(self):
@@ -39,7 +37,7 @@ class User(ModelMixin, db.Document):
 
     @classmethod
     def create(cls, **kwargs):
-        password = kwargs.pop('password')
+        password = kwargs.pop("password")
         res = super().create(password=cls.TEMPORARY_PASSWORD, **kwargs)
         res.set_password(password)
         return res

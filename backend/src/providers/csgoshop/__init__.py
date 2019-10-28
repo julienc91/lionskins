@@ -2,4 +2,4 @@
 
 from .client import Client as CSGOShop
 
-__all__ = ['CSGOShop']
+__all__ = ["CSGOShop"]

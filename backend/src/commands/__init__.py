@@ -10,9 +10,9 @@ from ..application import app
 from ..models.enums import Providers
 
 
-@app.cli.command('fetch_providers')
-@click.option('--daemon', is_flag=True)
-@click.option('--provider', type=click.Choice([p.name for p in Providers]))
+@app.cli.command("fetch_providers")
+@click.option("--daemon", is_flag=True)
+@click.option("--provider", type=click.Choice([p.name for p in Providers]))
 def fetch_providers(daemon, provider):
     from .fetch_providers import FetchProviders
 
@@ -31,7 +31,7 @@ def fetch_providers(daemon, provider):
                     logging.exception(e)
                 time.sleep(3600)
 
-        threads = [Thread(target=worker, args=(provider, )) for provider in providers]
+        threads = [Thread(target=worker, args=(provider,)) for provider in providers]
         for thread in threads:
             thread.start()
         for thread in threads:
@@ -42,13 +42,15 @@ def fetch_providers(daemon, provider):
             FetchProviders.run(provider)
 
 
-@app.cli.command('generate_sitemap')
+@app.cli.command("generate_sitemap")
 def generate_sitemap():
     from .generate_sitemap import GenerateSitemap
+
     GenerateSitemap.run()
 
 
-@app.cli.command('sync_catalog')
+@app.cli.command("sync_catalog")
 def sync_catalog():
     from .sync_catalog import SyncCatalog
+
     SyncCatalog.run()

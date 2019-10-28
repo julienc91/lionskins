@@ -8,7 +8,6 @@ from .weapons import Weapon
 
 
 class Skin(BaseSkin):
-
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.app = Apps.csgo
@@ -23,9 +22,7 @@ class Skin(BaseSkin):
     _collection_ = db.StringField(db_field="collection", choices=Collections)
     description = db.DictField()
 
-    meta = {
-        'indexes': ['stat_trak', 'souvenir', '_quality', '_rarity', '_collection_']
-    }
+    meta = {"indexes": ["stat_trak", "souvenir", "_quality", "_rarity", "_collection_"]}
 
     @property
     def fullname(self):
@@ -41,13 +38,13 @@ class Skin(BaseSkin):
 
     @property
     def market_hash_name(self):
-        res = ''
+        res = ""
         if self.weapon.category == Categories.knives:
-            res += '★ '
+            res += "★ "
         if self.souvenir:
-            res += 'Souvenir '
+            res += "Souvenir "
         elif self.stat_trak:
-            res += 'StatTrak™ '
+            res += "StatTrak™ "
         res += self.weapon.name.value + " | " + self.name
         return res
 
@@ -83,9 +80,9 @@ class Skin(BaseSkin):
 
     @classmethod
     def _parse_kwargs(cls, kwargs):
-        if 'quality' in kwargs:
+        if "quality" in kwargs:
             try:
-                kwargs['_quality'] = kwargs.pop('quality').to_int()
+                kwargs["_quality"] = kwargs.pop("quality").to_int()
             except AttributeError:
                 pass
         return super()._parse_kwargs(kwargs)

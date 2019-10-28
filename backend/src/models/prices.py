@@ -14,9 +14,7 @@ class Price(ModelMixin, db.EmbeddedDocument):
     creation_date = db.DateTimeField(required=True, default=datetime.now)
     update_date = db.DateTimeField(requured=True, default=datetime.now)
 
-    meta = {
-        'indexes': ['price']
-    }
+    meta = {"indexes": ["price"]}
 
     @property
     def provider(self):

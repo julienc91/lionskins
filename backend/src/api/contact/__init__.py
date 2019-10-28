@@ -2,4 +2,4 @@
 
 from .schema import Mutation
 
-__all__ = ['Mutation']
+__all__ = ["Mutation"]

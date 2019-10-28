@@ -25,9 +25,8 @@ class TypeItemContainer(graphene.ObjectType):
 
 
 class TypeList(graphene.ObjectType):
-
     class Meta:
-        interfaces = (graphene.relay.Node, )
+        interfaces = (graphene.relay.Node,)
 
     model = models.List
 
@@ -45,6 +44,5 @@ class TypeList(graphene.ObjectType):
 
 
 class ListConnection(graphene.relay.Connection):
-
     class Meta:
         node = TypeList

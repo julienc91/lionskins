@@ -28,8 +28,7 @@ def access_token(user):
 @pytest.fixture()
 def skin():
     weapon = Weapon.create(name=Weapons.ak_47)
-    return Skin.create(name='foo', weapon=weapon, souvenir=False,
-                       stat_trak=False, quality=Qualities.factory_new)
+    return Skin.create(name="foo", weapon=weapon, souvenir=False, stat_trak=False, quality=Qualities.factory_new)
 
 
 @pytest.fixture()
@@ -75,32 +74,31 @@ def test_get_current_user_lists(client, user, nb_lists, access_token):
 
     url = url_for("graphql")
 
-    res = client.post(url, headers={
-        "Authorization": f"Bearer {access_token}"
-    }, data=json.dumps({
-        "query": get_current_user_lists_query
-    }), content_type='application/json')
+    res = client.post(
+        url,
+        headers={"Authorization": f"Bearer {access_token}"},
+        data=json.dumps({"query": get_current_user_lists_query}),
+        content_type="application/json",
+    )
 
     assert res.status_code == HTTPStatus.OK
 
     res = res.json
-    assert res['data']['currentUserLists']
+    assert res["data"]["currentUserLists"]
 
-    lists = [edge['node'] for edge in res['data']['currentUserLists']['edges']]
+    lists = [edge["node"] for edge in res["data"]["currentUserLists"]["edges"]]
     assert len(lists) == nb_lists
 
 
 def test_get_current_user_lists_invalid(client):
     url = url_for("graphql")
 
-    res = client.post(url, data=json.dumps({
-        "query": get_current_user_lists_query
-    }), content_type='application/json')
+    res = client.post(url, data=json.dumps({"query": get_current_user_lists_query}), content_type="application/json")
 
     assert res.status_code == HTTPStatus.OK
 
     res = res.json
-    assert not res['data']['currentUserLists']
+    assert not res["data"]["currentUserLists"]
 
 
 #  get list
@@ -128,32 +126,30 @@ def test_get_list(client, list_):
     url = url_for("graphql")
 
     list_id = to_global_id("TypeList", list_.id)
-    res = client.post(url, data=json.dumps({
-        "query": get_list_query,
-        "variables": {"id": list_id}
-    }), content_type='application/json')
+    res = client.post(
+        url, data=json.dumps({"query": get_list_query, "variables": {"id": list_id}}), content_type="application/json"
+    )
 
     assert res.status_code == HTTPStatus.OK
 
     res = res.json
-    assert res['data']['userList']
-    assert res['data']['userList']['id'] == list_id
-    assert res['data']['userList']['user']['username'] == list_.user.username
+    assert res["data"]["userList"]
+    assert res["data"]["userList"]["id"] == list_id
+    assert res["data"]["userList"]["user"]["username"] == list_.user.username
 
 
 def test_get_list_invalid(client):
     url = url_for("graphql")
 
     list_id = to_global_id("TypeList", "404")
-    res = client.post(url, data=json.dumps({
-        "query": get_list_query,
-        "variables": {"id": list_id}
-    }), content_type='application/json')
+    res = client.post(
+        url, data=json.dumps({"query": get_list_query, "variables": {"id": list_id}}), content_type="application/json"
+    )
 
     assert res.status_code == HTTPStatus.OK
 
     res = res.json
-    assert not res['data']['userList']
+    assert not res["data"]["userList"]
 
 
 # create list
@@ -175,20 +171,17 @@ create_list_query = """
 """
 
 
-@pytest.mark.parametrize("name, description", [
-    ("foo", "bar"),
-    ("foo", "")
-])
+@pytest.mark.parametrize("name, description", [("foo", "bar"), ("foo", "")])
 def test_create_list(client, user, access_token, name, description):
 
     url = url_for("graphql")
 
-    res = client.post(url, headers={
-        "Authorization": f"Bearer {access_token}"
-    }, data=json.dumps({
-        "query": create_list_query,
-        "variables": {"name": name, "description": description}
-    }), content_type='application/json')
+    res = client.post(
+        url,
+        headers={"Authorization": f"Bearer {access_token}"},
+        data=json.dumps({"query": create_list_query, "variables": {"name": name, "description": description}}),
+        content_type="application/json",
+    )
 
     assert res.status_code == HTTPStatus.OK
 
@@ -201,37 +194,38 @@ def test_create_list(client, user, access_token, name, description):
     assert list_.description == description
 
     res = res.json
-    assert res['data']['createList']['list']
-    assert res['data']['createList']['list']['name'] == name
+    assert res["data"]["createList"]["list"]
+    assert res["data"]["createList"]["list"]["name"] == name
 
 
 def test_create_list_not_authenticated(client):
     url = url_for("graphql")
-    res = client.post(url, data=json.dumps({
-        "query": create_list_query,
-        "variables": {"name": "foo", "description": "bar"}
-    }), content_type='application/json')
+    res = client.post(
+        url,
+        data=json.dumps({"query": create_list_query, "variables": {"name": "foo", "description": "bar"}}),
+        content_type="application/json",
+    )
 
     assert res.status_code == HTTPStatus.OK
 
     res = res.json
-    assert not res['data']['createList']
+    assert not res["data"]["createList"]
     assert List.count() == 0
 
 
 def test_create_list_invalid(client, access_token):
     url = url_for("graphql")
-    res = client.post(url, headers={
-        "Authorization": f"Bearer {access_token}"
-    }, data=json.dumps({
-        "query": create_list_query,
-        "variables": {"name": "", "description": "bar"}
-    }), content_type='application/json')
+    res = client.post(
+        url,
+        headers={"Authorization": f"Bearer {access_token}"},
+        data=json.dumps({"query": create_list_query, "variables": {"name": "", "description": "bar"}}),
+        content_type="application/json",
+    )
 
     assert res.status_code == HTTPStatus.OK
 
     res = res.json
-    assert not res['data']['createList']
+    assert not res["data"]["createList"]
     assert List.count() == 0
 
 
@@ -254,40 +248,35 @@ update_list_query = """
 """
 
 
-@pytest.mark.parametrize("variables", [
-    {},
-    {"name": ""},
-    {"name": "foo"},
-    {"name": "bar"},
-    {"description": "qux"},
-    {"description": ""}
-])
+@pytest.mark.parametrize(
+    "variables", [{}, {"name": ""}, {"name": "foo"}, {"name": "bar"}, {"description": "qux"}, {"description": ""}]
+)
 def test_update_list(client, list_, access_token, variables):
     url = url_for("graphql")
 
     list_id = to_global_id("TypeList", list_.id)
-    res = client.post(url, headers={
-        "Authorization": f"Bearer {access_token}"
-    }, data=json.dumps({
-        "query": update_list_query,
-        "variables": {"id": list_id, **variables}
-    }), content_type='application/json')
+    res = client.post(
+        url,
+        headers={"Authorization": f"Bearer {access_token}"},
+        data=json.dumps({"query": update_list_query, "variables": {"id": list_id, **variables}}),
+        content_type="application/json",
+    )
 
     assert res.status_code == HTTPStatus.OK
 
     res = res.json
-    assert res['data']['updateList']['list']
+    assert res["data"]["updateList"]["list"]
 
     updated_list = List.get(id=list_.id)
-    if variables.get('name'):
-        assert updated_list.name == variables['name']
-        assert updated_list.slug == slugify(variables['name'])
+    if variables.get("name"):
+        assert updated_list.name == variables["name"]
+        assert updated_list.slug == slugify(variables["name"])
     else:
         assert updated_list.name == list_.name
         assert updated_list.slug == list_.slug
 
-    if 'description' in variables:
-        assert updated_list.description == variables['description']
+    if "description" in variables:
+        assert updated_list.description == variables["description"]
     else:
         assert updated_list.description == list_.description
 
@@ -296,15 +285,16 @@ def test_update_list_not_authenticated(client, list_):
     url = url_for("graphql")
 
     list_id = to_global_id("TypeList", list_.id)
-    res = client.post(url, data=json.dumps({
-        "query": update_list_query,
-        "variables": {"id": list_id, "name": "bar"}
-    }), content_type='application/json')
+    res = client.post(
+        url,
+        data=json.dumps({"query": update_list_query, "variables": {"id": list_id, "name": "bar"}}),
+        content_type="application/json",
+    )
 
     assert res.status_code == HTTPStatus.OK
 
     res = res.json
-    assert not res['data']['updateList']
+    assert not res["data"]["updateList"]
 
 
 def test_update_list_not_owner(client, list_, access_token):
@@ -315,34 +305,34 @@ def test_update_list_not_owner(client, list_, access_token):
     url = url_for("graphql")
 
     list_id = to_global_id("TypeList", list_.id)
-    res = client.post(url, headers={
-        "Authorization": f"Bearer {access_token}"
-    }, data=json.dumps({
-        "query": update_list_query,
-        "variables": {"id": list_id, "name": "bar"}
-    }), content_type='application/json')
+    res = client.post(
+        url,
+        headers={"Authorization": f"Bearer {access_token}"},
+        data=json.dumps({"query": update_list_query, "variables": {"id": list_id, "name": "bar"}}),
+        content_type="application/json",
+    )
 
     assert res.status_code == HTTPStatus.OK
 
     res = res.json
-    assert not res['data']['updateList']
+    assert not res["data"]["updateList"]
 
 
 def test_update_list_invalid(client, list_, access_token):
     url = url_for("graphql")
 
     list_id = to_global_id("TypeList", "invalid_id")
-    res = client.post(url, headers={
-        "Authorization": f"Bearer {access_token}"
-    }, data=json.dumps({
-        "query": update_list_query,
-        "variables": {"id": list_id, "name": "bar"}
-    }), content_type='application/json')
+    res = client.post(
+        url,
+        headers={"Authorization": f"Bearer {access_token}"},
+        data=json.dumps({"query": update_list_query, "variables": {"id": list_id, "name": "bar"}}),
+        content_type="application/json",
+    )
 
     assert res.status_code == HTTPStatus.OK
 
     res = res.json
-    assert not res['data']['updateList']
+    assert not res["data"]["updateList"]
 
 
 # delete list
@@ -360,17 +350,17 @@ def test_delete_list(client, list_, access_token):
     url = url_for("graphql")
 
     list_id = to_global_id("TypeList", list_.id)
-    res = client.post(url, headers={
-        "Authorization": f"Bearer {access_token}"
-    }, data=json.dumps({
-        "query": delete_list_query,
-        "variables": {"id": list_id}
-    }), content_type='application/json')
+    res = client.post(
+        url,
+        headers={"Authorization": f"Bearer {access_token}"},
+        data=json.dumps({"query": delete_list_query, "variables": {"id": list_id}}),
+        content_type="application/json",
+    )
 
     assert res.status_code == HTTPStatus.OK
 
     res = res.json
-    assert res['data']['deleteList']['ok']
+    assert res["data"]["deleteList"]["ok"]
 
     assert List.count() == 0
 
@@ -379,15 +369,14 @@ def test_delete_list_not_authenticated(client, list_):
     url = url_for("graphql")
 
     list_id = to_global_id("TypeList", list_.id)
-    res = client.post(url, data=json.dumps({
-        "query": delete_list_query,
-        "variables": {"id": list_id}
-    }), content_type='application/json')
+    res = client.post(
+        url, data=json.dumps({"query": delete_list_query, "variables": {"id": list_id}}), content_type="application/json"
+    )
 
     assert res.status_code == HTTPStatus.OK
 
     res = res.json
-    assert not res['data']['deleteList']
+    assert not res["data"]["deleteList"]
 
     assert List.count() == 1
 
@@ -400,34 +389,34 @@ def test_delete_list_not_owner(client, list_, access_token):
     url = url_for("graphql")
 
     list_id = to_global_id("TypeList", list_.id)
-    res = client.post(url, headers={
-        "Authorization": f"Bearer {access_token}"
-    }, data=json.dumps({
-        "query": delete_list_query,
-        "variables": {"id": list_id}
-    }), content_type='application/json')
+    res = client.post(
+        url,
+        headers={"Authorization": f"Bearer {access_token}"},
+        data=json.dumps({"query": delete_list_query, "variables": {"id": list_id}}),
+        content_type="application/json",
+    )
 
     assert res.status_code == HTTPStatus.OK
 
     res = res.json
-    assert not res['data']['deleteList']
+    assert not res["data"]["deleteList"]
 
 
 def test_delete_list_invalid(client, list_, access_token):
     url = url_for("graphql")
 
     list_id = to_global_id("TypeList", "invalid_id")
-    res = client.post(url, headers={
-        "Authorization": f"Bearer {access_token}"
-    }, data=json.dumps({
-        "query": delete_list_query,
-        "variables": {"id": list_id}
-    }), content_type='application/json')
+    res = client.post(
+        url,
+        headers={"Authorization": f"Bearer {access_token}"},
+        data=json.dumps({"query": delete_list_query, "variables": {"id": list_id}}),
+        content_type="application/json",
+    )
 
     assert res.status_code == HTTPStatus.OK
 
     res = res.json
-    assert not res['data']['deleteList']
+    assert not res["data"]["deleteList"]
 
 
 # delete container
@@ -444,25 +433,23 @@ delete_container_query = """
 """
 
 
-@pytest.mark.parametrize("container_id", [
-    0, 1, 2
-])
+@pytest.mark.parametrize("container_id", [0, 1, 2])
 def test_delete_container(client, list_, access_token, container_id):
     nb_containers = len(list_.item_containers)
 
     url = url_for("graphql")
     list_id = to_global_id("TypeList", list_.id)
-    res = client.post(url, headers={
-        "Authorization": f"Bearer {access_token}"
-    }, data=json.dumps({
-        "query": delete_container_query,
-        "variables": {"id": list_id, "containerId": container_id}
-    }), content_type='application/json')
+    res = client.post(
+        url,
+        headers={"Authorization": f"Bearer {access_token}"},
+        data=json.dumps({"query": delete_container_query, "variables": {"id": list_id, "containerId": container_id}}),
+        content_type="application/json",
+    )
 
     assert res.status_code == HTTPStatus.OK, res.json
 
     res = res.json
-    assert res['data']['deleteContainer']['list']['countItems'] == nb_containers - 1
+    assert res["data"]["deleteContainer"]["list"]["countItems"] == nb_containers - 1
 
     list_ = List.filter(id=list_.id).first()
     assert len(list_.item_containers) == nb_containers - 1
@@ -487,29 +474,28 @@ move_container_query = """
 """
 
 
-@pytest.mark.parametrize("container_id, new_container_id", [
-    (0, 0),
-    (1, 1),
-    (1, 0),
-    (0, 1),
-    (2, 0)
-])
+@pytest.mark.parametrize("container_id, new_container_id", [(0, 0), (1, 1), (1, 0), (0, 1), (2, 0)])
 def test_move_container(client, list_, access_token, container_id, new_container_id):
     nb_containers = len(list_.item_containers)
 
     url = url_for("graphql")
     list_id = to_global_id("TypeList", list_.id)
-    res = client.post(url, headers={
-        "Authorization": f"Bearer {access_token}"
-    }, data=json.dumps({
-        "query": move_container_query,
-        "variables": {"id": list_id, "containerId": container_id, "newContainerId": new_container_id}
-    }), content_type='application/json')
+    res = client.post(
+        url,
+        headers={"Authorization": f"Bearer {access_token}"},
+        data=json.dumps(
+            {
+                "query": move_container_query,
+                "variables": {"id": list_id, "containerId": container_id, "newContainerId": new_container_id},
+            }
+        ),
+        content_type="application/json",
+    )
 
     assert res.status_code == HTTPStatus.OK, res.json
 
     res = res.json
-    assert res['data']['moveContainer']['list']['countItems'] == nb_containers
+    assert res["data"]["moveContainer"]["list"]["countItems"] == nb_containers
 
     list_ = List.filter(id=list_.id).first()
     assert len(list_.item_containers) == nb_containers

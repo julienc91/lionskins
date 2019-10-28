@@ -23,34 +23,28 @@ class Query(graphene.ObjectType):
         query = TypeCSGOSkin.model
         filters = {}
 
-        if args.get('slug'):
-            filters['slug'] = args['slug']
-        if args.get('stat_trak') is not None:
-            filters['stat_trak'] = args['stat_trak']
-        if args.get('souvenir') is not None:
-            filters['souvenir'] = args['souvenir']
-        if args.get('quality'):
-            filters['quality'] = csgo_models.enums.Qualities(args['quality'])
-        if args.get('rarity'):
-            filters['rarity'] = csgo_models.enums.Rarities(args['rarity'])
-        if args.get('weapon'):
-            weapon = csgo_models.Weapon.filter(name=csgo_models.enums.Weapons(args['weapon'])).first()
-            filters['weapon'] = weapon
-        elif args.get('category'):
-            weapons = csgo_models.Weapon.filter(category=csgo_models.enums.Categories(args['category']))
-            filters['weapon__in'] = weapons
+        if args.get("slug"):
+            filters["slug"] = args["slug"]
+        if args.get("stat_trak") is not None:
+            filters["stat_trak"] = args["stat_trak"]
+        if args.get("souvenir") is not None:
+            filters["souvenir"] = args["souvenir"]
+        if args.get("quality"):
+            filters["quality"] = csgo_models.enums.Qualities(args["quality"])
+        if args.get("rarity"):
+            filters["rarity"] = csgo_models.enums.Rarities(args["rarity"])
+        if args.get("weapon"):
+            weapon = csgo_models.Weapon.filter(name=csgo_models.enums.Weapons(args["weapon"])).first()
+            filters["weapon"] = weapon
+        elif args.get("category"):
+            weapons = csgo_models.Weapon.filter(category=csgo_models.enums.Categories(args["category"]))
+            filters["weapon__in"] = weapons
 
-        if args.get('search'):
-            filters['name__icontains'] = args['search']
+        if args.get("search"):
+            filters["name__icontains"] = args["search"]
 
         query = query.filter(**filters)
-        query = query.order_by(
-            'weapon',
-            'name',
-            'souvenir',
-            'stat_trak',
-            'quality'
-        )
+        query = query.order_by("weapon", "name", "souvenir", "stat_trak", "quality")
 
         # force caching the queryset length to avoid horrible performances when a `len`
         # is called on the queryset later on in graphql_relay.connection.arrayconnection.connection_from_list

@@ -15,9 +15,9 @@ def redirect_view(provider, skin_id):
     provider = Providers[provider]
     skin = Skin.objects.get(id=skin_id)
 
-    tracker = request.args.get('src')
+    tracker = request.args.get("src")
 
-    user_agent = request.headers.get('User-Agent')
+    user_agent = request.headers.get("User-Agent")
     if user_agent and not user_agents.parse(user_agent).is_bot:
         Redirect.create(skin=skin, provider=provider, tracker=tracker)
 

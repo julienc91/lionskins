@@ -4,12 +4,7 @@ from http import HTTPStatus
 
 import graphene
 from flask import request
-from flask_jwt_extended import (
-    create_access_token,
-    create_refresh_token,
-    jwt_refresh_token_required,
-    jwt_required
-)
+from flask_jwt_extended import create_access_token, create_refresh_token, jwt_refresh_token_required, jwt_required
 
 from .types import TypeUser
 from ..exceptions import ApiError
@@ -29,15 +24,15 @@ class Create(graphene.Mutation):
 
     @classmethod
     def mutate(cls, *args, **kwargs):
-        username = kwargs['username']
-        password = kwargs['password']
+        username = kwargs["username"]
+        password = kwargs["password"]
         if len(password) < 8:
             raise ApiError("passwords should be at least 8 character long", HTTPStatus.BAD_REQUEST, field="password")
         if User.filter(username=username).count():
             raise ApiError("another user already exists with this username", HTTPStatus.CONFLICT, field="username")
-        if not check_captcha(kwargs.get('captcha'), request.remote_addr):
+        if not check_captcha(kwargs.get("captcha"), request.remote_addr):
             raise ApiError("invalid captcha", HTTPStatus.BAD_REQUEST, field="captcha")
-        user = User.create(username=kwargs.get('username'), password=kwargs['password'])
+        user = User.create(username=kwargs.get("username"), password=kwargs["password"])
         access_token = create_access_token(identity=user.jwt_identity)
         refresh_token = create_refresh_token(identity=user.jwt_identity)
         return cls(access_token=access_token, refresh_token=refresh_token)
@@ -53,8 +48,8 @@ class Authenticate(graphene.Mutation):
 
     @classmethod
     def mutate(cls, *args, **kwargs):
-        username = kwargs['username']
-        password = kwargs['password']
+        username = kwargs["username"]
+        password = kwargs["password"]
         try:
             user = User.get(username=username)
         except User.DoesNotExist:

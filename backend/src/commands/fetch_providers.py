@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-aa
+# -*- coding: utf-8 -*-
 
 import logging
 from datetime import datetime
@@ -8,7 +8,6 @@ from ..providers import clients
 
 
 class FetchProviders:
-
     @classmethod
     def fetch_provider(cls, client, app):
         logging.info("Fetching data from provider {} for app {}".format(client.provider, app))
@@ -21,16 +20,9 @@ class FetchProviders:
             logging.debug("{} - {}: {}".format(client.provider.name, skin.fullname, price))
 
         # delete prices that were not updated
-        Skin.filter(__raw__={
-            "prices": {
-                "$elemMatch": {
-                    "provider": client.provider.name,
-                    "update_date": {
-                        "$lt": start_date
-                    }
-                }
-            }
-        }).update(pull__prices___provider=client.provider.name)
+        Skin.filter(
+            __raw__={"prices": {"$elemMatch": {"provider": client.provider.name, "update_date": {"$lt": start_date}}}}
+        ).update(pull__prices___provider=client.provider.name)
 
         logging.info("Fetching finished for provider {}, created or updated {} skins".format(client.provider, count))
 
