@@ -6,7 +6,6 @@ class Tracker {
     Tracker.push(['enableLinkTracking'])
     Tracker.push(['setTrackerUrl', 'https://analytics.lionskins.co/push'])
     Tracker.push(['setSiteId', '1'])
-    Tracker.push(['setRequestMethod', 'POST'])
 
     return {
       push: this.push,
