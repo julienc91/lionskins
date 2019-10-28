@@ -16,6 +16,7 @@ class Providers(enum.Enum):
     csgoshop = "CSGOShop"
     lootbear = "LootBear"
     skinbaron = "SkinBaron"
+    opskins = "OPSkins"
 
     def get_skin_url(self, skin):
         base_url = ''

@@ -13,7 +13,6 @@ import PropTypes from 'prop-types'
 import Breadcrumb from '../../components/tools/Breadcrumb'
 import PageNotFound from '../PageNotFound'
 import { withTranslation } from 'react-i18next'
-import SkinPricesHistory from '../../components/csgo/SkinPricesHistory'
 import { getSkinQuery } from '../../api/csgo'
 import { importAll } from '../../tools'
 
@@ -36,16 +35,20 @@ class SkinPage extends Component {
   }
 
   componentDidMount () {
-    this.executeQuery()
+    this.reset()
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.currency !== this.props.currency) {
-      this.setState({
-        breadcrumb: [this.state.breadcrumb[0]],
-        skins: [],
-        notFound: false
-      }, this.executeQuery)
+  reset () {
+    this.setState({
+      breadcrumb: [this.state.breadcrumb[0]],
+      skins: [],
+      notFound: false
+    }, this.executeQuery)
+  }
+
+  componentDidUpdate (prevProps, prevState, snapshot) {
+    if (this.props.currency !== prevProps.currency) {
+      this.reset()
     }
   }
 
@@ -102,6 +105,7 @@ class SkinPage extends Component {
 
     const skin = skins[0]
     const weapon = t(Weapons[skin.weapon.name])
+    const description = t(skin.description[t('current_language')])
     const skinName = skin.name
     const hasStatTrak = skins.some(s => s.statTrak)
     const hasSouvenir = skins.some(s => s.souvenir)
@@ -116,6 +120,8 @@ class SkinPage extends Component {
         <Header as='h1'>{weapon} - {skinName}</Header>
 
         <div className='main-content'>
+
+          <div>{description}</div>
 
           <div className='panels'>
             <section className='left-panel'>
@@ -162,10 +168,11 @@ class SkinPage extends Component {
             </section>
           </div>
 
-          <section className='bottom-panel'>
-            <Header as='h3'>{t('skin.prices_history.header')}</Header>
-            <SkinPricesHistory skins={skins} />
-          </section>
+          {/* (
+            <section className='bottom-panel'>
+              <Header as='h3'>{t('skin.prices_history.header')}</Header>
+              <SkinPricesHistory skins={skins} />
+            </section>) */}
 
         </div>
 

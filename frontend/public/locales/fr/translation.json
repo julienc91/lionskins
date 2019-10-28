@@ -155,6 +155,7 @@
     "eur": "{{price, eur}}",
     "usd": "{{price, usd}}"
   },
+  "current_language": "fr",
   "date": "{{date, date}}",
   "faq": {
     "page_title": "Lion Skins - FAQ",

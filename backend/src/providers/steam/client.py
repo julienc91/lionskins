@@ -74,6 +74,6 @@ class Client(AbstractProvider):
                     self._app_specific_parsing(skin, row)
 
                     if item_price > 0:
-                        yield (skin, item_price)
+                        yield skin, item_price
 
             start += count

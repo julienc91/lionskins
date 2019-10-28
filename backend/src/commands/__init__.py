@@ -46,3 +46,9 @@ def fetch_providers(daemon, provider):
 def generate_sitemap():
     from .generate_sitemap import GenerateSitemap
     GenerateSitemap.run()
+
+
+@app.cli.command('sync_catalog')
+def sync_catalog():
+    from .sync_catalog import SyncCatalog
+    SyncCatalog.run()

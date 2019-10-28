@@ -26,6 +26,11 @@ class CSGOCategories(graphene.Enum):
         enum = models.csgo.enums.Categories
 
 
+class CSGOCollections(graphene.Enum):
+    class Meta:
+        enum = models.csgo.enums.Collections
+
+
 class TypeCSGOWeapon(graphene.ObjectType):
 
     name = CSGOWeapons()
@@ -37,6 +42,10 @@ class TypeCSGOSkin(BaseTypeSkin):
     class Meta:
         interfaces = (graphene.relay.Node, )
 
+    class TypeDescription(graphene.ObjectType):
+        en = graphene.String()
+        fr = graphene.String()
+
     model = models.csgo.Skin
 
     weapon = graphene.Field(TypeCSGOWeapon)
@@ -44,6 +53,8 @@ class TypeCSGOSkin(BaseTypeSkin):
     souvenir = graphene.Boolean()
     quality = CSGOQualities()
     rarity = CSGORarities()
+    collection = CSGOCollections()
+    description = graphene.Field(TypeDescription)
 
 
 class SkinConnection(graphene.relay.Connection):

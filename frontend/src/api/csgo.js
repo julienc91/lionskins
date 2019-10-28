@@ -60,6 +60,11 @@ export const getSkinQuery = gql`
           quality
           rarity
           souvenir
+          collection
+          description {
+            en
+            fr
+          }
           weapon {
             name
             category

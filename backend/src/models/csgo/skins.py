@@ -3,7 +3,7 @@
 from ...init import db
 from ..enums import Apps
 from ..skins import Skin as BaseSkin
-from .enums import Rarities, Qualities, Categories
+from .enums import Collections, Rarities, Qualities, Categories
 from .weapons import Weapon
 
 
@@ -20,8 +20,11 @@ class Skin(BaseSkin):
     _quality = db.IntField(db_field="quality", required=True)
     _rarity = db.StringField(db_field="rarity", choices=Rarities)
 
+    _collection_ = db.StringField(db_field="collection", choices=Collections)
+    description = db.DictField()
+
     meta = {
-        'indexes': ['stat_trak', 'souvenir', '_quality', '_rarity']
+        'indexes': ['stat_trak', 'souvenir', '_quality', '_rarity', '_collection_']
     }
 
     @property
@@ -66,6 +69,17 @@ class Skin(BaseSkin):
     @rarity.setter
     def rarity(self, value):
         self._rarity = value.name
+
+    @property
+    def collection(self):
+        try:
+            return Collections[self._collection_]
+        except KeyError:
+            return None
+
+    @collection.setter
+    def collection(self, value):
+        self._collection_ = value.name if value else None
 
     @classmethod
     def _parse_kwargs(cls, kwargs):
