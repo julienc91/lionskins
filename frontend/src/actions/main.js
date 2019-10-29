@@ -11,11 +11,12 @@ import { getSkinList } from './csgo'
 import i18n from '../i18n'
 import moment from 'moment'
 import 'moment/locale/fr'
+import { StorageManager } from '../tools'
 
 export const changeCurrency = currency => (dispatch, getState) => {
   if (currency !== getState().main.currency) {
     if (Currencies[currency]) {
-      localStorage.setItem('currency', currency)
+      StorageManager.set('currency', currency)
       dispatch({ type: SET_CURRENCY, currency })
       dispatch({ type: CSGO_RESET_SKINS })
       dispatch(getSkinList())
@@ -33,7 +34,7 @@ export const setAccessToken = accessToken => dispatch => {
 }
 
 export const setRefreshToken = refreshToken => dispatch => {
-  localStorage.setItem('refreshToken', refreshToken)
+  StorageManager.set('refreshToken', refreshToken)
   dispatch({ type: SET_REFRESH_TOKEN, refreshToken })
 }
 

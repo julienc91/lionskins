@@ -2,6 +2,7 @@ import React from 'react'
 import { withTranslation } from 'react-i18next'
 import { Icon, Message } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
+import { StorageManager } from '../tools'
 
 class Changelog extends React.Component {
   constructor (props) {
@@ -19,7 +20,7 @@ class Changelog extends React.Component {
   }
 
   componentDidMount () {
-    const lastDismissDate = localStorage.getItem('changelog.dismiss_date')
+    const lastDismissDate = StorageManager.get('changelog.dismiss_date')
     const mostRecentChangelog = Object.keys(this.CHANGELOG).sort().pop()
     if (!lastDismissDate || new Date(lastDismissDate) < new Date(mostRecentChangelog)) {
       this.setState({ visible: true })
@@ -27,7 +28,7 @@ class Changelog extends React.Component {
   }
 
   handleDismiss () {
-    localStorage.setItem('changelog.dismiss_date', (new Date()).toISOString())
+    StorageManager.set('changelog.dismiss_date', (new Date()).toISOString())
     this.setState({ visible: false })
   }
 

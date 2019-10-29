@@ -7,10 +7,11 @@ import {
   SET_REFRESH_TOKEN
 } from '../constants'
 import { Currencies } from '../components/enums'
+import { StorageManager } from '../tools'
 
 // get the currency to use based on potentially previously set value
 const getDefaultCurrency = () => {
-  let currency = localStorage.getItem('currency')
+  let currency = StorageManager.get('currency')
   if (!Currencies[currency]) {
     currency = Currencies.eur
   }
@@ -18,7 +19,7 @@ const getDefaultCurrency = () => {
 }
 
 const getRefreshToken = () => {
-  return localStorage.getItem('refreshToken')
+  return StorageManager.get('refreshToken')
 }
 
 const initialState = {
@@ -57,7 +58,7 @@ const main = (state = initialState, action) => {
         lists: action.lists
       }
     case UNSET_USER:
-      localStorage.removeItem('refreshToken')
+      StorageManager.remove('refreshToken')
       return {
         ...state,
         user: null,

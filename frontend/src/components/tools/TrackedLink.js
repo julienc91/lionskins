@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import uuid from 'uuid/v4'
+import { StorageManager } from '../../tools'
 
 class TrackedLink extends Component {
   constructor (props) {
@@ -11,12 +12,16 @@ class TrackedLink extends Component {
   }
 
   static getFingerprint () {
-    let fingerprint = sessionStorage.getItem('src')
-    if (!fingerprint) {
-      fingerprint = uuid()
-      sessionStorage.setItem('src', fingerprint)
+    try {
+      let fingerprint = StorageManager.get('src', false)
+      if (!fingerprint) {
+        fingerprint = uuid()
+        StorageManager.set('src', fingerprint)
+      }
+      return fingerprint
+    } catch (e) {
+      return uuid()
     }
-    return fingerprint
   }
 
   render () {
