@@ -17,9 +17,9 @@ class Header extends Component {
       <Menu.Item>
         <Dropdown item text={<><Icon name='user' />{user.username}</>}>
           <Dropdown.Menu>
-            {/* <Dropdown.Item onClick={() => toggleListManagementModal(true)}> */}
-            {/*  <Icon name='list' />{t('header.list_management')} */}
-            {/* </Dropdown.Item> */}
+            <Dropdown.Item onClick={() => toggleListManagementModal(true)}>
+              <Icon name='list' />{t('header.list_management')}
+            </Dropdown.Item>
             <Dropdown.Item onClick={() => toggleSettingsModal(true)}>
               <Icon name='setting' />{t('header.settings')}
             </Dropdown.Item>

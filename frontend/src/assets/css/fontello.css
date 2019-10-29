@@ -1,22 +1,22 @@
 @font-face {
   font-family: 'fontello';
-  src: url("../fonts/fontello.eot?71886455");
-  src: url("../fonts/fontello.eot?71886455#iefix") format("embedded-opentype"), url("../fonts/fontello.woff2?71886455") format("woff2"), url("../fonts/fontello.woff?71886455") format("woff"), url("../fonts/fontello.ttf?71886455") format("truetype"), url("../fonts/fontello.svg?71886455#fontello") format("svg");
+  font-style: normal;
   font-weight: normal;
-  font-style: normal; }
+  src: url("../fonts/fontello.eot?71886455");
+  src: url("../fonts/fontello.eot?71886455#iefix") format("embedded-opentype"), url("../fonts/fontello.woff2?71886455") format("woff2"), url("../fonts/fontello.woff?71886455") format("woff"), url("../fonts/fontello.ttf?71886455") format("truetype"), url("../fonts/fontello.svg?71886455#fontello") format("svg"); }
 .icon.fontello {
   font-family: fontello; }
 
-.icon.bitskins:before {
+.icon.bitskins::before {
   content: '\e800'; }
 
-.icon.lootbear:before {
+.icon.lootbear::before {
   content: '\e801'; }
 
-.icon.csgoshop:before {
+.icon.csgoshop::before {
   content: '\e802'; }
 
-.icon.skinbaron:before {
+.icon.skinbaron::before {
   content: '\e803'; }
 
 /*# sourceMappingURL=fontello.css.map */

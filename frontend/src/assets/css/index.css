@@ -1,81 +1,81 @@
 @import url(./fontello.css);
 body {
+  font-family: Lato, Helvetica Neue, Arial, Helvetica, sans-serif;
   margin: 0;
-  padding: 0;
-  font-family: Lato, Helvetica Neue, Arial, Helvetica, sans-serif; }
+  padding: 0; }
 
-.modal .ui.loader.active:before {
-  border-color: #E4E9EC !important; }
-.modal .ui.loader.active:after {
-  border-color: #527B9B transparent transparent !important; }
+.modal .ui.loader.active ::before {
+  border-color: #e4e9ec !important; }
+.modal .ui.loader.active ::after {
+  border-color: #527b9b transparent transparent !important; }
 
 #root > nav {
+  background-color: #010204;
+  border-radius: 0;
+  height: 60px;
   position: fixed;
   top: 0;
   width: 100%;
-  height: 60px;
-  z-index: 100;
-  background-color: #010204;
-  border-radius: 0; }
+  z-index: 100; }
   #root > nav .item img {
     height: 2.5rem;
     width: auto; }
   #root > nav .menu-settings {
     min-width: 150px; }
     #root > nav .menu-settings .dropdown {
-      width: 100%;
-      justify-content: center; }
+      justify-content: center;
+      width: 100%; }
       #root > nav .menu-settings .dropdown a {
         color: rgba(0, 0, 0, 0.87); }
       #root > nav .menu-settings .dropdown .text {
         display: flex; }
       #root > nav .menu-settings .dropdown .item {
-        display: flex;
-        align-items: center; }
+        align-items: center;
+        display: flex; }
 #root > main {
-  padding-top: 60px;
-  min-height: calc(100vh - 90px); }
+  min-height: calc(100vh - 90px);
+  padding-top: 60px; }
   #root > main > div {
     padding-top: 30px; }
 #root > footer {
   background-color: #010204;
-  color: #9FB1BF;
+  clear: both;
+  color: #9fb1bf;
   height: 90px;
   padding: 5px 1rem;
-  clear: both;
-  z-index: 200;
-  position: relative; }
+  position: relative;
+  z-index: 200; }
   #root > footer ul {
-    padding: 0;
-    list-style: none; }
+    list-style: none;
+    padding: 0; }
     #root > footer ul li {
       display: inline-block;
       margin-right: 2rem; }
       #root > footer ul li:last-of-type {
         margin-right: 0; }
     #root > footer ul a {
-      color: #9FB1BF; }
+      color: #9fb1bf; }
 #root .no-results {
-  width: 100%;
-  margin-top: 10vh; }
+  margin-top: 10vh;
+  width: 100%; }
   #root .no-results button {
     margin-top: 50px; }
 #root .breadcrumb {
-  margin: 1.5rem 0 3rem 0; }
+  margin: 1.5rem 0 3rem; }
 #root .homepage {
-  margin: 0;
-  width: 100%;
   background-color: #010204;
-  text-align: center;
-  color: #E4E9EC;
+  color: #e4e9ec;
+  margin: 0;
+  min-height: calc(100vh - 60px - 90px);
   padding-bottom: 32px;
-  min-height: calc(100vh - 60px - 90px); }
+  text-align: center;
+  width: 100%; }
   #root .homepage .logo {
     height: 20vh;
     margin: auto; }
   #root .homepage h1 {
     font-size: 3rem;
-    letter-spacing: 0.5rem; }
+    letter-spacing: .5rem; }
     @media only screen and (max-width: 639px) {
       #root .homepage h1 {
         font-size: 2rem;
@@ -88,31 +88,31 @@ body {
         font-size: 1rem;
         line-height: 1.5rem; } }
   #root .homepage .header {
-    color: #C3CDD7; }
+    color: #c3cdd7; }
   #root .homepage .carousel div {
     overflow: hidden; }
   #root .homepage .carousel img {
-    transition: transform 0.2s; }
+    transition: transform .2s; }
     #root .homepage .carousel img:hover {
-      transform-origin: 50%;
       transform: scale(1.05);
+      transform-origin: 50%;
       z-index: 10; }
 #root .skin-list-container .skin-list-filter-container {
-  top: 60px;
   background-color: #010204;
-  width: 260px;
-  overflow-x: hidden; }
+  overflow-x: hidden;
+  top: 60px;
+  width: 260px; }
   #root .skin-list-container .skin-list-filter-container .expand-icon {
     display: none; }
   #root .skin-list-container .skin-list-filter-container .fields {
-    width: 260px;
     display: flex;
     flex-flow: column;
-    padding: 10px; }
+    padding: 10px;
+    width: 260px; }
     #root .skin-list-container .skin-list-filter-container .fields .field {
       margin: 10px 0; }
       #root .skin-list-container .skin-list-filter-container .fields .field label {
-        color: white !important; }
+        color: #fff !important; }
 #root .skin-list-container .skin-list {
   margin-bottom: 30px;
   margin-left: 260px;
@@ -127,9 +127,10 @@ body {
       #root .skin-list-container .skin-list .skin-list-inner .skin .header a {
         color: #010204; }
       #root .skin-list-container .skin-list .skin-list-inner .skin img {
-        cursor: pointer;
-        background-color: rgba(0, 0, 0, 0.05); }
-      #root .skin-list-container .skin-list .skin-list-inner .skin .stattrak, #root .skin-list-container .skin-list .skin-list-inner .skin .souvenir {
+        background-color: rgba(0, 0, 0, 0.05);
+        cursor: pointer; }
+      #root .skin-list-container .skin-list .skin-list-inner .skin .stattrak,
+      #root .skin-list-container .skin-list .skin-list-inner .skin .souvenir {
         position: absolute;
         right: 5px;
         top: 5px; }
@@ -143,7 +144,8 @@ body {
             width: 50%; }
     #root .skin-list-container .skin-list .skin-list-inner .padding-item {
       height: 0; }
-    #root .skin-list-container .skin-list .skin-list-inner .skin, #root .skin-list-container .skin-list .skin-list-inner .padding-item {
+    #root .skin-list-container .skin-list .skin-list-inner .skin,
+    #root .skin-list-container .skin-list .skin-list-inner .padding-item {
       flex: 1 1 250px;
       margin: 1rem; }
   #root .skin-list-container .skin-list .loader {
@@ -152,81 +154,83 @@ body {
 @media only screen and (max-width: 1023px) {
   #root .skin-list-container .skin-list-filter-container {
     margin-left: -260px !important;
-    width: 320px;
-    transition: margin-left 0.2s; }
+    transition: margin-left .2s;
+    width: 320px; }
     #root .skin-list-container .skin-list-filter-container .fields {
       padding-right: 0; }
     #root .skin-list-container .skin-list-filter-container .expand-icon {
+      color: #fff;
+      cursor: pointer;
       display: block;
-      position: fixed;
-      z-index: 100;
-      margin: 0;
-      color: white;
-      top: 0;
-      right: 0;
-      width: 60px;
+      font-size: 20px;
       height: 60px;
       line-height: 60px;
+      margin: 0;
+      position: fixed;
+      right: 0;
       text-align: center;
-      cursor: pointer;
-      font-size: 20px;
-      transition: transform 0.2s; }
+      top: 0;
+      transition: transform .2s;
+      width: 60px;
+      z-index: 100; }
     #root .skin-list-container .skin-list-filter-container.active {
       margin-left: 0 !important; }
       #root .skin-list-container .skin-list-filter-container.active .expand-icon {
         transform: rotate(180deg); }
   #root .skin-list-container .skin-list {
-    width: calc(100% - 60px);
-    margin-left: 60px; } }
+    margin-left: 60px;
+    width: calc(100% - 60px); } }
 #root .skin-page {
-  max-width: 1800px;
   margin: auto;
+  max-width: 1800px;
   padding-bottom: 30px; }
   #root .skin-page .skin-image {
-    position: relative;
-    margin: 30px auto 0 auto;
-    max-width: 500px; }
+    margin: 30px auto 0;
+    max-width: 500px;
+    position: relative; }
     #root .skin-page .skin-image .placeholder img {
-      visibility: hidden;
-      max-width: 100%; }
+      max-width: 100%;
+      visibility: hidden; }
     #root .skin-page .skin-image .effective {
       position: absolute;
       top: 0; }
       #root .skin-page .skin-image .effective img {
         max-width: 100%; }
   #root .skin-page .select-quality {
-    display: flex;
-    text-align: center;
-    margin-top: 10px;
-    flex-flow: row wrap;
     align-items: center;
-    justify-content: center; }
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    margin-top: 10px;
+    text-align: center; }
     #root .skin-page .select-quality > div {
-      color: white;
-      background-color: #527B9B;
-      padding: 0.2rem 0.5rem;
-      font-size: 0.9rem;
-      margin-right: 0.5rem;
-      margin-bottom: 0.5rem;
+      background-color: #527b9b;
       border-radius: 4px;
-      cursor: pointer; }
+      color: #fff;
+      cursor: pointer;
+      font-size: .9rem;
+      margin-bottom: .5rem;
+      margin-right: .5rem;
+      padding: .2rem .5rem; }
       #root .skin-page .select-quality > div.active {
         background-color: #335284; }
       #root .skin-page .select-quality > div:last-of-type {
         margin-right: 0; }
-  #root .skin-page .left-panel h3, #root .skin-page .right-panel h3 {
+  #root .skin-page .left-panel h3,
+  #root .skin-page .right-panel h3 {
     margin-top: 30px; }
   #root .skin-page .main-content {
+    align-items: center;
     display: flex;
     flex-flow: column;
-    justify-content: flex-start;
-    align-items: center; }
+    justify-content: flex-start; }
     #root .skin-page .main-content .panels {
+      align-items: flex-start;
       display: flex;
       flex-flow: row wrap;
-      justify-content: center;
-      align-items: flex-start; }
-      #root .skin-page .main-content .panels .left-panel, #root .skin-page .main-content .panels .right-panel {
+      justify-content: center; }
+      #root .skin-page .main-content .panels .left-panel,
+      #root .skin-page .main-content .panels .right-panel {
         margin: 0 10px; }
       #root .skin-page .main-content .panels .left-panel {
         flex: 1 1 380px; }
@@ -234,8 +238,8 @@ body {
         flex: 1 0 auto; }
         #root .skin-page .main-content .panels .right-panel table {
           display: block;
-          overflow-x: auto;
-          max-width: calc(100vw - 40px); }
+          max-width: calc(100vw - 40px);
+          overflow-x: auto; }
           #root .skin-page .main-content .panels .right-panel table thead tr th:first-child {
             width: 100%; }
     #root .skin-page .main-content .bottom-panel {
@@ -269,8 +273,8 @@ body {
       margin-right: 20px; }
   #root .page .header .sub.header {
     line-height: 1.7rem;
-    margin-top: 15px;
-    margin-bottom: 50px; }
+    margin-bottom: 50px;
+    margin-top: 15px; }
   #root .page .admin-actions {
     float: right;
     margin-top: 30px; }
@@ -281,5 +285,8 @@ body {
   text-align: right; }
   .list-management-modal .details-icon i {
     margin-left: 5px; }
+.list-management-modal .no-items {
+  font-weight: 500;
+  text-align: center; }
 
 /*# sourceMappingURL=index.css.map */
