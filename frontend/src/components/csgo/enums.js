@@ -75,8 +75,12 @@ const Weapons = Object.freeze({
   karambit: 'csgo.weapons.karambit',
   m9_bayonet: 'csgo.weapons.m9_bayonet',
   navaja_knife: 'csgo.weapons.navaja_knife',
+  nomad_knife: 'csgo.weapons.nomad_knife',
+  paracord_knife: 'csgo.weapons.paracord_knife',
   shadow_daggers: 'csgo.weapons.shadow_daggers',
+  skeleton_knife: 'csgo.weapoins.skeleton_knife',
   stiletto_knife: 'csgo.weapons.stiletto_knife',
+  survival_knife: 'csgo.weapons.survival_knife',
   talon_knife: 'csgo.weapons.talon_knife',
   ursus_knife: 'csgo.weapons.ursus_knife',
 
@@ -107,8 +111,8 @@ const WeaponsByCategories = Object.freeze({
   knives: [
     'bayonet', 'bowie_knife', 'butterfly_knife', 'classic_knife', 'falchion_knife',
     'flip_knife', 'gut_knife', 'huntsman_knife', 'karambit', 'm9_bayonet',
-    'navaja_knife', 'shadow_daggers', 'stiletto_knife', 'talon_knife',
-    'ursus_knife'
+    'navaja_knife', 'nomad_knife', 'paracord_knife', 'shadow_daggers', 'skeleton_knife',
+    'stiletto_knife', 'survival_knife', 'talon_knife', 'ursus_knife'
   ],
   gloves: [
     'bloodhound_gloves', 'driver_gloves', 'hand_wraps', 'hydra_gloves',

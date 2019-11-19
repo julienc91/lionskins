@@ -147,8 +147,12 @@ class Weapons(enum.Enum):
     karambit = "Karambit"
     m9_bayonet = "M9 Bayonet"
     navaja_knife = "Navaja Knife"
+    nomad_knife = "Nomad Knife"
+    paracord_knife = "Paracord Knife"
     shadow_daggers = "Shadow Daggers"
+    skeleton_knife = "Skeleton Knife"
     stiletto_knife = "Stiletto Knife"
+    survival_knife = "Survival Knife"
     talon_knife = "Talon Knife"
     ursus_knife = "Ursus Knife"
 

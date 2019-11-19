@@ -21,7 +21,8 @@
   "changelog": {
     "title": "What's new on Lion Skins:",
     "2019_10_20_001": "The new Classic Knife was added",
-    "2019_10_21_001": "Now you can check out prices for the glove skins!"
+    "2019_10_21_001": "Now you can check out prices for the glove skins!",
+    "2019_11_19_001": "New knives from the Shattered Web collection were added"
   },
   "contact": {
     "page_title": "Lion Skins - Contact us",
@@ -138,8 +139,12 @@
       "karambit": "Karambit",
       "m9_bayonet": "M9 Bayonet",
       "navaja_knife": "Navaja Knife",
+      "nomad_knife": "Nomad Knife",
+      "paracord_knife": "Paracord Knife",
       "shadow_daggers": "Shadow Daggers",
+      "skeleton_knife": "Skeleton Knife",
       "stiletto_knife": "Stiletto Knife",
+      "survival_knife": "Survival Knife",
       "talon_knife": "Talon Knife",
       "ursus_knife": "Ursus Knife",
       "bloodhound_gloves": "Bloodhound Gloves",
@@ -229,7 +234,9 @@
     "lists": {
       "title": "My Lists",
       "last_update_tooltip": "Last updated",
-      "number_of_items_tooltip": "Number of items"
+      "number_of_items_tooltip": "Number of items",
+      "no_items": "You don't have any lists",
+      "create_list": "Create a new list"
     }
   },
   "login": {

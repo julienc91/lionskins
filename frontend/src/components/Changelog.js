@@ -12,6 +12,7 @@ class Changelog extends React.Component {
     }
 
     this.CHANGELOG = {
+      '2019-11-19': 'changelog.2019_11_19_001',
       '2019-10-21': 'changelog.2019_10_21_001',
       '2019-10-20': 'changelog.2019_10_20_001'
     }
