@@ -78,7 +78,7 @@ const Weapons = Object.freeze({
   nomad_knife: 'csgo.weapons.nomad_knife',
   paracord_knife: 'csgo.weapons.paracord_knife',
   shadow_daggers: 'csgo.weapons.shadow_daggers',
-  skeleton_knife: 'csgo.weapoins.skeleton_knife',
+  skeleton_knife: 'csgo.weapons.skeleton_knife',
   stiletto_knife: 'csgo.weapons.stiletto_knife',
   survival_knife: 'csgo.weapons.survival_knife',
   talon_knife: 'csgo.weapons.talon_knife',
