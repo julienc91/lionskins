@@ -3,7 +3,8 @@ const Qualities = Object.freeze({
   minimal_wear: 'csgo.qualities.minimal_wear',
   field_tested: 'csgo.qualities.field_tested',
   well_worn: 'csgo.qualities.well_worn',
-  battle_scarred: 'csgo.qualities.battle_scarred'
+  battle_scarred: 'csgo.qualities.battle_scarred',
+  vanilla: 'csgo.qualities.vanilla'
 })
 
 const Rarities = Object.freeze({

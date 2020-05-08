@@ -12,10 +12,14 @@ import { withTranslation } from 'react-i18next'
 class SkinPrices extends React.Component {
   providers = ['steam', 'bitskins', 'skinbaron']
 
-  qualities = ['factory_new', 'minimal_wear', 'field_tested', 'well_worn', 'battle_scarred']
-
   render () {
     const { currency, skins, statTrak, souvenir, t } = this.props
+
+    let qualities = ['factory_new', 'minimal_wear', 'field_tested', 'well_worn', 'battle_scarred']
+    const skin = skins[0]
+    if (skin.quality === 'vanilla') {
+      qualities = ['vanilla']
+    }
 
     return (
       <Table unstackable celled singleLine textAlign='center'>
@@ -32,7 +36,7 @@ class SkinPrices extends React.Component {
         </Table.Header>
 
         <Table.Body>
-          {this.qualities.map(quality => {
+          {qualities.map(quality => {
             const skin = skins.find(
               skin => skin.statTrak === statTrak &&
               skin.souvenir === souvenir &&

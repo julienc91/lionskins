@@ -19,7 +19,8 @@ class Skin extends Component {
     const internalUrl = getSkinInternalUrl(skin)
     const defaultWeaponImage = defaultWeaponImages[`default_skin_${skin.weapon.name}.png`]
 
-    const alt = `${skin.weapon.name} - ${skin.name}`
+    const skinName = skin.slug === 'vanilla' ? t('csgo.qualities.vanilla') : skin.name
+    const alt = `${skin.weapon.name} - ${skinName}`
     const defaultImage = <img src={defaultWeaponImage} className='ui image' alt={alt} />
 
     return (
@@ -41,7 +42,7 @@ class Skin extends Component {
         )}
         <Card.Content>
           <Card.Header>
-            <Link to={internalUrl}>{t(Weapons[skin.weapon.name])} - {skin.name}</Link>
+            <Link to={internalUrl}>{t(Weapons[skin.weapon.name])} - {skinName}</Link>
           </Card.Header>
           <Card.Meta>
             {t(Qualities[skin.quality])}

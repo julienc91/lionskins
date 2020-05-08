@@ -4,7 +4,7 @@ import re
 
 from ....models import Apps
 from ....models.csgo import Weapon, Skin
-from ....models.csgo.enums import Weapons, Qualities, Rarities
+from ....models.csgo.enums import Categories, Weapons, Qualities, Rarities
 
 
 class Parser:
@@ -39,13 +39,23 @@ class Parser:
 
         try:
             weapon = Weapons(weapon)
-            quality = re.search(r"\(([\w\s-]+)\)$", right_split).group(1)
-            quality = cls._parse_quality(quality)
-        except (ValueError, AttributeError):
+        except ValueError:
             return None
 
         weapon = Weapon.get(name=weapon)
-        skin_name = right_split.replace("(" + quality.value + ")", "").strip()
+
+        if right_split:
+            try:
+                quality = re.search(r"\(([\w\s-]+)\)$", right_split).group(1)
+                quality = cls._parse_quality(quality)
+            except (ValueError, AttributeError):
+                return None
+            skin_name = right_split.replace(f"({quality.value})", "").strip()
+        elif weapon.category is not Categories.knives:
+            return None
+        else:
+            skin_name = "Vanilla"
+            quality = Qualities.vanilla
 
         return Skin.get_or_create(
             name=skin_name, app=Apps.csgo, weapon=weapon, quality=quality, stat_trak=stat_trak, souvenir=souvenir

@@ -20,6 +20,8 @@ class Providers(enum.Enum):
         parameters = {}
 
         if skin.app == Apps.csgo:
+            from .csgo.enums import Qualities
+
             if self == self.bitskins:
                 base_url = "https://bitskins.com/"
                 parameters = {
@@ -34,18 +36,18 @@ class Providers(enum.Enum):
                 }
             elif self == self.steam:
                 base_url = "https://steamcommunity.com/market/listings/730/"
-                base_url += skin.market_hash_name + " (" + skin.quality.value + ")"
+                base_url += skin.fullname
             elif self == self.skinbaron:
                 base_url = "https://skinbaron.de/#!"
-                parameters = {
-                    "appId": 730,
-                    "wf": (skin.quality.to_int() - 1),
-                    "tli": 8,
-                    "souvenir": 1 if skin.souvenir else 0,
-                    "statTrak": 1 if skin.stat_trak else 0,
-                    "sort": "CF",
-                    "str": skin.market_hash_name,
-                }
+                parameters = {"appId": 730, "sort": "CF", "str": skin.market_hash_name}
+                if skin.souvenir:
+                    parameters["souvenir"] = 1
+                if skin.stat_trak:
+                    parameters["statTrak"] = 1
+                if skin.quality == Qualities.vanilla:
+                    parameters["unpainted"] = 1
+                else:
+                    parameters["wf"] = skin.quality.to_int() - 1
 
         if parameters:
             base_url += "?" + urllib.parse.urlencode(parameters)

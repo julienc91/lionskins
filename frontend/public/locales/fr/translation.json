@@ -22,7 +22,8 @@
     "title": "Quoi de neuf sur Lion Skins\u00A0?",
     "2019_10_20_001": "Le nouveau Classic Knife a été ajouté",
     "2019_10_21_001": "Vous pouvez désormais suivre les prix des skins de gants\u00A0!",
-    "2019_11_19_001": "Les nouveaux couteaux de la collection Shattered Web ont été ajoutés"
+    "2019_11_19_001": "Les nouveaux couteaux de la collection Shattered Web ont été ajoutés",
+    "2020_05_08_001": "Les skins de couteaux non peints ont été ajoutés"
   },
   "contact": {
     "page_title": "Lion Skins - Nous contacter",
@@ -65,6 +66,7 @@
       "search_label": "Chercher"
     },
     "qualities": {
+      "vanilla": "Non peint",
       "factory_new": "Neuve",
       "minimal_wear": "Très peu usée",
       "field_tested": "Testée sur le terrain",

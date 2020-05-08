@@ -4,6 +4,7 @@ import enum
 
 
 class Qualities(enum.Enum):
+    vanilla = "Vanilla"
     factory_new = "Factory New"
     minimal_wear = "Minimal Wear"
     field_tested = "Field-Tested"
@@ -12,10 +13,24 @@ class Qualities(enum.Enum):
 
     @classmethod
     def from_int(cls, i):
-        return {1: cls.factory_new, 2: cls.minimal_wear, 3: cls.field_tested, 4: cls.well_worn, 5: cls.battle_scarred}[i]
+        return {
+            0: cls.vanilla,
+            1: cls.factory_new,
+            2: cls.minimal_wear,
+            3: cls.field_tested,
+            4: cls.well_worn,
+            5: cls.battle_scarred,
+        }[i]
 
     def to_int(self):
-        return {self.factory_new: 1, self.minimal_wear: 2, self.field_tested: 3, self.well_worn: 4, self.battle_scarred: 5}[self]
+        return {
+            self.vanilla: 0,
+            self.factory_new: 1,
+            self.minimal_wear: 2,
+            self.field_tested: 3,
+            self.well_worn: 4,
+            self.battle_scarred: 5,
+        }[self]
 
 
 class Collections(enum.Enum):

@@ -26,14 +26,9 @@ class Skin(BaseSkin):
 
     @property
     def fullname(self):
-        res = ""
-        if self.stat_trak:
-            res += "StatTrak "
-        res += self.weapon.pk
-        if self.souvenir:
-            res += " (Souvenir)"
-        res += " | " + self.name + " "
-        res += "(" + self.quality.value + ")"
+        res = self.market_hash_name
+        if self.quality != Qualities.vanilla:
+            res += " (" + self.quality.value + ")"
         return res
 
     @property
@@ -45,7 +40,9 @@ class Skin(BaseSkin):
             res += "Souvenir "
         elif self.stat_trak:
             res += "StatTrak™ "
-        res += self.weapon.name.value + " | " + self.name
+        res += self.weapon.name.value
+        if self.quality != Qualities.vanilla:
+            res += " | " + self.name
         return res
 
     @property

@@ -14,7 +14,8 @@ class Changelog extends React.Component {
     this.CHANGELOG = {
       '2019-11-19': 'changelog.2019_11_19_001',
       '2019-10-21': 'changelog.2019_10_21_001',
-      '2019-10-20': 'changelog.2019_10_20_001'
+      '2019-10-20': 'changelog.2019_10_20_001',
+      '2020-05-08': 'changelog.2020_05_08_001'
     }
 
     this.handleDismiss = this.handleDismiss.bind(this)

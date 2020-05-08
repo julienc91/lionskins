@@ -71,15 +71,20 @@ class SkinPage extends Component {
     }
 
     const images = {}
+    const skin = skins[0]
     const breadcrumb = [
       ...this.state.breadcrumb,
-      { name: t(Weapons[skins[0].weapon.name]) },
-      { name: skins[0].name }
+      { name: t(Weapons[skin.weapon.name]) },
+      { name: skin.quality === 'vanilla' ? t('csgo.qualities.vanilla') : skin.name }
     ]
+
+    if (skin.quality === 'vanilla') {
+      this.setState({ quality: skin.quality })
+    }
 
     Object.keys(Qualities).forEach(quality => {
       const defaultSkin = skins.find(s => s.quality === quality && s.imageUrl)
-      let imageUrl = defaultWeaponImages[`default_skin_${skins[0].weapon.name}.png`]
+      let imageUrl = defaultWeaponImages[`default_skin_${skin.weapon.name}.png`]
       if (defaultSkin) {
         imageUrl = defaultSkin.imageUrl
       }
@@ -106,14 +111,19 @@ class SkinPage extends Component {
     const skin = skins[0]
     const weapon = t(Weapons[skin.weapon.name])
     const description = t(skin.description[t('current_language')])
-    const skinName = skin.name
+    const skinName = skin.quality === 'vanilla' ? t('csgo.qualities.vanilla') : skin.name
     const hasStatTrak = skins.some(s => s.statTrak)
     const hasSouvenir = skins.some(s => s.souvenir)
+
+    let qualities = ['factory_new', 'minimal_wear', 'field_tested', 'well_worn', 'battle_scarred']
+    if (skin.quality === 'vanilla') {
+      qualities = ['vanilla']
+    }
 
     return (
       <Container className='skin-page'>
         <Helmet
-          title={`${t('csgo.skin.page_title')} - ${t(Weapons[skin.weapon.name])} - ${skin.name}`}
+          title={`${t('csgo.skin.page_title')} - ${t(Weapons[skin.weapon.name])} - ${skinName}`}
         />
 
         <Breadcrumb items={breadcrumb} />
@@ -134,12 +144,12 @@ class SkinPage extends Component {
                   <Img src={defaultWeaponImages[`default_skin_${skin.weapon.name}.png`]} alt='' />
                 </div>
                 <div className='effective'>
-                  <Img src={images[quality]} alt={`${weapon} - ${skin.name}`} />
+                  <Img src={images[quality]} alt={`${weapon} - ${skinName}`} />
                 </div>
               </div>
 
               <div className='select-quality'>
-                {['factory_new', 'minimal_wear', 'field_tested', 'well_worn', 'battle_scarred'].map(key => (
+                {qualities.map(key => (
                   <div
                     key={key}
                     className={quality === key ? 'active' : ''}
