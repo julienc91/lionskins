@@ -14,7 +14,8 @@ class LoginModal extends Component {
     super(props)
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      error: null
     }
 
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -28,25 +29,30 @@ class LoginModal extends Component {
 
   handleCompleted (res) {
     const { setAccessToken, setRefreshToken, setUser } = this.props
-    const { accessToken, refreshToken } = res.authenticate
-    setRefreshToken(refreshToken)
-    setAccessToken(accessToken)
-    client.query({
-      query: getUserQuery
-    }).then(response => {
-      const user = response.data.currentUser
-      setUser(user)
-    })
+    const { accessToken, error, refreshToken } = res.authenticate
+    if (error.status === 200) {
+      this.setState({ error: null })
+      setRefreshToken(refreshToken)
+      setAccessToken(accessToken)
+      client.query({
+        query: getUserQuery
+      }).then(response => {
+        const user = response.data.currentUser
+        setUser(user)
+      })
+    } else {
+      this.setState({ error })
+    }
   }
 
-  renderError (error) {
+  renderError () {
     const { t } = this.props
-    if (!error) {
+    const { error } = this.state
+    if (!error || error.status === 200) {
       return null
     }
     let errorMessage = t('login.error.default_error')
-    const errorCode = error.graphQLErrors && error.graphQLErrors[0].code
-    if (errorCode + '|' === '401') {
+    if (error.status === 401) {
       errorMessage = t('login.error.invalid_credentials')
     }
 
@@ -77,9 +83,9 @@ class LoginModal extends Component {
             onError={this.handleError}
             onCompleted={this.handleCompleted}
           >
-            {(mutation, { loading, error }) => (
+            {(mutation, { loading }) => (
               <Form onSubmit={(e) => this.handleSubmit(e, mutation)}>
-                {this.renderError(error)}
+                {this.renderError()}
                 <Form.Input
                   label={t('login.username_label')} value={username} required disabled={loading}
                   onChange={(e) => this.setState({ username: e.target.value })}

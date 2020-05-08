@@ -14,7 +14,7 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      Authorization: accessToken ? `Bearer ${accessToken}` : ''
+      ...(accessToken && { Authorization: `Bearer ${accessToken}` })
     }
   }
 })
@@ -25,7 +25,7 @@ const refreshAuthLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      Authorization: refreshToken ? `Bearer ${refreshToken}` : ''
+      ...(refreshToken && { Authorization: `Bearer ${refreshToken}` })
     }
   }
 })

@@ -33,6 +33,7 @@ export class StorageManager {
 
   static set (key, value, persistent = true) {
     const storage = StorageManager._getStorage(persistent)
+    value = value || ''
     try {
       storage.setItem(key, value)
     } catch {

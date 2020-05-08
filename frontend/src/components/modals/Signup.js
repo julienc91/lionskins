@@ -17,7 +17,8 @@ class SignupModal extends Component {
       username: '',
       password: '',
       showPassword: false,
-      captcha: null
+      captcha: null,
+      error: null
     }
     this.captcha = React.createRef()
     this.mutation = null
@@ -55,25 +56,32 @@ class SignupModal extends Component {
 
   handleCompleted (res) {
     const { setAccessToken, setRefreshToken, setUser } = this.props
-    const { accessToken, refreshToken } = res.createUser
-    setRefreshToken(refreshToken)
-    setAccessToken(accessToken)
-    client.query({
-      query: getUserQuery
-    }).then(response => {
-      const user = response.data.currentUser
-      setUser(user)
-    })
+    const { accessToken, error, refreshToken } = res.createUser
+    if (error.status === 200) {
+      this.setState({ error: null })
+      setRefreshToken(refreshToken)
+      setAccessToken(accessToken)
+      client.query({
+        query: getUserQuery
+      }).then(response => {
+        const user = response.data.currentUser
+        setUser(user)
+      })
+    } else {
+      this.setState({ error })
+    }
   }
 
-  renderError (error) {
+  renderError () {
     const { t } = this.props
-    if (!error) {
+    const { error } = this.state
+    if (!error || error.status === 200) {
       return null
     }
     let errorMessage = t('signup.error.default_error')
-    const errorCode = error.graphQLErrors && error.graphQLErrors[0].code
-    const errorField = error.graphQLErrors && error.graphQLErrors[0].field
+    const errorCode = error.status
+    const errorField = error.field
+
     switch (errorCode + '|' + errorField) {
       case '400|password':
         errorMessage = t('signup.error.invalid_password')
@@ -118,9 +126,9 @@ class SignupModal extends Component {
             onError={this.handleError}
             onCompleted={this.handleCompleted}
           >
-            {(mutation, { loading, error }) => (
+            {(mutation, { loading }) => (
               <Form onSubmit={(e) => this.handleSubmit(e, mutation)}>
-                {this.renderError(error)}
+                {this.renderError()}
                 <Form.Input
                   label={t('signup.username_label')} value={username} required disabled={loading}
                   onChange={(e) => this.setState({ username: e.target.value })}

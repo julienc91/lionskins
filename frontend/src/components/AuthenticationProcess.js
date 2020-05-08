@@ -26,17 +26,24 @@ class AuthenticationProcess extends React.Component {
   }
 
   refreshToken () {
-    const { refreshToken, setAccessToken } = this.props
+    const { refreshToken, setAccessToken, setRefreshToken, setUser } = this.props
     if (!refreshToken) {
       return
     }
     refreshClient.mutate({
       mutation: refreshTokenQuery
     }).then(response => {
-      const { accessToken } = response.data.refreshToken
-      setAccessToken(accessToken)
-      this.getCurrentUser()
-      this.getCurrentUserLists()
+      response = response.data.refreshToken
+      if (response.error.status === 401) {
+        setAccessToken('')
+        setRefreshToken('')
+        setUser(null)
+      } else if (response.error.status === 200) {
+        const { accessToken } = refreshToken
+        setAccessToken(accessToken)
+        this.getCurrentUser()
+        this.getCurrentUserLists()
+      }
     })
   }
 
@@ -76,6 +83,7 @@ AuthenticationProcess.propTypes = {
   accessToken: PropTypes.string,
   refreshToken: PropTypes.string,
   setAccessToken: PropTypes.func.isRequired,
+  setRefreshToken: PropTypes.func.isRequired,
   setUser: PropTypes.func.isRequired,
   setUserLists: PropTypes.func.isRequired
 }

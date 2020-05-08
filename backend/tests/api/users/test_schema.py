@@ -18,7 +18,11 @@ create_user_query = """
     mutation($username: String!, $password: String!, $captcha: String!) {
         createUser(username: $username, password: $password, captcha: $captcha) {
             accessToken,
-            refreshToken
+            refreshToken,
+            error {
+                status,
+                field
+            }
         }
     }
 """
@@ -72,10 +76,11 @@ def test_create_user_existing_username(monkeypatch, client, username, ok):
 
     res = res.json
     if ok:
-        assert res["data"]["createUser"]
+        assert res["data"]["createUser"]["accessToken"]
+        assert res["data"]["createUser"]["refreshToken"]
     else:
-        error_field = res["errors"][0]
-        assert error_field["code"] == HTTPStatus.CONFLICT
+        error_field = res["data"]["createUser"]["error"]
+        assert error_field["status"] == HTTPStatus.CONFLICT
         assert error_field["field"] == "username"
 
 
@@ -92,8 +97,8 @@ def test_create_user_password_too_short(monkeypatch, client):
     assert res.status_code == HTTPStatus.OK
 
     res = res.json
-    error_field = res["errors"][0]
-    assert error_field["code"] == HTTPStatus.BAD_REQUEST
+    error_field = res["data"]["createUser"]["error"]
+    assert error_field["status"] == HTTPStatus.BAD_REQUEST
     assert error_field["field"] == "password"
 
 
@@ -112,8 +117,8 @@ def test_create_user_invalid_captcha(monkeypatch, client):
     assert res.status_code == HTTPStatus.OK
 
     res = res.json
-    error_field = res["errors"][0]
-    assert error_field["code"] == HTTPStatus.BAD_REQUEST
+    error_field = res["data"]["createUser"]["error"]
+    assert error_field["status"] == HTTPStatus.BAD_REQUEST
     assert error_field["field"] == "captcha"
 
 
@@ -123,7 +128,11 @@ authenticate_query = """
     mutation($username: String!, $password: String!) {
         authenticate(username: $username, password: $password) {
             accessToken,
-            refreshToken
+            refreshToken,
+            error {
+                status,
+                field
+            }
         }
     }
 """
@@ -164,9 +173,10 @@ def test_authenticate_invalid_credentials(client, username, password):
     assert res.status_code == HTTPStatus.OK
 
     res = res.json
-    assert not res["data"]["authenticate"]
-    error_field = res["errors"][0]
-    assert error_field["code"] == HTTPStatus.UNAUTHORIZED
+    assert not res["data"]["authenticate"]["accessToken"]
+    assert not res["data"]["authenticate"]["refreshToken"]
+    error_field = res["data"]["authenticate"]["error"]
+    assert error_field["status"] == HTTPStatus.UNAUTHORIZED
 
 
 # refresh token
@@ -174,7 +184,11 @@ def test_authenticate_invalid_credentials(client, username, password):
 refresh_token_query = """
     mutation {
         refreshToken {
-            accessToken
+            accessToken,
+            error {
+                status,
+                field
+            }
         }
     }
 """
