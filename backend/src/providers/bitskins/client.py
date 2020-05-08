@@ -43,10 +43,13 @@ class Client(AbstractProvider):
 
     def get_prices(self):
         result = self.__get("get_price_data_for_items_on_sale", params={"app_id": self.parser.app_id})
+        if result.status_code >= 500:
+            return
+
         result = result.json()["data"]["items"]
         for row in result:
             item_name = row["market_hash_name"]
             item_price = float(row["lowest_price"])
             skin = self.parser.get_skin_from_item_name(item_name)
             if skin and item_price > 0:
-                yield (skin, item_price)
+                yield skin, item_price

@@ -57,11 +57,10 @@ class Client(AbstractProvider):
                     "start": start,
                 }
             )
-            try:
-                result = result.json()["results"]
-            except (KeyError, TypeError):
+            if result.status_code >= 500:
                 return
 
+            result = result.json()["results"]
             if not result:
                 return
 

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import re
 import enum
 import urllib.parse
 
@@ -13,8 +12,6 @@ class Apps(enum.Enum):
 class Providers(enum.Enum):
     steam = "Steam"
     bitskins = "BitSkins"
-    csgoshop = "CSGOShop"
-    lootbear = "LootBear"
     skinbaron = "SkinBaron"
     opskins = "OPSkins"
 
@@ -35,16 +32,6 @@ class Providers(enum.Enum):
                     "sort_by": "price",
                     "order": "asc",
                 }
-            elif self == self.csgoshop:
-                base_url = "https://csgoshop.com/item/"
-                path = skin.market_hash_name + "-" + skin.quality.value
-                path = path.lower()
-                path = re.sub(r"[^\x00-\x7F]", "", path).strip()
-                path = re.sub(r"[\s |]+", "-", path)
-                base_url += path
-            elif self == self.lootbear:
-                base_url = "https://app.lootbear.com/items/"
-                base_url += skin.market_hash_name + "/" + skin.quality.value
             elif self == self.steam:
                 base_url = "https://steamcommunity.com/market/listings/730/"
                 base_url += skin.market_hash_name + " (" + skin.quality.value + ")"

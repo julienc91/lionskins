@@ -1,8 +1,6 @@
 const Providers = Object.freeze({
   steam: 'Steam',
   bitskins: 'BitSkins',
-  csgoshop: 'CSGOShop',
-  lootbear: 'LootBear',
   skinbaron: 'SkinBaron'
 })
 

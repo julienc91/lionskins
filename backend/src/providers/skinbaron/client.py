@@ -50,6 +50,9 @@ class Client(AbstractProvider):
                         "after_saleid": last_id,
                     },
                 )
+                if result.status_code >= 500:
+                    return
+
                 result = result.json()["sales"]
                 if not result:
                     break
@@ -72,4 +75,4 @@ class Client(AbstractProvider):
                 skin = self.parser.get_skin_from_item_name(item_name)
                 if skin and item_price > 0:
                     item_price = CurrencyConverter.convert(item_price, Currencies.eur, Currencies.usd)
-                    yield (skin, item_price)
+                    yield skin, item_price

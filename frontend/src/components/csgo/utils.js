@@ -30,10 +30,6 @@ const getIconFromProvider = (provider) => {
   switch (provider) {
     case Providers.bitskins:
       return <i className='icon fontello bitskins' title={provider} />
-    case Providers.csgoshop:
-      return <i className='icon fontello csgoshop' title={provider} />
-    case Providers.lootbear:
-      return <i className='icon fontello lootbear' title={provider} />
     case Providers.skinbaron:
       return <i className='icon fontello skinbaron' title={provider} />
     case Providers.steam:

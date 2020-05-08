@@ -10,12 +10,6 @@
 .icon.bitskins::before {
   content: '\e800'; }
 
-.icon.lootbear::before {
-  content: '\e801'; }
-
-.icon.csgoshop::before {
-  content: '\e802'; }
-
 .icon.skinbaron::before {
   content: '\e803'; }
 

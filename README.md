@@ -14,6 +14,5 @@ Available marketplaces:
 
 * Bitskins
 * CSGOShip
-* LootBear
 * SkinBaron
 * Steam

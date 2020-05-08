@@ -106,8 +106,6 @@ class SkinPricesHistory extends React.Component {
       const colors = {
         steam: '#010204',
         bitskins: '#9F3A38',
-        csgoshop: '#A3C293',
-        lootbear: '#9FB1BF',
         skinbaron: '#F1BD00'
       }
       Object.keys(Providers).forEach(p => {
