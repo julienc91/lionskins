@@ -94,7 +94,7 @@ class SkinPage extends Component {
   }
 
   render () {
-    const { t } = this.props
+    const { currency, t } = this.props
     const { notFound, breadcrumb, skins, images, quality } = this.state
 
     if (notFound) {
@@ -175,6 +175,23 @@ class SkinPage extends Component {
             </section>) */}
 
         </div>
+
+        <script type='application/ld+json'>
+          {JSON.stringify({
+            '@context': 'https://schema.org/',
+            '@type': 'Product',
+            name: `${weapon} - ${skinName}`,
+            image: Object.values(images),
+            description,
+            offers: {
+              '@type': 'AggregateOffer',
+              offerCount: skins.map(skin => skin.prices.length).reduce((a, b) => a + b),
+              lowPrice: skins.map(skin => skin.prices).flat().map(price => price.price).sort((a, b) => a - b).shift(),
+              highPrice: skins.map(skin => skin.prices).flat().map(price => price.price).sort((a, b) => a - b).pop(),
+              priceCurrency: currency
+            }
+          })}
+        </script>
 
       </Container>
     )
