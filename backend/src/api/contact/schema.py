@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import logging
+
 import graphene
 from graphql import GraphQLError
 from flask import request
@@ -34,6 +36,11 @@ class ContactMessage(graphene.Mutation):
         if user:
             params["user"] = user
         res = Contact.create(**params)
+
+        try:
+            res.send()
+        except Exception as e:
+            logging.exception(e)
         return cls(message_id=res.id)
 
 
