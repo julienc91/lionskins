@@ -35,7 +35,7 @@ class SettingsModal extends Component {
               control={Select}
               label={t('settings.currency.label')}
               options={[
-                { key: 'usd', icon: 'usd sign', text: t('settings.currency.usd'), value: Currencies.usd },
+                { key: 'usd', icon: 'usd', text: t('settings.currency.usd'), value: Currencies.usd },
                 { key: 'eur', icon: 'euro sign', text: t('settings.currency.eur'), value: Currencies.eur }
               ]}
               value={currency}

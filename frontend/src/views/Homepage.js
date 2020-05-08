@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Helmet } from 'react-helmet'
 import { withTranslation } from 'react-i18next'
-import { Image, Header } from 'semantic-ui-react'
+import { Header, Image } from 'semantic-ui-react'
 import Carousel from '../components/carousel'
 import PropTypes from 'prop-types'
 
