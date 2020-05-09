@@ -7,6 +7,7 @@ from ratelimit import limits, sleep_and_retry
 
 from ...models import Apps, Providers
 from ..abstract_provider import AbstractProvider
+from ..exceptions import UnfinishedJob
 
 
 class Client(AbstractProvider):
@@ -43,6 +44,7 @@ class Client(AbstractProvider):
     def get_prices(self):
         start = 0
         count = 100
+        unfinished_job = False
 
         while True:
             result = self.__get(
@@ -58,7 +60,8 @@ class Client(AbstractProvider):
                 }
             )
             if result.status_code >= 500:
-                return
+                unfinished_job = True
+                continue
 
             result = result.json()["results"]
             if not result:
@@ -79,3 +82,5 @@ class Client(AbstractProvider):
                         yield skin, item_price
 
             start += count
+            if unfinished_job:
+                raise UnfinishedJob

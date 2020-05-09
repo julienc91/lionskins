@@ -13,7 +13,6 @@ class Providers(enum.Enum):
     steam = "Steam"
     bitskins = "BitSkins"
     skinbaron = "SkinBaron"
-    opskins = "OPSkins"
 
     def get_skin_url(self, skin):
         base_url = ""

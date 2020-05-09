@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
 
-import os
-
 import requests
 from ratelimit import limits, sleep_and_retry
 
 from ...models import Apps, Providers
 from ...models.enums import Currencies
-from ...models.csgo.enums import Weapons
+from ...models.csgo import Skin
+from ...models.csgo.enums import Qualities
 from ...utils import CurrencyConverter
 from ..abstract_provider import AbstractProvider
+from ..exceptions import UnfinishedJob
 
 
 class Client(AbstractProvider):
 
     provider = Providers.skinbaron
-    base_url = "https://api.skinbaron.de/"
+    base_url = "https://skinbaron.de/api/v2/"
 
     @staticmethod
     def get_parser(app):
@@ -28,51 +28,39 @@ class Client(AbstractProvider):
     @sleep_and_retry
     @limits(calls=1, period=5)
     def __get(self, method, params=None):
-        if not params:
-            params = {}
-        params["apikey"] = os.environ.get("SKINBARON_API_KEY")
-        return requests.post(self.base_url + method, json=params, headers={"X-REQUESTED-WITH": "XMLHttpRequest"})
+        params = params or {}
+        return requests.get(self.base_url + method, params)
 
     def get_prices(self):
+        skins = Skin.filter()
+        unfinished_job = False
+        for skin in skins:
+            params = {"appId": self.parser.app_id, "str": skin.market_hash_name, "sort": "CF", "language": "en"}
+            if skin.quality == Qualities.vanilla:
+                params["unpainted"] = 1
+            elif skin.quality:
+                params["wf"] = skin.quality.to_int() - 1
 
-        for weapon in Weapons:
+            if skin.stat_trak:
+                params["statTrak"] = 1
+            elif skin.souvenir:
+                params["souvenir"] = 1
 
-            prices = {}
+            res = self.__get("Browsing/FilterOffers", params)
+            if res.status_code >= 500:
+                unfinished_job = True
+                continue
 
-            last_id = None
-            while True:
-                result = self.__get(
-                    "Search",
-                    params={
-                        "appid": self.parser.app_id,
-                        "search_item": weapon.value,
-                        "items_per_page": 500,
-                        "after_saleid": last_id,
-                    },
-                )
-                if result.status_code >= 500:
-                    return
+            res = res.json()
+            offers = res["aggregatedMetaOffers"]
+            if not offers:
+                continue
 
-                result = result.json()["sales"]
-                if not result:
-                    break
+            offer = offers[0]
+            item_price = offer["singleOffer"]["itemPrice"]
+            if item_price > 0:
+                item_price = CurrencyConverter.convert(item_price, Currencies.eur, Currencies.usd)
+                yield skin, item_price
 
-                for row in result:
-                    last_id = row["id"]
-                    if row["appid"] != self.parser.app_id:
-                        continue
-
-                    item_name = row["market_name"]
-                    item_price = row["price"]
-                    if item_price <= 0:
-                        continue
-
-                    if item_name not in prices:
-                        prices[item_name] = item_price
-                    prices[item_name] = min(item_price, prices[item_name])
-
-            for item_name, item_price in prices.items():
-                skin = self.parser.get_skin_from_item_name(item_name)
-                if skin and item_price > 0:
-                    item_price = CurrencyConverter.convert(item_price, Currencies.eur, Currencies.usd)
-                    yield skin, item_price
+        if unfinished_job:
+            raise UnfinishedJob

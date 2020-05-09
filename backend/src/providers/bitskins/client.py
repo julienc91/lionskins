@@ -8,6 +8,7 @@ from ratelimit import limits, sleep_and_retry
 
 from ...models import Apps, Providers
 from ..abstract_provider import AbstractProvider
+from ..exceptions import UnfinishedJob
 
 
 class Client(AbstractProvider):
@@ -44,7 +45,7 @@ class Client(AbstractProvider):
     def get_prices(self):
         result = self.__get("get_price_data_for_items_on_sale", params={"app_id": self.parser.app_id})
         if result.status_code >= 500:
-            return
+            raise UnfinishedJob
 
         result = result.json()["data"]["items"]
         for row in result:
