@@ -2,12 +2,12 @@
   font-family: 'fontello';
   font-style: normal;
   font-weight: normal;
-  src: url('../fonts/fontello.eot?71886455');
-  src: url('../fonts/fontello.eot?71886455#iefix') format('embedded-opentype'),
-  url('../fonts/fontello.woff2?71886455') format('woff2'),
-  url('../fonts/fontello.woff?71886455') format('woff'),
-  url('../fonts/fontello.ttf?71886455') format('truetype'),
-  url('../fonts/fontello.svg?71886455#fontello') format('svg');
+  src: url('../fonts/fontello.eot?26011871');
+  src: url('../fonts/fontello.eot?26011871#iefix') format('embedded-opentype'),
+  url('../fonts/fontello.woff2?26011871') format('woff2'),
+  url('../fonts/fontello.woff?26011871') format('woff'),
+  url('../fonts/fontello.ttf?26011871') format('truetype'),
+  url('../fonts/fontello.svg?26011871#fontello') format('svg');
 }
 
 .icon.fontello {
@@ -20,4 +20,8 @@
 
 .icon.skinbaron::before {
   content: '\e803';
+}
+
+.icon.csmoney::before {
+  content: '\e805';
 }

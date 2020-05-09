@@ -10,7 +10,7 @@ import * as actions from '../../actions'
 import { withTranslation } from 'react-i18next'
 
 class SkinPrices extends React.Component {
-  providers = ['steam', 'bitskins', 'skinbaron']
+  providers = ['steam', 'bitskins', 'csmoney', 'skinbaron']
 
   render () {
     const { currency, skins, statTrak, souvenir, t } = this.props

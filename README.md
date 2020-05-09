@@ -13,5 +13,6 @@ Available games:
 Available marketplaces:
 
 * Bitskins
+* CS.Money
 * SkinBaron
 * Steam

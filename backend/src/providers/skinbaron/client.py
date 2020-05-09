@@ -32,9 +32,12 @@ class Client(AbstractProvider):
         return requests.get(self.base_url + method, params)
 
     def get_prices(self):
-        skins = Skin.filter()
         unfinished_job = False
-        for skin in skins:
+        # exception if the cursor is kept open for too long, so we get the ids first, and then we iterate and fetch
+        # the Skin object when we need it
+        skin_ids = [skin.id for skin in Skin.filter()]
+        for skin_id in skin_ids:
+            skin = Skin.get(id=skin_id)
             params = {"appId": self.parser.app_id, "str": skin.market_hash_name, "sort": "CF", "language": "en"}
             if skin.quality == Qualities.vanilla:
                 params["unpainted"] = 1

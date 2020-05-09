@@ -12,6 +12,7 @@ class Apps(enum.Enum):
 class Providers(enum.Enum):
     steam = "Steam"
     bitskins = "BitSkins"
+    csmoney = "CSMoney"
     skinbaron = "SkinBaron"
 
     def get_skin_url(self, skin):
@@ -33,9 +34,9 @@ class Providers(enum.Enum):
                     "sort_by": "price",
                     "order": "asc",
                 }
-            elif self == self.steam:
-                base_url = "https://steamcommunity.com/market/listings/730/"
-                base_url += skin.fullname
+            elif self == self.csmoney:
+                # there are no per-skin url on this site
+                base_url = "https://cs.money/"
             elif self == self.skinbaron:
                 base_url = "https://skinbaron.de/#!"
                 parameters = {"appId": 730, "sort": "CF", "str": skin.market_hash_name}
@@ -47,6 +48,9 @@ class Providers(enum.Enum):
                     parameters["unpainted"] = 1
                 else:
                     parameters["wf"] = skin.quality.to_int() - 1
+            elif self == self.steam:
+                base_url = "https://steamcommunity.com/market/listings/730/"
+                base_url += skin.fullname
 
         if parameters:
             base_url += "?" + urllib.parse.urlencode(parameters)
