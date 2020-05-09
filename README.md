@@ -2,7 +2,7 @@
 
 A website providing price comparison for video game skins.
 
-Visit it now on https://lionskins.co
+Visit it now on https://lionskins.co/
 
 ---
 
@@ -13,6 +13,5 @@ Available games:
 Available marketplaces:
 
 * Bitskins
-* CSGOShip
 * SkinBaron
 * Steam
