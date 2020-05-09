@@ -39,7 +39,7 @@ class AuthenticationProcess extends React.Component {
         setRefreshToken('')
         setUser(null)
       } else if (response.error.status === 200) {
-        const { accessToken } = refreshToken
+        const { accessToken } = response
         setAccessToken(accessToken)
         this.getCurrentUser()
         this.getCurrentUserLists()
