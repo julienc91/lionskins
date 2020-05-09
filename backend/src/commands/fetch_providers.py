@@ -11,7 +11,6 @@ from ..providers.exceptions import UnfinishedJob
 class FetchProviders:
     @classmethod
     def fetch_provider(cls, client, app):
-        logging.getLogger().setLevel(logging.DEBUG)
         logging.info("Fetching data from provider {} for app {}".format(client.provider, app))
         client = client(app)
 
