@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import logging
 import requests
 from ratelimit import limits, sleep_and_retry
 
@@ -51,6 +52,15 @@ class Client(AbstractProvider):
 
             res = self.__get("Browsing/FilterOffers", params)
             if res.status_code >= 500:
+                unfinished_job = True
+                continue
+            if res.status_code >= 400:
+                logging.exception(
+                    f"Unexpected response from {self.provider}:\n"
+                    f"* params: {params}\n"
+                    f"* status: {res.status_code}\n"
+                    f"* response: {res.content}"
+                )
                 unfinished_job = True
                 continue
 

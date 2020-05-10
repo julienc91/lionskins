@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import logging
 import re
 
 import requests
@@ -47,19 +48,27 @@ class Client(AbstractProvider):
         unfinished_job = False
 
         while True:
-            result = self.__get(
-                {
-                    "appid": self.parser.app_id,
-                    "search_description": 0,
-                    "sort_dir": "asc",
-                    "sort_column": "name",
-                    "norender": 1,
-                    "count": count,
-                    "currency": 3,
-                    "start": start,
-                }
-            )
+            params = {
+                "appid": self.parser.app_id,
+                "search_description": 0,
+                "sort_dir": "asc",
+                "sort_column": "name",
+                "norender": 1,
+                "count": count,
+                "currency": 3,
+                "start": start,
+            }
+            result = self.__get(params)
             if result.status_code >= 500:
+                unfinished_job = True
+                continue
+            if result.status_code >= 400:
+                logging.exception(
+                    f"Unexpected response from {self.provider}:\n"
+                    f"* params: {params}\n"
+                    f"* status: {result.status_code}\n"
+                    f"* response: {result.content}"
+                )
                 unfinished_job = True
                 continue
 
