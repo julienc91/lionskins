@@ -9,8 +9,11 @@ from ..providers.exceptions import UnfinishedJob
 
 
 class FetchProviders:
-    @classmethod
-    def fetch_provider(cls, client, app):
+    def __init__(self, provider=None, queue=None):
+        self.provider = provider
+        self.queue = queue
+
+    def fetch_provider(self, client, app):
         logging.info("Fetching data from provider {} for app {}".format(client.provider, app))
         client = client(app)
 
@@ -18,7 +21,12 @@ class FetchProviders:
         start_date = datetime.now()
         try:
             for count, (skin, price) in enumerate(client.get_prices(), start=1):
-                skin.add_price(provider=client.provider, price=price)
+                # when the command is run in daemon mode, there may be concurrency issues
+                # the queue is here for the database update to take place in a single thread
+                if self.queue:
+                    self.queue.put((skin, price, client.provider))
+                else:
+                    skin.add_price(provider=client.provider, price=price)
                 logging.debug("{} - {}: {}".format(client.provider.name, skin.fullname, price))
         except UnfinishedJob:
             logging.info(f"Fetching interrupted for provider {client.provider}, created or updated {count} skins")
@@ -31,10 +39,9 @@ class FetchProviders:
 
         logging.info(f"Fetching finished for provider {client.provider}, created or updated {count} skins")
 
-    @classmethod
-    def run(cls, provider=None):
+    def run(self):
         for app in Apps:
             for client in clients:
-                if provider and provider != client.provider:
+                if self.provider and self.provider != client.provider:
                     continue
-                cls.fetch_provider(client, app)
+                self.fetch_provider(client, app)

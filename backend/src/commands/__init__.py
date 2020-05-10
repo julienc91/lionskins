@@ -2,6 +2,7 @@
 
 import time
 import logging
+from queue import Queue
 from threading import Thread
 
 import click
@@ -22,24 +23,29 @@ def fetch_providers(daemon, provider):
         providers = [p for p in Providers]
 
     if daemon:
+        queue = Queue()
 
         def worker(p):
             while True:
                 try:
-                    FetchProviders.run(p)
+                    FetchProviders(p, queue).run()
                 except Exception as e:
                     logging.exception(e)
                 time.sleep(3600)
 
-        threads = [Thread(target=worker, args=(provider,)) for provider in providers]
-        for thread in threads:
+        for provider in providers:
+            thread = Thread(target=worker, args=(provider,))
             thread.start()
-        for thread in threads:
-            thread.join()
+
+        # process all the price updates in the main thread, to avoid concurrency issues
+        while True:
+            (skin, price, provider) = queue.get()
+            skin.add_price(provider=provider, price=price)
+            queue.task_done()
 
     else:
         for provider in providers:
-            FetchProviders.run(provider)
+            FetchProviders(provider).run()
 
 
 @app.cli.command("generate_sitemap")
