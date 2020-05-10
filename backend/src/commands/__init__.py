@@ -8,6 +8,7 @@ from threading import Thread
 import click
 
 from ..application import app
+from ..models import Skin
 from ..models.enums import Providers
 
 
@@ -39,7 +40,8 @@ def fetch_providers(daemon, provider):
 
         # process all the price updates in the main thread, to avoid concurrency issues
         while True:
-            (skin, price, provider) = queue.get()
+            (skin_id, price, provider) = queue.get()
+            skin = Skin.get(id=skin_id)
             skin.add_price(provider=provider, price=price)
             queue.task_done()
 

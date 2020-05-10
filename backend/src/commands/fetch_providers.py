@@ -24,7 +24,7 @@ class FetchProviders:
                 # when the command is run in daemon mode, there may be concurrency issues
                 # the queue is here for the database update to take place in a single thread
                 if self.queue:
-                    self.queue.put((skin, price, client.provider))
+                    self.queue.put((skin.id, price, client.provider))
                 else:
                     skin.add_price(provider=client.provider, price=price)
                 logging.debug("{} - {}: {}".format(client.provider.name, skin.fullname, price))
