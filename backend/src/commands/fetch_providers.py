@@ -3,7 +3,7 @@
 import logging
 from datetime import datetime
 
-from ..models import Apps, Skin
+from ..models import Apps
 from ..providers import clients
 from ..providers.exceptions import UnfinishedJob
 
@@ -35,10 +35,6 @@ class FetchProviders:
         # delete prices that were not updated
         if self.queue:
             self.queue.put(("remove", [start_date, client.provider]))
-        else:
-            Skin.filter(
-                __raw__={"prices": {"$elemMatch": {"provider": client.provider.name, "update_date": {"$lt": start_date}}}}
-            ).update(pull__prices___provider=client.provider.name)
 
         logging.info(f"Fetching finished for provider {client.provider}, created or updated {count} skins")
 

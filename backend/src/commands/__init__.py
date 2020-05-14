@@ -47,9 +47,18 @@ def fetch_providers(daemon, provider):
                 skin.add_price(provider=provider, price=price)
             elif task_type == "remove":
                 start_date, provider = args
-                Skin.filter(
+                skins_to_update = Skin.filter(
                     __raw__={"prices": {"$elemMatch": {"provider": provider.name, "update_date": {"$lt": start_date}}}}
-                ).update(pull__prices___provider=provider.name)
+                )
+                for skin in skins_to_update:
+                    updated_prices = []
+                    for price in skin.prices:
+                        if price.provider == provider and price.update_date < start_date:
+                            continue
+                        updated_prices.append(price)
+                    skin.prices = updated_prices
+                    skin.save()
+
             queue.task_done()
 
     else:
