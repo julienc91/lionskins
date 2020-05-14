@@ -40,9 +40,16 @@ def fetch_providers(daemon, provider):
 
         # process all the price updates in the main thread, to avoid concurrency issues
         while True:
-            (skin_id, price, provider) = queue.get()
-            skin = Skin.get(id=skin_id)
-            skin.add_price(provider=provider, price=price)
+            (task_type, args) = queue.get()
+            if task_type == "add":
+                skin_id, price, provider = args
+                skin = Skin.get(id=skin_id)
+                skin.add_price(provider=provider, price=price)
+            elif task_type == "remove":
+                start_date, provider = args
+                Skin.filter(
+                    __raw__={"prices": {"$elemMatch": {"provider": provider.name, "update_date": {"$lt": start_date}}}}
+                ).update(pull__prices___provider=provider.name)
             queue.task_done()
 
     else:

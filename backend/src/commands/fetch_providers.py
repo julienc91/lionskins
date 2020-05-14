@@ -24,7 +24,7 @@ class FetchProviders:
                 # when the command is run in daemon mode, there may be concurrency issues
                 # the queue is here for the database update to take place in a single thread
                 if self.queue:
-                    self.queue.put((skin.id, price, client.provider))
+                    self.queue.put(("add", [skin.id, price, client.provider]))
                 else:
                     skin.add_price(provider=client.provider, price=price)
                 logging.debug("{} - {}: {}".format(client.provider.name, skin.fullname, price))
@@ -33,9 +33,12 @@ class FetchProviders:
             return
 
         # delete prices that were not updated
-        Skin.filter(
-            __raw__={"prices": {"$elemMatch": {"provider": client.provider.name, "update_date": {"$lt": start_date}}}}
-        ).update(pull__prices___provider=client.provider.name)
+        if self.queue:
+            self.queue.put(("remove", [start_date, client.provider]))
+        else:
+            Skin.filter(
+                __raw__={"prices": {"$elemMatch": {"provider": client.provider.name, "update_date": {"$lt": start_date}}}}
+            ).update(pull__prices___provider=client.provider.name)
 
         logging.info(f"Fetching finished for provider {client.provider}, created or updated {count} skins")
 
