@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import os
 import json
 
 from bs4 import BeautifulSoup
@@ -11,38 +10,34 @@ from ..models.csgo.enums import Collections, Weapons
 
 class SyncCatalog:
     @classmethod
-    def run(cls):
-        data_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "data", "csgo.json"))
+    def run(cls, data_path):
         with open(data_path) as f:
             data = json.load(f)
 
         languages = ["fr", "en"]
 
-        for entry in data:
-            name, weapon = entry["name"], entry["weapon"]
+        for weapon_name in data:
+            for name in data[weapon_name]:
+                entry = data[weapon_name][name]
+                weapon = Weapons[weapon_name]
+                weapon = Weapon.get(name=weapon)
 
-            weapon = Weapons(weapon)
-            weapon = Weapon.get(name=weapon)
+                collection = entry.get("collection")
+                if collection:
+                    collection = Collections[collection]
 
-            collection = entry["collection"] or None
-            if collection:
-                collection = Collections[collection]
+                skins = Skin.filter(weapon=weapon, name=name)
+                for skin in skins:
+                    if collection:
+                        skin.collection = collection
 
-            skins = Skin.filter(weapon=weapon, name=name)
-            for skin in skins:
-                if skin.collection and (not collection or collection != skin.collection):
-                    input(f"Check collection: {skin.collection} - {collection}")
-                skin.collection = collection
+                    if not skin.description:
+                        skin.description = {}
 
-                if not skin.description:
-                    skin.description = {}
+                    for language in languages:
+                        description = entry["weapon_description"][language] + " " + entry["skin_description"][language]
+                        description = BeautifulSoup(description, "html.parser").text
 
-                for language in languages:
-                    description = entry[f"description_{language}"]
-                    description = BeautifulSoup(description, "html.parser").text
-                    if skin.description and skin.description.get(language) and skin.description[language] != description:
-                        input(f"Check description_{language}:\nOld: {skin.description[language]}\nNew: {description}")
+                        skin.description[language] = description
 
-                    skin.description[language] = description
-
-                skin.save()
+                    skin.save()

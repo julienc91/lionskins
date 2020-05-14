@@ -65,7 +65,8 @@ def generate_sitemap():
 
 
 @app.cli.command("sync_catalog")
-def sync_catalog():
+@click.argument("path")
+def sync_catalog(path):
     from .sync_catalog import SyncCatalog
 
-    SyncCatalog.run()
+    SyncCatalog.run(path)
