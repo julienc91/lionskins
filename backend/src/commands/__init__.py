@@ -48,10 +48,15 @@ def fetch_providers(daemon, provider):
             elif task_type == "remove":
                 start_date, provider = args
                 for skin in Skin.filter():
+                    updated_prices = []
                     for price in skin.prices:
-                        if price.provider == provider and price.update_date < start_date:
+                        if price.provider.name == provider.name and price.update_date < start_date:
                             continue
-                        Skin.objects(id=skin.id).update_one(pull__prices___provider=price.provider.name)
+                        updated_prices.append(price)
+
+                    if len(updated_prices) != len(skin.prices):
+                        skin.prices = updated_prices
+                        skin.save()
 
             queue.task_done()
 
