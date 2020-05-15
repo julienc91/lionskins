@@ -73,3 +73,10 @@ def sync_catalog(path):
     from .sync_catalog import SyncCatalog
 
     SyncCatalog.run(path)
+
+
+@app.cli.command("sanity_check")
+def sanity_check():
+    from .sanity_check import SanityCheck
+
+    SanityCheck.run()
