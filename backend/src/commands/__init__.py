@@ -51,7 +51,7 @@ def fetch_providers(daemon, provider):
                     for price in skin.prices:
                         if price.provider == provider and price.update_date < start_date:
                             continue
-                        Skin.objects(id=skin.id).update_one(pull__prices___provider=price.provider)
+                        Skin.objects(id=skin.id).update_one(pull__prices___provider=price.provider.name)
 
             queue.task_done()
 
