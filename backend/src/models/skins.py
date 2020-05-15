@@ -52,7 +52,9 @@ class Skin(ModelMixin, db.Document):
     def add_price(self, provider, price):
         now = datetime.now()
         for price_ in self.prices:
-            if price_.provider == provider:
+            # very weird issue here when comparing enums directly instead of names
+            # the result is sometimes False in a deamonized run when the values are actually the same...
+            if price_.provider.name == provider.name:
                 price_.price = price
                 price_.update_date = now
                 break
