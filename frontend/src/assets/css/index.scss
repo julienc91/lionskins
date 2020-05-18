@@ -180,11 +180,6 @@ $xlarge-down: 'only screen and (max-width : 1439px)' !default;
     }
 
     .carousel {
-
-      div {
-        overflow: hidden;
-      }
-
       img {
         transition: transform .2s;
 

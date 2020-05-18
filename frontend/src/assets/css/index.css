@@ -89,8 +89,6 @@ body {
         line-height: 1.5rem; } }
   #root .homepage .header {
     color: #c3cdd7; }
-  #root .homepage .carousel div {
-    overflow: hidden; }
   #root .homepage .carousel img {
     transition: transform .2s; }
     #root .homepage .carousel img:hover {
