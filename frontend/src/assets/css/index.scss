@@ -51,10 +51,13 @@ $xlarge-down: 'only screen and (max-width : 1439px)' !default;
   $sidebar-width: 260px;
   $sidebar-offset: 60px;
 
+  height: 100%;
+
   > nav {
     background-color: $color0;
     border-radius: 0;
     height: $topbar-height;
+    margin: 0;
     position: fixed;
     top: 0;
     width: 100%;
@@ -105,7 +108,7 @@ $xlarge-down: 'only screen and (max-width : 1439px)' !default;
     clear: both;
     color: $color3;
     height: $footer-height;
-    padding: 5px 1rem;
+    padding: 5px 10px;
     position: relative;
     z-index: 200;
 
@@ -146,7 +149,6 @@ $xlarge-down: 'only screen and (max-width : 1439px)' !default;
     color: $color5;
     margin: 0;
     min-height: calc(100vh - #{$topbar-height} - #{$footer-height});
-    padding-bottom: 32px;
     text-align: center;
     width: 100%;
 
