@@ -33,6 +33,7 @@ class Providers(enum.Enum):
                     "is_souvenir": 1 if skin.souvenir else -1,
                     "sort_by": "price",
                     "order": "asc",
+                    "ref_alias": "tbyygmpSeDE",
                 }
             elif self == self.csmoney:
                 # there are no per-skin url on this site
