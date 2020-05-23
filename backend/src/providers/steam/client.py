@@ -93,3 +93,9 @@ class Client(AbstractProvider):
             start += count
             if unfinished_job:
                 raise UnfinishedJob
+
+    def get_inventory(self, steam_id):
+        res = requests.get(
+            f"https://steamcommunity.com/inventory/{steam_id}/{self.parser.app_id}/2", {"l": "english", "count": 5000}
+        )
+        assert res.status_code == 200

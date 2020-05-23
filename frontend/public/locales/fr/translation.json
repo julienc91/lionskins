@@ -24,7 +24,8 @@
     "2019_10_21_001": "Vous pouvez désormais suivre les prix des skins de gants\u00A0!",
     "2019_11_19_001": "Les nouveaux couteaux de la collection Shattered Web ont été ajoutés",
     "2020_05_08_001": "Les skins de couteaux non peints ont été ajoutés",
-    "2020_05_09_001": "Les prix de la plateforme CS.Money sont à présent disponibles\u00A0!"
+    "2020_05_09_001": "Les prix de la plateforme CS.Money sont à présent disponibles\u00A0!",
+    "2020_05_22_001": "Visualisez les skins que vous possédez et estimez la valeur de votre inventaire Steam\u00A0!"
   },
   "contact": {
     "page_title": "Lion Skins - Nous contacter",
@@ -66,6 +67,18 @@
       "stat_trak_souvenir_label": "StatTrak/Souvenir",
       "search_label": "Chercher"
     },
+    "inventory": {
+      "page_title": "Lion Skins - Votre inventaire pour Counter-Strike: Global Offensive",
+      "title": "Votre inventaire",
+      "breadcrumb": "Votre inventaire",
+      "sign_in_title": "Connectez-vous avec Steam",
+      "sign_in_subtitle": "Connectez-vous à votre compte Steam pour évaluer votre inventaire\u00A0!",
+      "steam_login": "Se connecter avec Steam",
+      "no_results_title": "Aucun résultat",
+      "no_results_subtitle": "Aucun skin n'a été trouvé dans votre inventaire. Assurez-vous que la visibilité sur votre inventaire est publique dans les paramètres de confidentialité de votre compte Steam\u00A0!",
+      "summary_title": "c'est la valeur de votre inventaire",
+      "summary_subtitle": "Il s'agit du prix de revente minimum observé récemment pour chacun de vos skins. Certains stickers peuvent également augmenter la valeur de vos skins. Ce prix ne prend pas en compte la commission perçue par les marketplace, entre 5 et 30% selon les cas, en cas de revente via leur service."
+    },
     "qualities": {
       "vanilla": "Non peint",
       "factory_new": "Neuve",
@@ -94,7 +107,8 @@
       "price_range": "Gamme de prix"
     },
     "skin_list": {
-      "page_title": "Lion Skins - Skins pour Counter-Strike: Global Offensive"
+      "page_title": "Lion Skins - Skins pour Counter-Strike: Global Offensive",
+      "inventory_link": "Évaluer votre inventaire Steam"
     },
     "weapons": {
       "glock_18": "Glock-18",

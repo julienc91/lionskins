@@ -4,6 +4,7 @@ import Script from 'react-load-script'
 import { Helmet } from 'react-helmet'
 import { Switch, Route, Link } from 'react-router-dom'
 import { withTranslation } from 'react-i18next'
+import InventoryPage from '../views/csgo/InventoryPage'
 import SkinList from '../views/csgo/SkinList'
 import SkinPage from '../views/csgo/SkinPage'
 import Header from './Header'
@@ -64,6 +65,7 @@ class App extends React.Component {
           <Route exact path='/faq/' component={Faq} />
           <Route exact path='/privacy-policy/' component={PrivacyPolicy} />
           <Route exact path='/counter-strike-global-offensive/' component={SkinList} />
+          <Route exact path='/counter-strike-global-offensive/my-inventory' component={InventoryPage} />
           <Route path='/counter-strike-global-offensive/:weapon/:slug/' component={SkinPage} />
           <Route path='/lists/:id/:slug/' component={UserList} />
           <Route component={PageNotFound} status={404} />

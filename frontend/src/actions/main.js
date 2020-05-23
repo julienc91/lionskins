@@ -4,7 +4,9 @@ import {
   SET_CURRENCY, SET_LISTS,
   SET_REFRESH_TOKEN,
   SET_USER,
-  UNSET_USER
+  UNSET_USER,
+  SET_STEAM_ID,
+  UNSET_STEAM_ID
 } from '../constants'
 import { Currencies } from '../components/enums'
 import { getSkinList } from './csgo'
@@ -34,12 +36,19 @@ export const setAccessToken = accessToken => dispatch => {
 }
 
 export const setRefreshToken = refreshToken => dispatch => {
-  StorageManager.set('refreshToken', refreshToken)
   dispatch({ type: SET_REFRESH_TOKEN, refreshToken })
 }
 
 export const setUser = user => dispatch => {
   dispatch({ type: SET_USER, user })
+}
+
+export const setSteamId = steamId => dispatch => {
+  dispatch({ type: SET_STEAM_ID, steamId })
+}
+
+export const unsetSteamId = () => dispatch => {
+  dispatch({ type: UNSET_STEAM_ID })
 }
 
 export const unsetUser = () => dispatch => {

@@ -24,7 +24,8 @@
     "2019_10_21_001": "Now you can check out prices for the glove skins!",
     "2019_11_19_001": "New knives from the Shattered Web collection were added",
     "2020_05_08_001": "Vanilla knives were added",
-    "2020_05_09_001": "Prices from the CS.Money platform are now available!"
+    "2020_05_09_001": "Prices from the CS.Money platform are now available!",
+    "2020_05_22_001": "Visualize the skins you own and evaluate the price of your Steam inventory!"
   },
   "contact": {
     "page_title": "Lion Skins - Contact us",
@@ -66,6 +67,18 @@
       "stat_trak_souvenir_label": "StatTrak/Souvenir",
       "search_label": "Search"
     },
+    "inventory": {
+      "page_title": "Lion Skins - Your Counter-Strike: Gobal Offensive inventory",
+      "title": "Your inventory",
+      "breadcrumb": "Your inventory",
+      "sign_in_title": "Connect your Steam account",
+      "sign_in_subtitle": "Log in with your Steam account to evaluate your inventory!",
+      "steam_login": "Sign in through Steam",
+      "no_results_title": "No result",
+      "no_results_subtitle": "No skin was found in your inventory. Make sure the visibility of your inventory is set to public on the confidentiality settings of your Steam account!",
+      "summary_title": "this is the current value of your inventory",
+      "summary_subtitle": "This is the  minimum resale price for all of the skins in your inventory, although some stickers may increase their value. None of the prices shown on this page include the platform fee, usually between 5 and 30%, applied by the marketplace in case of a successful sale."
+    },
     "qualities": {
       "vanilla": "Not painted",
       "factory_new": "Factory New",
@@ -94,7 +107,8 @@
       "price_range": "Price Range"
     },
     "skin_list": {
-      "page_title": "Lion Skins - Counter-Strike: Global Offensive Skins"
+      "page_title": "Lion Skins - Counter-Strike: Global Offensive Skins",
+      "inventory_link": "Evaluate your Steam inventory"
     },
     "weapons": {
       "glock_18": "Glock-18",

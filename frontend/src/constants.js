@@ -1,6 +1,8 @@
 export const SET_CURRENCY = 'SET_CURRENCY'
 export const SET_USER = 'SET_USER'
 export const UNSET_USER = 'UNSET_USER'
+export const SET_STEAM_ID = 'SET_STEAM_ID'
+export const UNSET_STEAM_ID = 'UNSET_STEAM_ID'
 export const SET_LISTS = 'SET_LISTS'
 export const SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN'
 export const SET_REFRESH_TOKEN = 'SET_REFRESH_TOKEN'

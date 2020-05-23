@@ -2,10 +2,11 @@ import React from 'react'
 import { Helmet } from 'react-helmet'
 import { withTranslation } from 'react-i18next'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import * as actions from '../../actions'
 import Skin from '../../components/csgo/Skin'
 import Filter from '../../components/csgo/Filter'
-import { Card, Header, Icon, Loader, Sidebar } from 'semantic-ui-react'
+import { Button, Card, Header, Icon, Loader, Sidebar } from 'semantic-ui-react'
 import Breadcrumb from '../../components/tools/Breadcrumb'
 import Changelog from '../../components/Changelog'
 import InfiniteScroll from 'react-infinite-scroller'
@@ -109,6 +110,13 @@ class SkinList extends React.Component {
 
           <div className='breadcrumb-container'>
             <Breadcrumb items={[{ name: 'Counter-Strike: Global Offensive' }]} />
+          </div>
+
+          <div className='inventory-link'>
+            <Button primary icon labelPosition='left' as={p => <Link to='/counter-strike-global-offensive/my-inventory' {...p} />}>
+              <Icon name='steam' />
+              {t('csgo.skin_list.inventory_link')}
+            </Button>
           </div>
 
           <Changelog />
