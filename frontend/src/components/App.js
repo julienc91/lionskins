@@ -86,7 +86,7 @@ class App extends React.Component {
             <Link to='/privacy-policy/'>{t('footer.privacy_policy')}</Link>
           </li>
         </ul>
-        <div>© {App.getCopyright()} - Lion Skins</div>
+        <div>© {App.getCopyright()} - LionSkins</div>
       </footer>,
       <Script key='tracker' url='https://analytics.lionskins.co/init.js' attributes={{ async: true, defer: true }} />
     ]

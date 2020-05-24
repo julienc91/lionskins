@@ -1,12 +1,12 @@
 {
   "about": {
-    "page_title": "Lion Skins - About",
+    "page_title": "LionSkins - About",
     "breadcrumb": "About",
     "title": "About",
     "subtitle": "Let's get to know each other",
     "part1": {
       "title": "Who we are",
-      "content1": "Lion Skins was made by gamers and for gamers.",
+      "content1": "LionSkins was made by gamers and for gamers.",
       "content2": "The purpose of our service is to provide easy access to trusted marketplaces for you to buy the skins of your dreams for your favorite video games at the best price available.",
       "content3": "We are not affiliated to any of the marketplaces we suggest, we just consider them to be trustworthy.",
       "content4": "If you have any question, don't hesite to drop us a message from the <1>contact form</1>!"
@@ -19,7 +19,7 @@
     "soon": "Soon"
   },
   "changelog": {
-    "title": "What's new on Lion Skins:",
+    "title": "What's new on LionSkins:",
     "2019_10_20_001": "The new Classic Knife was added",
     "2019_10_21_001": "Now you can check out prices for the glove skins!",
     "2019_11_19_001": "New knives from the Shattered Web collection were added",
@@ -28,7 +28,7 @@
     "2020_05_22_001": "Visualize the skins you own and evaluate the price of your Steam inventory!"
   },
   "contact": {
-    "page_title": "Lion Skins - Contact us",
+    "page_title": "LionSkins - Contact us",
     "breadcrumb": "Contact",
     "title": "Contact Us",
     "subtitle1": "A question? A suggestion?",
@@ -68,7 +68,7 @@
       "search_label": "Search"
     },
     "inventory": {
-      "page_title": "Lion Skins - Your Counter-Strike: Gobal Offensive inventory",
+      "page_title": "LionSkins - Your Counter-Strike: Gobal Offensive inventory",
       "title": "Your inventory",
       "breadcrumb": "Your inventory",
       "sign_in_title": "Connect your Steam account",
@@ -97,7 +97,7 @@
       "contraband": "Contraband"
     },
     "skin": {
-      "page_title": "Lion Skins",
+      "page_title": "LionSkins",
       "summary": "Summary",
       "rarity": "Rarity",
       "quality": "Quality",
@@ -107,7 +107,7 @@
       "price_range": "Price Range"
     },
     "skin_list": {
-      "page_title": "Lion Skins - Counter-Strike: Global Offensive Skins",
+      "page_title": "LionSkins - Counter-Strike: Global Offensive Skins",
       "inventory_link": "Evaluate your Steam inventory"
     },
     "weapons": {
@@ -180,7 +180,7 @@
   "current_language": "en",
   "date": "{{date, date}}",
   "faq": {
-    "page_title": "Lion Skins - FAQ",
+    "page_title": "LionSkins - FAQ",
     "breadcrumb": "FAQ",
     "title": "FAQ",
     "subtitle": "Any question?",
@@ -202,7 +202,7 @@
     },
     "part5": {
       "title": "Can I suggest you something?",
-      "content": "We'd love to hear about your ideas so that we make Lion Skins better! Drop us a message from the <1>contact form</1>."
+      "content": "We'd love to hear about your ideas so that we make LionSkins better! Drop us a message from the <1>contact form</1>."
     }
   },
   "footer": {
@@ -212,7 +212,7 @@
     "privacy_policy": "Privacy Policy"
   },
   "head": {
-    "title": "Lion Skins - Compare prices of thousands of skins for your favorite games",
+    "title": "LionSkins - Compare prices of thousands of skins for your favorite games",
     "description": "Compare prices of thousands of skins for your favorite video games among the most trusted marketplaces"
   },
   "header": {
@@ -223,8 +223,8 @@
     "settings": "Settings"
   },
   "homepage": {
-    "page_title": "Lion Skins - Compare prices of thousands of skins for your favorite games",
-    "title": "Lion Skins",
+    "page_title": "LionSkins - Compare prices of thousands of skins for your favorite games",
+    "title": "LionSkins",
     "subtitle1": "Compare prices of thousands of skins",
     "subtitle2": "among the most trusted marketplaces"
   },
@@ -273,13 +273,13 @@
     "homepage": "Home"
   },
   "privacy_policy": {
-    "page_title": "Lion Skins - Privacy Policy",
+    "page_title": "LionSkins - Privacy Policy",
     "breadcrumb": "Privacy Policy",
     "title": "Privacy Policy",
     "subtitle": "Because we value your privacy",
     "part1": {
       "title": "Who we are",
-      "content1": "Lion Skins was made by gamers and for gamers. We are pleased to see you use our service, and you can be sure that we wil never use any of your personal data for profit or for anything that does not involve a better user experience.",
+      "content1": "LionSkins was made by gamers and for gamers. We are pleased to see you use our service, and you can be sure that we wil never use any of your personal data for profit or for anything that does not involve a better user experience.",
       "content2": "If you have any question regarding this privacy policy, feel free to <1>contact us</1>."
     },
     "part2": {

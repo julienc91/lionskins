@@ -57,7 +57,7 @@ class Header extends Component {
     return (
       <Menu as='nav' inverted>
         <Menu.Item>
-          <Link to='/'><img src={logo} alt='Lion Skins' /></Link>
+          <Link to='/'><img src={logo} alt='LionSkins' /></Link>
         </Menu.Item>
         <Menu.Item>
           <Link to='/counter-strike-global-offensive/'>
