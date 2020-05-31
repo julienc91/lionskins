@@ -4,6 +4,7 @@ import logging
 from datetime import datetime, timedelta
 
 from ..models.csgo import Skin
+from ..models.csgo.enums import Categories
 
 
 class SanityCheck:
@@ -21,7 +22,7 @@ class SanityCheck:
 
             if not skin.quality:
                 logging.warning(f"Missing quality on skin {skin}")
-            if not skin.rarity:
+            if not skin.rarity and skin.weapon.category == Categories.gloves:
                 logging.warning(f"Missing rarity on skin {skin}")
             if not skin.image_url:
                 logging.warning(f"Missing image on skin {skin}")
