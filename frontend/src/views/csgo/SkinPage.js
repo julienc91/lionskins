@@ -7,7 +7,6 @@ import { Container, Header } from 'semantic-ui-react'
 import { Qualities, Weapons } from '../../components/csgo/enums'
 import SkinSummary from '../../components/csgo/SkinSummary'
 import SkinPrices from '../../components/csgo/SkinPrices'
-import Img from 'react-image'
 import slugify from 'slugify'
 import PropTypes from 'prop-types'
 import Breadcrumb from '../../components/tools/Breadcrumb'
@@ -141,10 +140,10 @@ class SkinPage extends Component {
 
               <div className='skin-image'>
                 <div className='placeholder'>
-                  <Img src={defaultWeaponImages[`default_skin_${skin.weapon.name}.png`]} alt='' />
+                  <img src={defaultWeaponImages[`default_skin_${skin.weapon.name}.png`]} alt='' />
                 </div>
                 <div className='effective'>
-                  <Img src={images[quality]} alt={`${weapon} - ${skinName}`} />
+                  <img src={images[quality]} alt={`${weapon} - ${skinName}`} />
                 </div>
               </div>
 
