@@ -286,6 +286,9 @@ body {
   #root a {
     outline: none; }
 
+.login-modal .content {
+  text-align: center; }
+
 .list-management-modal .details-icon {
   text-align: right; }
   .list-management-modal .details-icon i {

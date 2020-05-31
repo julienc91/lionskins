@@ -8,7 +8,7 @@ import InventoryPage from '../views/csgo/InventoryPage'
 import SkinList from '../views/csgo/SkinList'
 import SkinPage from '../views/csgo/SkinPage'
 import Header from './Header'
-import { ListManagementModal, LoginModal, SettingsModal, SignupModal } from './modals'
+import { ListManagementModal, LoginModal, SettingsModal } from './modals'
 import AuthenticationProcess from './AuthenticationProcess'
 import Homepage from '../views/Homepage'
 import About from '../views/About'
@@ -54,7 +54,6 @@ class App extends React.Component {
       <AuthenticationProcess key='authentication-process' />,
       <SettingsModal key='settings' />,
       <LoginModal key='login' />,
-      <SignupModal key='signup' />,
       <ListManagementModal key='lists' />,
       <Header key='header' />,
       <main key='main'>

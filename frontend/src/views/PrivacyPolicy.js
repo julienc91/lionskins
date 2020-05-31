@@ -40,6 +40,10 @@ class PrivacyPolicy extends Component {
               <strong>{t('privacy_policy.part2.item2.name')}</strong>
               {t('privacy_policy.part2.item2.description')}
             </li>
+            <li>
+              <strong>{t('privacy_policy.part2.item3.name')}</strong>
+              {t('privacy_policy.part2.item3.description')}
+            </li>
           </ul>
 
           <Header as='h2'>{t('privacy_policy.part3.title')}</Header>
@@ -47,12 +51,16 @@ class PrivacyPolicy extends Component {
 
           <ul>
             <li>
-              <a href='https://matomo.org/' target='_blank' rel='noopener noreferrer'>{t('privacy_policy.part3.item1.name')}</a>
+              <a href='https://store.steampowered.com/' target='_blank' rel='noopener noreferrer'>{t('privacy_policy.part3.item1.name')}</a>
               {t('privacy_policy.part3.item1.description')}
             </li>
             <li>
-              <a href='https://www.google.com/recaptcha/' target='_blank' rel='noopener noreferrer'>{t('privacy_policy.part3.item2.name')}</a>
+              <a href='https://matomo.org/' target='_blank' rel='noopener noreferrer'>{t('privacy_policy.part3.item2.name')}</a>
               {t('privacy_policy.part3.item2.description')}
+            </li>
+            <li>
+              <a href='https://www.google.com/recaptcha/' target='_blank' rel='noopener noreferrer'>{t('privacy_policy.part3.item3.name')}</a>
+              {t('privacy_policy.part3.item3.description')}
             </li>
           </ul>
 

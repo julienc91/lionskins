@@ -1,15 +1,13 @@
 import {
   TOGGLE_LIST_MANAGEMENT_MODAL,
   TOGGLE_LOGIN_MODAL,
-  TOGGLE_SETTINGS_MODAL,
-  TOGGLE_SIGNUP_MODAL
+  TOGGLE_SETTINGS_MODAL
 } from '../constants'
 
 const initialState = {
   openListManagementModal: false,
   openLoginModal: false,
-  openSettingsModal: false,
-  openSignupModal: false
+  openSettingsModal: false
 }
 
 const views = (state = initialState, action) => {
@@ -22,19 +20,12 @@ const views = (state = initialState, action) => {
     case TOGGLE_LOGIN_MODAL:
       return {
         ...state,
-        openLoginModal: action.open,
-        openSignupModal: action.open ? false : state.openSignupModal
+        openLoginModal: action.open
       }
     case TOGGLE_SETTINGS_MODAL:
       return {
         ...state,
         openSettingsModal: action.open
-      }
-    case TOGGLE_SIGNUP_MODAL:
-      return {
-        ...state,
-        openLoginModal: action.open ? false : state.openLoginModal,
-        openSignupModal: action.open
       }
     default:
       return state

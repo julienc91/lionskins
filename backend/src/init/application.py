@@ -28,6 +28,9 @@ def create_application():
                 "host": os.environ["MONGO_HOSTNAME"],
                 "port": int(os.environ["MONGO_PORT"]),
             },
+            SESSION_COOKIE_SECURE=not os.environ.get("FLASK_DEBUG", False),
+            SESSION_COOKIE_HTTPONLY=True,
+            SESSION_COOKIE_SAMESITE="Strict",
             JWT_REFRESH_TOKEN_EXPIRES=False,
         )
     except KeyError as e:
@@ -35,7 +38,7 @@ def create_application():
         sys.exit(2)
 
     db.init_app(application)
-    cors.init_app(application)
+    cors.init_app(application, supports_credentials=True)
     jwt.init_app(application)
     oid.init_app(application)
     return application

@@ -219,7 +219,6 @@
     "list_management": "Mes listes",
     "logout": "Déconnexion",
     "login": "Connexion",
-    "signup": "Inscription",
     "settings": "Paramètres"
   },
   "homepage": {
@@ -258,14 +257,8 @@
   },
   "login": {
     "title": "Connexion",
-    "username_label": "Nom d'utilisateur",
-    "password_label": "Mot de passe",
-    "submit": "Valider",
-    "error": {
-      "title": "Oups...",
-      "default_error": "Il y a eu un problème, veuillez réessayer",
-      "invalid_credentials": "Le nom d'utilisateur ou le mot de passe est invalide"
-    }
+    "description": "Connectez-vous avec votre compte Steam",
+    "steam_login": "Se connecter avec Steam"
   },
   "not_found": {
     "title": "Page non trouvée",
@@ -286,22 +279,30 @@
       "title": "Ce que nous collectons",
       "content1": "Pas grand chose...",
       "item1": {
+        "name": "Votre ID Steam et votre nom d'utilisateur",
+        "description": "\u00A0: seulement si vous choisissez de vous authentifier via Steam sur notre site"
+      },
+      "item2": {
         "name": "Votre adresse mail",
         "description": "\u00A0: seulement si vous nous envoyez un message depuis le formulaire de contact et que vous souhaitez une réponse"
       },
-      "item2": {
+      "item3": {
         "name": "Vos clics sur les liens des différentes marketplaces",
-        "description": "\u00A0: à chaque fois que vous cliquer sur un lien vous redirigeant vers une marketplace, nous générons un identifiant unique et totalement aléatoire dans le but d'avoir une estimation approximative de la manière dont nos visiteurs interagissent avec les marketplaces que nous suggérons. Cet identifiant est automatiquement supprimé à la fin de votre visite, et ne peut être utilisé pour retrouver vous-même ou votre appareil"
+        "description": "\u00A0: à chaque fois que vous cliquez sur un lien vous redirigeant vers une marketplace, nous générons un identifiant unique et totalement aléatoire dans le but d'avoir une estimation approximative de la manière dont nos visiteurs interagissent avec les marketplaces que nous suggérons. Cet identifiant est automatiquement supprimé à la fin de votre visite, et ne peut être utilisé pour retrouver vous-même ou votre appareil"
       }
     },
     "part3": {
       "title": "Les services tiers que nous utilisons",
       "content1": "Nous utilisons des services tiers pour que notre site fonctionne comme nous le souhaitons. En voici la liste\u00A0:",
       "item1": {
+        "name": "Steam",
+        "description": "\u00A0: la boutique de Valve de vente de jeux dématérialisés. Nous utilisons leur service OpenID pour authentifier les utilisateurs sur notre site"
+      },
+      "item2": {
         "name": "Matomo",
         "description": "\u00A0: un outil d'analyse de données open-source particulièrement connu pour son respect de la vie privée. Nous utilisons ce logiciel pour savoir comment nos visiteurs interagissent avec notre service afin d'améliorer continuellement leur expérience"
       },
-      "item2": {
+      "item3": {
         "name": "Recaptcha",
         "description": "\u00A0: la solution de protection contre le spam par Google, utilisée uniquement sur le formulaire de contact"
       }
@@ -318,20 +319,6 @@
       "label": "Devise",
       "usd": "Dollar US",
       "eur": "Euro"
-    }
-  },
-  "signup": {
-    "title": "Créer un compte",
-    "username_label": "Nom d'utilisateur",
-    "password_label": "Mot de passe",
-    "submit": "Valider",
-    "error": {
-      "title": "Oups...",
-      "default_error": "Il y a eu un problème, veuillez réessayer",
-      "invalid_password": "Votre mot de passe doit compter au moins 8 caractères",
-      "invalid_username": "Ce nom d'utilisateur n'est pas valide",
-      "conflict_username": "Un autre utilisateur a déjà pris ce nom",
-      "invalid_captcha": "Le captcha est incorrect, essayez de recharger la page"
     }
   },
   "skin": {

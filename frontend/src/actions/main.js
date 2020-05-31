@@ -4,9 +4,7 @@ import {
   SET_CURRENCY, SET_LISTS,
   SET_REFRESH_TOKEN,
   SET_USER,
-  UNSET_USER,
-  SET_STEAM_ID,
-  UNSET_STEAM_ID
+  UNSET_USER
 } from '../constants'
 import { Currencies } from '../components/enums'
 import { getSkinList } from './csgo'
@@ -43,16 +41,12 @@ export const setUser = user => dispatch => {
   dispatch({ type: SET_USER, user })
 }
 
-export const setSteamId = steamId => dispatch => {
-  dispatch({ type: SET_STEAM_ID, steamId })
-}
-
-export const unsetSteamId = () => dispatch => {
-  dispatch({ type: UNSET_STEAM_ID })
-}
-
 export const unsetUser = () => dispatch => {
   dispatch({ type: UNSET_USER })
+  window.fetch(`${process.env.REACT_APP_API_DOMAIN}/rest/jwt/`, {
+    method: 'delete',
+    credentials: 'include'
+  })
 }
 
 export const setUserLists = lists => dispatch => {

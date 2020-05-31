@@ -1,8 +1,7 @@
 import {
   TOGGLE_LIST_MANAGEMENT_MODAL,
   TOGGLE_LOGIN_MODAL,
-  TOGGLE_SETTINGS_MODAL,
-  TOGGLE_SIGNUP_MODAL
+  TOGGLE_SETTINGS_MODAL
 } from '../constants'
 
 export const toggleListManagementModal = open => dispatch => {
@@ -15,8 +14,4 @@ export const toggleLoginModal = open => dispatch => {
 
 export const toggleSettingsModal = open => dispatch => {
   dispatch({ type: TOGGLE_SETTINGS_MODAL, open })
-}
-
-export const toggleSignupModal = open => dispatch => {
-  dispatch({ type: TOGGLE_SIGNUP_MODAL, open })
 }

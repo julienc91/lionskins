@@ -2,19 +2,30 @@
 
 import graphene
 import requests
+from flask_jwt_extended import jwt_optional
 
 from ..csgo.types import SkinConnection
 from ...models.enums import Apps
 from ...models.csgo import Skin
 from ...providers.steam import Steam
+from ...utils.users import get_current_user
 
 
 class Query(graphene.ObjectType):
-    inventory = graphene.relay.ConnectionField(SkinConnection, steam_id=graphene.String(required=True))
+    inventory = graphene.relay.ConnectionField(SkinConnection, steam_id=graphene.String())
 
+    @jwt_optional
     def resolve_inventory(self, info, **args):
         client = Steam(Apps.csgo)
-        res = requests.get(f"https://steamcommunity.com/inventory/{args['steam_id']}/730/2?l=english&count=5000")
+
+        steam_id = args.get("steam_id")
+        if not steam_id:
+            user = get_current_user()
+            if not user:
+                return []
+            steam_id = user.steam_id
+
+        res = requests.get(f"https://steamcommunity.com/inventory/{steam_id}/730/2?l=english&count=5000")
         if res.status_code == 403:
             return []
         elif res.status_code >= 500:

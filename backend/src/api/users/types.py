@@ -12,3 +12,4 @@ class TypeUser(graphene.ObjectType):
     model = models.User
 
     username = graphene.String()
+    steam_id = graphene.String()

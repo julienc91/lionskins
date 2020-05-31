@@ -50,3 +50,8 @@ export class StorageManager {
     }
   }
 }
+
+export const startOpenId = () => {
+  StorageManager.set('openid.redirect', window.location.pathname, false)
+  window.location = `${process.env.REACT_APP_API_DOMAIN}/steam/login`
+}

@@ -1,10 +1,8 @@
 import {
   SET_CURRENCY,
   SET_USER,
-  SET_STEAM_ID,
   SET_LISTS,
   UNSET_USER,
-  UNSET_STEAM_ID,
   SET_ACCESS_TOKEN,
   SET_REFRESH_TOKEN
 } from '../constants'
@@ -24,16 +22,11 @@ const getRefreshToken = () => {
   return StorageManager.get('refreshToken')
 }
 
-const getSteamId = () => {
-  return StorageManager.get('steamId', false)
-}
-
 const initialState = {
   currency: getDefaultCurrency(),
   accessToken: null,
   refreshToken: getRefreshToken(),
   user: null,
-  steamId: getSteamId(),
   lists: null
 }
 
@@ -60,12 +53,6 @@ const main = (state = initialState, action) => {
         ...state,
         user: action.user
       }
-    case SET_STEAM_ID:
-      StorageManager.set('steamId', action.steamId, false)
-      return {
-        ...state,
-        steamId: action.steamId
-      }
     case SET_LISTS:
       return {
         ...state,
@@ -73,20 +60,12 @@ const main = (state = initialState, action) => {
       }
     case UNSET_USER:
       StorageManager.remove('refreshToken')
-      StorageManager.remove('steamId', false)
       return {
         ...state,
         user: null,
         lists: null,
         accessToken: null,
-        refreshToken: null,
-        steamId: null
-      }
-    case UNSET_STEAM_ID:
-      StorageManager.remove('steamId', false)
-      return {
-        ...state,
-        steamId: null
+        refreshToken: null
       }
     default:
       return state

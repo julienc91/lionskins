@@ -4,6 +4,7 @@ export const getUserQuery = gql`
   query {
     currentUser {
       id,
-      username
+      username,
+      steamId
     }
   }`

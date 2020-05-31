@@ -14,41 +14,37 @@ class Header extends Component {
   renderUserMenu () {
     const { toggleSettingsModal, user, unsetUser, t } = this.props
     return (
-      <Menu.Item>
-        <Dropdown item text={<><Icon name='user' />{user.username}</>}>
-          <Dropdown.Menu>
-            <Dropdown.Item onClick={() => toggleSettingsModal(true)}>
-              <Icon name='setting' />{t('header.settings')}
-            </Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item onClick={unsetUser}>
-              <Icon name='log out' />{t('header.logout')}
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-      </Menu.Item>
+      <>
+        <Menu.Item
+          icon='setting'
+          onClick={() => toggleSettingsModal(true)}
+        />
+        <Menu.Item>
+          <Dropdown item text={<><Icon name='user' />{user.username}</>}>
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={unsetUser}>
+                <Icon name='log out' />{t('header.logout')}
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </Menu.Item>
+      </>
     )
   }
 
   renderVisitorMenu () {
-    const { toggleLoginModal, toggleSettingsModal, toggleSignupModal, t } = this.props
+    const { toggleLoginModal, toggleSettingsModal } = this.props
     return (
-      <Menu.Item>
-        <Dropdown item text={<Icon name='user' />}>
-          <Dropdown.Menu>
-            <Dropdown.Item onClick={() => toggleLoginModal(true)}>
-              <Icon name='sign in' />{t('header.login')}
-            </Dropdown.Item>
-            <Dropdown.Item onClick={() => toggleSignupModal(true)}>
-              <Icon name='signup' />{t('header.signup')}
-            </Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item onClick={() => toggleSettingsModal(true)}>
-              <Icon name='setting' />{t('header.settings')}
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-      </Menu.Item>
+      <>
+        <Menu.Item
+          icon='setting'
+          onClick={() => toggleSettingsModal(true)}
+        />
+        <Menu.Item
+          icon='user'
+          onClick={() => toggleLoginModal(true)}
+        />
+      </>
     )
   }
 
@@ -76,7 +72,6 @@ Header.propTypes = {
   t: PropTypes.func.isRequired,
   toggleLoginModal: PropTypes.func.isRequired,
   toggleSettingsModal: PropTypes.func.isRequired,
-  toggleSignupModal: PropTypes.func.isRequired,
   user: PropTypes.object,
   unsetUser: PropTypes.func.isRequired
 }

@@ -514,6 +514,12 @@ $xlarge-down: 'only screen and (max-width : 1439px)' !default;
   }
 }
 
+.login-modal {
+  .content {
+    text-align: center;
+  }
+}
+
 .list-management-modal {
   .details-icon {
     text-align: right;

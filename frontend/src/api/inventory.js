@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 
 export const getInventoryQuery = gql`
-  query ($steamId: String!, $currency: TypeCurrency) {
+  query ($steamId: String, $currency: TypeCurrency) {
     inventory (steamId: $steamId) {
       edges {
         node {

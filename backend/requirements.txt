@@ -7,7 +7,6 @@ flask-jwt-extended==3.24.1
 flask-mongoengine==0.9.5
 Flask-OpenID==1.2.5
 graphene==2.1.8
-passlib==1.7.2
 python-slugify==4.0.0
 user-agents==2.1
 
