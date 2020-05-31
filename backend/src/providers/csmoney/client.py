@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
+import re
 
 import requests
 from ratelimit import limits, sleep_and_retry
@@ -54,7 +55,9 @@ class Client(AbstractProvider):
             if price <= 0:
                 continue
 
-            skin = self.parser.get_skin_from_item_name(skin["m"])
+            market_hash_name = skin["m"]
+            market_hash_name = re.sub(r" Phase \d+$", "", market_hash_name)
+            skin = self.parser.get_skin_from_item_name(market_hash_name)
             if skin and (skin.id not in skins or skins[skin.id][1] > price):
                 skins[skin.id] = (skin, price)
 
