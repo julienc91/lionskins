@@ -37,8 +37,8 @@ class SanityCheck:
                 if price.update_date < datetime.now() - timedelta(days=7):
                     logging.warning(f"Old price on skin {skin} for provider {price.provider}")
 
-            if not skin.description or not skin.description["fr"] or not skin.description["en"]:
-                if skin.weapon.category != Categories.knives and skin.quality != Qualities.vanilla:
+            if not skin.description or not skin.description.get("fr") or not skin.description.get("en"):
+                if skin.quality != Qualities.vanilla:
                     logging.warning(f"Missing description on skin {skin}")
 
             duplicate_skins = Skin.filter(
