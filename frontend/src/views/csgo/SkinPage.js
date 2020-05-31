@@ -190,7 +190,7 @@ class SkinPage extends Component {
             '@context': 'https://schema.org/',
             '@type': 'Product',
             name: `${weapon} - ${skinName}`,
-            image: Object.values(images),
+            image: Array.from(Object.values(images)).filter(image => image && image.startsWith('http')),
             description,
             offers: {
               '@type': 'AggregateOffer',
