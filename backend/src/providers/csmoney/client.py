@@ -56,7 +56,7 @@ class Client(AbstractProvider):
                 continue
 
             market_hash_name = skin["m"]
-            market_hash_name = re.sub(r" Phase \d+$", "", market_hash_name)
+            market_hash_name = re.sub(r" Phase \d+ \(", " (", market_hash_name)
             skin = self.parser.get_skin_from_item_name(market_hash_name)
             if skin and (skin.id not in skins or skins[skin.id][1] > price):
                 skins[skin.id] = (skin, price)
