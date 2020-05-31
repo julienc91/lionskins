@@ -4,7 +4,7 @@ import logging
 from datetime import datetime, timedelta
 
 from ..models.csgo import Skin
-from ..models.csgo.enums import Categories
+from ..models.csgo.enums import Categories, Qualities
 
 
 class SanityCheck:
@@ -38,7 +38,8 @@ class SanityCheck:
                     logging.warning(f"Old price on skin {skin} for provider {price.provider}")
 
             if not skin.description or not skin.description["fr"] or not skin.description["en"]:
-                logging.warning(f"Missing description on skin {skin}")
+                if skin.weapon.category != Categories.knives and skin.quality != Qualities.vanilla:
+                    logging.warning(f"Missing description on skin {skin}")
 
             duplicate_skins = Skin.filter(
                 name=skin.name, weapon=skin.weapon, stat_trak=skin.stat_trak, souvenir=skin.souvenir, quality=skin.quality
