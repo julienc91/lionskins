@@ -3,7 +3,7 @@
 import http
 
 import user_agents
-from flask import redirect, request
+from flask import abort, redirect, request
 from graphql_relay.node.node import from_global_id
 
 from ..models import Skin, Providers, Redirect
@@ -11,9 +11,12 @@ from ..models import Skin, Providers, Redirect
 
 def redirect_view(provider, skin_id):
 
-    _, skin_id = from_global_id(skin_id)
-    provider = Providers[provider]
-    skin = Skin.objects.get(id=skin_id)
+    try:
+        _, skin_id = from_global_id(skin_id)
+        provider = Providers[provider]
+        skin = Skin.objects.get(id=skin_id)
+    except (ValueError, KeyError, Skin.DoesNotExist):
+        return abort(404)
 
     tracker = request.args.get("src")
 
