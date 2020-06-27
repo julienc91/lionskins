@@ -39,13 +39,17 @@ def backoffice():
     )
 
     scheduler.start()
-    fetch_providers(True, None)
+    _fetch_providers(True, None)
 
 
 @app.cli.command("fetch_providers")
 @click.option("--daemon", is_flag=True)
 @click.option("--provider", type=click.Choice([p.name for p in Providers]))
 def fetch_providers(daemon, provider):
+    return _fetch_providers(daemon, provider)
+
+
+def _fetch_providers(daemon, provider):
     from .fetch_providers import FetchProviders
 
     if provider:
