@@ -19,7 +19,7 @@ class GenerateSitemap:
     ]
 
     @classmethod
-    def run(cls):
+    def run(cls, output=None):
         urls = [url for url in cls.base_urls]
 
         all_skins = Skin.objects.all()
@@ -39,5 +39,9 @@ class GenerateSitemap:
             res += f"""<url><loc>{url}</loc><changefreq>{frequency}</changefreq><priority>{priority}</priority></url>"""
         res += """</urlset>"""
 
-        sys.stdout.write(res)
+        if not output:
+            sys.stdout.write(res)
+        else:
+            with open(output, "w") as f:
+                f.write(res)
         return res

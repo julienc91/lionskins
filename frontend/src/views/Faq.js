@@ -37,7 +37,7 @@ class Faq extends Component {
           <p>{t('faq.part4.content')}</p>
 
           <Header as='h2'>{t('faq.part5.title')}</Header>
-          <p><Trans i18nKey='faq.part5.content'>-<Link to='/contact/'>-</Link>.</Trans></p>
+          <p><Trans i18nKey='faq.part5.content'><Link to='/contact/'>-</Link>.</Trans></p>
 
         </Container>
       </Container>

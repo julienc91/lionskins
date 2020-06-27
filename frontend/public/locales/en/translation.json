@@ -9,7 +9,7 @@
       "content1": "LionSkins was made by gamers and for gamers.",
       "content2": "The purpose of our service is to provide easy access to trusted marketplaces for you to buy the skins of your dreams for your favorite video games at the best price available.",
       "content3": "We are not affiliated to any of the marketplaces we suggest, we just consider them to be trustworthy.",
-      "content4": "If you have any question, don't hesite to drop us a message from the <1>contact form</1>!"
+      "content4": "If you have any question, don't hesitate to drop us a message from the <0>contact form</0>!"
     }
   },
   "breadcrumb": {
@@ -68,7 +68,7 @@
       "search_label": "Search"
     },
     "inventory": {
-      "page_title": "LionSkins - Your Counter-Strike: Gobal Offensive inventory",
+      "page_title": "LionSkins - Counter-Strike: Gobal Offensive - Your inventory",
       "title": "Your inventory",
       "breadcrumb": "Your inventory",
       "sign_in_title": "Connect your Steam account",
@@ -78,6 +78,13 @@
       "no_results_subtitle": "No skin was found in your inventory. Make sure the visibility of your inventory is set to public on the confidentiality settings of your Steam account!",
       "summary_title": "this is the current value of your inventory",
       "summary_subtitle": "This is the  minimum resale price for all of the skins in your inventory, although some stickers may increase their value. None of the prices shown on this page include the platform fee, usually between 5 and 30%, applied by the marketplace in case of a successful sale."
+    },
+    "pro_player": {
+      "page_title": "LionSkins - Counter-Strike: Global Offensive",
+      "subtitle": "Player for team {{team}}",
+      "no_results_title": "No result",
+      "no_results_subtitle": "No skin was found on {{player}}'s inventory, this is probably because it is not public",
+      "description": "This is the skin inventory of {{player}}, one of the top players in the world!"
     },
     "qualities": {
       "vanilla": "Not painted",
@@ -109,6 +116,13 @@
     "skin_list": {
       "page_title": "LionSkins - Counter-Strike: Global Offensive Skins",
       "inventory_link": "Evaluate your Steam inventory"
+    },
+    "teams": {
+      "page_title": "LionSkins - Counter-Strike: Global Offensive - Pro Teams",
+      "title": "Pro Teams",
+      "breadcrumb": "Pro Teams",
+      "subtitle": "Browse the inventory of the best players",
+      "disclaimer": "Teams shown here are the top-30 teams from HLTV's weekly ranking. Data provided by <0>HLTV.org</0> and <1>Liquipedia.net</1>."
     },
     "weapons": {
       "glock_18": "Glock-18",
@@ -202,7 +216,7 @@
     },
     "part5": {
       "title": "Can I suggest you something?",
-      "content": "We'd love to hear about your ideas so that we make LionSkins better! Drop us a message from the <1>contact form</1>."
+      "content": "We'd love to hear about your ideas so that we make LionSkins better! Drop us a message from the <0>contact form</0>."
     }
   },
   "footer": {
@@ -273,7 +287,7 @@
     "part1": {
       "title": "Who we are",
       "content1": "LionSkins was made by gamers and for gamers. We are pleased to see you use our service, and you can be sure that we wil never use any of your personal data for profit or for anything that does not involve a better user experience.",
-      "content2": "If you have any question regarding this privacy policy, feel free to <1>contact us</1>."
+      "content2": "If you have any question regarding this privacy policy, feel free to <0>contact us</0>."
     },
     "part2": {
       "title": "What we collect",

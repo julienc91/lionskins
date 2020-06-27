@@ -5,8 +5,10 @@ import { Helmet } from 'react-helmet'
 import { Switch, Route, Link } from 'react-router-dom'
 import { withTranslation } from 'react-i18next'
 import InventoryPage from '../views/csgo/InventoryPage'
+import PlayerInventoryPage from '../views/csgo/PlayerInventoryPage'
 import SkinList from '../views/csgo/SkinList'
 import SkinPage from '../views/csgo/SkinPage'
+import TeamList from '../views/csgo/TeamList'
 import Header from './Header'
 import { ListManagementModal, LoginModal, SettingsModal } from './modals'
 import AuthenticationProcess from './AuthenticationProcess'
@@ -65,6 +67,8 @@ class App extends React.Component {
           <Route exact path='/privacy-policy/' component={PrivacyPolicy} />
           <Route exact path='/counter-strike-global-offensive/' component={SkinList} />
           <Route exact path='/counter-strike-global-offensive/my-inventory' component={InventoryPage} />
+          <Route exact path='/counter-strike-global-offensive/teams/' component={TeamList} />
+          <Route exact path='/counter-strike-global-offensive/teams/:team/:player/' component={PlayerInventoryPage} />
           <Route path='/counter-strike-global-offensive/:weapon/:slug/' component={SkinPage} />
           <Route path='/lists/:id/:slug/' component={UserList} />
           <Route component={PageNotFound} status={404} />

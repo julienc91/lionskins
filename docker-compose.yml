@@ -22,23 +22,27 @@ services:
     build: backend
     env_file:
     - backend/.env.${ENVIRONMENT:-production}
+    volumes:
+    - "shareddata:/data/shared"
     networks:
     - db_network
     depends_on:
     - db
-    command: ../fetch_providers --daemon
+    command: ../backoffice
 
   frontend:
     build: frontend
     env_file:
     - frontend/.env.${ENVIRONMENT:-production}
+    volumes:
+    - "shareddata:/data/shared"
     networks:
     - web_network
     depends_on:
     - backend
 
   nginx:
-    image: "nginx:1.15"
+    image: "nginx:1"
     ports:
     - "127.0.0.1:10080:80"
     volumes:
@@ -56,3 +60,4 @@ networks:
     driver: bridge
 volumes:
   dbdata:
+  shareddata:

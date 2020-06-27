@@ -24,7 +24,7 @@ class Skin extends Component {
     const defaultImage = <img src={defaultWeaponImage} className='ui image' alt={alt} />
 
     return (
-      <Card color={getColorFromRarity(skin.rarity)} className='skin'>
+      <Card color={getColorFromRarity(skin.rarity)} className='skin item'>
         <Link to={internalUrl}>
           <Img
             src={skin.imageUrl}

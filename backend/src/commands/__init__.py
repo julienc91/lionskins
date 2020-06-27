@@ -1,15 +1,45 @@
 # -*- coding: utf-8 -*-
 
-import time
 import logging
+import time
+from datetime import datetime
 from queue import Queue
 from threading import Thread
 
 import click
+from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.triggers.cron import CronTrigger
+from apscheduler.triggers.interval import IntervalTrigger
 
 from ..application import app
 from ..models import Skin
 from ..models.enums import Providers
+from .fetch_players import FetchPlayers
+from .generate_sitemap import GenerateSitemap
+
+
+@app.cli.command("backoffice")
+def backoffice():
+    shared_dir = "/data/shared/"
+
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(
+        GenerateSitemap.run,
+        IntervalTrigger(hours=12),
+        args=(shared_dir + "sitemap.xml",),
+        id="sitemap",
+        next_run_time=datetime.now(),
+    )
+    scheduler.add_job(
+        FetchPlayers.run,
+        CronTrigger.from_crontab("0 20 * * 1"),
+        args=(shared_dir + "players.json",),
+        id="players",
+        next_run_time=datetime.now(),
+    )
+
+    scheduler.start()
+    fetch_providers(True, None)
 
 
 @app.cli.command("fetch_providers")

@@ -29,7 +29,7 @@ class About extends Component {
           <p>{t('about.part1.content1')}</p>
           <p>{t('about.part1.content2')}</p>
           <p>{t('about.part1.content3')}</p>
-          <p><Trans i18nKey='about.part1.content4'>-<Link to='/contact/'>-</Link></Trans></p>
+          <p><Trans i18nKey='about.part1.content4'><Link to='/contact/'>-</Link></Trans></p>
 
         </Container>
       </Container>

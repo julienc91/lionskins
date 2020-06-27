@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from src import app as _  # noqa
-from src.commands import fetch_providers
+from src.commands import backoffice
 
 
 if __name__ == "__main__":
-    fetch_providers()
+    backoffice()

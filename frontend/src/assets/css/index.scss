@@ -144,6 +144,22 @@ $xlarge-down: 'only screen and (max-width : 1439px)' !default;
     margin: 1.5rem 0 3rem;
   }
 
+  .item-list {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+
+    > .padding-item {
+      height: 0;
+    }
+
+    > .item,
+    > .padding-item {
+      flex: 1 1 250px;
+      margin: 1rem;
+    }
+  }
+
   .homepage {
     background-color: $color0;
     color: $color5;
@@ -194,6 +210,12 @@ $xlarge-down: 'only screen and (max-width : 1439px)' !default;
     }
   }
 
+  .inventory {
+    h2 {
+      margin-top: 60px;
+    }
+  }
+
   .skin-list {
     margin-bottom: 30px;
     padding: 0 20px;
@@ -202,14 +224,8 @@ $xlarge-down: 'only screen and (max-width : 1439px)' !default;
       text-align: right;
     }
 
-    .skin-list-inner {
-      display: flex;
-      flex-flow: row wrap;
-      justify-content: space-between;
-
+    .item-list {
       .skin {
-        margin: 1rem;
-
         .header {
           a {
             color: $color0;
@@ -241,16 +257,6 @@ $xlarge-down: 'only screen and (max-width : 1439px)' !default;
             }
           }
         }
-      }
-
-      .padding-item {
-        height: 0;
-      }
-
-      .skin,
-      .padding-item {
-        flex: 1 1 250px;
-        margin: 1rem;
       }
     }
 
@@ -473,6 +479,27 @@ $xlarge-down: 'only screen and (max-width : 1439px)' !default;
           }
         }
       }
+    }
+  }
+
+  .team-list {
+    .team {
+      img {
+        background: $white;
+        padding: 5px;
+        width: 100%;
+      }
+
+      .list {
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        padding: 5px;
+      }
+    }
+
+    .disclaimer {
+      font-style: italic;
     }
   }
 

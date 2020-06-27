@@ -108,9 +108,7 @@ class SkinList extends React.Component {
 
         <div className='skin-list' onClick={this.handleHideSidebar}>
 
-          <div className='breadcrumb-container'>
-            <Breadcrumb items={[{ name: 'Counter-Strike: Global Offensive' }]} />
-          </div>
+          <Breadcrumb items={[{ name: 'Counter-Strike: Global Offensive' }]} />
 
           <div className='inventory-link'>
             <Button primary icon labelPosition='left' as={p => <Link to='/counter-strike-global-offensive/my-inventory' {...p} />}>
@@ -128,7 +126,7 @@ class SkinList extends React.Component {
               hasMore={hasNextPage}
               loader={<Loader active inline='centered' key='loader' />}
             >
-              <Card.Group className='skin-list-inner'>
+              <Card.Group className='item-list'>
                 {skins.map((skin) => this.renderChild(skin))}
                 <div className='padding-item' />
                 <div className='padding-item' />

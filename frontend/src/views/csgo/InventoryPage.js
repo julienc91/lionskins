@@ -77,50 +77,49 @@ class InventoryPage extends Component {
           title={t('csgo.inventory.page_title')}
         />
 
+        <Breadcrumb
+          items={[
+            { name: 'Counter-Strike: Global Offensive', link: '/counter-strike-global-offensive/' },
+            { name: t('csgo.inventory.breadcrumb') }
+          ]}
+        />
+
         <Header as='h1' textAlign='center'>{t('csgo.inventory.title')}</Header>
 
-        <div className='skin-list'>
-          <div className='breadcrumb-container'>
-            <Breadcrumb
-              items={[
-                { name: 'Counter-Strike: Global Offensive', link: '/counter-strike-global-offensive/' },
-                { name: t('csgo.inventory.breadcrumb') }
-              ]}
-            />
-          </div>
-          {!user && (
+        {!user && (
+          <Header as='h2' icon textAlign='center'>
+            <Icon name='steam symbol' />
+            {t('csgo.inventory.sign_in_title')}
+            <Header.Subheader>
+              {t('csgo.inventory.sign_in_subtitle')}
+            </Header.Subheader>
+            <span onClick={startOpenId} style={{ cursor: 'pointer' }}>
+              <img alt={t('csgo.inventory.steam_login')} src={steamOpenId} />
+            </span>
+          </Header>
+        )}
+        {loading && user && <Loader active inline='centered' />}
+        {!loading && user && (!skins || skins.length === 0) && (
+          <Header as='h2' icon textAlign='center'>
+            <Icon name='frown outline' />
+            {t('csgo.inventory.no_results_title')}
+            <Header.Subheader>
+              {t('csgo.inventory.no_results_subtitle')}
+            </Header.Subheader>
+          </Header>
+        )}
+        {!loading && user && skins && skins.length > 0 && (
+          <>
             <Header as='h2' icon textAlign='center'>
-              <Icon name='steam symbol' />
-              {t('csgo.inventory.sign_in_title')}
+              <Icon name={currency} />
+              {t(`currency.${currency}`, { price: minCost })}<br />{t('csgo.inventory.summary_title')}
               <Header.Subheader>
-                {t('csgo.inventory.sign_in_subtitle')}
-              </Header.Subheader>
-              <span onClick={startOpenId} style={{ cursor: 'pointer' }}>
-                <img alt={t('csgo.inventory.steam_login')} src={steamOpenId} />
-              </span>
-            </Header>
-          )}
-          {loading && user && <Loader active inline='centered' />}
-          {!loading && user && (!skins || skins.length === 0) && (
-            <Header as='h2' icon textAlign='center'>
-              <Icon name='frown outline' />
-              {t('csgo.inventory.no_results_title')}
-              <Header.Subheader>
-                {t('csgo.inventory.no_results_subtitle')}
+                {t('csgo.inventory.summary_subtitle')}
               </Header.Subheader>
             </Header>
-          )}
-          {!loading && user && skins && skins.length > 0 && (
-            <>
-              <Header as='h2' icon textAlign='center'>
-                <Icon name={currency} />
-                {t(`currency.${currency}`, { price: minCost })}<br />{t('csgo.inventory.summary_title')}
-                <Header.Subheader>
-                  {t('csgo.inventory.summary_subtitle')}
-                </Header.Subheader>
-              </Header>
 
-              <Card.Group className='skin-list-inner'>
+            <div className='skin-list'>
+              <Card.Group className='item-list'>
                 {skins.map((skin) => this.renderChild(skin))}
                 <div className='padding-item' />
                 <div className='padding-item' />
@@ -128,9 +127,9 @@ class InventoryPage extends Component {
                 <div className='padding-item' />
                 <div className='padding-item' />
               </Card.Group>
-            </>
-          )}
-        </div>
+            </div>
+          </>
+        )}
       </Container>
     )
   }

@@ -15,7 +15,7 @@ import { withTranslation } from 'react-i18next'
 import { getSkinQuery } from '../../api/csgo'
 import { importAll } from '../../tools'
 
-const defaultWeaponImages = importAll(require.context('../../assets/images/csgo/', false, /default_skin_\w+\.png/))
+const defaultWeaponImages = importAll(require.context('../../assets/images/csgo/weapons/', false, /default_skin_\w+\.png/))
 
 class SkinPage extends Component {
   rootName = 'csgo'

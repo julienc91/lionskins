@@ -11,8 +11,11 @@ python-slugify==4.0.0
 user-agents==2.1
 
 python-dotenv==0.13.0
-requests==2.23.0
+requests==2.24.0
 ratelimit==2.2.1
+
+# backoffice
+apscheduler==3.6.3
 
 # bitskins
 pyotp==2.3.0

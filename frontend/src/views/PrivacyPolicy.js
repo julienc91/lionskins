@@ -26,7 +26,7 @@ class PrivacyPolicy extends Component {
 
           <Header as='h2'>{t('privacy_policy.part1.title')}</Header>
           <p>{t('privacy_policy.part1.content1')}</p>
-          <p><Trans i18nKey='privacy_policy.part1.content2'>-<Link to='/contact/'>-</Link></Trans></p>
+          <p><Trans i18nKey='privacy_policy.part1.content2'><Link to='/contact/'>-</Link></Trans></p>
 
           <Header as='h2'>{t('privacy_policy.part2.title')}</Header>
           <p>{t('privacy_policy.part2.content1')}</p>

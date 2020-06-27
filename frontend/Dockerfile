@@ -5,8 +5,10 @@ COPY package.json .
 RUN yarn install \
     && yarn global add serve
 COPY . .
-RUN yarn build
+RUN yarn build \
+    && ln -sf /data/shared/sitemap.xml build/ \
+    && ln -sf /data/shared/players.json build/
 
 EXPOSE 5000
 
-CMD ["serve", "-s", "build/"]
+CMD ["serve", "-s", "-S", "build/"]
