@@ -42,7 +42,7 @@ services:
     - backend
 
   nginx:
-    image: "nginx:1"
+    image: "nginx:1.15"
     ports:
     - "127.0.0.1:10080:80"
     volumes:
