@@ -221,6 +221,7 @@ $xlarge-down: 'only screen and (max-width : 1439px)' !default;
     padding: 0 20px;
 
     .inventory-link {
+      margin-bottom: 40px;
       text-align: right;
     }
 
@@ -297,10 +298,6 @@ $xlarge-down: 'only screen and (max-width : 1439px)' !default;
     .skin-list {
       margin-left: $sidebar-width;
       width: calc(100% - #{$sidebar-width});
-
-      .inventory-link {
-        text-align: right;
-      }
     }
 
     @media #{$large-down} {

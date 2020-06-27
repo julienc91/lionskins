@@ -11,7 +11,7 @@ import * as actions from '../../actions'
 import { getSkinInternalUrl, importAll } from '../../tools'
 import TrackedLink from '../tools/TrackedLink'
 
-const defaultWeaponImages = importAll(require.context('../../assets/images/csgo/', false, /default_skin_\w+\.png/))
+const defaultWeaponImages = importAll(require.context('../../assets/images/csgo/weapons/', false, /default_skin_\w+\.png/))
 
 class Skin extends Component {
   render () {

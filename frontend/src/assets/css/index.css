@@ -113,6 +113,7 @@ body {
     margin-bottom: 30px;
     padding: 0 20px; }
     #root .skin-list .inventory-link {
+      margin-bottom: 40px;
       text-align: right; }
     #root .skin-list .item-list .skin .header a {
       color: #010204; }
@@ -154,8 +155,6 @@ body {
   #root .skin-list-container .skin-list {
     margin-left: 260px;
     width: calc(100% - 260px); }
-    #root .skin-list-container .skin-list .inventory-link {
-      text-align: right; }
   @media only screen and (max-width: 1023px) {
     #root .skin-list-container .skin-list-filter-container {
       margin-left: -260px !important;
