@@ -46,7 +46,8 @@ services:
     ports:
     - "127.0.0.1:10080:80"
     volumes:
-    - ./nginx/conf.d:/etc/nginx/conf.d
+    - ./nginx/conf.d/backend.conf:/etc/nginx/conf.d/backend.conf
+    - ./nginx/conf.d/frontend.conf:/etc/nginx/conf.d/frontend.conf
     networks:
     - web_network
     depends_on:
