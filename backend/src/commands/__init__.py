@@ -42,6 +42,11 @@ def backoffice():
     _fetch_providers(True, None)
 
 
+@app.cli.command("fetch_players")
+def fetch_players():
+    return FetchPlayers.run()
+
+
 @app.cli.command("fetch_providers")
 @click.option("--daemon", is_flag=True)
 @click.option("--provider", type=click.Choice([p.name for p in Providers]))
