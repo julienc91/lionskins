@@ -61,7 +61,7 @@ class FetchPlayers:
 
         active_squad = re.search(r"{{ActiveSquad\|(\n{{SquadPlayer.*}})+\n}}", content)[0].split("\n")[1:-1]
         for player in active_squad:
-            if "|coach|" in player.lower():
+            if re.search(r"\|\s*coach\s*\|", player, re.IGNORECASE):
                 continue
 
             country = re.search(r"flag=(\w+)", player).groups()[0]
