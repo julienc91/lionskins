@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Icon, Table } from 'semantic-ui-react'
 import useSettings from '../SettingsProvider'
 import { withTranslation } from '../../i18n'
-import { Rarities } from '../../../frontend.backup/src/components/csgo/enums'
+import { Rarities } from '../../utils/csgo/enums'
 
 const SkinSummary = ({ skins, t }) => {
   const { currency } = useSettings()
