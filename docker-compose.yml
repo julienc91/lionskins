@@ -22,8 +22,6 @@ services:
     build: backend
     env_file:
     - backend/.env.${ENVIRONMENT:-production}
-    volumes:
-    - "shareddata:/data/shared"
     networks:
     - db_network
     depends_on:
@@ -34,8 +32,6 @@ services:
     build: frontend
     env_file:
     - frontend/.env.local
-    volumes:
-    - "shareddata:/data/shared"
     networks:
     - web_network
     depends_on:

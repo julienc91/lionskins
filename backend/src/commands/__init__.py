@@ -20,23 +20,9 @@ from .generate_sitemap import GenerateSitemap
 
 @app.cli.command("backoffice")
 def backoffice():
-    shared_dir = "/data/shared/"
-
     scheduler = BackgroundScheduler()
-    scheduler.add_job(
-        GenerateSitemap.run,
-        IntervalTrigger(hours=12),
-        args=(shared_dir + "sitemap.xml",),
-        id="sitemap",
-        next_run_time=datetime.now(),
-    )
-    scheduler.add_job(
-        FetchPlayers.run,
-        CronTrigger.from_crontab("0 20 * * 1"),
-        args=(shared_dir + "players.json",),
-        id="players",
-        next_run_time=datetime.now(),
-    )
+    scheduler.add_job(GenerateSitemap.run, IntervalTrigger(hours=12), id="sitemap", next_run_time=datetime.now())
+    scheduler.add_job(FetchPlayers.run, CronTrigger.from_crontab("0 20 * * 1"), id="players", next_run_time=datetime.now())
 
     scheduler.start()
     _fetch_providers(True, None)

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import json
+import os
 import re
-import sys
 from typing import Optional
 
 import requests
@@ -11,6 +11,8 @@ from ratelimit import limits, sleep_and_retry
 
 
 class FetchPlayers:
+    output_file = os.path.join(os.path.dirname(__file__), "teams.json")
+
     @classmethod
     def _get_soup(cls, url: str, params=None) -> Optional[BeautifulSoup]:
         html = cls._get_content(url, params=params)
@@ -86,7 +88,7 @@ class FetchPlayers:
         return steam_id.groups()[0]
 
     @classmethod
-    def run(cls, output=None):
+    def run(cls):
         res = []
         for team in cls._get_top_teams():
             team_data = {"name": team, "players": []}
@@ -97,9 +99,6 @@ class FetchPlayers:
             res.append(team_data)
 
         res = json.dumps(res, indent=4)
-        if not output:
-            sys.stdout.write(res)
-        else:
-            with open(output, "w") as f:
-                f.write(res)
+        with open(cls.output_file, "w") as f:
+            f.write(res)
         return res

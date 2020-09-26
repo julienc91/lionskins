@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import sys
+import os
 
 from slugify import slugify
 
@@ -9,6 +9,7 @@ from ..models.csgo import Skin
 
 class GenerateSitemap:
 
+    output_file = os.path.join(os.path.dirname(__file__), "sitemap.xml")
     base_url = "https://lionskins.co"
     languages = ["en", "fr"]
     static_pages = [
@@ -22,7 +23,7 @@ class GenerateSitemap:
     ]
 
     @classmethod
-    def run(cls, output=None):
+    def run(cls):
         urls = [url for url in cls.static_pages]
 
         all_skins = Skin.objects.all()
@@ -51,9 +52,6 @@ class GenerateSitemap:
                 res += "</url>"
         res += "</urlset>"
 
-        if not output:
-            sys.stdout.write(res)
-        else:
-            with open(output, "w") as f:
-                f.write(res)
+        with open(cls.output_file, "w") as f:
+            f.write(res)
         return res
