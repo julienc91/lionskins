@@ -64,7 +64,7 @@ const SkinPage = ({ slug, t, weapon }) => {
   const skins = data.csgo.edges.map(({ node }) => node)
   const skin = skins[0]
   const weaponName = t(Weapons[skin.weapon.name])
-  const description = t(skin.description[t('current_language')])
+  const description = t(skin.description[t('common:current_language')])
   const skinName = skin.quality === 'vanilla' ? t('csgo.qualities.vanilla') : skin.name
   const hasStatTrak = skins.some(s => s.statTrak)
   const hasSouvenir = skins.some(s => s.souvenir)
