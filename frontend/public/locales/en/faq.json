@@ -1,0 +1,28 @@
+{
+  "faq": {
+    "page_title": "LionSkins - FAQ",
+    "breadcrumb": "FAQ",
+    "title": "FAQ",
+    "subtitle": "Any question?",
+    "part1": {
+      "title": "Why only Counter-Strike?",
+      "content": "We wanted to add more games at first, but we never had neither time nor resources to do so... But we keep that in mind for one day maybe!"
+    },
+    "part2": {
+      "title": "Why don't you propose this one marketplace?",
+      "content": "We're sure that this service is super great, but we cannot include every marketplace that exists. But maybe if you are numerous enough to suggest this, we'll have a look one day or another!"
+    },
+    "part3": {
+      "title": "The price you showed was not right!",
+      "content": "Even though we aim for real-time pricing updates, we are technically not able to do so at the moment; which is why you may notice inconsistencies between the prices we show and the effective prices in the marketplaces."
+    },
+    "part4": {
+      "title": "Are you related to this or that marketplace?",
+      "content": "No, we're not, LionSkins is independent. However, the Bitskins and Skinbaron links are affiliated, and we receive a commission if you buy on these marketplaces after using one of our links."
+    },
+    "part5": {
+      "title": "Can I suggest you something?",
+      "content": "We'd love to hear about your ideas so that we make LionSkins better! Drop us a message from the <0>contact form</0>."
+    }
+  }
+}

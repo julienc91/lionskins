@@ -33,7 +33,7 @@ services:
   frontend:
     build: frontend
     env_file:
-    - frontend/.env.${ENVIRONMENT:-production}
+    - frontend/.env.local
     volumes:
     - "shareddata:/data/shared"
     networks:

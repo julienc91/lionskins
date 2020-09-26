@@ -1,0 +1,28 @@
+{
+  "faq": {
+    "page_title": "LionSkins - FAQ",
+    "breadcrumb": "FAQ",
+    "title": "FAQ",
+    "subtitle": "Une question\u00A0?",
+    "part1": {
+      "title": "Pourquoi seulement Counter-Strike\u00A0?",
+      "content": "Nous avions initialement prévu d'ajouter d'autres jeux progressivement, mais nous n'avons jamais trouvé ni le temps ni les ressources pour le faire. Mais nous gardons l'idée dans un coin pour un jour peut-etre\u00A0!"
+    },
+    "part2": {
+      "title": "Pourquoi n'y a t-il pas cette marketplace\u00A0?",
+      "content": "Ce site est probablement génial, mais nous ne pouvons pas intégrer toutes les plateformes qui existent. Mais si vous êtes suffisamment nombreux à nous le réclamer, nous y jetterons un œil\u00A0!"
+    },
+    "part3": {
+      "title": "Le prix indiqué est faux\u00A0!",
+      "content": "Même si nous visons une mise à jour en temps réel des prix, nous sommes techniquement dans l'incapacité de le faire pour le moment. C'est pour cette raison que certains prix affichés ne sont pas forcément les mêmes que ceux proposés par le site indiqué."
+    },
+    "part4": {
+      "title": "Est-ce que vous êtes rattaché à tel ou tel site\u00A0?",
+      "content": "Non, LionSkins est un projet totalement indépendant. Cependant, nos liens Bitskins et Skinbaron sont affiliés, et nous percevons une commission si vous réalisez des achats sur ces marketplaces en passant par l'un de nos liens."
+    },
+    "part5": {
+      "title": "Je peux proposer un truc\u00A0?",
+      "content": "Nous serions très heureux de lire vos suggestions pour nous aider à améliorer LionSkins\u00A0! Laissez-nous un message depuis la <0>page contact</0>."
+    }
+  }
+}

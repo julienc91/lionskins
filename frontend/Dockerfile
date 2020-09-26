@@ -1,14 +1,13 @@
-FROM node:12
+FROM node:14
 
 WORKDIR /opt/services/frontend/
 COPY package.json .
-RUN yarn install \
-    && yarn global add serve
+RUN yarn install
 COPY . .
 RUN yarn build \
-    && ln -sf /data/shared/sitemap.xml build/ \
-    && ln -sf /data/shared/players.json build/
+    && ln -sf /data/shared/sitemap.xml public/ \
+    && ln -sf /data/shared/players.json public/
 
-EXPOSE 5000
+EXPOSE 3000
 
-CMD ["serve", "-s", "-S", "build/"]
+CMD ["yarn", "start"]

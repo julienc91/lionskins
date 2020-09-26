@@ -1,0 +1,72 @@
+{
+  "carousel": {
+    "soon": "Soon"
+  },
+  "currency": {
+    "eur": "{{price, eur}}",
+    "usd": "{{price, usd}}"
+  },
+  "current_language": "en",
+  "date": "{{date, date}}",
+  "head": {
+    "title": "LionSkins - Compare prices of thousands of skins for your favorite games",
+    "description": "Compare prices of thousands of skins for your favorite video games among the most trusted marketplaces"
+  },
+  "lists": {
+    "creation": {
+      "cancel_button": "Cancel",
+      "confirm_button": "Submit",
+      "name_label": "Name",
+      "description_label": "Description",
+      "title": "New list"
+    },
+    "deletion": {
+      "confirm_description": "Are you sure you want to delete this list?",
+      "cancel_button": "Cancel",
+      "confirm_button": "Confirm"
+    },
+    "edition": {
+      "cancel_button": "Cancel",
+      "confirm_button": "Submit",
+      "name_label": "Name",
+      "description_label": "Description",
+      "title": "List edition"
+    },
+    "lists": {
+      "title": "My Lists",
+      "last_update_tooltip": "Last updated",
+      "number_of_items_tooltip": "Number of items",
+      "no_items": "You don't have any lists",
+      "create_list": "Create a new list"
+    }
+  },
+  "login": {
+    "title": "Log in",
+    "description": "Login with your Steam account",
+    "steam_login": "Sign in through Steam"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": {
+      "label": "Language",
+      "en": "English",
+      "fr": "Français"
+    },
+    "currency": {
+      "label": "Currency",
+      "usd": "US Dollar",
+      "eur": "Euro"
+    }
+  },
+  "skin": {
+    "prices_history": {
+      "header": "History",
+      "options": "Settings",
+      "mode": "Price display",
+      "mode_average": "Average price",
+      "mode_min": "Lowest price",
+      "group": "Group offers",
+      "skins": "Filter offers"
+    }
+  }
+}

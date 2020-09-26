@@ -59,7 +59,7 @@ class FetchPlayers:
         page = list(pages.values())[0]
         content = page["revisions"][0]["*"]
 
-        active_squad = re.search(r"{{ActiveSquad\|(\n{{SquadPlayer.*}})+\n}}", content)[0].split("\n")[1:-1]
+        active_squad = re.search(r"{{ActiveSquad\|(\n{{SquadPlayer.*}}\s*)+\n}}", content)[0].split("\n")[1:-1]
         for player in active_squad:
             if re.search(r"\|\s*coach\s*\|", player, re.IGNORECASE):
                 continue

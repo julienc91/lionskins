@@ -1,0 +1,72 @@
+{
+  "carousel": {
+    "soon": "Bientôt"
+  },
+  "currency": {
+    "eur": "{{price, eur}}",
+    "usd": "{{price, usd}}"
+  },
+  "current_language": "fr",
+  "date": "{{date, date}}",
+  "head": {
+    "title": "LionSkins - Comparez les prix de milliers de skins pour vos jeux favoris",
+    "description": "Comparez les prix de milliers de skins pour vos jeux vidéos favoris parmi les meilleures marketplaces"
+  },
+  "lists": {
+    "creation": {
+      "cancel_button": "Annuler",
+      "confirm_button": "Enregistrer",
+      "name_label": "Titre",
+      "description_label": "Description",
+      "title": "Nouvelle liste"
+    },
+    "deletion": {
+      "confirm_description": "Êtes-vous sûr de vouloir supprimer cette liste\u00A0?",
+      "cancel_button": "Annuler",
+      "confirm_button": "Confirmer"
+    },
+    "edition": {
+      "cancel_button": "Annuler",
+      "confirm_button": "Enregistrer",
+      "name_label": "Titre",
+      "description_label": "Description",
+      "title": "Édition de liste"
+    },
+    "lists": {
+      "title": "Mes Listes",
+      "last_update_tooltip": "Denière modification",
+      "number_of_items_tooltip": "Nombre d'éléments",
+      "no_items": "Vous n'avez aucune liste",
+      "create_list": "Créer une nouvelle liste"
+    }
+  },
+  "login": {
+    "title": "Connexion",
+    "description": "Connectez-vous avec votre compte Steam",
+    "steam_login": "Se connecter avec Steam"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "language": {
+      "label": "Langue",
+      "en": "English",
+      "fr": "Français"
+    },
+    "currency": {
+      "label": "Devise",
+      "usd": "Dollar US",
+      "eur": "Euro"
+    }
+  },
+  "skin": {
+    "prices_history": {
+      "header": "Historique",
+      "options": "Options",
+      "mode": "Affichage du prix",
+      "mode_average": "Prix moyen",
+      "mode_min": "Prix le plus bas",
+      "group": "Regrouper les offres",
+      "skins": "Filtrer les offres"
+    }
+  }
+}

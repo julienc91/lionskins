@@ -8,7 +8,7 @@ flask-mongoengine==0.9.5
 Flask-OpenID==1.2.5
 graphene==2.1.8
 python-slugify==4.0.0
-user-agents==2.1
+user-agents==2.2.0
 
 python-dotenv==0.13.0
 requests==2.24.0
@@ -24,4 +24,4 @@ pyotp==2.3.0
 gunicorn==20.0.4
 
 # sentry
-sentry-sdk[flask]==0.14.4
+sentry-sdk[flask]==0.17.8

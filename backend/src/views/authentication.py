@@ -49,7 +49,7 @@ def steam_login_callback(resp):
         user.set_last_login()
 
     session["user_id"] = str(user.id)
-    return redirect(os.environ["FRONTEND_DOMAIN"] + "?authenticated")
+    return redirect(os.environ["FRONTEND_DOMAIN"] + "/authentication")
 
 
 def get_tokens():

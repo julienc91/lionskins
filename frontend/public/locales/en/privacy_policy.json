@@ -1,0 +1,45 @@
+{
+  "privacy_policy": {
+    "page_title": "LionSkins - Privacy Policy",
+    "breadcrumb": "Privacy Policy",
+    "title": "Privacy Policy",
+    "subtitle": "Because we value your privacy",
+    "part1": {
+      "title": "Who we are",
+      "content1": "LionSkins was made by gamers and for gamers. We are pleased to see you use our service, and you can be sure that we wil never use any of your personal data for profit or for anything that does not involve a better user experience.",
+      "content2": "If you have any question regarding this privacy policy, feel free to <0>contact us</0>."
+    },
+    "part2": {
+      "title": "What we collect",
+      "content1": "Not much actually...",
+      "item1": {
+        "name": "Your Steam ID and username",
+        "description": ": only if you choose to sign up through Steam on our service"
+      },
+      "item2": {
+        "name": "Your e-mail address",
+        "description": ": only if you want to contact us from the contact form and expect an answer"
+      },
+      "item3": {
+        "name": "Your clicks on links to marketplaces' websites",
+        "description": ": everytime you click on one of the links that redirects you to a skin marketplace, we generate a unique and totally random id in order to have a rough idea of how our visitors interact with the marketplaces we suggest. This id is automatically deleted at the end of your visit, and cannot be linked back to your device or your person"
+      }
+    },
+    "part3": {
+      "title": "Third party services we use",
+      "content1": "We also use third-party services to make our site work like we want it to. Here's the list:",
+      "item1": {
+        "name": "Steam",
+        "description": ": Valve's well-known digital video game store. We use their OpenID service to authenticate users on our side"
+      },
+      "item2": {
+        "name": "Matomo",
+        "description": ": an open-source analytics platform that is known for being especially privacy-protection friendly. We need this tool to know how our visitors interact with our service in order to continuously improve their experience"
+      },
+      "item3": {
+        "name": "Recaptcha",
+        "description": ": Google's captcha solution. This is only used on the contact form to prevent spam"
+      }
+    }
+  }
+}

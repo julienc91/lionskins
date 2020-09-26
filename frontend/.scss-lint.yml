@@ -1,4 +1,4 @@
-scss_files: 'src/assets/*.scss'
+scss_files: 'assets/*.scss'
 
 linters:
   IdSelector:

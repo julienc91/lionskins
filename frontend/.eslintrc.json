@@ -14,9 +14,7 @@
   },
   "plugins": [
     "react",
-    "flow",
     "graphql",
-    "jsx-a11y",
     "promise",
     "standard",
     "cypress"
