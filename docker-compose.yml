@@ -4,51 +4,55 @@ services:
   db:
     image: "mongo:4"
     volumes:
-    - "dbdata:/data/db"
+      - "dbdata:/data/db"
     networks:
-    - db_network
+      - db_network
 
   backend:
     build: backend
     env_file:
-    - backend/.env.${ENVIRONMENT:-production}
+      - backend/.env.${ENVIRONMENT:-production}
     networks:
-    - db_network
-    - web_network
+      - db_network
+      - web_network
+    volumes:
+      - "backenddata:/data/backend:ro"
     depends_on:
-    - db
+      - db
 
   backoffice:
     build: backend
     env_file:
-    - backend/.env.${ENVIRONMENT:-production}
+      - backend/.env.${ENVIRONMENT:-production}
     networks:
-    - db_network
+      - db_network
+    volumes:
+      - "backenddata:/data/backend"
     depends_on:
-    - db
+      - db
     command: ../backoffice
 
   frontend:
     build: frontend
     env_file:
-    - frontend/.env.local
+      - frontend/.env.local
     networks:
-    - web_network
+      - web_network
     depends_on:
-    - backend
+      - backend
 
   nginx:
     image: "nginx:1.15"
     ports:
-    - "127.0.0.1:10080:80"
+      - "127.0.0.1:10080:80"
     volumes:
-    - ./nginx/conf.d/backend.conf:/etc/nginx/conf.d/backend.conf
-    - ./nginx/conf.d/frontend.conf:/etc/nginx/conf.d/frontend.conf
+      - ./nginx/conf.d/backend.conf:/etc/nginx/conf.d/backend.conf
+      - ./nginx/conf.d/frontend.conf:/etc/nginx/conf.d/frontend.conf
     networks:
-    - web_network
+      - web_network
     depends_on:
-    - backend
-    - frontend
+      - backend
+      - frontend
 
 networks:
   db_network:
@@ -57,4 +61,4 @@ networks:
     driver: bridge
 volumes:
   dbdata:
-  shareddata:
+  backenddata:

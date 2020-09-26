@@ -9,7 +9,7 @@ from ..models.csgo import Skin
 
 class GenerateSitemap:
 
-    output_file = os.path.join(os.path.dirname(__file__), "sitemap.xml")
+    output_file = os.path.join("/", "data", "backend", "sitemap.xml")
     base_url = "https://lionskins.co"
     languages = ["en", "fr"]
     static_pages = [

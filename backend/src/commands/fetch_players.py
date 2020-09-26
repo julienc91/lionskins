@@ -11,7 +11,7 @@ from ratelimit import limits, sleep_and_retry
 
 
 class FetchPlayers:
-    output_file = os.path.join(os.path.dirname(__file__), "teams.json")
+    output_file = os.path.join("/", "data", "backend", "teams.json")
 
     @classmethod
     def _get_soup(cls, url: str, params=None) -> Optional[BeautifulSoup]:
