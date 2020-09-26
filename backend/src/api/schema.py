@@ -4,13 +4,12 @@ import graphene
 
 from . import contact
 from . import csgo
-from . import history
 from . import inventory
 from . import lists
 from . import users
 
 
-class Query(csgo.Query, history.Query, inventory.Query, lists.Query, users.Query, graphene.ObjectType):
+class Query(csgo.Query, inventory.Query, lists.Query, users.Query, graphene.ObjectType):
     pass
 
 

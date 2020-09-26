@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from datetime import date, datetime
+from datetime import datetime
 
 from slugify import slugify
 
 from ..init import db
 from ..models.enums import Apps
-from .history import History
 from .model_mixin import ModelMixin
 from .prices import Price
 
@@ -60,16 +59,4 @@ class Skin(ModelMixin, db.Document):
                 break
         else:
             self.prices.append(Price(price=price, provider=provider))
-
-        try:
-            history = History.get(skin=self.id, provider=provider, creation_date__gte=date.today())
-        except History.DoesNotExist:
-            History.create(skin=self.id, provider=provider, price=price)
-        except History.MultipleObjectsReturned:
-            pass
-        else:
-            if history.price > price:
-                history.price = price
-                history.creation_date = now
-                history.save()
         self.save()
