@@ -5,11 +5,12 @@ import os
 from slugify import slugify
 
 from ..models.csgo import Skin
+from ..utils.data import get_data_directory
 
 
 class GenerateSitemap:
 
-    output_file = os.path.join("/", "data", "backend", "sitemap.xml")
+    output_file = os.path.join(get_data_directory(), "sitemap.xml")
     base_url = "https://lionskins.co"
     languages = ["en", "fr"]
     static_pages = [

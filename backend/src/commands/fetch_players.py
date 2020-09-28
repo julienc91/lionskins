@@ -9,9 +9,11 @@ import requests
 from bs4 import BeautifulSoup
 from ratelimit import limits, sleep_and_retry
 
+from ..utils.data import get_data_directory
+
 
 class FetchPlayers:
-    output_file = os.path.join("/", "data", "backend", "teams.json")
+    output_file = os.path.join(get_data_directory(), "teams.json")
 
     @classmethod
     def _get_soup(cls, url: str, params=None) -> Optional[BeautifulSoup]:

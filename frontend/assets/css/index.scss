@@ -468,10 +468,15 @@ $xlarge-down: 'only screen and (max-width : 1439px)' !default;
 
   .team-list {
     .team {
+      .reveal .visible.content {
+        background: $white;
+        text-align: center;
+        width: 100%;
+      }
+
       img {
         background: $white;
         padding: 5px;
-        width: 100%;
       }
 
       .list {
