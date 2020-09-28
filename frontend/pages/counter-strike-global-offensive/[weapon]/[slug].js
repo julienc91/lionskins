@@ -143,22 +143,25 @@ const SkinPage = ({ slug, t, weapon }) => {
         </div>
       </div>
 
-      <script type='application/ld+json'>
-        {JSON.stringify({
-          '@context': 'https://schema.org/',
-          '@type': 'Product',
-          name: `${weaponName} - ${skinName}`,
-          image,
-          description,
-          offers: {
-            '@type': 'AggregateOffer',
-            offerCount: skins.map(skin => skin.prices.length).reduce((a, b) => a + b),
-            lowPrice: skins.map(skin => skin.prices).flat().map(price => price.price).sort((a, b) => a - b).shift(),
-            highPrice: skins.map(skin => skin.prices).flat().map(price => price.price).sort((a, b) => a - b).pop(),
-            priceCurrency: currency
-          }
-        })}
-      </script>
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org/',
+            '@type': 'Product',
+            name: `${weaponName} - ${skinName}`,
+            image,
+            description,
+            offers: {
+              '@type': 'AggregateOffer',
+              offerCount: skins.map(skin => skin.prices.length).reduce((a, b) => a + b),
+              lowPrice: skins.map(skin => skin.prices).flat().map(price => price.price).sort((a, b) => a - b).shift(),
+              highPrice: skins.map(skin => skin.prices).flat().map(price => price.price).sort((a, b) => a - b).pop(),
+              priceCurrency: currency
+            }
+          })
+        }}
+      />
 
     </Container>
   )

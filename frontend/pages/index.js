@@ -20,18 +20,21 @@ const Homepage = ({ images, t }) => (
       {t('homepage.subtitle2')}
     </Header>
     <Carousel images={images} />
-    <script type='application/ld+json'>
-      {JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'WebSite',
-        url: 'https://lionskins.co/',
-        potentialAction: {
-          '@type': 'SearchAction',
-          target: 'https://lionskins.co/counter-strike-global-offensive/#search={search_term_string}',
-          'query-input': 'required name=search_term_string'
-        }
-      })}
-    </script>
+    <script
+      type='application/ld+json'
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'WebSite',
+          url: 'https://lionskins.co/',
+          potentialAction: {
+            '@type': 'SearchAction',
+            target: 'https://lionskins.co/counter-strike-global-offensive/#search={search_term_string}',
+            'query-input': 'required name=search_term_string'
+          }
+        })
+      }}
+    />
   </div>
 )
 
