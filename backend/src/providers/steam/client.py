@@ -86,6 +86,7 @@ class Client(AbstractProvider):
                         skin.image_url = f"https://steamcommunity-a.akamaihd.net/economy/image/{image_url}/720fx720f"
 
                     self._app_specific_parsing(skin, row)
+                    skin.save()
 
                     if item_price > 0:
                         yield skin, item_price
