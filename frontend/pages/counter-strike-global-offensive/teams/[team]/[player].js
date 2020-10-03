@@ -114,14 +114,12 @@ export const getServerSideProps = async ({ query, res }) => {
   const team = data.find(t => slugify(t.name, { lower: true }) === query.team)
   if (!team) {
     res.statusCode = 404
-    console.log('team not found')
     return {}
   }
 
   const player = team.players.find(p => slugify(p.name, { lower: true }) === query.player)
   if (!player) {
     res.statusCode = 404
-    console.log('player not found')
     return {}
   }
 

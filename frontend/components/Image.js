@@ -20,12 +20,10 @@ const Image = ({ loaderSrc, imageSrc, alt, ...props }) => {
   }, [])
 
   const setLoaded_ = () => {
-    console.log(imageSrc, 'loaded')
     setLoaded(true)
   }
 
   const setError_ = () => {
-    console.log(imageSrc, 'error')
     setError(true)
   }
 
