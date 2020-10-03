@@ -17,7 +17,7 @@ from backend.src.models.lists import ItemContainer, Item
 
 @pytest.fixture()
 def user():
-    return User.create(username="foo", password="password")
+    return User.create(username="foo", steam_id="foo")
 
 
 @pytest.fixture()
@@ -66,7 +66,7 @@ get_current_user_lists_query = """
 @pytest.mark.parametrize("nb_lists", [0, 1, 3])
 def test_get_current_user_lists(client, user, nb_lists, access_token):
 
-    other_user = User.create(username="bar", password="password")
+    other_user = User.create(username="bar", steam_id="bar")
     List.create(user=other_user, name="Foo", slug="foo")
     for _ in range(nb_lists):
         List.create(user=user, name="Foo", slug="foo")
@@ -298,7 +298,7 @@ def test_update_list_not_authenticated(client, list_):
 
 
 def test_update_list_not_owner(client, list_, access_token):
-    other_user = User.create(username="bar", password="password")
+    other_user = User.create(username="bar", steam_id="bar")
     list_.user = other_user
     list_.save()
 
@@ -382,7 +382,7 @@ def test_delete_list_not_authenticated(client, list_):
 
 
 def test_delete_list_not_owner(client, list_, access_token):
-    other_user = User.create(username="bar", password="password")
+    other_user = User.create(username="bar", steam_id="bar")
     list_.user = other_user
     list_.save()
 
