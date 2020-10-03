@@ -12,7 +12,7 @@ class AuthenticationManager {
 
   setToken (token) {
     if (token) {
-      Cookies.set('token', token)
+      Cookies.set('token', token, { sameSite: 'strict' })
     } else {
       Cookies.remove('token')
     }
@@ -20,7 +20,7 @@ class AuthenticationManager {
 
   setRefreshToken (token) {
     if (token) {
-      Cookies.set('refreshToken', token)
+      Cookies.set('refreshToken', token, { expires: 90, sameSite: 'strict' })
     } else {
       Cookies.remove('refreshToken')
     }
