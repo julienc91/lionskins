@@ -4,7 +4,7 @@ import os
 import sys
 import logging
 
-from flask_graphql import GraphQLView
+from graphql_server.flask import GraphQLView
 
 from .application import app
 from .api import schema
@@ -18,7 +18,7 @@ logging.basicConfig(level=logging.INFO)
 
 sys.path.append(os.path.dirname(__file__))
 
-app.add_url_rule("/graphql", view_func=GraphQLView.as_view("graphql", schema=schema, graphiql=True))
+app.add_url_rule("/graphql", view_func=GraphQLView.as_view("graphql", schema=schema.graphql_schema, graphiql=True))
 app.add_url_rule("/redirect/<provider>/<skin_id>/", view_func=redirect_view)
 app.add_url_rule("/sitemap.xml", view_func=sitemap_view, methods=["GET"])
 app.add_url_rule("/teams.json", view_func=teams_view, methods=["GET"])

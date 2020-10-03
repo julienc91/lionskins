@@ -8,10 +8,7 @@ import AuthenticationManager from '../utils/authentication'
 const refreshTokenQuery = gql`
   mutation {
     refreshToken {
-      accessToken,
-      error {
-        status
-      }
+      accessToken
     }
   }`
 
@@ -47,12 +44,12 @@ export const AuthenticationProvider = ({ children }) => {
       return
     }
 
-    const response = await refreshClient.mutate({ mutation: refreshTokenQuery })
-    if (response.data.refreshToken.error.status === 401) {
+    try {
+      const response = await refreshClient.mutate({ mutation: refreshTokenQuery })
+      AuthenticationManager.setToken(response.data.refreshToken.accessToken)
+    } catch {
       AuthenticationManager.setToken(null)
       AuthenticationManager.setRefreshToken(null)
-    } else if (response.data.refreshToken.error.status === 200) {
-      AuthenticationManager.setToken(response.data.refreshToken.accessToken)
     }
 
     setTimeout(refreshToken, 5 * 60 * 1000)

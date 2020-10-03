@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 
-from http import HTTPStatus
-
 import graphene
+from graphql import GraphQLError
 from flask_jwt_extended import create_access_token, jwt_refresh_token_required, jwt_required
 
 from .types import TypeUser
-from ..generic import AbstractMutation
 from ...utils.users import get_current_user
 
 
-class RefreshToken(AbstractMutation):
+class RefreshToken(graphene.Mutation):
 
     access_token = graphene.Field(graphene.String)
 
@@ -19,7 +17,7 @@ class RefreshToken(AbstractMutation):
     def mutate(cls, *args, **kwargs):
         user = get_current_user()
         if not user:
-            return cls.handle_error(HTTPStatus.UNAUTHORIZED, "invalid token")
+            raise GraphQLError("Invalid token")
         user.set_last_login()
         access_token = create_access_token(identity=user.jwt_identity)
         return cls(access_token=access_token)
