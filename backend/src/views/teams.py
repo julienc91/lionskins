@@ -7,6 +7,6 @@ from ..commands.fetch_players import FetchPlayers
 
 def teams_view():
     try:
-        return send_file(FetchPlayers.output_file, mimetype="application/json")
+        return send_file(FetchPlayers.output_file(), mimetype="application/json")
     except FileNotFoundError:
         return abort(404)

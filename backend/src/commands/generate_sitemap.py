@@ -10,7 +10,6 @@ from ..utils.data import get_data_directory
 
 class GenerateSitemap:
 
-    output_file = os.path.join(get_data_directory(), "sitemap.xml")
     base_url = "https://lionskins.co"
     languages = ["en", "fr"]
     static_pages = [
@@ -22,6 +21,10 @@ class GenerateSitemap:
         ["counter-strike-global-offensive", "daily", 1],
         ["counter-strike-global-offensive/my-inventory", "monthly", 0.1],
     ]
+
+    @classmethod
+    def output_file(cls) -> str:
+        return os.path.join(get_data_directory(), "sitemap.xml")
 
     @classmethod
     def run(cls):
@@ -53,6 +56,6 @@ class GenerateSitemap:
                 res += "</url>"
         res += "</urlset>"
 
-        with open(cls.output_file, "w") as f:
+        with open(cls.output_file(), "w") as f:
             f.write(res)
         return res

@@ -17,3 +17,9 @@ def app():
 
     db.connection.drop_database("test")
     ctx.pop()
+
+
+@pytest.fixture
+def client(app):
+    with app.test_client() as client:
+        yield client

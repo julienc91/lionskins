@@ -18,7 +18,10 @@ class CurrencyConverter:
     ERROR_DELAY = timedelta(minutes=5)
 
     @classmethod
-    def _get_rate(cls, from_currency, to_currency):
+    def _get_rate(cls, from_currency: Currencies, to_currency: Currencies) -> float:
+        if from_currency is to_currency:
+            return 1.0
+
         with cls.__lock:
             if not cls.__rate or not cls.__last_update or (datetime.now() - cls.__last_update) > cls.UPDATE_DELAY:
                 cls._update_rate()
@@ -27,9 +30,10 @@ class CurrencyConverter:
                 if from_currency in cls.__rate:
                     return cls.__rate[from_currency][to_currency]
                 elif to_currency in cls.__rate:
-                    return 1.0 / cls.__rate[to_currency][from_currency]
+                    return 1 / cls.__rate[to_currency][from_currency]
             except (KeyError, ValueError, TypeError):
-                return 1.0
+                pass
+            return 1.0
 
     @classmethod
     def _update_rate(cls):
@@ -43,6 +47,6 @@ class CurrencyConverter:
         cls.__last_update = datetime.now()
 
     @classmethod
-    def convert(cls, amount, from_currency, to_currency):
+    def convert(cls, amount: float, from_currency: Currencies, to_currency: Currencies) -> float:
         rate = cls._get_rate(from_currency, to_currency)
         return round(amount * rate, 2)

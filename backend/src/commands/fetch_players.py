@@ -13,7 +13,9 @@ from ..utils.data import get_data_directory
 
 
 class FetchPlayers:
-    output_file = os.path.join(get_data_directory(), "teams.json")
+    @classmethod
+    def output_file(cls) -> str:
+        return os.path.join(get_data_directory(), "teams.json")
 
     @classmethod
     def _get_soup(cls, url: str, params=None) -> Optional[BeautifulSoup]:
@@ -101,6 +103,6 @@ class FetchPlayers:
             res.append(team_data)
 
         res = json.dumps(res, indent=4)
-        with open(cls.output_file, "w") as f:
+        with open(cls.output_file(), "w") as f:
             f.write(res)
         return res
