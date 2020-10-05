@@ -35,6 +35,9 @@ class ContactMessage(graphene.Mutation):
             params["name"] = kwargs["name"]
         if user:
             params["user"] = user
+        if not kwargs["message"]:
+            raise GraphQLError("message is empty")
+
         res = Contact.create(**params)
 
         try:

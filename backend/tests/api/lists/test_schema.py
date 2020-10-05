@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import json
 from http import HTTPStatus
 
 import pytest
@@ -74,12 +73,7 @@ def test_get_current_user_lists(client, user, nb_lists, access_token):
 
     url = url_for("graphql")
 
-    res = client.post(
-        url,
-        headers={"Authorization": f"Bearer {access_token}"},
-        data=json.dumps({"query": get_current_user_lists_query}),
-        content_type="application/json",
-    )
+    res = client.post(url, headers={"Authorization": f"Bearer {access_token}"}, json={"query": get_current_user_lists_query})
 
     assert res.status_code == HTTPStatus.OK
 
@@ -93,7 +87,7 @@ def test_get_current_user_lists(client, user, nb_lists, access_token):
 def test_get_current_user_lists_invalid(client):
     url = url_for("graphql")
 
-    res = client.post(url, data=json.dumps({"query": get_current_user_lists_query}), content_type="application/json")
+    res = client.post(url, json={"query": get_current_user_lists_query})
 
     assert res.status_code == HTTPStatus.OK
 
@@ -126,9 +120,7 @@ def test_get_list(client, list_):
     url = url_for("graphql")
 
     list_id = to_global_id("TypeList", list_.id)
-    res = client.post(
-        url, data=json.dumps({"query": get_list_query, "variables": {"id": list_id}}), content_type="application/json"
-    )
+    res = client.post(url, json={"query": get_list_query, "variables": {"id": list_id}})
 
     assert res.status_code == HTTPStatus.OK
 
@@ -142,9 +134,7 @@ def test_get_list_invalid(client):
     url = url_for("graphql")
 
     list_id = to_global_id("TypeList", "404")
-    res = client.post(
-        url, data=json.dumps({"query": get_list_query, "variables": {"id": list_id}}), content_type="application/json"
-    )
+    res = client.post(url, json={"query": get_list_query, "variables": {"id": list_id}})
 
     assert res.status_code == HTTPStatus.OK
 
@@ -179,8 +169,7 @@ def test_create_list(client, user, access_token, name, description):
     res = client.post(
         url,
         headers={"Authorization": f"Bearer {access_token}"},
-        data=json.dumps({"query": create_list_query, "variables": {"name": name, "description": description}}),
-        content_type="application/json",
+        json={"query": create_list_query, "variables": {"name": name, "description": description}},
     )
 
     assert res.status_code == HTTPStatus.OK
@@ -200,11 +189,7 @@ def test_create_list(client, user, access_token, name, description):
 
 def test_create_list_not_authenticated(client):
     url = url_for("graphql")
-    res = client.post(
-        url,
-        data=json.dumps({"query": create_list_query, "variables": {"name": "foo", "description": "bar"}}),
-        content_type="application/json",
-    )
+    res = client.post(url, json={"query": create_list_query, "variables": {"name": "foo", "description": "bar"}})
 
     assert res.status_code == HTTPStatus.OK
 
@@ -218,8 +203,7 @@ def test_create_list_invalid(client, access_token):
     res = client.post(
         url,
         headers={"Authorization": f"Bearer {access_token}"},
-        data=json.dumps({"query": create_list_query, "variables": {"name": "", "description": "bar"}}),
-        content_type="application/json",
+        json={"query": create_list_query, "variables": {"name": "", "description": "bar"}},
     )
 
     assert res.status_code == HTTPStatus.OK
@@ -258,8 +242,7 @@ def test_update_list(client, list_, access_token, variables):
     res = client.post(
         url,
         headers={"Authorization": f"Bearer {access_token}"},
-        data=json.dumps({"query": update_list_query, "variables": {"id": list_id, **variables}}),
-        content_type="application/json",
+        json={"query": update_list_query, "variables": {"id": list_id, **variables}},
     )
 
     assert res.status_code == HTTPStatus.OK
@@ -285,11 +268,7 @@ def test_update_list_not_authenticated(client, list_):
     url = url_for("graphql")
 
     list_id = to_global_id("TypeList", list_.id)
-    res = client.post(
-        url,
-        data=json.dumps({"query": update_list_query, "variables": {"id": list_id, "name": "bar"}}),
-        content_type="application/json",
-    )
+    res = client.post(url, json={"query": update_list_query, "variables": {"id": list_id, "name": "bar"}})
 
     assert res.status_code == HTTPStatus.OK
 
@@ -308,8 +287,7 @@ def test_update_list_not_owner(client, list_, access_token):
     res = client.post(
         url,
         headers={"Authorization": f"Bearer {access_token}"},
-        data=json.dumps({"query": update_list_query, "variables": {"id": list_id, "name": "bar"}}),
-        content_type="application/json",
+        json={"query": update_list_query, "variables": {"id": list_id, "name": "bar"}},
     )
 
     assert res.status_code == HTTPStatus.OK
@@ -325,8 +303,7 @@ def test_update_list_invalid(client, list_, access_token):
     res = client.post(
         url,
         headers={"Authorization": f"Bearer {access_token}"},
-        data=json.dumps({"query": update_list_query, "variables": {"id": list_id, "name": "bar"}}),
-        content_type="application/json",
+        json={"query": update_list_query, "variables": {"id": list_id, "name": "bar"}},
     )
 
     assert res.status_code == HTTPStatus.OK
@@ -351,10 +328,7 @@ def test_delete_list(client, list_, access_token):
 
     list_id = to_global_id("TypeList", list_.id)
     res = client.post(
-        url,
-        headers={"Authorization": f"Bearer {access_token}"},
-        data=json.dumps({"query": delete_list_query, "variables": {"id": list_id}}),
-        content_type="application/json",
+        url, headers={"Authorization": f"Bearer {access_token}"}, json={"query": delete_list_query, "variables": {"id": list_id}}
     )
 
     assert res.status_code == HTTPStatus.OK
@@ -369,9 +343,7 @@ def test_delete_list_not_authenticated(client, list_):
     url = url_for("graphql")
 
     list_id = to_global_id("TypeList", list_.id)
-    res = client.post(
-        url, data=json.dumps({"query": delete_list_query, "variables": {"id": list_id}}), content_type="application/json"
-    )
+    res = client.post(url, json={"query": delete_list_query, "variables": {"id": list_id}})
 
     assert res.status_code == HTTPStatus.OK
 
@@ -390,10 +362,7 @@ def test_delete_list_not_owner(client, list_, access_token):
 
     list_id = to_global_id("TypeList", list_.id)
     res = client.post(
-        url,
-        headers={"Authorization": f"Bearer {access_token}"},
-        data=json.dumps({"query": delete_list_query, "variables": {"id": list_id}}),
-        content_type="application/json",
+        url, headers={"Authorization": f"Bearer {access_token}"}, json={"query": delete_list_query, "variables": {"id": list_id}}
     )
 
     assert res.status_code == HTTPStatus.OK
@@ -407,10 +376,7 @@ def test_delete_list_invalid(client, list_, access_token):
 
     list_id = to_global_id("TypeList", "invalid_id")
     res = client.post(
-        url,
-        headers={"Authorization": f"Bearer {access_token}"},
-        data=json.dumps({"query": delete_list_query, "variables": {"id": list_id}}),
-        content_type="application/json",
+        url, headers={"Authorization": f"Bearer {access_token}"}, json={"query": delete_list_query, "variables": {"id": list_id}}
     )
 
     assert res.status_code == HTTPStatus.OK
@@ -442,8 +408,7 @@ def test_delete_container(client, list_, access_token, container_id):
     res = client.post(
         url,
         headers={"Authorization": f"Bearer {access_token}"},
-        data=json.dumps({"query": delete_container_query, "variables": {"id": list_id, "containerId": container_id}}),
-        content_type="application/json",
+        json={"query": delete_container_query, "variables": {"id": list_id, "containerId": container_id}},
     )
 
     assert res.status_code == HTTPStatus.OK, res.json
@@ -483,13 +448,10 @@ def test_move_container(client, list_, access_token, container_id, new_container
     res = client.post(
         url,
         headers={"Authorization": f"Bearer {access_token}"},
-        data=json.dumps(
-            {
-                "query": move_container_query,
-                "variables": {"id": list_id, "containerId": container_id, "newContainerId": new_container_id},
-            }
-        ),
-        content_type="application/json",
+        json={
+            "query": move_container_query,
+            "variables": {"id": list_id, "containerId": container_id, "newContainerId": new_container_id},
+        },
     )
 
     assert res.status_code == HTTPStatus.OK, res.json

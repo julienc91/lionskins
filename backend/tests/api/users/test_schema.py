@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import json
 from datetime import timedelta
 from http import HTTPStatus
 
@@ -27,12 +26,7 @@ def test_refresh_token(client):
 
     url = url_for("graphql")
     refresh_token = create_refresh_token(user.jwt_identity)
-    res = client.post(
-        url,
-        data=json.dumps({"query": refresh_token_query}),
-        headers={"Authorization": f"Bearer {refresh_token}"},
-        content_type="application/json",
-    )
+    res = client.post(url, json={"query": refresh_token_query}, headers={"Authorization": f"Bearer {refresh_token}"})
 
     assert res.status_code == HTTPStatus.OK
 
@@ -60,7 +54,7 @@ def test_refresh_token_invalid(client, refresh_token_generator):
     if refresh_token:
         headers["Authentication"] = f"Bearer {refresh_token}"
 
-    res = client.post(url, headers=headers, data=json.dumps({"query": refresh_token_query}), content_type="application/json")
+    res = client.post(url, headers=headers, json={"query": refresh_token_query})
 
     assert res.status_code == HTTPStatus.OK
     res = res.json
@@ -85,12 +79,7 @@ def test_get_current_user(client):
     url = url_for("graphql")
     access_token = create_access_token(user.jwt_identity)
 
-    res = client.post(
-        url,
-        headers={"Authorization": f"Bearer {access_token}"},
-        data=json.dumps({"query": get_current_user_query}),
-        content_type="application/json",
-    )
+    res = client.post(url, headers={"Authorization": f"Bearer {access_token}"}, json={"query": get_current_user_query})
 
     assert res.status_code == HTTPStatus.OK
     res = res.json
@@ -117,7 +106,7 @@ def test_get_current_user_invalid(client, access_token_generator):
     if access_token:
         headers["Authentication"] = f"Bearer {access_token}"
 
-    res = client.post(url, headers=headers, data=json.dumps({"query": get_current_user_query}), content_type="application/json")
+    res = client.post(url, headers=headers, json={"query": get_current_user_query})
 
     assert res.status_code == HTTPStatus.OK
     res = res.json
