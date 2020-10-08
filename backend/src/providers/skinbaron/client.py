@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import logging
-import os
 import time
 
 import requests
@@ -10,7 +9,7 @@ from ratelimit import limits, sleep_and_retry
 from ...models import Apps, Providers
 from ...models.enums import Currencies
 from ...models.csgo import Skin
-from ...models.csgo.enums import Qualities, Weapons
+from ...models.csgo.enums import Qualities
 from ...utils import CurrencyConverter
 from ..abstract_provider import AbstractProvider
 from ..exceptions import UnfinishedJob
@@ -33,34 +32,16 @@ class Client(AbstractProvider):
     @limits(calls=1, period=30)
     def __get(self, method, params=None):
         params = params or {}
-        cookies = {"AUTHID": os.environ.get("SKINBARON_COOKIE")}
-        return requests.get(self.base_url + method, params, cookies=cookies)
-
-    def get_weapon_ids(self):
-        res = self.__get("Menu/Load", {"language": "en", "appId": 730})
-        res = res.json()
-
-        weapon_ids = {}
-        for category in res["nodes"]:
-            rows = category["c"]
-            for row in rows:
-                try:
-                    weapon = Weapons(row["lN"])
-                except ValueError:
-                    continue
-                weapon_ids[weapon] = row["vpIds"]
-        return weapon_ids
+        return requests.get(self.base_url + method, params, headers={"Referer": "https://skinbaron.de/"})
 
     def get_prices(self):
         unfinished_job = False
         # exception if the cursor is kept open for too long, so we get the ids first, and then we iterate and fetch
         # the Skin object when we need it
-        weapon_ids = self.get_weapon_ids()
         skin_ids = [skin.id for skin in Skin.filter()]
         for skin_id in skin_ids:
             skin = Skin.get(id=skin_id)
-            weapon_id = weapon_ids[skin.weapon.name]
-            params = {"appId": self.parser.app_id, "str": skin.market_hash_name, "sort": "CF", "language": "en", "v": weapon_id}
+            params = {"appId": self.parser.app_id, "str": skin.market_hash_name, "sort": "CF", "language": "en"}
             if skin.quality == Qualities.vanilla:
                 params["unpainted"] = 1
             elif skin.quality:
