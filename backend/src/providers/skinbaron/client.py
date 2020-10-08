@@ -42,7 +42,7 @@ class Client(AbstractProvider):
         for skin_id in skin_ids:
             skin = Skin.get(id=skin_id)
             params = {"appId": self.parser.app_id, "str": skin.market_hash_name, "sort": "CF", "language": "en"}
-            if skin.quality == Qualities.vanilla:
+            if skin.quality is Qualities.vanilla:
                 params["unpainted"] = 1
             elif skin.quality:
                 params["wf"] = skin.quality.to_int() - 1

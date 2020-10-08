@@ -37,7 +37,7 @@ class Providers(enum.Enum):
                 }
             elif self == self.csmoney:
                 # there are no per-skin url on this site
-                base_url = "https://cs.money/"
+                base_url = "https://cs.money/csgo/store/"
             elif self == self.skinbaron:
                 base_url = "https://skinbaron.de/?affiliateId=393#!"
                 parameters = {"appId": 730, "sort": "CF", "str": skin.market_hash_name}

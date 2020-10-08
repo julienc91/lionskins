@@ -1,19 +1,20 @@
 # -*- coding: utf-8 -*-
 
-import json
-import re
+import logging
 
 import requests
 from ratelimit import limits, sleep_and_retry
 
 from ...models import Apps, Providers
+from ...models.csgo import Skin
+from ...models.csgo.enums import Qualities
 from ..abstract_provider import AbstractProvider
 from ..exceptions import UnfinishedJob
 
 
 class Client(AbstractProvider):
     provider = Providers.csmoney
-    base_url = "https://cs.money/"
+    base_url = "https://inventories.cs.money/4.0/load_bots_inventory/730"
 
     @staticmethod
     def get_parser(app):
@@ -24,42 +25,71 @@ class Client(AbstractProvider):
         raise NotImplementedError
 
     @sleep_and_retry
-    @limits(calls=5, period=1)
-    def __get(self, method, params=None):
+    @limits(calls=5, period=30)
+    def __get(self, params=None):
         if not params:
             params = {}
-        return requests.get(self.base_url + method, params)
+        return requests.get(self.base_url, params)
+
+    @staticmethod
+    def convert_quality(quality: Qualities) -> str:
+        if quality is Qualities.factory_new:
+            return "fn"
+        elif quality is Qualities.minimal_wear:
+            return "mw"
+        elif quality is Qualities.field_tested:
+            return "ft"
+        elif quality is Qualities.well_worn:
+            return "ww"
+        elif quality is Qualities.battle_scarred:
+            return "bs"
 
     def get_prices(self):
-        res = self.__get("js/database-skins/library-en-730.js")
-        if res.status_code >= 500:
-            raise UnfinishedJob
+        unfinished_job = False
+        skin_ids = [skin.id for skin in Skin.filter()]
+        for skin_id in skin_ids:
+            skin = Skin.get(id=skin_id)
+            params = {"hasTradeLock": False, "isStore": True, "limit": 10, "offset": 0, "order": "asc", "sort": "price"}
+            quality = self.convert_quality(skin.quality)
+            if skin.quality is not Qualities.vanilla:
+                params["quality"] = quality
+            else:
+                # new api not considering vanilla skins for now?
+                continue
+            params["isStatTrak"] = skin.stat_trak
+            params["isSouvenir"] = skin.souvenir
+            params["name"] = f"{skin.weapon.name.value} {skin.name}"
 
-        prefix_length = len("skinsBaseList[730] = ")
-        skins_db = res.content[prefix_length:]
-        skins_db = json.loads(skins_db)
-
-        res = self.__get("730/load_bots_inventory")
-        if res.status_code >= 500:
-            raise UnfinishedJob
-
-        offers = res.json()
-        skins = {}
-        for offer in offers:
-            skin_id = str(offer["o"])
-            skin = skins_db.get(skin_id)
-            if not skin:
+            res = self.__get(params)
+            if res.status_code >= 500:
+                unfinished_job = True
+                continue
+            if res.status_code >= 400:
+                logging.exception(
+                    f"Unexpected response from {self.provider}:\n"
+                    f"* params: {params}\n"
+                    f"* status: {res.status_code}\n"
+                    f"* response: {res.content}"
+                )
+                unfinished_job = True
                 continue
 
-            price = offer["p"]
-            if price <= 0:
+            res = res.json()
+            offers = res["items"]
+            if not offers:
                 continue
 
-            market_hash_name = skin["m"]
-            market_hash_name = re.sub(r" Doppler ((Phase \d+)|Sapphire|Ruby|Black Pearl|Emerald)", " Doppler", market_hash_name)
-            skin = self.parser.get_skin_from_item_name(market_hash_name)
-            if skin and (skin.id not in skins or skins[skin.id][1] > price):
-                skins[skin.id] = (skin, price)
+            for offer in offers:
+                if bool(offer.get("isStatTrak")) != skin.stat_trak:
+                    continue
+                if bool(offer.get("isSouvenir")) != skin.souvenir:
+                    continue
+                if offer["quality"] != quality:
+                    continue
 
-        for skin, price in skins.values():
-            yield skin, price
+                price = round(offer["price"] * 0.8, 2)
+                yield skin, price
+                break
+
+        if unfinished_job:
+            raise UnfinishedJob
