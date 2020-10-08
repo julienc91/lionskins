@@ -75,7 +75,7 @@ class Client(AbstractProvider):
                 continue
 
             res = res.json()
-            offers = res["items"]
+            offers = res.get("items")
             if not offers:
                 continue
 
