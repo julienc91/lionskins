@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
+import time
 
 import requests
 from ratelimit import limits, sleep_and_retry
@@ -25,7 +26,7 @@ class Client(AbstractProvider):
         raise NotImplementedError
 
     @sleep_and_retry
-    @limits(calls=5, period=30)
+    @limits(calls=1, period=10)
     def __get(self, params=None):
         if not params:
             params = {}
@@ -63,6 +64,10 @@ class Client(AbstractProvider):
             res = self.__get(params)
             if res.status_code >= 500:
                 unfinished_job = True
+                continue
+            if res.status_code == 429:
+                unfinished_job = True
+                time.sleep(300)
                 continue
             if res.status_code >= 400:
                 logging.exception(
