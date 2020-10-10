@@ -11,7 +11,7 @@ services:
   backend:
     build: backend
     env_file:
-      - backend/.env.${ENVIRONMENT:-production}
+      - backend/.env.local
     networks:
       - db_network
       - web_network
@@ -23,7 +23,7 @@ services:
   backoffice:
     build: backend
     env_file:
-      - backend/.env.${ENVIRONMENT:-production}
+      - backend/.env.local
     networks:
       - db_network
     volumes:
