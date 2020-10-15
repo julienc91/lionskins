@@ -37,7 +37,7 @@ class Client(AbstractProvider):
     def __get(self, method, params=None):
         if not params:
             params = {}
-        params["api_key"] = os.environ.get("BITSKINS_API_KEY")
+        params["api_key"] = os.environ["BITSKINS_API_KEY"]
         params["code"] = self.__2fa_code
 
         return requests.get(self.base_url + method + "/", params)

@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
 
-import logging
-import time
+import os
 
 import requests
 from ratelimit import limits, sleep_and_retry
 
 from ...models import Apps, Providers
 from ...models.enums import Currencies
-from ...models.csgo import Skin
-from ...models.csgo.enums import Qualities
 from ...utils import CurrencyConverter
 from ..abstract_provider import AbstractProvider
 from ..exceptions import UnfinishedJob
@@ -18,7 +15,7 @@ from ..exceptions import UnfinishedJob
 class Client(AbstractProvider):
 
     provider = Providers.skinbaron
-    base_url = "https://skinbaron.de/api/v2/"
+    base_url = "https://api.skinbaron.de/"
 
     @staticmethod
     def get_parser(app):
@@ -29,69 +26,44 @@ class Client(AbstractProvider):
         raise NotImplementedError
 
     @sleep_and_retry
-    @limits(calls=1, period=30)
+    @limits(calls=1, period=10)
     def __get(self, method, params=None):
         params = params or {}
-        return requests.get(self.base_url + method, params, headers={"Referer": "https://skinbaron.de/"})
+        params["apikey"] = os.environ["SKINBARON_API_KEY"]
+        params["appId"] = self.parser.app_id
+        return requests.post(
+            self.base_url + method,
+            json=params,
+            headers={"Content-Type": "application/json", "X-Requested-With": "XMLHttpRequest"},
+        )
 
     def get_prices(self):
-        unfinished_job = False
-        # exception if the cursor is kept open for too long, so we get the ids first, and then we iterate and fetch
-        # the Skin object when we need it
-        skin_ids = [skin.id for skin in Skin.filter()]
-        for skin_id in skin_ids:
-            skin = Skin.get(id=skin_id)
-            params = {"appId": self.parser.app_id, "str": skin.market_hash_name, "sort": "CF", "language": "en"}
-            if skin.quality is Qualities.vanilla:
-                params["unpainted"] = 1
-            elif skin.quality:
-                params["wf"] = skin.quality.to_int() - 1
-
-            if skin.stat_trak:
-                params["statTrak"] = True
-            elif skin.souvenir:
-                params["souvenir"] = True
-
-            res = self.__get("Browsing/FilterOffers", params)
-            if res.status_code >= 500:
-                unfinished_job = True
-                continue
-            if res.status_code == 429:
-                unfinished_job = True
-                time.sleep(300)
-                continue
-            if res.status_code >= 400:
-                logging.exception(
-                    f"Unexpected response from {self.provider}:\n"
-                    f"* params: {params}\n"
-                    f"* status: {res.status_code}\n"
-                    f"* response: {res.content}"
-                )
-                unfinished_job = True
-                continue
-
-            res = res.json()
-            offers = res["aggregatedMetaOffers"]
-            if not offers:
-                continue
-
-            for offer in offers:
-                if offer["singleOffer"]["localizedName"] not in skin.market_hash_name:
-                    continue
-                if offer["singleOffer"]["localizedExteriorName"] != skin.quality.value and (
-                    skin.quality != Qualities.vanilla or offer["singleOffer"]["localizedExteriorName"] != "Not painted"
-                ):
-                    continue
-                if bool(offer["singleOffer"].get("statTrakString")) != skin.stat_trak:
-                    continue
-                if bool(offer["singleOffer"].get("souvenirString")) != skin.souvenir:
-                    continue
-
-                item_price = offer["singleOffer"]["itemPrice"]
-                if item_price > 0:
-                    item_price = CurrencyConverter.convert(item_price, Currencies.eur, Currencies.usd)
-                    yield skin, item_price
-                    break
-
-        if unfinished_job:
+        result = self.__get("GetPriceList")
+        if result.status_code >= 500:
             raise UnfinishedJob
+
+        result = result.json()["map"]
+        for row in result:
+            item_price = float(row["lowestPrice"])
+            if item_price <= 0:
+                return
+
+            skin = None
+            item_name = row.get("marketHashName")
+            if item_name and "StatTrak™ " in item_name and not row.get("statTrak"):
+                # fix api inconsistency
+                item_name = item_name.replace("StatTrak™ ", "")
+            if item_name and "Souvenir " in item_name and not row.get("souvenir"):
+                # fix api inconsistency
+                item_name = item_name.replace("Souvenir ", "")
+
+            if item_name:
+                skin = self.parser.get_skin_from_item_name(item_name)
+            if skin and skin.souvenir and not row.get("souvenir"):
+                continue
+            elif skin and skin.stat_trak and not row.get("statTrak"):
+                continue
+
+            if skin:
+                item_price = CurrencyConverter.convert(item_price, Currencies.eur, Currencies.usd)
+                yield skin, item_price
