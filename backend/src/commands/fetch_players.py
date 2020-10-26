@@ -61,7 +61,8 @@ class FetchPlayers:
         res = json.loads(res)
         pages = res["query"]["pages"]
         if pages.get("-1"):
-            raise ValueError(f"Team not found on Liquipedia: {team}")
+            logging.error(f"Team not found on Liquipedia: {team}")
+            return
 
         page = list(pages.values())[0]
         content = page["revisions"][0]["*"]
