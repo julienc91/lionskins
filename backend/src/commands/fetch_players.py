@@ -49,6 +49,7 @@ class FetchPlayers:
             "hard legion": "Hard Legion Esports",
             "nemiga": "Nemiga Gaming",
             "ninjas in pyjamas": "Ninjas in Pyjamas",
+            "saw": "SAw (Portuguese team)",
             "spirit": "Team Spirit",
             "teamone": "Team One",
         }.get(team.lower(), team)
@@ -106,8 +107,9 @@ class FetchPlayers:
             for player_name, country, page_title in cls._get_players(team):
                 steam_id = cls._get_steam_id(page_title)
                 team_data["players"].append({"name": player_name, "country": country, "steamId": steam_id})
-            team_data["players"].sort(key=lambda p: p["name"].lower())
-            res.append(team_data)
+            if team_data["players"]:
+                team_data["players"].sort(key=lambda p: p["name"].lower())
+                res.append(team_data)
 
         res = json.dumps(res, indent=4)
         with open(cls.output_file(), "w") as f:
