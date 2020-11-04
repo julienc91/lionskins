@@ -38,7 +38,7 @@ def create_application():
         sys.exit(2)
 
     db.init_app(application)
-    cors.init_app(application, supports_credentials=True)
+    cors.init_app(application, supports_credentials=True, origins=os.environ.get("FRONTEND_DOMAIN", "*"))
     jwt.init_app(application)
     oid.init_app(application)
     return application
