@@ -24,6 +24,6 @@ const i18n = new NextI18Next({
   }
 })
 
-export const { appWithTranslation, Link, Trans, withTranslation } = i18n
+export const { appWithTranslation, Link, Trans, useTranslation, withTranslation } = i18n
 
 export default i18n

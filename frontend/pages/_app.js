@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { I18nContext } from 'next-i18next'
 import PropTypes from 'prop-types'
 import { client } from '../apollo'
-import { appWithTranslation } from '../i18n'
+import { appWithTranslation, useTranslation } from '../i18n'
 import { AuthenticationProvider } from '../components/AuthenticationProvider'
 import { SettingsProvider } from '../components/SettingsProvider'
 import Footer from '../components/Footer'
@@ -19,6 +19,7 @@ import '../assets/css/index.scss'
 
 const MyApp = ({ Component, pageProps }) => {
   const { i18n } = useContext(I18nContext)
+  const [t] = useTranslation()
   const router = useRouter()
   const languages = [i18n.options.defaultLanguage, ...i18n.options.otherLanguages]
   const path = router.asPath.split('?')[0].slice(4)
@@ -33,6 +34,7 @@ const MyApp = ({ Component, pageProps }) => {
                 href={`${process.env.NEXT_PUBLIC_FRONTEND_DOMAIN}/${language}/${path}`}
               />
             ))}
+            <meta key='description' name='description' content={t('head.description')} />
           </Head>
           <Header />
           <main>
