@@ -1,4 +1,4 @@
-FROM python:3-alpine
+FROM python:3
 
 WORKDIR /opt/services/backend/
 COPY requirements.txt /opt/services/backend/
