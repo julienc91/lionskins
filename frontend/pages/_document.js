@@ -19,7 +19,7 @@ class MyDocument extends Document {
       "img-src 'self' data: https:",
       'frame-src https://www.google.com/recaptcha/',
       "font-src 'self' data: https:",
-      `connect-src 'self' ${process.env.NEXT_PUBLIC_API_DOMAIN} https://sentry.io/api/`
+      `connect-src 'self' ${process.env.NEXT_PUBLIC_API_DOMAIN} https://sentry.io/api/ https://analytics.lionskins.co/`
     ]
 
     return (
