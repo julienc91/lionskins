@@ -41,7 +41,7 @@ class FetchPlayers:
 
         soup = cls._get_soup("https://globalranks.gg/")
         for div in soup.select(".hltv .ranking"):
-            yield div.select_one(".team b")
+            yield div.select_one(".team").select_one("b").text
 
     @classmethod
     def _get_players(cls, team: str):
