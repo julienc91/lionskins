@@ -23,11 +23,7 @@ def create_application():
         application.config.update(
             DEBUG=os.environ.get("FLASK_DEBUG", False),
             SECRET_KEY=os.environ.get("FLASK_SECRET_KEY", ""),
-            MONGODB_SETTINGS={
-                "db": os.environ["MONGO_DBNAME"],
-                "host": os.environ["MONGO_HOSTNAME"],
-                "port": int(os.environ["MONGO_PORT"]),
-            },
+            MONGODB_HOST=os.environ["MONGO_HOST"],
             SESSION_COOKIE_SECURE=not os.environ.get("FLASK_DEBUG", False),
             SESSION_COOKIE_HTTPONLY=True,
             SESSION_COOKIE_SAMESITE="Strict",

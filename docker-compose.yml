@@ -1,35 +1,20 @@
 version: '3'
 services:
-
-  db:
-    image: "mongo:4"
-    volumes:
-      - "dbdata:/data/db"
-    networks:
-      - db_network
-
   backend:
     build: backend
     env_file:
       - backend/.env.local
     networks:
-      - db_network
       - web_network
     volumes:
       - "backenddata:/data/backend:ro"
-    depends_on:
-      - db
 
   backoffice:
     build: backend
     env_file:
       - backend/.env.local
-    networks:
-      - db_network
     volumes:
       - "backenddata:/data/backend"
-    depends_on:
-      - db
     command: ../backoffice
 
   nginx:
@@ -44,10 +29,7 @@ services:
       - backend
 
 networks:
-  db_network:
-    driver: bridge
   web_network:
     driver: bridge
 volumes:
-  dbdata:
   backenddata:
