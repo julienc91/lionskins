@@ -1,3 +1,5 @@
+black
+isort
 pytest                      ~= 6.2.2
 mongomock                   ~= 3.22.1
 pre-commit
