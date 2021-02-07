@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
+import logging
 import os
 import sys
-import logging
 
 import sentry_sdk
 from flask import Flask

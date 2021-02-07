@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from threading import Lock
 from datetime import datetime, timedelta
+from threading import Lock
 
 import requests
 

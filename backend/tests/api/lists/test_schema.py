@@ -11,7 +11,7 @@ from slugify import slugify
 from backend.src.models import List, User
 from backend.src.models.csgo import Skin, Weapon
 from backend.src.models.csgo.enums import Qualities, Weapons
-from backend.src.models.lists import ItemContainer, Item
+from backend.src.models.lists import Item, ItemContainer
 
 
 @pytest.fixture()

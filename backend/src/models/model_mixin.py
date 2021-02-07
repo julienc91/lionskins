@@ -4,7 +4,6 @@ from enum import Enum
 
 from ..init import db
 
-
 string_field_init = db.StringField.__init__
 
 

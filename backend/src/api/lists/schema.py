@@ -11,7 +11,7 @@ from ...models import List
 from ...models.csgo import Skin
 from ...models.lists import Item, ItemContainer
 from ...utils.users import get_current_user
-from .types import TypeList, ListConnection
+from .types import ListConnection, TypeList
 
 
 def get_list_from_id(list_id):

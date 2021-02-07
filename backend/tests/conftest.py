@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import pytest
-
 from flask_mongoengine import MongoEngine
 
 

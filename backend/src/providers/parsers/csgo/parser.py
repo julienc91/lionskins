@@ -3,8 +3,8 @@
 import re
 
 from ....models import Apps
-from ....models.csgo import Weapon, Skin
-from ....models.csgo.enums import Categories, Weapons, Qualities, Rarities
+from ....models.csgo import Skin, Weapon
+from ....models.csgo.enums import Categories, Qualities, Rarities, Weapons
 
 
 class Parser:

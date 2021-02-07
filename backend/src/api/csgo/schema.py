@@ -2,8 +2,15 @@
 
 import graphene
 
-from .types import SkinConnection, CSGOCategories, CSGOWeapons, CSGOQualities, CSGORarities, TypeCSGOSkin
 from ...models import csgo as csgo_models
+from .types import (
+    CSGOCategories,
+    CSGOQualities,
+    CSGORarities,
+    CSGOWeapons,
+    SkinConnection,
+    TypeCSGOSkin,
+)
 
 
 class Query(graphene.ObjectType):

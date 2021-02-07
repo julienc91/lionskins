@@ -7,7 +7,6 @@ import pytest
 from backend.src.models.enums import Currencies
 from backend.src.utils import CurrencyConverter
 
-
 test_rates = {"GBP": 0.7730008525, "EUR": 0.852514919}
 
 EPSILON = 10e-8

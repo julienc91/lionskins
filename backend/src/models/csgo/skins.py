@@ -3,7 +3,7 @@
 from ...init import db
 from ..enums import Apps
 from ..skins import Skin as BaseSkin
-from .enums import Collections, Rarities, Qualities, Categories
+from .enums import Categories, Collections, Qualities, Rarities
 from .weapons import Weapon
 
 

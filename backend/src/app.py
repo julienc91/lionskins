@@ -1,18 +1,17 @@
 # -*- coding: utf-8 -*-
 
+import logging
 import os
 import sys
-import logging
 
 from graphql_server.flask import GraphQLView
 
-from .application import app
 from .api import schema
+from .application import app
 from .views.authentication import get_tokens, logout, steam_login
 from .views.redirect import redirect_view
 from .views.sitemap import sitemap_view
 from .views.teams import teams_view
-
 
 logging.basicConfig(level=logging.INFO)
 

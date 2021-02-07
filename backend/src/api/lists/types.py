@@ -2,9 +2,9 @@
 
 import graphene
 
+from ... import models
 from ..skins import BaseTypeSkin
 from ..users.types import TypeUser
-from ... import models
 
 
 class TypeItem(graphene.ObjectType):

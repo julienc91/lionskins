@@ -24,7 +24,7 @@ class Contact(ModelMixin, db.Document):
     def send(self):
         msg = EmailMessage()
         msg.set_content(f'From: "{self.name}"<{self.email}>\n\n{self.message}')
-        msg["Subject"] = f"[LionSkins] Contact"
+        msg["Subject"] = "[LionSkins] Contact"
         msg["From"] = os.environ["CONTACT_FROM"]
         msg["To"] = os.environ["CONTACT_TO"]
 

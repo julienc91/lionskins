@@ -3,9 +3,9 @@
 import logging
 
 import graphene
-from graphql import GraphQLError
 from flask import request
 from flask_jwt_extended import jwt_optional
+from graphql import GraphQLError
 
 from ...models import Contact
 from ...utils.captcha import check_captcha

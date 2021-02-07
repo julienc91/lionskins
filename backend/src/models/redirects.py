@@ -3,8 +3,8 @@
 from datetime import datetime
 
 from ..init import db
-from .model_mixin import ModelMixin
 from .enums import Providers
+from .model_mixin import ModelMixin
 from .skins import Skin
 
 

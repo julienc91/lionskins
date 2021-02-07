@@ -2,8 +2,8 @@
 
 import graphene
 
-from ..skins import BaseTypeSkin
 from ... import models
+from ..skins import BaseTypeSkin
 
 
 class CSGOWeapons(graphene.Enum):

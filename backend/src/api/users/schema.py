@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
 
 import graphene
-from flask_jwt_extended import create_access_token, jwt_refresh_token_required, jwt_required
+from flask_jwt_extended import (
+    create_access_token,
+    jwt_refresh_token_required,
+    jwt_required,
+)
 
-from .types import TypeUser
 from ...utils.users import get_current_user
+from .types import TypeUser
 
 
 class RefreshToken(graphene.Mutation):

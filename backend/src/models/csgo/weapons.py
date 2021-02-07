@@ -4,7 +4,6 @@ from ...init import db
 from ..model_mixin import ModelMixin
 from .enums import Categories, Weapons
 
-
 WEAPONS = {
     Categories.pistols: {
         Weapons.glock_18,

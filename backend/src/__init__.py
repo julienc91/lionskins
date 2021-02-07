@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
-from .app import app  # noqa
 from . import commands  # noqa
+from .app import app  # noqa

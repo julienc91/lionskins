@@ -6,7 +6,6 @@ from datetime import datetime, timedelta
 from ..models.csgo import Skin
 from ..models.csgo.enums import Categories, Qualities
 
-
 languages = ["en", "fr"]
 
 

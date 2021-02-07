@@ -91,36 +91,39 @@ const MyInventory = ({ t }) => {
 
       {!userLoading && user && !dataLoading && (
         <>
-          {(!data || !data.inventory.edges.length) ? (
-            <Header as='h2' icon textAlign='center'>
-              <Icon name='frown outline' />
-              {t('csgo.inventory.no_results_title')}
-              <Header.Subheader>
-                {t('csgo.inventory.no_results_subtitle')}
-              </Header.Subheader>
-            </Header>
-          ) : (
-            <>
+          {(!data || !data.inventory.edges.length)
+            ? (
               <Header as='h2' icon textAlign='center'>
-                <Icon name={currency} />
-                {t(`common:currency.${currency}`, { price: minCost })}<br />{t('csgo.inventory.summary_title')}
+                <Icon name='frown outline' />
+                {t('csgo.inventory.no_results_title')}
                 <Header.Subheader>
-                  {t('csgo.inventory.summary_subtitle')}
+                  {t('csgo.inventory.no_results_subtitle')}
                 </Header.Subheader>
               </Header>
+              )
+            : (
+              <>
+                <Header as='h2' icon textAlign='center'>
+                  <Icon name={currency} />
+                  {t(`common:currency.${currency}`, { price: minCost })}<br />{t('csgo.inventory.summary_title')}
+                  <Header.Subheader>
+                    {t('csgo.inventory.summary_subtitle')}
+                  </Header.Subheader>
+                </Header>
 
-              <div className='skin-list'>
-                <Card.Group className='item-list'>
-                  {data.inventory.edges.map(({ node }) => <Skin key={node.id} skin={node} />)}
-                  <div className='padding-item' />
-                  <div className='padding-item' />
-                  <div className='padding-item' />
-                  <div className='padding-item' />
-                  <div className='padding-item' />
-                </Card.Group>
-              </div>
-            </>
-          )}
+                <div className='skin-list'>
+                  <Card.Group className='item-list'>
+                    {data.inventory.edges.map(({ node }) => <Skin key={node.id} skin={node} />)}
+                    <div className='padding-item' />
+                    <div className='padding-item' />
+                    <div className='padding-item' />
+                    <div className='padding-item' />
+                    <div className='padding-item' />
+                  </Card.Group>
+                </div>
+              </>
+              )
+            }
         </>
       )}
 
