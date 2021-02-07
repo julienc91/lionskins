@@ -1,28 +1,28 @@
-beautifulsoup4==4.9.3
-click==7.1.2
-flask==1.1.2
-flask-cors==3.0.9
-flask-jwt-extended==3.24.1
-flask-mongoengine==0.9.5
-Flask-OpenID==1.2.5
-graphene==3.0b5
-graphql-core==3.1.2
-graphql-server[flask]==3.0.0b1
-python-slugify==4.0.1
-user-agents==2.2.0
+beautifulsoup4              ~= 4.9.3
+click                       ~= 7.1.2
+flask                       ~= 1.1.2
+flask-cors                  ~= 3.0.9
+flask-jwt-extended          ~= 3.25.0
+flask-mongoengine           ~= 1.0.0
+Flask-OpenID                ~= 1.2.5
+graphene                    ~= 3.0b5
+graphql-core                ~= 3.1.2
+graphql-server[flask]       ~= 3.0.0b1
+python-slugify              ~= 4.0.1
+user-agents                 ~= 2.2.0
 
-python-dotenv==0.14.0
-requests==2.24.0
-ratelimit==2.2.1
+python-dotenv               ~= 0.15.0
+requests                    ~= 2.25.1
+ratelimit                   ~= 2.2.1
 
 # backoffice
-apscheduler==3.6.3
+apscheduler                 ~= 3.7.0
 
 # bitskins
-pyotp==2.4.0
+pyotp                       ~= 2.6.0
 
 # deployment
-gunicorn==20.0.4
+gunicorn                    ~= 20.0.4
 
 # sentry
-sentry-sdk[flask]==0.18.0
+sentry-sdk[flask]           ~= 0.19.5
