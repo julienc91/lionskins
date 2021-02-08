@@ -16,7 +16,6 @@ const Matomo = () => {
 
   const handleRouteChange = path => {
     push(['setCustomUrl', path])
-    push(['setGenerationTimeMs', 0])
     push(['trackPageView'])
   }
 
