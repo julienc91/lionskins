@@ -35,6 +35,8 @@ const getIconFromProvider = provider => {
       return <i className='icon fontello csmoney' title={provider} />
     case Providers.skinbaron:
       return <i className='icon fontello skinbaron' title={provider} />
+    case Providers.skinport:
+      return <i className='icon fontello skinport' title={provider} />
     case Providers.steam:
       return <Icon name='steam symbol' title={provider} />
     default:

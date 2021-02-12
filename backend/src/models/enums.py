@@ -14,6 +14,7 @@ class Providers(enum.Enum):
     bitskins = "BitSkins"
     csmoney = "CSMoney"
     skinbaron = "SkinBaron"
+    skinport = "Skinport"
 
     def get_skin_url(self, skin):
         base_url = ""
@@ -49,6 +50,24 @@ class Providers(enum.Enum):
                     parameters["unpainted"] = 1
                 else:
                     parameters["wf"] = skin.quality.to_int() - 1
+            elif self == self.skinport:
+                base_url = "https://skinport.com/market/730"
+                parameters = {
+                    "type": skin.weapon.name.value,
+                    "item": skin.name,
+                    "stattrak": int(skin.stat_trak),
+                    "souvenir": int(skin.souvenir),
+                }
+                if skin.quality != Qualities.vanilla:
+                    parameters["exterior"] = {
+                        Qualities.battle_scarred: 1,
+                        Qualities.factory_new: 2,
+                        Qualities.field_tested: 3,
+                        Qualities.minimal_wear: 4,
+                        Qualities.well_worn: 5,
+                    }.get(skin.quality, 0)
+                else:
+                    parameters["vanilla"] = 1
             elif self == self.steam:
                 base_url = "https://steamcommunity.com/market/listings/730/"
                 base_url += skin.fullname

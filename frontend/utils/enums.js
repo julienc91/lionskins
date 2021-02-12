@@ -2,7 +2,8 @@ const Providers = Object.freeze({
   steam: 'Steam',
   bitskins: 'BitSkins',
   csmoney: 'CS.Money',
-  skinbaron: 'SkinBaron'
+  skinbaron: 'SkinBaron',
+  skinport: 'Skinport'
 })
 
 const Currencies = Object.freeze({

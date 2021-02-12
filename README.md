@@ -15,4 +15,5 @@ Available marketplaces:
 * Bitskins
 * CS.Money
 * SkinBaron
+* Skinport
 * Steam

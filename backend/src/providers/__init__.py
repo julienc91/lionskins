@@ -3,6 +3,7 @@
 from .bitskins import Bitskins
 from .csmoney import CSMoney
 from .skinbaron import SkinBaron
+from .skinport import Skinport
 from .steam import Steam
 
-clients = [Bitskins, CSMoney, SkinBaron, Steam]
+clients = [Bitskins, CSMoney, SkinBaron, Skinport, Steam]
