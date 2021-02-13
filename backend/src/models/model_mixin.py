@@ -28,9 +28,8 @@ class ModelMixin:
     def _parse_kwargs(cls, kwargs):
         new_kwargs = {}
         for k, v in kwargs.items():
-            if isinstance(v, Enum):
-                if ("_" + k) in cls._fields:
-                    k = "_" + k
+            if isinstance(v, Enum) and ("_" + k) in cls._fields:
+                k = "_" + k
                 v = v.name
             new_kwargs[k] = v
         return new_kwargs
