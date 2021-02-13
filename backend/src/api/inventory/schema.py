@@ -39,7 +39,7 @@ class Query(graphene.ObjectType):
             if skin:
                 skin_ids.add(skin.id)
 
-        query = Skin.filter(id__in=skin_ids)
+        query = Skin.objects.no_dereference().filter(id__in=skin_ids)
         query = query.order_by("weapon", "name", "souvenir", "stat_trak", "quality")
 
         # force caching the queryset length to avoid horrible performances when a `len`

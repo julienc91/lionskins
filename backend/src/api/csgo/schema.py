@@ -27,7 +27,7 @@ class Query(graphene.ObjectType):
     )
 
     def resolve_csgo(self, info, **args):
-        query = TypeCSGOSkin.model
+        query = TypeCSGOSkin.model.objects.no_dereference()
         filters = {}
 
         if args.get("slug"):

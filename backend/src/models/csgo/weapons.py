@@ -69,6 +69,7 @@ class Weapon(ModelMixin, db.Document):
 
     _name = db.StringField(db_field="name", choices=Weapons, primary_key=True)
     _category = db.StringField(db_field="category", choices=Categories)
+    __cache = {}
 
     meta = {"indexes": ["_category"]}
 
@@ -108,3 +109,10 @@ class Weapon(ModelMixin, db.Document):
                         kwargs["category"] = category
                         break
             return cls.create(**kwargs)
+
+    @classmethod
+    def get_cache(cls, name: str) -> "Weapon":
+        if name not in cls.__cache:
+            all_weapons = cls.objects.all()
+            cls.__cache = {weapon.name.name: weapon for weapon in all_weapons}
+        return cls.__cache[name]
