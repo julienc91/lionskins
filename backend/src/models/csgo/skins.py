@@ -16,13 +16,13 @@ class Skin(BaseSkin):
 
     stat_trak = db.BooleanField(required=True)
     souvenir = db.BooleanField(required=True)
-    _quality = db.IntField(db_field="quality", required=True)
-    _rarity = db.StringField(db_field="rarity", choices=Rarities)
+    quality = db.EnumField(Qualities, required=True)
+    rarity = db.EnumField(Rarities)
 
-    _collection_ = db.StringField(db_field="collection", choices=Collections)
+    collection_ = db.EnumField(Collections, db_field="collection")
     description = db.DictField()
 
-    meta = {"indexes": ["stat_trak", "souvenir", "_quality", "_rarity", "_collection_"]}
+    meta = {"indexes": ["stat_trak", "souvenir", "quality", "rarity", "collection_"]}
 
     @property
     def fullname(self):
@@ -44,42 +44,3 @@ class Skin(BaseSkin):
         if self.quality != Qualities.vanilla:
             res += " | " + self.name
         return res
-
-    @property
-    def quality(self):
-        return Qualities.from_int(self._quality)
-
-    @quality.setter
-    def quality(self, value):
-        self._quality = value.to_int()
-
-    @property
-    def rarity(self):
-        try:
-            return Rarities[self._rarity]
-        except KeyError:
-            return None
-
-    @rarity.setter
-    def rarity(self, value):
-        self._rarity = value.name
-
-    @property
-    def collection(self):
-        try:
-            return Collections[self._collection_]
-        except KeyError:
-            return None
-
-    @collection.setter
-    def collection(self, value):
-        self._collection_ = value.name if value else None
-
-    @classmethod
-    def _parse_kwargs(cls, kwargs):
-        if "quality" in kwargs:
-            try:
-                kwargs["_quality"] = kwargs.pop("quality").to_int()
-            except AttributeError:
-                pass
-        return super()._parse_kwargs(kwargs)
