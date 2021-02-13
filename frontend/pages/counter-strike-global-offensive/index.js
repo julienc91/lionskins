@@ -160,7 +160,7 @@ const CsgoSkinList = ({ t }) => {
 
       <Sidebar
         className={'skin-list-filter-container' + (showSidebar ? ' active' : '')}
-        visible onClick={toggleSidebar}
+        visible
       >
         <Icon name='angle double right' className='expand-icon' onClick={toggleSidebar} />
         <Filter
