@@ -12,7 +12,7 @@ from .prices import Price
 
 class Skin(ModelMixin, db.Document):
 
-    _app = db.StringField(db_field="app", choices=Apps, required=True)
+    app = db.EnumField(Apps, required=True)
     slug = db.StringField(required=True)
 
     name = db.StringField(required=True)
@@ -21,7 +21,7 @@ class Skin(ModelMixin, db.Document):
 
     prices = db.EmbeddedDocumentListField(Price)
 
-    meta = {"indexes": ["_app", "slug", "name"], "allow_inheritance": True}
+    meta = {"indexes": ["app", "slug", "name"], "allow_inheritance": True}
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -39,14 +39,6 @@ class Skin(ModelMixin, db.Document):
 
     def generate_slug(self):
         return slugify(self.name)
-
-    @property
-    def app(self):
-        return Apps[self._app]
-
-    @app.setter
-    def app(self, value):
-        self._app = value.name
 
     def add_price(self, provider, price):
         now = datetime.now()
