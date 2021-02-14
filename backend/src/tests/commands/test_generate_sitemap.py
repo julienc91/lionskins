@@ -3,10 +3,10 @@
 from xml.dom.minidom import parseString
 
 import pytest
+from commands import GenerateSitemap
+from models.csgo import Skin
+from models.csgo.enums import Qualities, Weapons
 from slugify import slugify
-from src.commands import GenerateSitemap
-from src.models.csgo import Skin
-from src.models.csgo.enums import Qualities, Weapons
 
 
 @pytest.fixture(autouse=True)

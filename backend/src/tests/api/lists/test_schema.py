@@ -6,11 +6,11 @@ import pytest
 from flask import url_for
 from flask_jwt_extended import create_access_token
 from graphql_relay.node.node import to_global_id
+from models import List, User
+from models.csgo import Skin
+from models.csgo.enums import Qualities, Weapons
+from models.lists import Item, ItemContainer
 from slugify import slugify
-from src.models import List, User
-from src.models.csgo import Skin
-from src.models.csgo.enums import Qualities, Weapons
-from src.models.lists import Item, ItemContainer
 
 
 @pytest.fixture()

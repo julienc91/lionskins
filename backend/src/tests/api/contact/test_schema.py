@@ -5,7 +5,7 @@ from http import HTTPStatus
 import pytest
 from flask import url_for
 from flask_jwt_extended import create_access_token
-from src.models import Contact, User
+from models import Contact, User
 
 
 @pytest.fixture()
@@ -31,7 +31,7 @@ send_message_query = """
 @pytest.mark.parametrize("email", [None, "foo@bar.baz"])
 @pytest.mark.parametrize("authenticated", [True, False])
 def test_send_message(monkeypatch, client, access_token, user, name, email, authenticated):
-    monkeypatch.setattr("backend.src.api.contact.schema.check_captcha", lambda *_: True)
+    monkeypatch.setattr("api.contact.schema.check_captcha", lambda *_: True)
 
     url = url_for("graphql")
     message = "message content"
@@ -62,7 +62,7 @@ def test_send_message(monkeypatch, client, access_token, user, name, email, auth
     [("", "", "captcha"), ("foo", "", "bad_captcha"), ("foo", "bar", "captcha")],  # empty message  # bad captcha  # bad email
 )
 def test_send_message_invalid_parameter(monkeypatch, client, captcha, email, message):
-    monkeypatch.setattr("backend.src.api.contact.schema.check_captcha", lambda *_: captcha == "captcha")
+    monkeypatch.setattr("api.contact.schema.check_captcha", lambda *_: captcha == "captcha")
 
     url = url_for("graphql")
     res = client.post(

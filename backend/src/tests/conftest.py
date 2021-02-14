@@ -6,7 +6,7 @@ from flask_mongoengine import MongoEngine
 
 @pytest.fixture(autouse=True)
 def app():
-    from src import app
+    from app import app
 
     db = MongoEngine(app)
     ctx = app.app_context()

@@ -3,8 +3,8 @@
 from unittest.mock import MagicMock
 
 import pytest
-from src.models.enums import Currencies
-from src.utils import CurrencyConverter
+from models.enums import Currencies
+from utils import CurrencyConverter
 
 test_rates = {"GBP": 0.7730008525, "EUR": 0.852514919}
 
