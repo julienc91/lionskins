@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import graphene
-
-from ... import models
+from src import models
 
 
 class TypeUser(graphene.ObjectType):

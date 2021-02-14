@@ -2,18 +2,20 @@
 
 import logging
 from datetime import datetime
+from queue import Queue
+from typing import Optional
 
-from ..models import Apps
-from ..providers import clients
-from ..providers.exceptions import UnfinishedJob
+from src.models import Apps, Providers
+from src.providers import clients
+from src.providers.exceptions import UnfinishedJob
 
 
 class FetchProviders:
-    def __init__(self, provider=None, queue=None):
+    def __init__(self, provider: Providers, queue: Optional[Queue] = None):
         self.provider = provider
         self.queue = queue
 
-    def fetch_provider(self, client, app):
+    def fetch_provider(self, client, app: Apps):
         logging.info("Fetching data from provider {} for app {}".format(client.provider, app))
         client = client(app)
 

@@ -6,8 +6,7 @@ from http import HTTPStatus
 import pytest
 from flask import url_for
 from flask_jwt_extended import create_access_token, create_refresh_token, decode_token
-
-from backend.src.models import User
+from src.models import User
 
 # refresh token
 

@@ -3,11 +3,10 @@
 from datetime import datetime
 
 from slugify import slugify
-
-from ..init import db
-from ..models.enums import Apps
-from .model_mixin import ModelMixin
-from .prices import Price
+from src.init import db
+from src.models.enums import Apps, Providers
+from src.models.model_mixin import ModelMixin
+from src.models.prices import Price
 
 
 class Skin(ModelMixin, db.Document):
@@ -27,20 +26,20 @@ class Skin(ModelMixin, db.Document):
         super().__init__(**kwargs)
         self.slug = self.generate_slug()
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"<Skin id={self.id}, name={self.name}>"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"<Skin {self.id} - {self.name}>"
 
     @property
-    def fullname(self):
+    def fullname(self) -> str:
         return self.name
 
-    def generate_slug(self):
+    def generate_slug(self) -> str:
         return slugify(self.name)
 
-    def add_price(self, provider, price):
+    def add_price(self, provider: Providers, price: float):
         now = datetime.now()
         for price_ in self.prices:
             # very weird issue here when comparing enums directly instead of names

@@ -5,9 +5,9 @@ import smtplib
 from datetime import datetime
 from email.message import EmailMessage
 
-from ..init import db
-from .model_mixin import ModelMixin
-from .users import User
+from src.init import db
+from src.models.model_mixin import ModelMixin
+from src.models.users import User
 
 
 class Contact(ModelMixin, db.Document):

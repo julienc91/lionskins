@@ -2,9 +2,9 @@
 
 from datetime import datetime
 
-from ..init import db
-from .enums import Providers
-from .model_mixin import ModelMixin
+from src.init import db
+from src.models.enums import Providers
+from src.models.model_mixin import ModelMixin
 
 
 class Price(ModelMixin, db.EmbeddedDocument):

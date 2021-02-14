@@ -5,12 +5,11 @@ import os
 
 import requests
 from ratelimit import limits, sleep_and_retry
-
-from ...models import Apps, Providers
-from ...models.enums import Currencies
-from ...utils import CurrencyConverter
-from ..abstract_provider import AbstractProvider
-from ..exceptions import UnfinishedJob
+from src.models import Apps, Providers
+from src.models.enums import Currencies
+from src.providers.abstract_provider import AbstractProvider
+from src.providers.exceptions import UnfinishedJob
+from src.utils import CurrencyConverter
 
 
 class Client(AbstractProvider):
@@ -21,7 +20,7 @@ class Client(AbstractProvider):
     @staticmethod
     def get_parser(app):
         if app == Apps.csgo:
-            from ..parsers.csgo import Parser
+            from src.providers.parsers.csgo import Parser
 
             return Parser
         raise NotImplementedError

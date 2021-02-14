@@ -7,11 +7,10 @@ from flask import url_for
 from flask_jwt_extended import create_access_token
 from graphql_relay.node.node import to_global_id
 from slugify import slugify
-
-from backend.src.models import List, User
-from backend.src.models.csgo import Skin
-from backend.src.models.csgo.enums import Qualities, Weapons
-from backend.src.models.lists import Item, ItemContainer
+from src.models import List, User
+from src.models.csgo import Skin
+from src.models.csgo.enums import Qualities, Weapons
+from src.models.lists import Item, ItemContainer
 
 
 @pytest.fixture()

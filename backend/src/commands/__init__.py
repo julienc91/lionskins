@@ -5,17 +5,20 @@ import time
 from datetime import datetime
 from queue import Queue
 from threading import Thread
+from typing import Optional
 
 import click
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 from apscheduler.triggers.interval import IntervalTrigger
-
-from ..application import app
-from ..models import Skin
-from ..models.enums import Providers
-from .fetch_players import FetchPlayers
-from .generate_sitemap import GenerateSitemap
+from src.application import app
+from src.commands.fetch_players import FetchPlayers
+from src.commands.fetch_providers import FetchProviders
+from src.commands.generate_sitemap import GenerateSitemap
+from src.commands.sanity_check import SanityCheck
+from src.commands.sync_catalog import SyncCatalog
+from src.models import Skin
+from src.models.enums import Providers
 
 
 @app.cli.command("backoffice")
@@ -36,17 +39,12 @@ def fetch_players():
 @app.cli.command("fetch_providers")
 @click.option("--daemon", is_flag=True)
 @click.option("--provider", type=click.Choice([p.name for p in Providers]))
-def fetch_providers(daemon, provider):
+def fetch_providers(daemon: bool, provider: Providers):
     return _fetch_providers(daemon, provider)
 
 
-def _fetch_providers(daemon, provider):
-    from .fetch_providers import FetchProviders
-
-    if provider:
-        providers = [Providers[provider]]
-    else:
-        providers = [p for p in Providers]
+def _fetch_providers(daemon: bool, provider: Optional[Providers] = None):
+    providers = [Providers[provider]] if provider else list(Providers)
 
     if daemon:
         queue = Queue()
@@ -72,7 +70,7 @@ def _fetch_providers(daemon, provider):
                 skin.add_price(provider=provider, price=price)
             elif task_type == "remove":
                 start_date, provider = args
-                for skin in Skin.filter():
+                for skin in Skin.objects:
                     updated_prices = []
                     for price in skin.prices:
                         if price.provider.name == provider.name and price.update_date < start_date:
@@ -92,21 +90,15 @@ def _fetch_providers(daemon, provider):
 
 @app.cli.command("generate_sitemap")
 def generate_sitemap():
-    from .generate_sitemap import GenerateSitemap
-
     GenerateSitemap.run()
-
-
-@app.cli.command("sync_catalog")
-@click.argument("path")
-def sync_catalog(path):
-    from .sync_catalog import SyncCatalog
-
-    SyncCatalog.run(path)
 
 
 @app.cli.command("sanity_check")
 def sanity_check():
-    from .sanity_check import SanityCheck
-
     SanityCheck.run()
+
+
+@app.cli.command("sync_catalog")
+@click.argument("path")
+def sync_catalog(path: str):
+    SyncCatalog.run(path)

@@ -3,9 +3,8 @@
 from datetime import datetime
 
 from slugify import slugify
-
-from ..init import db
-from .model_mixin import ModelMixin
+from src.init import db
+from src.models.model_mixin import ModelMixin
 
 
 class Item(ModelMixin, db.EmbeddedDocument):

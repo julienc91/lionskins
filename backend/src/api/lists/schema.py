@@ -6,12 +6,11 @@ import graphene
 from flask_jwt_extended import jwt_required
 from graphql import GraphQLError
 from graphql_relay.node.node import from_global_id
-
-from ...models import List
-from ...models.csgo import Skin
-from ...models.lists import Item, ItemContainer
-from ...utils.users import get_current_user
-from .types import ListConnection, TypeList
+from src.api.lists.types import ListConnection, TypeList
+from src.models import List
+from src.models.csgo import Skin
+from src.models.lists import Item, ItemContainer
+from src.utils.users import get_current_user
 
 
 def get_list_from_id(list_id):

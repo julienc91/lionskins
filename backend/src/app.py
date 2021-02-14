@@ -5,13 +5,12 @@ import os
 import sys
 
 from graphql_server.flask import GraphQLView
-
-from .api import schema
-from .application import app
-from .views.authentication import get_tokens, logout, steam_login
-from .views.redirect import redirect_view
-from .views.sitemap import sitemap_view
-from .views.teams import teams_view
+from src.api import schema
+from src.application import app
+from src.views.authentication import get_tokens, logout, steam_login
+from src.views.redirect import redirect_view
+from src.views.sitemap import sitemap_view
+from src.views.teams import teams_view
 
 logging.basicConfig(level=logging.INFO)
 

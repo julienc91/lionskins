@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from .client import Client as Skinport
+from src.providers.skinport.client import Client as Skinport
 
 __all__ = ["Skinport"]

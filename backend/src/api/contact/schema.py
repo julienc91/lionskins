@@ -6,10 +6,9 @@ import graphene
 from flask import request
 from flask_jwt_extended import jwt_optional
 from graphql import GraphQLError
-
-from ...models import Contact
-from ...utils.captcha import check_captcha
-from ...utils.users import get_current_user
+from src.models import Contact
+from src.utils.captcha import check_captcha
+from src.utils.users import get_current_user
 
 
 class ContactMessage(graphene.Mutation):

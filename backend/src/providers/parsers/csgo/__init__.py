@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from .parser import Parser
+from src.providers.parsers.csgo.parser import Parser
 
 __all__ = ["Parser"]

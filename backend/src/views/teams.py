@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from flask import abort, send_file
-
-from ..commands.fetch_players import FetchPlayers
+from src.commands.fetch_players import FetchPlayers
 
 
 def teams_view():

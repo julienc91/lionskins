@@ -4,8 +4,7 @@ from datetime import datetime, timedelta
 from threading import Lock
 
 import requests
-
-from ..models.enums import Currencies
+from src.models.enums import Currencies
 
 
 class CurrencyConverter:

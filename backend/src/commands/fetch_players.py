@@ -4,13 +4,12 @@ import json
 import logging
 import os
 import re
-from typing import Optional
+from typing import Any, Optional
 
 import requests
 from bs4 import BeautifulSoup
 from ratelimit import limits, sleep_and_retry
-
-from ..utils.data import get_data_directory
+from src.utils.data import get_data_directory
 
 
 class FetchPlayers:
@@ -19,14 +18,14 @@ class FetchPlayers:
         return os.path.join(get_data_directory(), "teams.json")
 
     @classmethod
-    def _get_soup(cls, url: str, params=None) -> Optional[BeautifulSoup]:
+    def _get_soup(cls, url: str, params: Optional[dict[str, Any]] = None) -> BeautifulSoup:
         html = cls._get_content(url, params=params)
         return BeautifulSoup(html, features="html.parser")
 
     @classmethod
     @sleep_and_retry
     @limits(calls=1, period=5)
-    def _get_content(cls, url: str, params=None):
+    def _get_content(cls, url: str, params: Optional[dict[str, Any]] = None) -> Optional[bytes]:
         res = requests.get(url, params=params, headers={"User-Agent": "LionSkins/1.0"})
         if res.status_code != 200:
             return None

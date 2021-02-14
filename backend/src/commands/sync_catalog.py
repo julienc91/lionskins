@@ -3,9 +3,8 @@
 import json
 
 from bs4 import BeautifulSoup
-
-from ..models.csgo import Skin
-from ..models.csgo.enums import Collections, Weapons
+from src.models.csgo import Skin
+from src.models.csgo.enums import Collections, Weapons
 
 
 class SyncCatalog:

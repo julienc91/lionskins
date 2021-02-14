@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from .schema import Mutation
+from src.api.contact.schema import Mutation
 
 __all__ = ["Mutation"]

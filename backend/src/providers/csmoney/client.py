@@ -5,10 +5,9 @@ import re
 
 import requests
 from ratelimit import limits, sleep_and_retry
-
-from ...models import Apps, Providers
-from ..abstract_provider import AbstractProvider
-from ..exceptions import UnfinishedJob
+from src.models import Apps, Providers
+from src.providers.abstract_provider import AbstractProvider
+from src.providers.exceptions import UnfinishedJob
 
 
 class Client(AbstractProvider):
@@ -18,7 +17,7 @@ class Client(AbstractProvider):
     @staticmethod
     def get_parser(app):
         if app == Apps.csgo:
-            from ..parsers.csgo import Parser
+            from src.providers.parsers.csgo import Parser
 
             return Parser
         raise NotImplementedError

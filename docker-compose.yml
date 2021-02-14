@@ -15,7 +15,7 @@ services:
       - backend/.env.local
     volumes:
       - "backenddata:/data/backend"
-    command: ../backoffice
+    command: ./backoffice
 
   nginx:
     image: "nginx:1.15"

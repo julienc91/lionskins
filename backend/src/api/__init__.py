@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from .schema import schema
+from src.api.schema import schema
 
 __all__ = ["schema"]

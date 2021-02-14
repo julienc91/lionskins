@@ -2,22 +2,7 @@
 
 from enum import Enum
 
-from ..init import db
-
-string_field_init = db.StringField.__init__
-
-
-def patched_init(*args, **kwargs):
-    if "choices" in kwargs:
-        try:
-            if issubclass(kwargs["choices"], Enum):
-                kwargs["choices"] = [(e.name, e.value) for e in kwargs["choices"]]
-        except TypeError:
-            pass
-    string_field_init(*args, **kwargs)
-
-
-db.StringField.__init__ = patched_init
+from src.init import db
 
 
 class ModelMixin:

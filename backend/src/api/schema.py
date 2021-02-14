@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import graphene
-
-from . import contact, csgo, inventory, lists, users
+from src.api import contact, csgo, inventory, lists, users
 
 
 class Query(csgo.Query, inventory.Query, lists.Query, users.Query, graphene.ObjectType):

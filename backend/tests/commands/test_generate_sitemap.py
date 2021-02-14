@@ -4,10 +4,9 @@ from xml.dom.minidom import parseString
 
 import pytest
 from slugify import slugify
-
-from backend.src.commands import GenerateSitemap
-from backend.src.models.csgo import Skin
-from backend.src.models.csgo.enums import Qualities, Weapons
+from src.commands import GenerateSitemap
+from src.models.csgo import Skin
+from src.models.csgo.enums import Qualities, Weapons
 
 
 @pytest.fixture(autouse=True)

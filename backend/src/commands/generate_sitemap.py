@@ -3,9 +3,8 @@
 import os
 
 from slugify import slugify
-
-from ..models.csgo import Skin
-from ..utils.data import get_data_directory
+from src.models.csgo import Skin
+from src.utils.data import get_data_directory
 
 
 class GenerateSitemap:

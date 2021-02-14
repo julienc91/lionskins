@@ -6,9 +6,8 @@ from flask_jwt_extended import (
     jwt_refresh_token_required,
     jwt_required,
 )
-
-from ...utils.users import get_current_user
-from .types import TypeUser
+from src.api.users.types import TypeUser
+from src.utils.users import get_current_user
 
 
 class RefreshToken(graphene.Mutation):

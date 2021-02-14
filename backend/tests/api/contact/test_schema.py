@@ -5,8 +5,7 @@ from http import HTTPStatus
 import pytest
 from flask import url_for
 from flask_jwt_extended import create_access_token
-
-from backend.src.models import Contact, User
+from src.models import Contact, User
 
 
 @pytest.fixture()
