@@ -21,7 +21,7 @@ class Providers(enum.Enum):
         parameters = {}
 
         if skin.app == Apps.csgo:
-            from src.models.csgo.enums import Qualities
+            from models.csgo.enums import Qualities
 
             if self == self.bitskins:
                 base_url = "https://bitskins.com/"

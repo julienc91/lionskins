@@ -8,17 +8,17 @@ from threading import Thread
 from typing import Optional
 
 import click
+from application import app
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 from apscheduler.triggers.interval import IntervalTrigger
-from src.application import app
-from src.commands.fetch_players import FetchPlayers
-from src.commands.fetch_providers import FetchProviders
-from src.commands.generate_sitemap import GenerateSitemap
-from src.commands.sanity_check import SanityCheck
-from src.commands.sync_catalog import SyncCatalog
-from src.models import Skin
-from src.models.enums import Providers
+from commands.fetch_players import FetchPlayers
+from commands.fetch_providers import FetchProviders
+from commands.generate_sitemap import GenerateSitemap
+from commands.sanity_check import SanityCheck
+from commands.sync_catalog import SyncCatalog
+from models import Skin
+from models.enums import Providers
 
 
 @app.cli.command("backoffice")

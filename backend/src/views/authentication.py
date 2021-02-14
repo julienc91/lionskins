@@ -6,8 +6,8 @@ import re
 import requests
 from flask import jsonify, redirect, session
 from flask_jwt_extended import create_access_token, create_refresh_token
-from src.init import oid
-from src.models import User
+from init import oid
+from models import User
 
 
 @oid.loginhandler

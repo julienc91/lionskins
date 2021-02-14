@@ -3,9 +3,9 @@
 import re
 from typing import Optional
 
-from src.models import Apps
-from src.models.csgo import Skin
-from src.models.csgo.enums import Categories, Qualities, Rarities, Weapons
+from models import Apps
+from models.csgo import Skin
+from models.csgo.enums import Categories, Qualities, Rarities, Weapons
 
 
 class Parser:

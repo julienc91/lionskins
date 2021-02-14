@@ -2,10 +2,10 @@
 
 from datetime import datetime
 
-from src.init import db
-from src.models.enums import Providers
-from src.models.model_mixin import ModelMixin
-from src.models.skins import Skin
+from init import db
+from models.enums import Providers
+from models.model_mixin import ModelMixin
+from models.skins import Skin
 
 
 class Redirect(ModelMixin, db.Document):

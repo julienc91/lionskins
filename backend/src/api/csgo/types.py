@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import graphene
-from src import models
-from src.api.skins import BaseTypeSkin
+import models
+from api.skins import BaseTypeSkin
 
 
 class CSGOWeapons(graphene.Enum):

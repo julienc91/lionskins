@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from src.init import db
-from src.models.csgo.enums import Categories, Collections, Qualities, Rarities, Weapons
-from src.models.enums import Apps
-from src.models.skins import Skin as BaseSkin
+from init import db
+from models.csgo.enums import Categories, Collections, Qualities, Rarities, Weapons
+from models.enums import Apps
+from models.skins import Skin as BaseSkin
 
 
 class Skin(BaseSkin):

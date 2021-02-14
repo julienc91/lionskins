@@ -4,10 +4,10 @@ import json
 import re
 
 import requests
+from models import Apps, Providers
+from providers.abstract_provider import AbstractProvider
+from providers.exceptions import UnfinishedJob
 from ratelimit import limits, sleep_and_retry
-from src.models import Apps, Providers
-from src.providers.abstract_provider import AbstractProvider
-from src.providers.exceptions import UnfinishedJob
 
 
 class Client(AbstractProvider):
@@ -17,7 +17,7 @@ class Client(AbstractProvider):
     @staticmethod
     def get_parser(app):
         if app == Apps.csgo:
-            from src.providers.parsers.csgo import Parser
+            from providers.parsers.csgo import Parser
 
             return Parser
         raise NotImplementedError

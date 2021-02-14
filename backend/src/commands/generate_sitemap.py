@@ -2,9 +2,9 @@
 
 import os
 
+from models.csgo import Skin
 from slugify import slugify
-from src.models.csgo import Skin
-from src.utils.data import get_data_directory
+from utils.data import get_data_directory
 
 
 class GenerateSitemap:

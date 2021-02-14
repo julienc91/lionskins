@@ -5,9 +5,9 @@ from datetime import datetime
 from queue import Queue
 from typing import Optional
 
-from src.models import Apps, Providers
-from src.providers import clients
-from src.providers.exceptions import UnfinishedJob
+from models import Apps, Providers
+from providers import clients
+from providers.exceptions import UnfinishedJob
 
 
 class FetchProviders:

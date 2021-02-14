@@ -2,8 +2,8 @@
 
 from datetime import datetime
 
-from src.init import db
-from src.models.model_mixin import ModelMixin
+from init import db
+from models.model_mixin import ModelMixin
 
 
 class User(ModelMixin, db.Document):

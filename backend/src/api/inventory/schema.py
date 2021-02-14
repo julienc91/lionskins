@@ -2,12 +2,12 @@
 
 import graphene
 import requests
+from api.csgo.types import SkinConnection
 from flask_jwt_extended import jwt_optional
-from src.api.csgo.types import SkinConnection
-from src.models.csgo import Skin
-from src.models.enums import Apps
-from src.providers.steam import Steam
-from src.utils.users import get_current_user
+from models.csgo import Skin
+from models.enums import Apps
+from providers.steam import Steam
+from utils.users import get_current_user
 
 
 class Query(graphene.ObjectType):

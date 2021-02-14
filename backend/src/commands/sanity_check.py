@@ -3,8 +3,8 @@
 import logging
 from datetime import datetime, timedelta
 
-from src.models.csgo import Skin
-from src.models.csgo.enums import Categories, Qualities
+from models.csgo import Skin
+from models.csgo.enums import Categories, Qualities
 
 languages = ["en", "fr"]
 

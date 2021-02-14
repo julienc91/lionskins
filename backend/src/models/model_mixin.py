@@ -2,7 +2,7 @@
 
 from enum import Enum
 
-from src.init import db
+from init import db
 
 
 class ModelMixin:

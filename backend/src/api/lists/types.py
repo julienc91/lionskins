@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import graphene
-from src import models
-from src.api.skins import BaseTypeSkin
-from src.api.users.types import TypeUser
+import models
+from api.skins import BaseTypeSkin
+from api.users.types import TypeUser
 
 
 class TypeItem(graphene.ObjectType):

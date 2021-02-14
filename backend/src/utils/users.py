@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from flask_jwt_extended import get_jwt_identity
-from src.models import User
+from models import User
 
 
 def get_current_user():

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import graphene
-from src import models
-from src.utils import CurrencyConverter
+import models
+from utils import CurrencyConverter
 
 
 class TypeProvider(graphene.Enum):

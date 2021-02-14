@@ -6,8 +6,8 @@ import sys
 
 import sentry_sdk
 from flask import Flask
+from init import cors, db, jwt, oid
 from sentry_sdk.integrations.flask import FlaskIntegration
-from src.init import cors, db, jwt, oid
 
 
 def create_application():

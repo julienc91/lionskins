@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import graphene
-from src.api.csgo.types import (
+from api.csgo.types import (
     CSGOCategories,
     CSGOQualities,
     CSGORarities,
@@ -9,7 +9,7 @@ from src.api.csgo.types import (
     SkinConnection,
     TypeCSGOSkin,
 )
-from src.models import csgo as csgo_models
+from models import csgo as csgo_models
 
 
 class Query(graphene.ObjectType):
