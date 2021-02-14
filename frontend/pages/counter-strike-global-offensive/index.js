@@ -127,7 +127,7 @@ const CsgoSkinList = ({ t }) => {
           lastGroupedSkin.souvenir = lastGroupedSkin.souvenir || node.souvenir
           lastGroupedSkin.statTrak = lastGroupedSkin.statTrak || node.statTrak
           lastGroupedSkin.rarity = lastGroupedSkin.rarity || node.rarity
-          lastGroupedSkin.imageUrl = lastGroupedSkin.imageUrl || node.imageUrl
+          lastGroupedSkin.imageUrl = node.imageUrl || lastGroupedSkin.imageUrl
 
           const prices = {}
           lastGroupedSkin.prices.forEach(price => {
