@@ -7,4 +7,6 @@ COPY . /opt/services/backend/
 
 EXPOSE 5000
 
+WORKDIR /opt/services/backend/src/
+
 CMD ["./startup.sh"]
