@@ -3,8 +3,7 @@
 from ...init import db
 from ..enums import Apps
 from ..skins import Skin as BaseSkin
-from .enums import Categories, Collections, Qualities, Rarities
-from .weapons import Weapon
+from .enums import Categories, Collections, Qualities, Rarities, Weapons
 
 
 class Skin(BaseSkin):
@@ -12,7 +11,7 @@ class Skin(BaseSkin):
         super().__init__(**kwargs)
         self.app = Apps.csgo
 
-    weapon = db.ReferenceField(Weapon, required=True)
+    weapon = db.EnumField(Weapons, required=True)
 
     stat_trak = db.BooleanField(required=True)
     souvenir = db.BooleanField(required=True)
@@ -22,7 +21,7 @@ class Skin(BaseSkin):
     collection_ = db.EnumField(Collections, db_field="collection")
     description = db.DictField()
 
-    meta = {"indexes": ["stat_trak", "souvenir", "quality", "rarity", "collection_"]}
+    meta = {"indexes": ["weapon", "stat_trak", "souvenir", "quality", "rarity", "collection_"]}
 
     @property
     def fullname(self):
@@ -40,7 +39,7 @@ class Skin(BaseSkin):
             res += "Souvenir "
         elif self.stat_trak:
             res += "StatTrak™ "
-        res += self.weapon.name.value
+        res += self.weapon.value
         if self.quality != Qualities.vanilla:
             res += " | " + self.name
         return res

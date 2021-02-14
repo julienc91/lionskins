@@ -53,7 +53,7 @@ class Providers(enum.Enum):
             elif self == self.skinport:
                 base_url = "https://skinport.com/market/730"
                 parameters = {
-                    "type": skin.weapon.name.value,
+                    "type": skin.weapon.value,
                     "item": skin.name,
                     "stattrak": int(skin.stat_trak),
                     "souvenir": int(skin.souvenir),

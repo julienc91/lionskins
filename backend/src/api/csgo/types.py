@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import graphene
-from mongoengine.fields import DBRef
 
 from ... import models
 from ..skins import BaseTypeSkin
@@ -57,10 +56,7 @@ class TypeCSGOSkin(BaseTypeSkin):
     description = graphene.Field(TypeDescription)
 
     def resolve_weapon(self, *args, **kwargs):
-        weapon = self.weapon
-        if isinstance(weapon, DBRef):
-            weapon = models.csgo.Weapon.get_cache(weapon.id)
-        return TypeCSGOWeapon(name=weapon.name, category=weapon.category)
+        return TypeCSGOWeapon(name=self.weapon.value, category=self.weapon.category.value)
 
 
 class SkinConnection(graphene.relay.Connection):

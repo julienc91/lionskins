@@ -9,7 +9,7 @@ from graphql_relay.node.node import to_global_id
 from slugify import slugify
 
 from backend.src.models import List, User
-from backend.src.models.csgo import Skin, Weapon
+from backend.src.models.csgo import Skin
 from backend.src.models.csgo.enums import Qualities, Weapons
 from backend.src.models.lists import Item, ItemContainer
 
@@ -26,8 +26,7 @@ def access_token(user):
 
 @pytest.fixture()
 def skin():
-    weapon = Weapon.create(name=Weapons.ak_47)
-    return Skin.create(name="foo", weapon=weapon, souvenir=False, stat_trak=False, quality=Qualities.factory_new)
+    return Skin.create(name="foo", weapon=Weapons.ak_47, souvenir=False, stat_trak=False, quality=Qualities.factory_new)
 
 
 @pytest.fixture()

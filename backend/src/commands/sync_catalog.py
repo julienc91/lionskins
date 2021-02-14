@@ -4,7 +4,7 @@ import json
 
 from bs4 import BeautifulSoup
 
-from ..models.csgo import Skin, Weapon
+from ..models.csgo import Skin
 from ..models.csgo.enums import Collections, Weapons
 
 
@@ -20,7 +20,6 @@ class SyncCatalog:
             for name in data[weapon_name]:
                 entry = data[weapon_name][name]
                 weapon = Weapons[weapon_name]
-                weapon = Weapon.get(name=weapon)
 
                 collection = entry.get("collection")
                 if collection:

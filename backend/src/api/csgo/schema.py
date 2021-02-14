@@ -27,7 +27,7 @@ class Query(graphene.ObjectType):
     )
 
     def resolve_csgo(self, info, **args):
-        query = TypeCSGOSkin.model.objects.no_dereference()
+        query = TypeCSGOSkin.model.objects
         filters = {}
 
         if args.get("slug"):
@@ -41,10 +41,10 @@ class Query(graphene.ObjectType):
         if args.get("rarity"):
             filters["rarity"] = csgo_models.enums.Rarities(args["rarity"])
         if args.get("weapon"):
-            weapon = csgo_models.Weapon.filter(name=csgo_models.enums.Weapons(args["weapon"])).first()
-            filters["weapon"] = weapon
+            filters["weapon"] = csgo_models.enums.Weapons(args["weapon"])
         elif args.get("category"):
-            weapons = csgo_models.Weapon.filter(category=csgo_models.enums.Categories(args["category"]))
+            category = csgo_models.enums.Categories(args["category"])
+            weapons = csgo_models.enums.Weapons.by_category(category)
             filters["weapon__in"] = weapons
 
         if args.get("search"):

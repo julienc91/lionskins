@@ -6,7 +6,7 @@ import pytest
 from slugify import slugify
 
 from backend.src.commands import GenerateSitemap
-from backend.src.models.csgo import Skin, Weapon
+from backend.src.models.csgo import Skin
 from backend.src.models.csgo.enums import Qualities, Weapons
 
 
@@ -17,8 +17,7 @@ def patch_output_file(monkeypatch, tmp_path):
 
 @pytest.fixture()
 def skin():
-    weapon = Weapon.create(name=Weapons.ak_47)
-    return Skin.create(name="foo bar", weapon=weapon, souvenir=False, stat_trak=False, quality=Qualities.factory_new)
+    return Skin.create(name="foo bar", weapon=Weapons.ak_47, souvenir=False, stat_trak=False, quality=Qualities.factory_new)
 
 
 def test_generate_sitemap_static_urls(client, skin):
@@ -31,7 +30,7 @@ def test_generate_sitemap_static_urls(client, skin):
     assert "<loc>https://lionskins.co/fr/faq</loc>" in res
     assert "<loc>https://lionskins.co/en/privacy-policy</loc>" in res
 
-    weapon = slugify(skin.weapon.name.value)
+    weapon = slugify(skin.weapon.value)
     assert f"<loc>https://lionskins.co/fr/counter-strike-global-offensive/{weapon}/{skin.slug}</loc>" in res
     assert f"<loc>https://lionskins.co/en/counter-strike-global-offensive/{weapon}/{skin.slug}</loc>" in res
 

@@ -3,7 +3,7 @@
 import re
 
 from ....models import Apps
-from ....models.csgo import Skin, Weapon
+from ....models.csgo import Skin
 from ....models.csgo.enums import Categories, Qualities, Rarities, Weapons
 
 
@@ -41,8 +41,6 @@ class Parser:
             weapon = Weapons(weapon)
         except ValueError:
             return None
-
-        weapon = Weapon.get(name=weapon)
 
         if right_split:
             try:
