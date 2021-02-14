@@ -5,8 +5,6 @@ import requests
 from api.csgo.types import SkinConnection
 from flask_jwt_extended import jwt_optional
 from models.csgo import Skin
-from models.enums import Apps
-from providers.steam import Steam
 from utils.users import get_current_user
 
 
@@ -15,8 +13,6 @@ class Query(graphene.ObjectType):
 
     @jwt_optional
     def resolve_inventory(self, info, **args):
-        client = Steam(Apps.csgo)
-
         steam_id = args.get("steam_id")
         if not steam_id:
             user = get_current_user()
@@ -31,14 +27,11 @@ class Query(graphene.ObjectType):
             return []
 
         res = res.json()
-        skin_ids = set()
-        data = res.get("descriptions", [])
-        for item in data:
-            skin = client.parser.get_skin_from_item_name(item["market_hash_name"])
-            if skin:
-                skin_ids.add(skin.id)
 
-        query = Skin.objects.filter(id__in=skin_ids)
+        data = res.get("descriptions", [])
+        market_hash_names = {item["market_hash_name"] for item in data}
+
+        query = Skin.objects.filter(market_hash_name__in=market_hash_names)
         query = query.order_by("weapon", "name", "souvenir", "stat_trak", "quality")
 
         # force caching the queryset length to avoid horrible performances when a `len`

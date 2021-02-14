@@ -191,7 +191,7 @@ const CsgoSkinList = ({ t }) => {
           </Header>
         )}
 
-        {data && data.csgo.edges.length && (
+        {data && !!data.csgo.edges.length && (
           <InfiniteScroll
             initialLoad={false}
             hasMore={hasMore}

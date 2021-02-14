@@ -28,6 +28,11 @@ class Parser:
 
     @classmethod
     def get_skin_from_item_name(cls, item_name: str) -> Optional[Skin]:
+        try:
+            return Skin.objects.get(app=Apps.csgo, market_hash_name=item_name)
+        except Skin.DoesNotExist:
+            pass
+
         left_split, _, right_split = item_name.partition("|")
 
         stat_trak = "StatTrak" in left_split

@@ -47,7 +47,8 @@ class Query(graphene.ObjectType):
             filters["weapon__in"] = weapons
 
         if args.get("search"):
-            filters["name__icontains"] = args["search"]
+            search = " ".join(f'"{word}"' for word in args["search"].split())
+            query = query.search_text(search)
 
         query = query.filter(**filters)
         query = query.order_by("weapon", "name", "souvenir", "stat_trak", "quality")

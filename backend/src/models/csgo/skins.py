@@ -17,21 +17,41 @@ class Skin(BaseSkin):
     souvenir = db.BooleanField(required=True)
     quality = db.EnumField(Qualities, required=True)
     rarity = db.EnumField(Rarities)
+    market_hash_name = db.StringField()
 
     collection_ = db.EnumField(Collections, db_field="collection")
     description = db.DictField()
 
-    meta = {"indexes": ["weapon", "stat_trak", "souvenir", "quality", "rarity", "collection_"]}
+    meta = {
+        "indexes": [
+            "weapon",
+            "stat_trak",
+            "souvenir",
+            "quality",
+            "rarity",
+            "collection_",
+            "market_hash_name",
+            "$market_hash_name",
+        ]
+    }
+
+    def save(self, *args, **kwargs):
+        self.market_hash_name = self._get_market_hash_name()
+        return super().save(*args, **kwargs)
 
     @property
     def fullname(self):
-        res = self.market_hash_name
-        if self.quality != Qualities.vanilla:
+        if not self.market_hash_name:
+            return self._get_market_hash_name()
+        return self.market_hash_name
+
+    def _get_market_hash_name(self) -> str:
+        res = self._get_partial_market_hash_name()
+        if self.quality and self.quality != Qualities.vanilla:
             res += " (" + self.quality.value + ")"
         return res
 
-    @property
-    def market_hash_name(self):
+    def _get_partial_market_hash_name(self) -> str:
         res = ""
         if self.weapon.category == Categories.knives:
             res += "★ "
