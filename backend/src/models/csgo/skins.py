@@ -6,6 +6,22 @@ from models.enums import Apps
 from models.skins import Skin as BaseSkin
 
 
+class QualityField(db.EnumField):
+    def __init__(self, **kwargs):
+        super().__init__(Qualities, **kwargs)
+
+    def to_mongo(self, value):
+        if isinstance(value, self._enum_cls):
+            return value.to_int()
+        return value
+
+    def to_python(self, value):
+        try:
+            return self._enum_cls.from_int(int(value))
+        except (TypeError, ValueError, KeyError):
+            return value
+
+
 class Skin(BaseSkin):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -15,7 +31,7 @@ class Skin(BaseSkin):
 
     stat_trak = db.BooleanField(required=True)
     souvenir = db.BooleanField(required=True)
-    quality = db.EnumField(Qualities, required=True)
+    quality = QualityField(required=True)
     rarity = db.EnumField(Rarities)
     market_hash_name = db.StringField()
 

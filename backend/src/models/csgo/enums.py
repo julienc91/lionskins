@@ -12,7 +12,7 @@ class Qualities(enum.Enum):
     battle_scarred = "Battle-Scarred"
 
     @classmethod
-    def from_int(cls, i):
+    def from_int(cls, i: int) -> "Qualities":
         return {
             0: cls.vanilla,
             1: cls.factory_new,
@@ -22,7 +22,7 @@ class Qualities(enum.Enum):
             5: cls.battle_scarred,
         }[i]
 
-    def to_int(self):
+    def to_int(self) -> int:
         return {
             self.vanilla: 0,
             self.factory_new: 1,
