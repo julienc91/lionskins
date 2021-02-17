@@ -121,7 +121,7 @@ const CsgoSkinList = ({ t }) => {
 
   const renderSkins = () => {
     const skinList = data.csgo.edges.map(({ node }) => node)
-    return skinList.map(skin => <Skin key={skin.id} skin={skin} />)
+    return skinList.map(skin => <Skin key={`${skin.id}-${variables.group}`} skin={skin} />)
   }
 
   return (
