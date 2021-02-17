@@ -16,9 +16,15 @@ class QueryWrapper:
     def __init__(self, queryset, pipeline):
         self.pipeline = pipeline
         self.queryset = queryset
+        self._cache_length = None
 
     def __len__(self):
-        return next(self.queryset.aggregate(self.pipeline + [{"$count": "total"}]))["total"]
+        if self._cache_length is None:
+            try:
+                self._cache_length = next(self.queryset.aggregate(self.pipeline + [{"$count": "total"}]))["total"]
+            except StopIteration:
+                self._cache_length = 0
+        return self._cache_length
 
     def __iter__(self):
         return self.queryset.aggregate(self.pipeline)
@@ -72,13 +78,6 @@ class Query(graphene.ObjectType):
             query = query.search_text(search)
 
         query = query.filter(**filters)
-
-        # query = query.order_by("weapon", "name", "souvenir", "stat_trak", "quality")
-
-        # force caching the queryset length to avoid horrible performances when a `len`
-        # is called on the queryset later on in graphql_relay.connection.arrayconnection.connection_from_list
-        # http://docs.mongoengine.org/guide/querying.html#counting-results
-        # query.count(with_limit_and_skip=True)
         pipeline = [
             {
                 "$group": {
