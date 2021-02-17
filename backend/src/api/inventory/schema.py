@@ -2,9 +2,9 @@
 
 import graphene
 import requests
+from api.csgo.schema import Query as csgoQuery
 from api.csgo.types import SkinConnection
 from flask_jwt_extended import jwt_optional
-from models.csgo import Skin
 from utils.users import get_current_user
 
 
@@ -31,11 +31,6 @@ class Query(graphene.ObjectType):
         data = res.get("descriptions", [])
         market_hash_names = {item["market_hash_name"] for item in data}
 
-        query = Skin.objects.filter(market_hash_name__in=market_hash_names)
-        query = query.order_by("weapon", "name", "souvenir", "stat_trak", "quality")
-
-        # force caching the queryset length to avoid horrible performances when a `len`
-        # is called on the queryset later on in graphql_relay.connection.arrayconnection.connection_from_list
-        # http://docs.mongoengine.org/guide/querying.html#counting-results
-        query.count(with_limit_and_skip=True)
-        return query
+        query_wrapper = csgoQuery().resolve_csgo(None)
+        query_wrapper.queryset = query_wrapper.queryset.filter(market_hash_name__in=market_hash_names)
+        return query_wrapper

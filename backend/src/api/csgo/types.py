@@ -54,8 +54,16 @@ class TypeCSGOSkin(BaseTypeSkin):
     collection = CSGOCollections()
     description = graphene.Field(TypeDescription)
 
+    def resolve_quality(self, *args, **kwargs):
+        try:
+            quality = self["quality"]
+        except KeyError:
+            return None
+        return models.csgo.enums.Qualities.from_int(int(quality))
+
     def resolve_weapon(self, *args, **kwargs):
-        return TypeCSGOWeapon(name=self.weapon.value, category=self.weapon.category.value)
+        weapon = models.csgo.enums.Weapons(self["weapon"])
+        return TypeCSGOWeapon(name=weapon.value, category=weapon.category.value)
 
 
 class SkinConnection(graphene.relay.Connection):

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Icon, Table } from 'semantic-ui-react'
 import useSettings from '../SettingsProvider'
 import { withTranslation } from '../../i18n'
+import { Providers } from '../../utils/enums'
 import { Rarities } from '../../utils/csgo/enums'
 
 const SkinSummary = ({ skins, t }) => {
@@ -14,8 +15,10 @@ const SkinSummary = ({ skins, t }) => {
 
   const allPrices = []
   skins.forEach(skin => {
-    skin.prices.forEach(price => {
-      allPrices.push(price.price)
+    Object.keys(Providers).forEach(provider => {
+      if (skin.prices && skin.prices[provider]) {
+        allPrices.push(skin.prices[provider])
+      }
     })
   })
 
@@ -59,11 +62,13 @@ SkinSummary.propTypes = {
       rarity: PropTypes.string,
       statTrak: PropTypes.bool.isRequired,
       souvenir: PropTypes.bool.isRequired,
-      prices: PropTypes.arrayOf(
-        PropTypes.shape({
-          price: PropTypes.number.isRequired
-        })
-      )
+      prices: PropTypes.shape({
+        bitskins: PropTypes.number,
+        csmoney: PropTypes.number,
+        skinbaron: PropTypes.number,
+        skinport: PropTypes.number,
+        steam: PropTypes.number
+      })
     })
   ).isRequired,
   t: PropTypes.func.isRequired

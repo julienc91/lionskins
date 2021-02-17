@@ -15,10 +15,10 @@ import Skin from '../../components/csgo/Skin'
 export const getSkinsQuery = gql`
   query ($first: Int, $after: String, $weapon: CSGOWeapons, $category: CSGOCategories,
          $quality: CSGOQualities, $rarity: CSGORarities, $statTrak: Boolean, $souvenir: Boolean,
-         $search: String, $currency: TypeCurrency, $slug: String) {
+         $search: String, $currency: TypeCurrency, $slug: String, $group: Boolean) {
     csgo (first: $first, after: $after, weapon: $weapon, category: $category,
           quality: $quality, rarity: $rarity, statTrak: $statTrak, souvenir: $souvenir,
-          search: $search, slug: $slug) {
+          search: $search, slug: $slug, group: $group) {
       pageInfo {
         hasNextPage
         endCursor
@@ -37,9 +37,12 @@ export const getSkinsQuery = gql`
             name
             category
           }
-          prices {
-            price (currency: $currency)
-            provider
+          prices (currency: $currency) {
+            bitskins
+            csmoney
+            skinbaron
+            skinport
+            steam
           }
         }
       }
@@ -47,7 +50,7 @@ export const getSkinsQuery = gql`
   }`
 
 const defaultFilters = {
-  category: null, rarity: null, quality: null, search: '', souvenir: null, statTrak: null, weapon: null
+  category: null, rarity: null, quality: null, search: '', souvenir: null, statTrak: null, weapon: null, group: true
 }
 
 const getInitialFilters = query => {
@@ -73,7 +76,7 @@ const CsgoSkinList = ({ t }) => {
   const router = useRouter()
   const { currency } = useSettings()
   const [showSidebar, setShowSidebar] = useState(false)
-  const [variables, setVariables] = useState({ ...getInitialFilters(router.query), group: true, first: 80, currency })
+  const [variables, setVariables] = useState({ ...getInitialFilters(router.query), first: 80, currency })
   const [hasMore, setHasMore] = useState(true)
   const { data, fetchMore, loading } = useQuery(getSkinsQuery, { variables, notifyOnNetworkStatusChange: true })
 
@@ -117,38 +120,7 @@ const CsgoSkinList = ({ t }) => {
   }
 
   const renderSkins = () => {
-    const skinList = []
-    if (!variables.group) {
-      skinList.push(...data.csgo.edges.map(({ node }) => node))
-    } else {
-      data.csgo.edges.forEach(({ node }) => {
-        const lastGroupedSkin = (!skinList.length) ? null : skinList[skinList.length - 1]
-        if (lastGroupedSkin && lastGroupedSkin.slug === node.slug && lastGroupedSkin.weapon.name === node.weapon.name) {
-          lastGroupedSkin.souvenir = lastGroupedSkin.souvenir || node.souvenir
-          lastGroupedSkin.statTrak = lastGroupedSkin.statTrak || node.statTrak
-          lastGroupedSkin.rarity = lastGroupedSkin.rarity || node.rarity
-          lastGroupedSkin.imageUrl = node.imageUrl || lastGroupedSkin.imageUrl
-
-          const prices = {}
-          lastGroupedSkin.prices.forEach(price => {
-            prices[price.provider] = price
-          })
-          node.prices.forEach(price => {
-            if (!prices[price.provider] || prices[price.provider].price > price.price) {
-              prices[price.provider] = price
-            }
-          })
-          lastGroupedSkin.prices = Object.values(prices)
-        } else {
-          node = { ...node }
-          node.quality = ''
-          skinList.push(node)
-        }
-      })
-      if (data.csgo.pageInfo.hasNextPage) {
-        skinList.pop()
-      }
-    }
+    const skinList = data.csgo.edges.map(({ node }) => node)
     return skinList.map(skin => <Skin key={skin.id} skin={skin} />)
   }
 

@@ -42,24 +42,25 @@ const SkinPrices = ({ skins, souvenir, statTrak, t }) => {
             skin.quality === quality
           )
           const prices = skin ? skin.prices : []
-          const minPrice = Math.min(...prices.map(price => price.price))
-          const maxPrice = Math.max(...prices.map(price => price.price))
+          const flatPrices = Object.keys(Providers).filter(provider => prices[provider]).map(provider => prices[provider])
+          const minPrice = Math.min(...flatPrices)
+          const maxPrice = Math.max(...flatPrices)
 
           return (
             <Table.Row key={quality}>
               <Table.Cell>{t(Qualities[quality])}</Table.Cell>
               {Object.keys(Providers).map(provider => {
-                const price = prices.find(price => price.provider === provider)
+                const price = prices[provider]
                 const url = skin ? getSkinUrlFromProvider(skin, provider) : ''
 
                 return (
                   <Table.Cell
                     key={provider}
-                    positive={price && price.price === minPrice}
-                    negative={price && minPrice < maxPrice && price.price === maxPrice}
+                    positive={price && price === minPrice}
+                    negative={price && minPrice < maxPrice && price === maxPrice}
                   >
                     {price
-                      ? <TrackedLink href={url}>{t(`common:currency.${currency}`, { price: price.price })}</TrackedLink>
+                      ? <TrackedLink href={url}>{t(`common:currency.${currency}`, { price })}</TrackedLink>
                       : ''}
                   </Table.Cell>
                 )
@@ -80,12 +81,13 @@ SkinPrices.propTypes = {
       quality: PropTypes.string.isRequired,
       statTrak: PropTypes.bool.isRequired,
       souvenir: PropTypes.bool.isRequired,
-      prices: PropTypes.arrayOf(
-        PropTypes.shape({
-          provider: PropTypes.string.isRequired,
-          price: PropTypes.number.isRequired
-        })
-      )
+      prices: PropTypes.shape({
+        bitskins: PropTypes.number,
+        csmoney: PropTypes.number,
+        skinbaron: PropTypes.number,
+        skinport: PropTypes.number,
+        steam: PropTypes.number
+      })
     })
   ).isRequired,
   statTrak: PropTypes.bool.isRequired,

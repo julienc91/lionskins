@@ -10,6 +10,7 @@ import SkinSummary from '../../../components/csgo/SkinSummary'
 import SkinPrices from '../../../components/csgo/SkinPrices'
 import { withTranslation } from '../../../i18n'
 import { getWeaponSlug } from '../../../utils/csgo/utils'
+import { Providers } from '../../../utils/enums'
 import { Qualities, Weapons } from '../../../utils/csgo/enums'
 import Image from '../../../components/Image'
 
@@ -37,9 +38,12 @@ const getSkinQuery = gql`
             name
             category
           }
-          prices {
-            price (currency: $currency)
-            provider
+          prices (currency: $currency) {
+            bitskins
+            csmoney
+            skinbaron
+            skinport
+            steam
           }
         }
       }
@@ -79,6 +83,15 @@ const SkinPage = ({ slug, t, weapon }) => {
   const defaultSkin = skins.find(s => s.quality === quality && s.imageUrl)
   const defaultImage = `/images/csgo/weapons/default_skin_${skin.weapon.name}.png`
   const image = (defaultSkin && defaultSkin.imageUrl) ? defaultSkin.imageUrl : defaultImage
+
+  const allPrices = []
+  skins.forEach(skin => {
+    Object.keys(Providers).forEach(provider => {
+      if (skin.prices && skin.prices[provider]) {
+        allPrices.push(skin.prices[provider])
+      }
+    })
+  })
 
   return (
     <Container className='skin-page'>
@@ -154,9 +167,9 @@ const SkinPage = ({ slug, t, weapon }) => {
             description,
             offers: {
               '@type': 'AggregateOffer',
-              offerCount: skins.map(skin => skin.prices.length).reduce((a, b) => a + b),
-              lowPrice: skins.map(skin => skin.prices).flat().map(price => price.price).sort((a, b) => a - b).shift(),
-              highPrice: skins.map(skin => skin.prices).flat().map(price => price.price).sort((a, b) => a - b).pop(),
+              offerCount: allPrices.length,
+              lowPrice: Math.min(...allPrices),
+              highPrice: Math.max(...allPrices),
               priceCurrency: currency
             }
           })

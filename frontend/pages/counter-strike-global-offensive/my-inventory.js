@@ -9,6 +9,7 @@ import Breadcrumb from '../../components/Breadcrumb'
 import useSettings from '../../components/SettingsProvider'
 import Skin from '../../components/csgo/Skin'
 import AuthenticationManager from '../../utils/authentication'
+import { Providers } from '../../utils/enums'
 import steamOpenId from '../../assets/images/steam_openid.png'
 
 export const getInventoryQuery = gql`
@@ -28,9 +29,12 @@ export const getInventoryQuery = gql`
             name
             category
           }
-          prices {
-            price (currency: $currency)
-            provider
+          prices (currency: $currency) {
+            bitskins
+            csmoney
+            skinbaron
+            skinport
+            steam
           }
         }
       }
@@ -56,7 +60,9 @@ const MyInventory = ({ t }) => {
 
   let minCost
   if (data && data.inventory.edges.length) {
-    minCost = data.inventory.edges.map(({ node }) => Math.min(...node.prices.map(price => price.price))).reduce((a, b) => a + b)
+    minCost = data.inventory.edges.map(({ node }) => (
+      Math.min(...Object.keys(Providers).filter(provider => node.prices[provider]).map(provider => node.prices[provider]))
+    )).reduce((a, b) => a + b)
   }
 
   return (

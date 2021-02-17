@@ -12,6 +12,26 @@ from api.csgo.types import (
 from models import csgo as csgo_models
 
 
+class QueryWrapper:
+    def __init__(self, queryset, pipeline):
+        self.pipeline = pipeline
+        self.queryset = queryset
+
+    def __len__(self):
+        return next(self.queryset.aggregate(self.pipeline + [{"$count": "total"}]))["total"]
+
+    def __iter__(self):
+        return self.queryset.aggregate(self.pipeline)
+
+    def __getitem__(self, item: slice):
+        stages = []
+        if item.start:
+            stages.append({"$skip": item.start})
+        if item.stop:
+            stages.append({"$limit": item.stop - (item.start or 0)})
+        return self.queryset.aggregate(self.pipeline + stages)
+
+
 class Query(graphene.ObjectType):
     csgo = graphene.relay.ConnectionField(
         SkinConnection,
@@ -23,6 +43,7 @@ class Query(graphene.ObjectType):
         rarity=CSGORarities(),
         weapon=CSGOWeapons(),
         category=CSGOCategories(),
+        group=graphene.Boolean(),
     )
 
     def resolve_csgo(self, info, **args):
@@ -51,10 +72,35 @@ class Query(graphene.ObjectType):
             query = query.search_text(search)
 
         query = query.filter(**filters)
-        query = query.order_by("weapon", "name", "souvenir", "stat_trak", "quality")
+
+        # query = query.order_by("weapon", "name", "souvenir", "stat_trak", "quality")
 
         # force caching the queryset length to avoid horrible performances when a `len`
         # is called on the queryset later on in graphql_relay.connection.arrayconnection.connection_from_list
         # http://docs.mongoengine.org/guide/querying.html#counting-results
-        query.count(with_limit_and_skip=True)
-        return query
+        # query.count(with_limit_and_skip=True)
+        pipeline = [
+            {
+                "$group": {
+                    "_id": "$_id",
+                    "id": {"$first": "$_id"},
+                    "name": {"$first": "$name"},
+                    "slug": {"$first": "$slug"},
+                    "weapon": {"$first": "$weapon"},
+                    "stat_trak": {"$max": "$stat_trak"},
+                    "souvenir": {"$max": "$souvenir"},
+                    "rarity": {"$first": "$rarity"},
+                    "quality": {"$first": "$quality"},
+                    "collection": {"$first": "$collection"},
+                    "description": {"$first": "$description"},
+                    "image_url": {"$first": "$image_url"},
+                    "prices": {"$push": "$prices"},
+                }
+            },
+            {"$sort": {"weapon": 1, "slug": 1, "souvenir": 1, "stat_trak": 1, "quality": 1}},
+        ]
+        if args.get("group"):
+            pipeline[0]["$group"]["_id"] = {"weapon": "$weapon", "slug": "$slug"}
+            del pipeline[0]["$group"]["quality"]
+
+        return QueryWrapper(query, pipeline)

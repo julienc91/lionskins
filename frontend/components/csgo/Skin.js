@@ -4,6 +4,7 @@ import { Card, Label } from 'semantic-ui-react'
 import Image from '../Image'
 import TrackedLink from '../TrackedLink'
 import { Link, withTranslation } from '../../i18n'
+import { Providers } from '../../utils/enums'
 import { Qualities, Weapons } from '../../utils/csgo/enums'
 import { getColorFromRarity, getIconFromProvider, getSkinInternalUrl, getSkinUrlFromProvider } from '../../utils/csgo/utils'
 import useSettings from '../SettingsProvider'
@@ -13,8 +14,6 @@ const Skin = ({ skin, t }) => {
   const skinName = skin.slug === 'vanilla' ? t('csgo.qualities.vanilla') : skin.name
   const alt = `${skin.weapon.name} - ${skinName}`
   const { currency } = useSettings()
-
-  const prices = [...skin.prices].sort((p1, p2) => p1.provider > p2.provider)
 
   return (
     <Card color={getColorFromRarity(skin.rarity)} className='skin item'>
@@ -44,12 +43,15 @@ const Skin = ({ skin, t }) => {
       </Card.Content>
       <Card.Content extra>
         <div className='prices'>
-          {prices.map(price => {
+          {Object.keys(Providers).sort().map(provider => {
+            if (!skin.prices[provider]) {
+              return null
+            }
             return (
-              <div className='price' key={price.provider}>
-                <TrackedLink href={getSkinUrlFromProvider(skin, price.provider)}>
-                  {getIconFromProvider(price.provider)}
-                  {t(`common:currency.${currency}`, { price: price.price })}
+              <div className='price' key={provider}>
+                <TrackedLink href={getSkinUrlFromProvider(skin, provider)}>
+                  {getIconFromProvider(provider)}
+                  {t(`common:currency.${currency}`, { price: skin.prices[provider] })}
                 </TrackedLink>
               </div>
             )
@@ -74,12 +76,13 @@ Skin.propTypes = {
     weapon: PropTypes.shape({
       name: PropTypes.string.isRequired
     }),
-    prices: PropTypes.arrayOf(
-      PropTypes.shape({
-        provider: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired
-      })
-    )
+    prices: PropTypes.shape({
+      bitskins: PropTypes.number,
+      csmoney: PropTypes.number,
+      skinbaron: PropTypes.number,
+      skinport: PropTypes.number,
+      steam: PropTypes.number
+    })
   })
 }
 

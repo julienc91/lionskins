@@ -28,9 +28,12 @@ export const getInventoryQuery = gql`
             name
             category
           }
-          prices {
-            price (currency: $currency)
-            provider
+          prices (currency: $currency) {
+            bitskins
+            csmoney
+            skinbaron
+            skinport
+            steam
           }
         }
       }
