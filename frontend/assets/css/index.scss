@@ -107,13 +107,17 @@ $xlarge-down: 'only screen and (max-width : 1439px)' !default;
     background-color: $color0;
     clear: both;
     color: $color3;
+    display: flex;
+    flex-flow: column;
     height: $footer-height;
+    justify-content: space-around;
     padding: 5px 10px;
     position: relative;
     z-index: 200;
 
     ul {
       list-style: none;
+      margin: 0;
       padding: 0;
 
       li {

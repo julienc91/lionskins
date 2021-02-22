@@ -78,7 +78,7 @@ SkinPrices.propTypes = {
   skins: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
-      quality: PropTypes.string.isRequired,
+      quality: PropTypes.string,
       statTrak: PropTypes.bool.isRequired,
       souvenir: PropTypes.bool.isRequired,
       prices: PropTypes.shape({

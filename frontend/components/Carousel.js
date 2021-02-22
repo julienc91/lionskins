@@ -1,55 +1,47 @@
-import React, { useCallback, useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import Slider from 'react-slick'
+import SwiperCore, { Autoplay } from 'swiper'
+import { Swiper, SwiperSlide } from 'swiper/react'
 import { Image } from 'semantic-ui-react'
 import { Link } from '../i18n'
 import carouselImagesData from '../assets/data/carousel'
 
+SwiperCore.use([Autoplay])
+
 const Carousel = ({ images }) => {
-  const [dragging, setDragging] = useState(false)
-
-  const handleClick = useCallback(e => {
-    if (dragging) {
-      e.preventDefault()
-    }
-  }, [dragging])
-
   const settings = {
-    autoplay: true,
-    dots: false,
-    infinite: true,
-    slidesToShow: 3,
-    lazyLoad: false,
-    beforeChange: () => setDragging(true),
-    afterChange: () => setDragging(false),
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2
-        }
+    autoplay: {
+      delay: 2500
+    },
+    loop: true,
+    slidesPerView: 1,
+    breakpoints: {
+      640: {
+        slidesPerView: 2
       },
-      {
-        breakpoint: 640,
-        settings: {
-          slidesToShow: 1
-        }
+      1024: {
+        slidesPerView: 3
+      },
+      2048: {
+        slidesPerView: 4
       }
-    ]
+    }
   }
 
   const slides = images.map((name, i) => (
-    <div key={i}>
-      <Link href={carouselImagesData[name].link} onClick={handleClick}>
-        <a><Image src={`/images/carousel/${name}.jpg`} alt={carouselImagesData[name].name} /></a>
+    <SwiperSlide key={i}>
+      <Link href={carouselImagesData[name].link}>
+        <a>
+          <Image src={`/images/carousel/${name}.jpg`} alt={carouselImagesData[name].name} />
+        </a>
       </Link>
-    </div>
+    </SwiperSlide>
   ))
 
   return (
-    <Slider {...settings} className='carousel'>
+    <Swiper {...settings} className='carousel'>
       {slides}
-    </Slider>
+    </Swiper>
   )
 }
 

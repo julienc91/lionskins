@@ -69,7 +69,7 @@ Skin.propTypes = {
     name: PropTypes.string.isRequired,
     slug: PropTypes.string.isRequired,
     imageUrl: PropTypes.string,
-    quality: PropTypes.string.isRequired,
+    quality: PropTypes.string,
     rarity: PropTypes.string,
     statTrak: PropTypes.bool.isRequired,
     souvenir: PropTypes.bool.isRequired,
