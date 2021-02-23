@@ -31,6 +31,9 @@ export const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache({
     typePolicies: {
+      TypeCSGOSkin: {
+        keyFields: ['weapon', 'slug', 'quality', 'statTrak', 'souvenir', 'prices']
+      },
       Query: {
         fields: {
           csgo: relayStylePagination(['weapon', 'slug', 'category', 'quality', 'rarity', 'statTrak', 'souvenir', 'search', 'group']),
