@@ -76,11 +76,11 @@ const CsgoSkinList = ({ t }) => {
   const router = useRouter()
   const { currency } = useSettings()
   const [showSidebar, setShowSidebar] = useState(false)
-  const [variables, setVariables] = useState({ ...getInitialFilters(router.query), first: 80, currency })
+  const [variables, setVariables] = useState({ ...getInitialFilters(router.query), first: 30, currency })
   const [hasMore, setHasMore] = useState(true)
   const { data, fetchMore, loading } = useQuery(getSkinsQuery, { variables, notifyOnNetworkStatusChange: true })
 
-  useEffect(() => data && setHasMore(data.csgo.pageInfo.hasNextPage), [data])
+  useEffect(() => data && data.csgo && setHasMore(data.csgo.pageInfo.hasNextPage), [data])
   useEffect(() => updateUrl(), [variables])
   useEffect(() => {
     setVariables({ ...variables, currency })
@@ -120,8 +120,7 @@ const CsgoSkinList = ({ t }) => {
   }
 
   const renderSkins = () => {
-    const skinList = data.csgo.edges.map(({ node }) => node)
-    return skinList.map(skin => <Skin key={`${skin.id}-${variables.group}`} skin={skin} />)
+    return data.csgo.edges.map(({ node: skin }) => <Skin key={skin.id} skin={skin} />)
   }
 
   return (
@@ -155,7 +154,7 @@ const CsgoSkinList = ({ t }) => {
 
         <Changelog />
 
-        {!loading && data && !data.csgo.edges.length && (
+        {!loading && data && data.csgo && data.csgo.edges.length === 0 && (
           <Header as='h2' icon className='no-results'>
             <Icon name='frown outline' />
             {t('skin_list.no_results.title')}
@@ -163,7 +162,7 @@ const CsgoSkinList = ({ t }) => {
           </Header>
         )}
 
-        {data && !!data.csgo.edges.length && (
+        {data && data.csgo && !!data.csgo.edges.length && (
           <InfiniteScroll
             initialLoad={false}
             hasMore={hasMore}
