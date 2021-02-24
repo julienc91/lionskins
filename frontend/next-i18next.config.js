@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = {
   i18n: {
     defaultLocale: 'catchAll',
@@ -16,6 +18,7 @@ module.exports = {
       return value
     }
   },
+  localePath: path.resolve('./public/locales'),
   react: {
     useSuspense: false
   },
