@@ -113,7 +113,7 @@ Player.propTypes = {
   team: PropTypes.object
 }
 
-export const getServerSideProps = async ({ query, res }) => {
+export const getServerSideProps = async ({ locale, query, res }) => {
   const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_DOMAIN}/teams.json`)
   const team = data.find(t => slugify(t.name, { lower: true }) === query.team)
   if (!team) {
@@ -127,13 +127,7 @@ export const getServerSideProps = async ({ query, res }) => {
     return {}
   }
 
-  return { props: { team, player } }
+  return { props: { team, player, ...await serverSideTranslations(locale, ['common', 'csgo']) } }
 }
-
-export const getStaticProps = async ({ locale }) => ({
-  props: {
-    ...await serverSideTranslations(locale, ['common', 'csgo'])
-  }
-})
 
 export default Player
