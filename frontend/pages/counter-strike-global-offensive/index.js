@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import Head from 'next/head'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
-import PropTypes from 'prop-types'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import InfiniteScroll from 'react-infinite-scroller'
 import { Button, Card, Header, Icon, Loader, Sidebar } from 'semantic-ui-react'
-import { Link, withTranslation } from '../../i18n'
 import Breadcrumb from '../../components/Breadcrumb'
 import Changelog from '../../components/Changelog'
 import useSettings from '../../components/SettingsProvider'
@@ -72,7 +73,8 @@ const getInitialFilters = query => {
   return res
 }
 
-const CsgoSkinList = ({ t }) => {
+const CsgoSkinList = () => {
+  const { t } = useTranslation(['csgo', 'skin_list'])
   const router = useRouter()
   const { currency } = useSettings()
   const [showSidebar, setShowSidebar] = useState(false)
@@ -186,8 +188,10 @@ const CsgoSkinList = ({ t }) => {
   )
 }
 
-CsgoSkinList.propTypes = {
-  t: PropTypes.func.isRequired
-}
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...await serverSideTranslations(locale, ['common', 'skin_list', 'csgo'])
+  }
+})
 
-export default withTranslation(['skin_list', 'csgo'])(CsgoSkinList)
+export default CsgoSkinList

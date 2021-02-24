@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { gql, useLazyQuery } from '@apollo/client'
 import Head from 'next/head'
-import PropTypes from 'prop-types'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { Card, Container, Header, Icon, Loader } from 'semantic-ui-react'
-import { withTranslation } from '../../i18n'
 import useAuth from '../../components/AuthenticationProvider'
 import Breadcrumb from '../../components/Breadcrumb'
 import useSettings from '../../components/SettingsProvider'
@@ -41,7 +41,8 @@ export const getInventoryQuery = gql`
     }
   }`
 
-const MyInventory = ({ t }) => {
+const MyInventory = () => {
+  const { t } = useTranslation('csgo')
   const { user, loading: userLoading } = useAuth()
   const [loadInventory, { data, loading: dataLoading }] = useLazyQuery(getInventoryQuery, { notifyOnNetworkStatusChange: true })
   const { currency } = useSettings()
@@ -137,8 +138,10 @@ const MyInventory = ({ t }) => {
   )
 }
 
-MyInventory.propTypes = {
-  t: PropTypes.func.isRequired
-}
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...await serverSideTranslations(locale, ['common', 'csgo'])
+  }
+})
 
-export default withTranslation(['csgo', 'common'])(MyInventory)
+export default MyInventory

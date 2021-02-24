@@ -1,11 +1,12 @@
 import React from 'react'
+import { useTranslation } from 'next-i18next'
 import PropTypes from 'prop-types'
 import { Checkbox, Form, Select } from 'semantic-ui-react'
 import SearchInput from '../SearchInput'
-import { withTranslation } from '../../i18n'
 import { WeaponsByCategories, Rarities, Qualities, Weapons, Categories } from '../../utils/csgo/enums'
 
-const Filter = ({ filters, onFilterChanged, t }) => {
+const Filter = ({ filters, onFilterChanged }) => {
+  const { t } = useTranslation('csgo')
   const { category, group, quality, rarity, search, souvenir, statTrak, weapon } = filters
 
   const getChoicesFromEnum = enum_ => {
@@ -127,8 +128,7 @@ Filter.propTypes = {
     category: PropTypes.string,
     group: PropTypes.bool
   }),
-  onFilterChanged: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired
+  onFilterChanged: PropTypes.func.isRequired
 }
 
-export default withTranslation('csgo')(Filter)
+export default Filter

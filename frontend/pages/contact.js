@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { gql, useMutation } from '@apollo/client'
 import Head from 'next/head'
-import PropTypes from 'prop-types'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import ReCAPTCHA from 'react-google-recaptcha'
 import { Button, Container, Form, Header, Message } from 'semantic-ui-react'
-import { withTranslation } from '../i18n'
 import Breadcrumb from '../components/Breadcrumb'
 
 const sendMessageQuery = gql`
@@ -14,7 +14,8 @@ const sendMessageQuery = gql`
     }
   }`
 
-const Contact = ({ t }) => {
+const Contact = () => {
+  const { t } = useTranslation('contact')
   const [sent, setSent] = useState(false)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -114,12 +115,10 @@ const Contact = ({ t }) => {
   )
 }
 
-Contact.propTypes = {
-  t: PropTypes.func.isRequired
-}
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...await serverSideTranslations(locale, ['common', 'contact'])
+  }
+})
 
-Contact.propTypes = {
-  t: PropTypes.func.isRequired
-}
-
-export default withTranslation('contact')(Contact)
+export default Contact

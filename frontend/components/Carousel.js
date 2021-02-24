@@ -1,9 +1,9 @@
 import React from 'react'
+import Link from 'next/link'
 import PropTypes from 'prop-types'
 import SwiperCore, { Autoplay } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Image } from 'semantic-ui-react'
-import { Link } from '../i18n'
 import carouselImagesData from '../assets/data/carousel'
 
 SwiperCore.use([Autoplay])

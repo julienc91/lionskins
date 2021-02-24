@@ -1,6 +1,19 @@
 {
+  "breadcrumb": {
+    "home": "Home"
+  },
   "carousel": {
     "soon": "Soon"
+  },
+  "changelog": {
+    "title": "What's new on LionSkins:",
+    "2019_10_20_001": "The new Classic Knife was added",
+    "2019_10_21_001": "Now you can check out prices for the glove skins!",
+    "2019_11_19_001": "New knives from the Shattered Web collection were added",
+    "2020_05_08_001": "Vanilla knives were added",
+    "2020_05_09_001": "Prices from the CS.Money platform are now available!",
+    "2020_05_22_001": "Visualize the skins you own and evaluate the price of your Steam inventory!",
+    "2021_02_12_001": "Prices from the Skinport platform are now available!"
   },
   "currency": {
     "eur": "{{price, eur}}",
@@ -8,9 +21,21 @@
   },
   "current_language": "en",
   "date": "{{date, date}}",
+  "footer": {
+    "about": "About",
+    "contact": "Contact Us",
+    "faq": "FAQ",
+    "privacy_policy": "Privacy Policy"
+  },
   "head": {
     "title": "LionSkins - Compare prices of thousands of skins for your favorite games",
     "description": "Compare prices of thousands of skins for your favorite video games among the most trusted marketplaces"
+  },
+  "header": {
+    "list_management": "My lists",
+    "logout": "Log out",
+    "login": "Log in",
+    "settings": "Settings"
   },
   "lists": {
     "creation": {

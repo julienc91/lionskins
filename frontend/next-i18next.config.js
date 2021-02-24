@@ -1,14 +1,8 @@
-import getConfig from 'next/config'
-import NextI18Next from 'next-i18next'
-const path = require('path')
-
-const { localeSubpaths } = getConfig().publicRuntimeConfig
-
-const i18n = new NextI18Next({
-  defaultLanguage: 'en',
-  otherLanguages: ['fr'],
-  localeSubpaths,
-  localePath: path.resolve('./public/locales'),
+module.exports = {
+  i18n: {
+    defaultLocale: 'catchAll',
+    locales: ['en', 'fr', 'catchAll']
+  },
   interpolation: {
     escapeValue: false,
     format: (value, format, lng) => {
@@ -21,9 +15,9 @@ const i18n = new NextI18Next({
       }
       return value
     }
-  }
-})
-
-export const { appWithTranslation, Link, Trans, useTranslation, withTranslation } = i18n
-
-export default i18n
+  },
+  react: {
+    useSuspense: false
+  },
+  serializeConfig: false
+}

@@ -1,11 +1,12 @@
 import React from 'react'
+import { useTranslation } from 'next-i18next'
 import PropTypes from 'prop-types'
 import { Modal } from 'semantic-ui-react'
-import { withTranslation } from '../i18n'
 import AuthencationManager from '../utils/authentication'
 import steamOpenId from '../assets/images/steam_openid.png'
 
-const LoginModal = ({ onClose, open, t }) => {
+const LoginModal = ({ onClose, open }) => {
+  const { t } = useTranslation()
   const handleStartLogin = AuthencationManager.startOpenId
 
   if (!open) {
@@ -28,8 +29,7 @@ const LoginModal = ({ onClose, open, t }) => {
 
 LoginModal.propTypes = {
   open: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired
 }
 
-export default withTranslation('common')(LoginModal)
+export default LoginModal

@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import Head from 'next/head'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import PropTypes from 'prop-types'
 import { Container, Header, Loader } from 'semantic-ui-react'
 import Page404 from '../../404'
@@ -8,7 +10,6 @@ import Breadcrumb from '../../../components/Breadcrumb'
 import useSettings from '../../../components/SettingsProvider'
 import SkinSummary from '../../../components/csgo/SkinSummary'
 import SkinPrices from '../../../components/csgo/SkinPrices'
-import { withTranslation } from '../../../i18n'
 import { getWeaponSlug } from '../../../utils/csgo/utils'
 import { Providers } from '../../../utils/enums'
 import { Qualities, Weapons } from '../../../utils/csgo/enums'
@@ -50,7 +51,8 @@ const getSkinQuery = gql`
     }
   }`
 
-const SkinPage = ({ slug, t, weapon }) => {
+const SkinPage = ({ slug, weapon }) => {
+  const { t } = useTranslation('csgo')
   const { currency } = useSettings()
   const { data, loading } = useQuery(getSkinQuery, { variables: { currency, weapon, slug }, notifyOnNetworkStatusChange: true })
   const [quality, setQuality] = useState(Object.keys(Qualities)[0])
@@ -182,14 +184,15 @@ const SkinPage = ({ slug, t, weapon }) => {
 
 SkinPage.propTypes = {
   slug: PropTypes.string.isRequired,
-  t: PropTypes.func.isRequired,
   weapon: PropTypes.string.isRequired
 }
 
-export const getServerSideProps = async ({ query, res }) => {
+export const getServerSideProps = async ({ locale, query, res }) => {
   const slug = query.slug
   const weapon = Object.keys(Weapons).find(e => getWeaponSlug(e) === query.weapon)
-  const props = {}
+  const props = {
+    ...await serverSideTranslations(locale, ['common', 'csgo'])
+  }
 
   if (!weapon) {
     res.statusCode = 404
@@ -201,4 +204,4 @@ export const getServerSideProps = async ({ query, res }) => {
   return { props }
 }
 
-export default withTranslation(['csgo', 'common'])(SkinPage)
+export default SkinPage

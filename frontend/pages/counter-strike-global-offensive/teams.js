@@ -1,13 +1,15 @@
 import React from 'react'
 import axios from 'axios'
 import Head from 'next/head'
+import { Trans, useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { Card, Container, Header } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 import Breadcrumb from '../../components/Breadcrumb'
 import Team from '../../components/csgo/Team'
-import { Trans, withTranslation } from '../../i18n'
 
-const TeamList = ({ t, teams }) => {
+const TeamList = ({ teams }) => {
+  const { t } = useTranslation('csgo')
   return (
     <Container className='page pro-players'>
       <Head>
@@ -50,15 +52,14 @@ const TeamList = ({ t, teams }) => {
 }
 
 TeamList.propTypes = {
-  t: PropTypes.func.isRequired,
   teams: PropTypes.array.isRequired
 }
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async ({ locale }) => {
   const res = await axios.get(`${process.env.NEXT_PUBLIC_API_DOMAIN}/teams.json`)
 
   const teams = res.data
-  return { props: { teams } }
+  return { props: { teams, ...await serverSideTranslations(locale, ['common', 'csgo']) } }
 }
 
-export default withTranslation('csgo')(TeamList)
+export default TeamList

@@ -2,6 +2,8 @@ import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 import axios from 'axios'
 import Head from 'next/head'
+import { Trans, useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import PropTypes from 'prop-types'
 import { Card, Container, Header, Icon, Loader } from 'semantic-ui-react'
 import slugify from 'slugify'
@@ -9,7 +11,6 @@ import Page404 from '../../../404'
 import Breadcrumb from '../../../../components/Breadcrumb'
 import useSettings from '../../../../components/SettingsProvider'
 import Skin from '../../../../components/csgo/Skin'
-import { Trans, withTranslation } from '../../../../i18n'
 
 export const getInventoryQuery = gql`
   query ($steamId: String, $currency: TypeCurrency) {
@@ -40,7 +41,8 @@ export const getInventoryQuery = gql`
     }
   }`
 
-const Player = ({ player, t, team }) => {
+const Player = ({ player, team }) => {
+  const { t } = useTranslation('csgo')
   const { currency } = useSettings()
   const { data, loading } = useQuery(getInventoryQuery, { variables: { steamId: player.steamId, currency }, notifyOnNetworkStatusChange: true })
 
@@ -108,7 +110,6 @@ const Player = ({ player, t, team }) => {
 
 Player.propTypes = {
   player: PropTypes.object,
-  t: PropTypes.func.isRequired,
   team: PropTypes.object
 }
 
@@ -129,4 +130,10 @@ export const getServerSideProps = async ({ query, res }) => {
   return { props: { team, player } }
 }
 
-export default withTranslation('csgo')(Player)
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...await serverSideTranslations(locale, ['common', 'csgo'])
+  }
+})
+
+export default Player

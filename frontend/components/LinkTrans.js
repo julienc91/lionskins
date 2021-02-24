@@ -1,6 +1,6 @@
 import React from 'react'
+import Link from 'next/link'
 import PropTypes from 'prop-types'
-import { Link } from '../i18n'
 
 // https://github.com/i18next/react-i18next/issues/1090
 

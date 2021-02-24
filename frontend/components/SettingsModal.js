@@ -1,15 +1,17 @@
 import React from 'react'
+import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 import PropTypes from 'prop-types'
 import { Form, Modal, Select } from 'semantic-ui-react'
-import { withTranslation } from '../i18n'
 import { Currencies } from '../utils/enums'
 import useSettings from './SettingsProvider'
 
-const SettingsModal = ({ i18n, onClose, open, t }) => {
+const SettingsModal = ({ onClose, open }) => {
+  const { t } = useTranslation()
+  const router = useRouter()
   if (!open) {
     return null
   }
-  const { changeLanguage, language } = i18n
   const { currency, changeCurrency } = useSettings()
 
   return (
@@ -26,8 +28,8 @@ const SettingsModal = ({ i18n, onClose, open, t }) => {
               { key: 'en', flag: 'gb', text: t('settings.language.en'), value: 'en' },
               { key: 'fr', flag: 'fr', text: t('settings.language.fr'), value: 'fr' }
             ]}
-            value={language}
-            onChange={(_, { value }) => changeLanguage(value)}
+            value={router.locale}
+            onChange={(_, { value }) => router.push('', '', { locale: value })}
           />
           <Form.Field
             control={Select}
@@ -46,10 +48,8 @@ const SettingsModal = ({ i18n, onClose, open, t }) => {
 }
 
 SettingsModal.propTypes = {
-  i18n: PropTypes.object.isRequired,
   open: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired
 }
 
-export default withTranslation('common')(SettingsModal)
+export default SettingsModal

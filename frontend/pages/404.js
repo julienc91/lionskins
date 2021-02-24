@@ -1,27 +1,26 @@
 import React from 'react'
+import Link from 'next/link'
+import { useTranslation } from 'next-i18next'
 import { Container, Header, Icon, Button } from 'semantic-ui-react'
-import PropTypes from 'prop-types'
-import { Link, withTranslation } from '../i18n'
 
-const Page404 = ({ t }) => (
-  <Container>
-    <Header as='h1' icon className='no-results'>
-      <Icon name='frown outline' />
-      {t('404.title')}
-      <Header.Subheader>{t('404.subtitle')}</Header.Subheader>
-      <Header.Subheader>
-        <Link href='/'>
-          <Button primary>
-            {t('404.homepage')}
-          </Button>
-        </Link>
-      </Header.Subheader>
-    </Header>
-  </Container>
-)
-
-Page404.propTypes = {
-  t: PropTypes.func.isRequired
+const Page404 = () => {
+  const { t } = useTranslation('404')
+  return (
+    <Container>
+      <Header as='h1' icon className='no-results'>
+        <Icon name='frown outline' />
+        {t('404.title')}
+        <Header.Subheader>{t('404.subtitle')}</Header.Subheader>
+        <Header.Subheader>
+          <Link href='/'>
+            <Button primary>
+              {t('404.homepage')}
+            </Button>
+          </Link>
+        </Header.Subheader>
+      </Header>
+    </Container>
+  )
 }
 
-export default withTranslation('404')(Page404)
+export default Page404

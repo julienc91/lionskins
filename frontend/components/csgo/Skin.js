@@ -1,15 +1,17 @@
 import React from 'react'
+import Link from 'next/link'
+import { useTranslation } from 'next-i18next'
 import PropTypes from 'prop-types'
 import { Card, Label } from 'semantic-ui-react'
 import Image from '../Image'
 import TrackedLink from '../TrackedLink'
-import { Link, withTranslation } from '../../i18n'
 import { Providers } from '../../utils/enums'
 import { Qualities, Weapons } from '../../utils/csgo/enums'
 import { getColorFromRarity, getIconFromProvider, getSkinInternalUrl, getSkinUrlFromProvider } from '../../utils/csgo/utils'
 import useSettings from '../SettingsProvider'
 
-const Skin = ({ skin, t }) => {
+const Skin = ({ skin }) => {
+  const { t } = useTranslation('csgo')
   const internalUrl = getSkinInternalUrl(skin)
   const skinName = skin.slug === 'vanilla' ? t('csgo.qualities.vanilla') : skin.name
   const alt = `${skin.weapon.name} - ${skinName}`
@@ -63,7 +65,6 @@ const Skin = ({ skin, t }) => {
 }
 
 Skin.propTypes = {
-  t: PropTypes.func.isRequired,
   skin: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -86,4 +87,4 @@ Skin.propTypes = {
   })
 }
 
-export default withTranslation(['csgo', 'common'])(Skin)
+export default Skin

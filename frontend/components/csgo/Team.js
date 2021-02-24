@@ -1,9 +1,9 @@
 import React from 'react'
+import Link from 'next/link'
 import PropTypes from 'prop-types'
 import { Card, Flag, List, Reveal } from 'semantic-ui-react'
 import slugify from 'slugify'
 import Image from '../Image'
-import { Link } from '../../i18n'
 
 const Team = ({ team }) => {
   const teamSlug = slugify(team.name, { lower: true })

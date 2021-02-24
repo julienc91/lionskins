@@ -1,12 +1,13 @@
 import React from 'react'
 import Head from 'next/head'
+import { Trans, useTranslation } from 'next-i18next'
 import { Container, Header } from 'semantic-ui-react'
-import PropTypes from 'prop-types'
-import { Trans, withTranslation } from '../i18n'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Breadcrumb from '../components/Breadcrumb'
 import LinkTrans from '../components/LinkTrans'
 
-const Faq = ({ t }) => {
+const Faq = () => {
+  const { t } = useTranslation('faq')
   return (
     <Container className='page faq'>
       <Head>
@@ -42,8 +43,10 @@ const Faq = ({ t }) => {
   )
 }
 
-Faq.propTypes = {
-  t: PropTypes.func.isRequired
-}
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...await serverSideTranslations(locale, ['common', 'faq'])
+  }
+})
 
-export default withTranslation('faq')(Faq)
+export default Faq
