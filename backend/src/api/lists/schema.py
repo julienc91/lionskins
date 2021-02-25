@@ -30,7 +30,7 @@ class CreateList(graphene.Mutation):
     list = graphene.Field(TypeList)
 
     @classmethod
-    @jwt_required
+    @jwt_required()
     def mutate(cls, *args, **kwargs):
         user = get_current_user()
         name = kwargs["name"]
@@ -52,7 +52,7 @@ class UpdateList(graphene.Mutation):
     list = graphene.Field(TypeList)
 
     @classmethod
-    @jwt_required
+    @jwt_required()
     def mutate(cls, *args, **kwargs):
         list_ = get_list_from_id(kwargs["id"])
 
@@ -73,7 +73,7 @@ class DeleteList(graphene.Mutation):
     ok = graphene.Boolean()
 
     @classmethod
-    @jwt_required
+    @jwt_required()
     def mutate(cls, *args, **kwargs):
         list_ = get_list_from_id(kwargs["id"])
         list_.delete()
@@ -89,7 +89,7 @@ class AddItems(graphene.Mutation):
     list = graphene.Field(TypeList)
 
     @classmethod
-    @jwt_required
+    @jwt_required()
     def mutate(cls, *args, **kwargs):
         list_ = get_list_from_id(kwargs["id"])
 
@@ -129,7 +129,7 @@ class DeleteContainer(graphene.Mutation):
     list = graphene.Field(TypeList)
 
     @classmethod
-    @jwt_required
+    @jwt_required()
     def mutate(cls, *args, **kwargs):
         list_ = get_list_from_id(kwargs["id"])
 
@@ -148,7 +148,7 @@ class MoveContainer(graphene.Mutation):
     list = graphene.Field(TypeList)
 
     @classmethod
-    @jwt_required
+    @jwt_required()
     def mutate(cls, *args, **kwargs):
         list_ = get_list_from_id(kwargs["id"])
 
@@ -169,7 +169,7 @@ class RemoveItems(graphene.Mutation):
     list = graphene.Field(TypeList)
 
     @classmethod
-    @jwt_required
+    @jwt_required()
     def mutate(cls, *args, **kwargs):
         list_ = get_list_from_id(kwargs["list_id"])
 
@@ -211,7 +211,7 @@ class Query(graphene.ObjectType):
         list_ = List.filter(id=list_id).first()
         return list_
 
-    @jwt_required
+    @jwt_required()
     def resolve_current_user_lists(self, info, **kwargs):
         user = get_current_user()
         lists = List.filter(user=user)

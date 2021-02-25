@@ -4,14 +4,14 @@ import graphene
 import requests
 from api.csgo.schema import Query as csgoQuery
 from api.csgo.types import SkinConnection
-from flask_jwt_extended import jwt_optional
+from flask_jwt_extended import jwt_required
 from utils.users import get_current_user
 
 
 class Query(graphene.ObjectType):
     inventory = graphene.relay.ConnectionField(SkinConnection, steam_id=graphene.String())
 
-    @jwt_optional
+    @jwt_required(optional=True)
     def resolve_inventory(self, info, **args):
         steam_id = args.get("steam_id")
         if not steam_id:

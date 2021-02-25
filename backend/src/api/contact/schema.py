@@ -4,7 +4,7 @@ import logging
 
 import graphene
 from flask import request
-from flask_jwt_extended import jwt_optional
+from flask_jwt_extended import jwt_required
 from graphql import GraphQLError
 from models import Contact
 from utils.captcha import check_captcha
@@ -21,7 +21,7 @@ class ContactMessage(graphene.Mutation):
     message_id = graphene.Field(graphene.String, name="id")
 
     @classmethod
-    @jwt_optional
+    @jwt_required(optional=True)
     def mutate(cls, *args, **kwargs):
         if not check_captcha(kwargs.get("captcha"), request.remote_addr):
             raise GraphQLError("captcha is invalid")

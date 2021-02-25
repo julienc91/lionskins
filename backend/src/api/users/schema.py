@@ -2,11 +2,7 @@
 
 import graphene
 from api.users.types import TypeUser
-from flask_jwt_extended import (
-    create_access_token,
-    jwt_refresh_token_required,
-    jwt_required,
-)
+from flask_jwt_extended import create_access_token, jwt_required
 from utils.users import get_current_user
 
 
@@ -15,7 +11,7 @@ class RefreshToken(graphene.Mutation):
     access_token = graphene.Field(graphene.String)
 
     @classmethod
-    @jwt_refresh_token_required
+    @jwt_required(refresh=True)
     def mutate(cls, *args, **kwargs):
         user = get_current_user()
         user.set_last_login()
@@ -30,7 +26,7 @@ class Mutation(graphene.ObjectType):
 class Query(graphene.ObjectType):
     current_user = graphene.Field(TypeUser)
 
-    @jwt_required
+    @jwt_required()
     def resolve_current_user(self, info, **args):
         user = get_current_user()
         return user
