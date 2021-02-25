@@ -9,10 +9,11 @@ import useSettings from './SettingsProvider'
 const SettingsModal = ({ onClose, open }) => {
   const { t } = useTranslation()
   const router = useRouter()
+  const { currency, changeCurrency } = useSettings()
+
   if (!open) {
     return null
   }
-  const { currency, changeCurrency } = useSettings()
 
   return (
     <Modal open={open} onClose={onClose}>
@@ -29,7 +30,7 @@ const SettingsModal = ({ onClose, open }) => {
               { key: 'fr', flag: 'fr', text: t('settings.language.fr'), value: 'fr' }
             ]}
             value={router.locale}
-            onChange={(_, { value }) => router.push('', '', { locale: value })}
+            onChange={(_, { value }) => router.push(router.asPath, null, { locale: value })}
           />
           <Form.Field
             control={Select}

@@ -27,7 +27,7 @@ class AuthenticationManager {
   }
 
   startOpenId () {
-    StorageManager.set('openid.redirect', window.location.pathname, false)
+    StorageManager.set('openid.redirect', window.location.pathname.substr(3), false)
     window.location = `${process.env.NEXT_PUBLIC_API_DOMAIN}/steam/login`
   }
 }
