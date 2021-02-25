@@ -2,7 +2,6 @@
 
 import logging
 import time
-from datetime import datetime
 from queue import Queue
 from threading import Thread
 from typing import Optional
@@ -11,7 +10,6 @@ import click
 from application import app
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
-from apscheduler.triggers.interval import IntervalTrigger
 from commands.fetch_players import FetchPlayers
 from commands.fetch_providers import FetchProviders
 from commands.generate_sitemap import GenerateSitemap
@@ -24,8 +22,8 @@ from models.enums import Providers
 @app.cli.command("backoffice")
 def backoffice():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(GenerateSitemap.run, IntervalTrigger(hours=12), id="sitemap", next_run_time=datetime.now())
-    scheduler.add_job(FetchPlayers.run, CronTrigger.from_crontab("0 20 * * 1"), id="players", next_run_time=datetime.now())
+    scheduler.add_job(GenerateSitemap.run, CronTrigger.from_crontab("0 */12 * * *"), id="sitemap")
+    scheduler.add_job(FetchPlayers.run, CronTrigger.from_crontab("0 20 * * *"), id="players")
 
     scheduler.start()
     _fetch_providers(True, None)
