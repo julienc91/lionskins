@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import SwiperCore, { Autoplay } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Image } from 'semantic-ui-react'
-import carouselImagesData from '../assets/data/carousel'
 
 SwiperCore.use([Autoplay])
 
@@ -28,11 +27,11 @@ const Carousel = ({ images }) => {
     }
   }
 
-  const slides = images.map((name, i) => (
-    <SwiperSlide key={i}>
-      <Link href={carouselImagesData[name].link}>
+  const slides = images.map(image => (
+    <SwiperSlide key={image.id}>
+      <Link href={image.link}>
         <a>
-          <Image src={`/images/carousel/${name}.jpg`} alt={carouselImagesData[name].name} />
+          <Image src={`/images/carousel/${image.id}.jpg`} alt={image.name} />
         </a>
       </Link>
     </SwiperSlide>
@@ -46,7 +45,11 @@ const Carousel = ({ images }) => {
 }
 
 Carousel.propTypes = {
-  images: PropTypes.arrayOf(PropTypes.string).isRequired
+  images: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    link: PropTypes.string.isRequired
+  })).isRequired
 }
 
 export default Carousel

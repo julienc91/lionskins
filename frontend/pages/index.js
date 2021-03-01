@@ -43,7 +43,11 @@ const Homepage = ({ images }) => {
 }
 
 Homepage.propTypes = {
-  images: PropTypes.arrayOf(PropTypes.string).isRequired
+  images: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    link: PropTypes.string.isRequired
+  })).isRequired
 }
 
 const shuffle = array => {
@@ -55,7 +59,7 @@ const shuffle = array => {
 }
 
 export const getServerSideProps = async ({ locale }) => {
-  const images = shuffle(Object.keys(carouselImagesData)).slice(0, 10)
+  const images = shuffle(carouselImagesData).slice(0, 10)
   return { props: { images, ...await serverSideTranslations(locale, ['common', 'homepage']) } }
 }
 

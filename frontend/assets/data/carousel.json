@@ -1,98 +1,122 @@
-{
-  "ak_47_neon_revolution": {
+[
+  {
+    "id": "ak_47_neon_revolution",
     "link": "/counter-strike-global-offensive/ak-47/neon-revolution/",
     "name": "AK-47 - Neon Revolution"
   },
-  "ak_47_uncharted": {
+  {
+    "id": "ak_47_uncharted",
     "link": "/counter-strike-global-offensive/ak-47/uncharted/",
     "name": "AK-47 - Uncharted"
   },
-  "aug_stymphalian": {
+  {
+    "id": "aug_stymphalian",
     "link": "/counter-strike-global-offensive/aug/stymphalian/",
     "name": "AUG - Stymphalian"
   },
-  "awp_asiimov": {
+  {
+    "id": "awp_asiimov",
     "link": "/counter-strike-global-offensive/awp/asiimov/",
     "name": "AWP - Asiimov"
   },
-  "cz75_auto_eco": {
+  {
+    "id": "cz75_auto_eco",
     "link": "/counter-strike-global-offensive/cz75-auto/eco/",
     "name": "CZ75-Auto - Eco"
   },
-  "desert_eagle_mecha_industries": {
+  {
+    "id": "desert_eagle_mecha_industries",
     "link": "/counter-strike-global-offensive/desert-eagle/mecha-industries/",
     "name": "Desert Eagle - Mecha Industries"
   },
-  "dual_berettas_cartel": {
+  {
+    "id": "dual_berettas_cartel",
     "link": "/counter-strike-global-offensive/dual-berettas/cartel/",
     "name": "Dual Berettas - Cartel"
   },
-  "famas_roll_cage": {
+  {
+    "id": "famas_roll_cage",
     "link": "/counter-strike-global-offensive/famas/roll-cage/",
     "name": "FAMAS - Roll Cage"
   },
-  "five_seven_monkey_business": {
+  {
+    "id": "five_seven_monkey_business",
     "link": "/counter-strike-global-offensive/five-seven/monkey-business/",
     "name": "Five-SeveN - Monkey Business"
   },
-  "galil_ar_kami": {
+  {
+    "id": "galil_ar_kami",
     "link": "/counter-strike-global-offensive/galil-ar/kami/",
     "name": "Galil AR - Kami"
   },
-  "glock_18_water_elemental": {
+  {
+    "id": "glock_18_water_elemental",
     "link": "/counter-strike-global-offensive/glock-18/water-elemental/",
     "name": "Glock-18 - Water Elemental"
   },
-  "m249_aztec": {
+  {
+    "id": "m249_aztec",
     "link": "/counter-strike-global-offensive/m249/aztec/",
     "name": "M249 - Aztec"
   },
-  "m4a1_s_hyper_beast": {
+  {
+    "id": "m4a1_s_hyper_beast",
     "link": "/counter-strike-global-offensive/m4a1-s/hyper-beast/",
     "name": "M4A1-S - Hyper Beast"
   },
-  "m4a4_neo_noir": {
+  {
+    "id": "m4a4_neo_noir",
     "link": "/counter-strike-global-offensive/m4a4/neo-noir/",
     "name": "M4A4 - Neo-Noir"
   },
-  "mac_10_neon_rider": {
+  {
+    "id": "mac_10_neon_rider",
     "link": "/counter-strike-global-offensive/mac-10/neon-rider/",
     "name": "MAC-10 - Neon Rider"
   },
-  "mp7_special_delivery": {
+  {
+    "id": "mp7_special_delivery",
     "link": "/counter-strike-global-offensive/mp7/special-delivery/",
     "name": "MP7 - Special Delivery"
   },
-  "negev_man_o_war": {
+  {
+    "id": "negev_man_o_war",
     "link": "/counter-strike-global-offensive/negev/man-o-war/",
     "name": "Negev - Man-o'-war"
   },
-  "p2000_imperial_dragon": {
+  {
+    "id": "p2000_imperial_dragon",
     "link": "/counter-strike-global-offensive/p2000/imperial-dragon/",
     "name": "P2000 - Imperial Dragon"
   },
-  "p90_nostalgia": {
+  {
+    "id": "p90_nostalgia",
     "link": "/counter-strike-global-offensive/p90/nostalgia/",
     "name": "P90 - Nostalgia"
   },
-  "sawed_off_devourer": {
+  {
+    "id": "sawed_off_devourer",
     "link": "/counter-strike-global-offensive/sawed-off/devourer/",
     "name": "Sawed-Off - Devourer"
   },
-  "sg_553_phantom": {
+  {
+    "id": "sg_553_phantom",
     "link": "/counter-strike-global-offensive/sg-553/phantom/",
     "name": "SG 553 - Phantom"
   },
-  "ssg_08_dragonfire": {
+  {
+    "id": "ssg_08_dragonfire",
     "link": "/counter-strike-global-offensive/ssg-08/dragonfire/",
     "name": "SSG 08 - Dragonfire"
   },
-  "ump_45_moonrise": {
+  {
+    "id": "ump_45_moonrise",
     "link": "/counter-strike-global-offensive/ump-45/moonrise/",
     "name": "UMP-45 - Moonrise"
   },
-  "usp_s_cortex": {
+  {
+    "id": "usp_s_cortex",
     "link": "/counter-strike-global-offensive/usp-s/cortex/",
     "name": "USP-S - Cortex"
   }
-}
+]
