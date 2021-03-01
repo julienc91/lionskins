@@ -1,4 +1,9 @@
 {
+  "404": {
+    "title": "Page non trouvée",
+    "subtitle": "La page que vous cherchez n'a pas été trouvée",
+    "homepage": "Accueil"
+  },
   "breadcrumb": {
     "home": "Accueil"
   },
