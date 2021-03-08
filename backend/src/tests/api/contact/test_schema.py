@@ -33,6 +33,7 @@ send_message_query = """
 @pytest.mark.parametrize("authenticated", [True, False])
 def test_send_message(monkeypatch, client, access_token, user, name, email, authenticated):
     monkeypatch.setattr("api.contact.schema.check_captcha", lambda *_: True)
+    monkeypatch.setattr("models.contact.Contact.send", lambda *_: None)
 
     url = url_for("graphql")
     message = "message content"
