@@ -5,6 +5,7 @@ import json
 from bs4 import BeautifulSoup
 from models.csgo import Skin
 from models.csgo.enums import Categories, Rarities, Weapons
+from tqdm import tqdm
 
 
 class SyncCatalog:
@@ -108,7 +109,7 @@ class SyncCatalog:
         languages = {"fr": "french", "en": "english"}
         default_language = "en"
 
-        for item in data:
+        for item in tqdm(data):
             if item["type"] not in (1, 3, 4):
                 continue
 
