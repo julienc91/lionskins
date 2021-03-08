@@ -172,6 +172,7 @@ class Weapons(enum.Enum):
     ursus_knife = "Ursus Knife"
 
     bloodhound_gloves = "Bloodhound Gloves"
+    broken_fang_gloves = "Broken Fang Gloves"
     driver_gloves = "Driver Gloves"
     hand_wraps = "Hand Wraps"
     hydra_gloves = "Hydra Gloves"
@@ -239,6 +240,7 @@ _categories_to_weapons = {
     ],
     Categories.gloves: [
         Weapons.bloodhound_gloves,
+        Weapons.broken_fang_gloves,
         Weapons.driver_gloves,
         Weapons.hand_wraps,
         Weapons.hydra_gloves,

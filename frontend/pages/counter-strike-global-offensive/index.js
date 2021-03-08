@@ -91,12 +91,14 @@ const CsgoSkinList = () => {
   const toggleSidebar = () => setShowSidebar(!showSidebar)
 
   const getMoreSkins = () => {
-    fetchMore({
-      variables: {
-        ...variables,
-        after: data.csgo.pageInfo.endCursor
-      }
-    })
+    if (hasMore) {
+      fetchMore({
+        variables: {
+          ...variables,
+          after: data.csgo.pageInfo.endCursor
+        }
+      })
+    }
   }
 
   const handleFilterChanged = value => {

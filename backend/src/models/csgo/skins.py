@@ -27,6 +27,9 @@ class Skin(BaseSkin):
         super().__init__(**kwargs)
         self.app = Apps.csgo
 
+    def __str__(self) -> str:
+        return f"<Skin {self.id} - {self.market_hash_name}>"
+
     weapon = db.EnumField(Weapons, required=True)
 
     stat_trak = db.BooleanField(required=True)
