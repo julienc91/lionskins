@@ -3,10 +3,11 @@
 from datetime import datetime
 
 import graphene
-from api.lists.types import ListConnection, TypeList
 from flask_jwt_extended import jwt_required
 from graphql import GraphQLError
 from graphql_relay.node.node import from_global_id
+
+from api.lists.types import ListConnection, TypeList
 from models import List
 from models.csgo import Skin
 from models.lists import Item, ItemContainer

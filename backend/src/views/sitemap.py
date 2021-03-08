@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from commands.generate_sitemap import GenerateSitemap
 from flask import abort, send_file
+
+from commands.generate_sitemap import GenerateSitemap
 
 
 def sitemap_view():

@@ -6,6 +6,7 @@ import graphene
 from flask import request
 from flask_jwt_extended import jwt_required
 from graphql import GraphQLError
+
 from models import Contact
 from utils.captcha import check_captcha
 from utils.users import get_current_user

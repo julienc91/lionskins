@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import graphene
+
 import models
 from api.skins import BaseTypeSkin
 

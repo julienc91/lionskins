@@ -2,9 +2,10 @@
 
 import graphene
 import requests
+from flask_jwt_extended import jwt_required
+
 from api.csgo.schema import Query as csgoQuery
 from api.csgo.types import SkinConnection
-from flask_jwt_extended import jwt_required
 from utils.users import get_current_user
 
 

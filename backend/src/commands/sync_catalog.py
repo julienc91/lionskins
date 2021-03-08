@@ -3,9 +3,10 @@
 import json
 
 from bs4 import BeautifulSoup
+from tqdm import tqdm
+
 from models.csgo import Skin
 from models.csgo.enums import Categories, Rarities, Weapons
-from tqdm import tqdm
 
 
 class SyncCatalog:

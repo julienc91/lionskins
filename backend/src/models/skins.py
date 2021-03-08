@@ -2,11 +2,12 @@
 
 from datetime import datetime
 
+from slugify import slugify
+
 from init import db
 from models.enums import Apps, Providers
 from models.model_mixin import ModelMixin
 from models.prices import Price
-from slugify import slugify
 
 
 class Skin(ModelMixin, db.Document):

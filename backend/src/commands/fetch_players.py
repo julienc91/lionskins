@@ -9,6 +9,7 @@ from typing import Any, Optional
 import requests
 from bs4 import BeautifulSoup
 from ratelimit import limits, sleep_and_retry
+
 from utils.data import get_data_directory
 
 

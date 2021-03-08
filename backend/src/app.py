@@ -2,9 +2,10 @@
 
 import logging
 
+from graphql_server.flask import GraphQLView
+
 from api import schema
 from application import app
-from graphql_server.flask import GraphQLView
 from views.authentication import get_tokens, logout, steam_login
 from views.redirect import redirect_view
 from views.sitemap import sitemap_view
