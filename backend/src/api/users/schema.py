@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import graphene
-from api.users.types import TypeUser
 from flask_jwt_extended import create_access_token, jwt_required
+
+from api.users.types import TypeUser
 from utils.users import get_current_user
 
 

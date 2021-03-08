@@ -3,11 +3,12 @@
 import os
 
 import requests
+from ratelimit import limits, sleep_and_retry
+
 from models import Apps, Providers
 from models.enums import Currencies
 from providers.abstract_provider import AbstractProvider
 from providers.exceptions import UnfinishedJob
-from ratelimit import limits, sleep_and_retry
 from utils import CurrencyConverter
 
 

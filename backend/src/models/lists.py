@@ -2,9 +2,10 @@
 
 from datetime import datetime
 
+from slugify import slugify
+
 from init import db
 from models.model_mixin import ModelMixin
-from slugify import slugify
 
 
 class Item(ModelMixin, db.EmbeddedDocument):

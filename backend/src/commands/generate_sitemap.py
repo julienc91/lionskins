@@ -2,8 +2,9 @@
 
 import os
 
-from models.csgo import Skin
 from slugify import slugify
+
+from models.csgo import Skin
 from utils.data import get_data_directory
 
 

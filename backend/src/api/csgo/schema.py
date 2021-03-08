@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import graphene
+
 from api.csgo.types import (
     CSGOCategories,
     CSGOQualities,

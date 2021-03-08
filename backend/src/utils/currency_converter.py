@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from threading import Lock
 
 import requests
+
 from models.enums import Currencies
 
 

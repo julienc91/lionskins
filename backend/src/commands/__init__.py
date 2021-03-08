@@ -7,9 +7,10 @@ from threading import Thread
 from typing import Optional
 
 import click
-from application import app
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
+
+from application import app
 from commands.fetch_players import FetchPlayers
 from commands.fetch_providers import FetchProviders
 from commands.generate_sitemap import GenerateSitemap

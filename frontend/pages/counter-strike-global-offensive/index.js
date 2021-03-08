@@ -161,8 +161,8 @@ const CsgoSkinList = () => {
         {!loading && data && data.csgo && data.csgo.edges.length === 0 && (
           <Header as='h2' icon className='no-results'>
             <Icon name='frown outline' />
-            {t('skin_list.no_results.title')}
-            <Header.Subheader>{t('skin_list.no_results.subtitle')}</Header.Subheader>
+            {t('skin_list:skin_list.no_results.title')}
+            <Header.Subheader>{t('skin_list:skin_list.no_results.subtitle')}</Header.Subheader>
           </Header>
         )}
 

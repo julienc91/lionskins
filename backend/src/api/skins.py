@@ -3,6 +3,7 @@
 import itertools
 
 import graphene
+
 import models
 from utils import CurrencyConverter
 

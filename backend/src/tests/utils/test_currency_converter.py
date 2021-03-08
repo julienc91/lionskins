@@ -3,6 +3,7 @@
 from unittest.mock import MagicMock
 
 import pytest
+
 from models.enums import Currencies
 from utils import CurrencyConverter
 

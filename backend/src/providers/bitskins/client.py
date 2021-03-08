@@ -4,10 +4,11 @@ import os
 
 import pyotp
 import requests
+from ratelimit import limits, sleep_and_retry
+
 from models import Apps, Providers
 from providers.abstract_provider import AbstractProvider
 from providers.exceptions import UnfinishedJob
-from ratelimit import limits, sleep_and_retry
 
 
 class Client(AbstractProvider):
