@@ -22,7 +22,7 @@ const Team = ({ team }) => {
                 </List.Icon>
                 <List.Content>
                   <Link href={`/counter-strike-global-offensive/teams/${teamSlug}/${slugify(player.name, { lower: true })}/`}>
-                    {player.name}
+                    <a>{player.name}</a>
                   </Link>
                 </List.Content>
               </List.Item>

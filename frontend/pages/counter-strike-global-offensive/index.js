@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import PropTypes from 'prop-types'
 import InfiniteScroll from 'react-infinite-scroller'
 import { Button, Card, Header, Icon, Loader, Sidebar } from 'semantic-ui-react'
 import Breadcrumb from '../../components/Breadcrumb'
@@ -73,12 +74,12 @@ const getInitialFilters = query => {
   return res
 }
 
-const CsgoSkinList = () => {
+const CsgoSkinList = ({ query }) => {
   const { t } = useTranslation(['csgo', 'skin_list'])
   const router = useRouter()
   const { currency } = useSettings()
   const [showSidebar, setShowSidebar] = useState(false)
-  const [variables, setVariables] = useState({ ...getInitialFilters(router.query), first: 30, currency })
+  const [variables, setVariables] = useState({ ...getInitialFilters(query), first: 30, currency })
   const [hasMore, setHasMore] = useState(true)
   const { data, fetchMore, loading } = useQuery(getSkinsQuery, { variables, notifyOnNetworkStatusChange: true })
 
@@ -116,10 +117,10 @@ const CsgoSkinList = () => {
         params.push(`${filter}=${value}`)
       }
     })
-    if (window.location.search || params.length) {
-      window.history.pushState({}, document.title, `${window.location.pathname}?${params.join('&')}`)
+    if (params.length) {
+      router.replace(`${router.pathname}?${params.join('&')}`)
     } else {
-      window.history.pushState({}, document.title, window.location.pathname)
+      router.replace(router.pathname)
     }
   }
 
@@ -148,7 +149,7 @@ const CsgoSkinList = () => {
         <Breadcrumb items={[{ name: 'Counter-Strike: Global Offensive' }]} />
 
         <div className='inventory-link'>
-          <Link href='/counter-strike-global-offensive/my-inventory'>
+          <Link href='/counter-strike-global-offensive/my-inventory' passHref>
             <Button primary icon labelPosition='left'>
               <Icon name='steam' />
               {t('csgo:csgo.skin_list.inventory_link')}
@@ -190,8 +191,13 @@ const CsgoSkinList = () => {
   )
 }
 
-export const getStaticProps = async ({ locale }) => ({
+CsgoSkinList.propTypes = {
+  query: PropTypes.object
+}
+
+export const getServerSideProps = async ({ locale, query }) => ({
   props: {
+    query,
     ...await serverSideTranslations(locale, ['common', 'skin_list', 'csgo'])
   }
 })

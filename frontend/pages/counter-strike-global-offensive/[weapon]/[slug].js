@@ -57,7 +57,7 @@ const SkinPage = ({ slug, weapon }) => {
   const { data, loading } = useQuery(getSkinQuery, { variables: { currency, weapon, slug }, notifyOnNetworkStatusChange: true })
   const [quality, setQuality] = useState(Object.keys(Qualities)[0])
 
-  if ((!weapon || !slug) || (!loading && (!data || !data.csgo.edges.length))) {
+  if (!loading && (!data || !data.csgo.edges.length)) {
     return <Page404 />
   } else if (loading) {
     return (
@@ -187,21 +187,21 @@ SkinPage.propTypes = {
   weapon: PropTypes.string.isRequired
 }
 
-export const getServerSideProps = async ({ locale, query, res }) => {
+export const getServerSideProps = async ({ locale, query }) => {
   const slug = query.slug
   const weapon = Object.keys(Weapons).find(e => getWeaponSlug(e) === query.weapon)
-  const props = {
-    ...await serverSideTranslations(locale, ['common', 'csgo'])
+
+  if (!weapon || !slug) {
+    return { notFound: true }
   }
 
-  if (!weapon) {
-    res.statusCode = 404
-  } else {
-    props.weapon = weapon
-    props.slug = slug
+  return {
+    props: {
+      ...await serverSideTranslations(locale, ['common', 'csgo']),
+      weapon,
+      slug
+    }
   }
-
-  return { props }
 }
 
 export default SkinPage

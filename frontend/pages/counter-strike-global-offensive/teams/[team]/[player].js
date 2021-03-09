@@ -7,7 +7,6 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import PropTypes from 'prop-types'
 import { Card, Container, Header, Icon, Loader } from 'semantic-ui-react'
 import slugify from 'slugify'
-import Page404 from '../../../404'
 import Breadcrumb from '../../../../components/Breadcrumb'
 import useSettings from '../../../../components/SettingsProvider'
 import Skin from '../../../../components/csgo/Skin'
@@ -45,10 +44,6 @@ const Player = ({ player, team }) => {
   const { t } = useTranslation('csgo')
   const { currency } = useSettings()
   const { data, loading } = useQuery(getInventoryQuery, { variables: { steamId: player.steamId, currency }, notifyOnNetworkStatusChange: true })
-
-  if (!player || !team) {
-    return <Page404 />
-  }
 
   const skins = (loading || !data) ? [] : data.inventory.edges.map(({ node }) => node)
 
@@ -109,22 +104,20 @@ const Player = ({ player, team }) => {
 }
 
 Player.propTypes = {
-  player: PropTypes.object,
-  team: PropTypes.object
+  player: PropTypes.object.isRequired,
+  team: PropTypes.object.isRequired
 }
 
-export const getServerSideProps = async ({ locale, query, res }) => {
+export const getServerSideProps = async ({ locale, query }) => {
   const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_DOMAIN}/teams.json`)
   const team = data.find(t => slugify(t.name, { lower: true }) === query.team)
   if (!team) {
-    res.statusCode = 404
-    return {}
+    return { notFound: true }
   }
 
   const player = team.players.find(p => slugify(p.name, { lower: true }) === query.player)
   if (!player) {
-    res.statusCode = 404
-    return {}
+    return { notFound: true }
   }
 
   return { props: { team, player, ...await serverSideTranslations(locale, ['common', 'csgo']) } }
