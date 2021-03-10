@@ -402,6 +402,10 @@ $xlarge-down: 'only screen and (max-width : 1439px)' !default;
       flex-flow: column;
       justify-content: flex-start;
 
+      .description {
+        width: 100%;
+      }
+
       .panels {
         align-items: flex-start;
         display: flex;

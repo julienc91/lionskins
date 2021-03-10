@@ -111,7 +111,7 @@ const SkinPage = ({ slug, weapon }) => {
 
       <div className='main-content'>
 
-        <div>{description}</div>
+        <div className='description'>{description}</div>
 
         <div className='panels'>
           <section className='left-panel'>
