@@ -107,7 +107,7 @@ class SyncCatalog:
         with open(data_path) as f:
             data = json.load(f)
 
-        languages = {"fr": "french", "en": "english"}
+        languages = {"en": "english", "fr": "french"}
         default_language = "en"
 
         for item in tqdm(data):
@@ -117,25 +117,24 @@ class SyncCatalog:
             weapon = cls.map_csgo_weapon_to_enum[item["weapon"]["id"]]
             name = item["name"][languages[default_language]]
 
-            skins = Skin.filter(weapon=weapon, name=name)
-            for skin in skins:
-                if weapon.category not in [Categories.gloves, Categories.knives]:
-                    mapping = (
-                        cls.map_csgo_rarity_to_enum_buffed
-                        if weapon in cls.weapons_with_buffed_rarity
-                        else cls.map_csgo_rarity_to_enum_default
-                    )
-                    skin.rarity = mapping[item["rarity"]]
-                elif weapon.category is Categories.knives:
-                    skin.rarity = Rarities.covert
-                if not skin.description:
-                    skin.description = {}
+            update = {}
+            if weapon.category not in [Categories.gloves, Categories.knives]:
+                mapping = (
+                    cls.map_csgo_rarity_to_enum_buffed
+                    if weapon in cls.weapons_with_buffed_rarity
+                    else cls.map_csgo_rarity_to_enum_default
+                )
+                update["set__rarity"] = mapping[item["rarity"]]
+            elif weapon.category is Categories.knives:
+                update["set__rarity"] = Rarities.covert
 
-                for language in languages:
-                    description = item["weapon"]["description"][languages[language]]
-                    if item["description"][languages[language]]:
-                        description += " " + item["description"][languages[language]]
-                    description = BeautifulSoup(description, "html.parser").text
-                    skin.description[language] = description
+            descriptions = {}
+            for language in languages:
+                description = item["weapon"]["description"][languages[language]]
+                if item["description"][languages[language]]:
+                    description += " " + item["description"][languages[language]]
+                description = BeautifulSoup(description, "html.parser").text
+                descriptions[language] = description
+            update["set__description"] = descriptions
 
-                skin.save()
+            Skin.objects(weapon=weapon, name=name).update(**update)
