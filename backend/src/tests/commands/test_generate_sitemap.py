@@ -6,18 +6,11 @@ import pytest
 from slugify import slugify
 
 from commands import GenerateSitemap
-from models.csgo import Skin
-from models.csgo.enums import Qualities, Weapons
 
 
 @pytest.fixture(autouse=True)
 def patch_output_file(monkeypatch, tmp_path):
     monkeypatch.setattr(GenerateSitemap, "output_file", lambda: str(tmp_path / "sitemap.xml"))
-
-
-@pytest.fixture()
-def skin():
-    return Skin.create(name="foo bar", weapon=Weapons.ak_47, souvenir=False, stat_trak=False, quality=Qualities.factory_new)
 
 
 def test_generate_sitemap_static_urls(client, skin):

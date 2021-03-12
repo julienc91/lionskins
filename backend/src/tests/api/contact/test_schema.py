@@ -6,12 +6,7 @@ import pytest
 from flask import url_for
 from flask_jwt_extended import create_access_token
 
-from models import Contact, User
-
-
-@pytest.fixture()
-def user():
-    return User.create(username="foo", steam_id="foo")
+from models import Contact
 
 
 @pytest.fixture()
@@ -50,7 +45,7 @@ def test_send_message(monkeypatch, client, access_token, user, name, email, auth
     assert res["data"]["contact"]
     assert res["data"]["contact"]["id"]
 
-    contact = Contact.filter()[0]
+    contact = Contact.objects.first()
     assert contact
     assert contact.name == name
     assert contact.email == email

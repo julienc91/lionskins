@@ -7,8 +7,6 @@ import pytest
 from flask import url_for
 from flask_jwt_extended import create_access_token, create_refresh_token, decode_token
 
-from models import User
-
 # refresh token
 
 refresh_token_query = """
@@ -20,9 +18,7 @@ refresh_token_query = """
 """
 
 
-def test_refresh_token(client):
-    user = User.create(username="foo", steam_id="foo")
-
+def test_refresh_token(client, user):
     url = url_for("graphql")
     refresh_token = create_refresh_token(user.jwt_identity)
     res = client.post(url, json={"query": refresh_token_query}, headers={"Authorization": f"Bearer {refresh_token}"})
@@ -44,9 +40,7 @@ def test_refresh_token(client):
         lambda user: create_access_token(user.jwt_identity),
     ],
 )
-def test_refresh_token_invalid(client, refresh_token_generator):
-    user = User.create(username="foo", steam_id="foo")
-
+def test_refresh_token_invalid(client, refresh_token_generator, user):
     url = url_for("graphql")
     refresh_token = refresh_token_generator(user)
     headers = {}
@@ -72,9 +66,7 @@ get_current_user_query = """
 """
 
 
-def test_get_current_user(client):
-    user = User.create(username="foo", steam_id="foo")
-
+def test_get_current_user(client, user):
     url = url_for("graphql")
     access_token = create_access_token(user.jwt_identity)
 
@@ -96,9 +88,7 @@ def test_get_current_user(client):
         lambda user: create_refresh_token(user.jwt_identity),
     ],
 )
-def test_get_current_user_invalid(client, access_token_generator):
-    user = User.create(username="foo", steam_id="foo")
-
+def test_get_current_user_invalid(client, access_token_generator, user):
     url = url_for("graphql")
     access_token = access_token_generator(user)
     headers = {}

@@ -9,24 +9,12 @@ from graphql_relay.node.node import to_global_id
 from slugify import slugify
 
 from models import List, User
-from models.csgo import Skin
-from models.csgo.enums import Qualities, Weapons
 from models.lists import Item, ItemContainer
-
-
-@pytest.fixture()
-def user():
-    return User.create(username="foo", steam_id="foo")
 
 
 @pytest.fixture()
 def access_token(user):
     return create_access_token(user.jwt_identity)
-
-
-@pytest.fixture()
-def skin():
-    return Skin.create(name="foo", weapon=Weapons.ak_47, souvenir=False, stat_trak=False, quality=Qualities.factory_new)
 
 
 @pytest.fixture()

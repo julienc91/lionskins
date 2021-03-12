@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from unittest.mock import MagicMock
+from unittest.mock import Mock
 
 import pytest
 
@@ -16,7 +16,7 @@ EPSILON = 10e-8
 def patch_rate(monkeypatch):
     monkeypatch.setattr(
         "requests.get",
-        lambda _: MagicMock(status_code=200, json=lambda: {"rates": test_rates, "base": "USD", "date": "2020-10-02"}),
+        lambda _: Mock(status_code=200, json=lambda: {"rates": test_rates, "base": "USD", "date": "2020-10-02"}),
     )
 
 

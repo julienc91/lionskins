@@ -1,9 +1,12 @@
+pre-commit
 black
 flake8
 isort
-pytest                      ~= 6.2.2
+
+factory_boy                 ~= 3.2.0
 mongomock                   ~= 3.22.1
-pre-commit
+pytest                      ~= 6.2.2
 pytest-cov                  ~= 2.11.1
 pytest-env                  ~= 0.6.2
+pytest-factoryboy           ~= 2.1.0
 pytest-flask                ~= 1.1.0
