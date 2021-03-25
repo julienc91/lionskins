@@ -6,25 +6,16 @@ import os
 import requests
 from ratelimit import limits, sleep_and_retry
 
-from models import Apps, Providers
+from models import Providers
 from models.enums import Currencies
-from providers.abstract_provider import AbstractProvider
+from providers.abstract_provider import AbstractProvider, TaskTypes
 from providers.exceptions import UnfinishedJob
 from utils import CurrencyConverter
 
 
 class Client(AbstractProvider):
-
     provider = Providers.skinport
     base_url = "https://api.skinport.com/v1/"
-
-    @staticmethod
-    def get_parser(app):
-        if app == Apps.csgo:
-            from providers.parsers.csgo import Parser
-
-            return Parser
-        raise NotImplementedError
 
     @property
     def token(self) -> str:
@@ -36,14 +27,14 @@ class Client(AbstractProvider):
     @limits(calls=1, period=10)
     def __get(self, method, params=None):
         params = params or {}
-        params["app_id"] = self.parser.app_id
+        params["app_id"] = 730
         return requests.get(
             self.base_url + method,
             params=params,
             headers={"Content-Type": "application/json", "Authorization": f"Basic {self.token}"},
         )
 
-    def get_prices(self):
+    def get_tasks(self):
         result = self.__get("items")
         if result.status_code >= 500:
             raise UnfinishedJob
@@ -54,11 +45,6 @@ class Client(AbstractProvider):
             if item_price <= 0:
                 continue
 
-            skin = None
             item_name = row.get("market_hash_name")
-            if item_name:
-                skin = self.parser.get_skin_from_item_name(item_name)
-
-            if skin:
-                item_price = CurrencyConverter.convert(item_price, Currencies.eur, Currencies.usd)
-                yield skin, item_price
+            item_price = CurrencyConverter.convert(item_price, Currencies.eur, Currencies.usd)
+            yield TaskTypes.ADD_PRICE, item_name, item_price, None

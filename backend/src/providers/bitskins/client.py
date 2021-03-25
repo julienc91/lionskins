@@ -7,7 +7,7 @@ import requests
 from ratelimit import limits, sleep_and_retry
 
 from models import Apps, Providers
-from providers.abstract_provider import AbstractProvider
+from providers.abstract_provider import AbstractProvider, TaskTypes
 from providers.exceptions import UnfinishedJob
 
 
@@ -42,8 +42,8 @@ class Client(AbstractProvider):
 
         return requests.get(self.base_url + method + "/", params)
 
-    def get_prices(self):
-        result = self.__get("get_price_data_for_items_on_sale", params={"app_id": self.parser.app_id})
+    def get_tasks(self):
+        result = self.__get("get_price_data_for_items_on_sale", params={"app_id": 730})
         if result.status_code >= 500:
             raise UnfinishedJob
 
@@ -51,6 +51,4 @@ class Client(AbstractProvider):
         for row in result:
             item_name = row["market_hash_name"]
             item_price = float(row["lowest_price"])
-            skin = self.parser.get_skin_from_item_name(item_name)
-            if skin and item_price > 0:
-                yield skin, item_price
+            yield TaskTypes.ADD_PRICE, item_name, item_price, None

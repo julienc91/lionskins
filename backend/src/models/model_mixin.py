@@ -1,41 +1,26 @@
 # -*- coding: utf-8 -*-
 
-from enum import Enum
-
 from init import db
 
 
 class ModelMixin:
-    def __init__(self, **kwargs):
-        super().__init__(**self._parse_kwargs(kwargs))
-
-    @classmethod
-    def _parse_kwargs(cls, kwargs):
-        new_kwargs = {}
-        for k, v in kwargs.items():
-            if isinstance(v, Enum) and ("_" + k) in cls._fields:
-                k = "_" + k
-                v = v.name
-            new_kwargs[k] = v
-        return new_kwargs
-
     @classmethod
     def get(cls, **kwargs):
         if issubclass(cls, db.EmbeddedDocument):
             raise NotImplementedError
         else:
-            return cls.objects.get(**cls._parse_kwargs(kwargs))
+            return cls.objects.get(**kwargs)
 
     @classmethod
     def filter(cls, **kwargs):
         if issubclass(cls, db.EmbeddedDocument):
             raise NotImplementedError
         else:
-            return cls.objects(**cls._parse_kwargs(kwargs))
+            return cls.objects(**kwargs)
 
     @classmethod
     def count(cls, **kwargs):
-        return cls.objects(**cls._parse_kwargs(kwargs)).count()
+        return cls.objects(**kwargs).count()
 
     @classmethod
     def exists(cls, **kwargs):
@@ -46,11 +31,10 @@ class ModelMixin:
         if issubclass(cls, db.EmbeddedDocument):
             return cls(**kwargs)
         else:
-            return cls.objects.create(**cls._parse_kwargs(kwargs))
+            return cls.objects.create(**kwargs)
 
     @classmethod
     def get_or_create(cls, defaults=None, **kwargs):
-        kwargs = cls._parse_kwargs(kwargs)
         res = cls.filter(**kwargs)
         assert res.count() <= 1
         res = res.first()

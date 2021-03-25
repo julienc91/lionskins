@@ -10,6 +10,7 @@ from models.csgo.enums import Categories, Qualities, Rarities, Weapons
 
 class Parser:
     app_id = 730
+    model = Skin
 
     @classmethod
     def parse_rarity(cls, rarity: str) -> Rarities:
@@ -27,12 +28,11 @@ class Parser:
         return Weapons(weapon)
 
     @classmethod
-    def get_skin_from_item_name(cls, item_name: str) -> Optional[Skin]:
-        try:
-            return Skin.objects.get(app=Apps.csgo, market_hash_name=item_name)
-        except Skin.DoesNotExist:
-            pass
+    def _validate_item_name(cls, item_name: str) -> bool:
+        return bool(cls._parse_item_name(item_name))
 
+    @classmethod
+    def _parse_item_name(cls, item_name: str):
         left_split, _, right_split = item_name.partition("|")
 
         stat_trak = "StatTrak" in left_split
@@ -60,7 +60,26 @@ class Parser:
         else:
             skin_name = "Vanilla"
             quality = Qualities.vanilla
+        return {"name": skin_name, "weapon": weapon, "quality": quality, "stat_trak": stat_trak, "souvenir": souvenir}
 
-        return Skin.get_or_create(
-            name=skin_name, app=Apps.csgo, weapon=weapon, quality=quality, stat_trak=stat_trak, souvenir=souvenir
-        )
+    @classmethod
+    def get_or_create_skin_from_item_name(cls, item_name: str) -> Optional[Skin]:
+        skin = cls.get_skin_from_item_name(item_name)
+        if skin:
+            return skin
+
+        kwargs = cls._parse_item_name(item_name)
+        if not kwargs:
+            return None
+
+        return cls.model.get_or_create(app=Apps.csgo, **kwargs)
+
+    @classmethod
+    def get_skin_from_item_name(cls, item_name: str) -> Optional[Skin]:
+        if not cls._validate_item_name(item_name):
+            return None
+
+        try:
+            return cls.model.objects.get(app=Apps.csgo, market_hash_name=item_name)
+        except cls.model.DoesNotExist:
+            return None

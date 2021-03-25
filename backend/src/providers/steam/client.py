@@ -7,49 +7,38 @@ import requests
 from ratelimit import limits, sleep_and_retry
 
 from models import Apps, Providers
-from providers.abstract_provider import AbstractProvider
+from providers.abstract_provider import AbstractProvider, TaskTypes
 from providers.exceptions import UnfinishedJob
+from providers.parsers import get_parser
 
 
 class Client(AbstractProvider):
-
     provider = Providers.steam
     base_url = "https://steamcommunity.com/market/search/render/"
-
-    @staticmethod
-    def get_parser(app):
-        if app == Apps.csgo:
-            from providers.parsers.csgo import Parser
-
-            return Parser
-        raise NotImplementedError
 
     @sleep_and_retry
     @limits(calls=1, period=45)
     def __get(self, params=None):
-        if not params:
-            params = {}
-
         return requests.get(self.base_url, params)
 
-    def _app_specific_parsing(self, skin, row):
+    def _parse_rarity(self, row):
         if self.app == Apps.csgo:
             try:
                 rarity = row["asset_description"]["type"]
                 rarity = re.sub(r"^Souvenir", "", rarity).strip()
-                rarity = self.parser.parse_rarity(rarity)
-                skin.rarity = rarity
+                return get_parser(self.app).parse_rarity(rarity)
             except (KeyError, AttributeError, ValueError):
                 pass
+        return None
 
-    def get_prices(self):
+    def get_tasks(self):
         start = 0
         count = 100
         unfinished_job = False
 
         while True:
             params = {
-                "appid": self.parser.app_id,
+                "appid": 730,
                 "search_description": 0,
                 "sort_dir": "asc",
                 "sort_column": "name",
@@ -79,24 +68,23 @@ class Client(AbstractProvider):
             for row in result:
                 item_name = row["hash_name"]
                 item_price = float(row["sell_price"]) / 100
-                skin = self.parser.get_skin_from_item_name(item_name)
-                if skin:
-                    image_url = row.get("asset_description", {}).get("icon_url", "")
-                    if not skin.image_url and image_url:
-                        skin.image_url = f"https://steamcommunity-a.akamaihd.net/economy/image/{image_url}/720fx720f"
 
-                    self._app_specific_parsing(skin, row)
-                    skin.save()
+                kwargs = {}
 
-                    if item_price > 0:
-                        yield skin, item_price
+                image_id = row.get("asset_description", {}).get("icon_url", "")
+                if image_id:
+                    kwargs["image_url"] = f"https://steamcommunity-a.akamaihd.net/economy/image/{image_id}/720fx720f"
+
+                rarity = self._parse_rarity(row)
+                if rarity:
+                    kwargs["rarity"] = rarity
+
+                yield TaskTypes.ADD_PRICE, item_name, item_price, kwargs
 
             start += count
             if unfinished_job:
                 raise UnfinishedJob
 
     def get_inventory(self, steam_id):
-        res = requests.get(
-            f"https://steamcommunity.com/inventory/{steam_id}/{self.parser.app_id}/2", {"l": "english", "count": 5000}
-        )
+        res = requests.get(f"https://steamcommunity.com/inventory/{steam_id}/730/2", {"l": "english", "count": 5000})
         assert res.status_code == 200

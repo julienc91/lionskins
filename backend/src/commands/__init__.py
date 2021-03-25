@@ -12,12 +12,13 @@ from apscheduler.triggers.cron import CronTrigger
 
 from application import app
 from commands.fetch_players import FetchPlayers
-from commands.fetch_providers import FetchProviders
+from commands.fetch_providers import FetchProviders, TaskTypes
 from commands.generate_sitemap import GenerateSitemap
 from commands.sanity_check import SanityCheck
 from commands.sync_catalog import SyncCatalog
 from models import Skin
 from models.enums import Providers
+from providers.parsers import get_parser
 
 
 @app.cli.command("backoffice")
@@ -45,46 +46,60 @@ def fetch_providers(daemon: bool, provider: Providers):
 def _fetch_providers(daemon: bool, provider: Optional[Providers] = None):
     providers = [Providers[provider]] if provider else list(Providers)
 
-    if daemon:
-        queue = Queue()
+    queue = Queue()
+    remaining_workers = 0
 
-        def worker(p):
-            while True:
-                try:
-                    FetchProviders(p, queue).run()
-                except Exception as e:
-                    logging.exception(e)
-                time.sleep(3600)
-
-        for provider in providers:
-            thread = Thread(target=worker, args=(provider,))
-            thread.start()
-
-        # process all the price updates in the main thread, to avoid concurrency issues
+    def worker(p):
         while True:
-            (task_type, args) = queue.get()
-            if task_type == "add":
-                skin_id, price, provider = args
-                skin = Skin.get(id=skin_id)
-                skin.add_price(provider=provider, price=price)
-            elif task_type == "remove":
-                start_date, provider = args
-                for skin in Skin.objects:
-                    updated_prices = []
-                    for price in skin.prices:
-                        if price.provider.name == provider.name and price.update_date < start_date:
-                            continue
-                        updated_prices.append(price)
+            try:
+                FetchProviders(p, queue).run()
+            except Exception as e:
+                logging.exception(e)
+            if not daemon:
+                queue.put((TaskTypes.LAST_TASK, p))
+                return
+            time.sleep(3600)
 
-                    if len(updated_prices) != len(skin.prices):
-                        skin.prices = updated_prices
+    for provider in providers:
+        remaining_workers += 1
+        thread = Thread(target=worker, args=(provider,))
+        thread.start()
+
+    # process all the price updates in the main thread, to avoid concurrency issues
+    while remaining_workers:
+        task_type, args = queue.get()
+        if task_type == TaskTypes.ADD_PRICE:
+            app_, provider, item_name, price, kwargs = args
+            if price > 0:
+                skin = get_parser(app_).get_or_create_skin_from_item_name(item_name)
+                if skin:
+                    skin.add_price(provider=provider, price=price)
+                    kwargs = kwargs or {}
+                    kwargs = {key: value for key, value in kwargs.items() if getattr(skin, key) != value}
+                    if kwargs:
+                        for key, value in kwargs.items():
+                            setattr(skin, key, value)
                         skin.save()
 
-            queue.task_done()
+        elif task_type == TaskTypes.REMOVE_PRICES:
+            app_, provider, start_date = args
+            for skin in Skin.objects(app=app_):
+                updated_prices = []
+                for price in skin.prices:
+                    if price.provider.name == provider.name and price.update_date < start_date:
+                        continue
+                    updated_prices.append(price)
 
-    else:
-        for provider in providers:
-            FetchProviders(provider).run()
+                if len(updated_prices) != len(skin.prices):
+                    skin.prices = updated_prices
+                    skin.save()
+
+        elif task_type == TaskTypes.LAST_TASK:
+            provider = args
+            remaining_workers -= 1
+            logging.info(f"Received last task for provider {provider}")
+
+        queue.task_done()
 
 
 @app.cli.command("generate_sitemap")

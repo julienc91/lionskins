@@ -5,39 +5,30 @@ import os
 import requests
 from ratelimit import limits, sleep_and_retry
 
-from models import Apps, Providers
+from models import Providers
 from models.enums import Currencies
-from providers.abstract_provider import AbstractProvider
+from providers.abstract_provider import AbstractProvider, TaskTypes
 from providers.exceptions import UnfinishedJob
 from utils import CurrencyConverter
 
 
 class Client(AbstractProvider):
-
     provider = Providers.skinbaron
     base_url = "https://api.skinbaron.de/"
-
-    @staticmethod
-    def get_parser(app):
-        if app == Apps.csgo:
-            from providers.parsers.csgo import Parser
-
-            return Parser
-        raise NotImplementedError
 
     @sleep_and_retry
     @limits(calls=1, period=10)
     def __get(self, method, params=None):
         params = params or {}
         params["apikey"] = os.environ["SKINBARON_API_KEY"]
-        params["appId"] = self.parser.app_id
+        params["appId"] = 730
         return requests.post(
             self.base_url + method,
             json=params,
             headers={"Content-Type": "application/json", "X-Requested-With": "XMLHttpRequest"},
         )
 
-    def get_prices(self):
+    def get_tasks(self):
         result = self.__get("GetPriceList")
         if result.status_code >= 500:
             raise UnfinishedJob
@@ -48,7 +39,6 @@ class Client(AbstractProvider):
             if item_price <= 0:
                 continue
 
-            skin = None
             item_name = row.get("marketHashName")
             if item_name and "StatTrak™ " in item_name and not row.get("statTrak"):
                 # fix api inconsistency
@@ -57,13 +47,5 @@ class Client(AbstractProvider):
                 # fix api inconsistency
                 item_name = item_name.replace("Souvenir ", "")
 
-            if item_name:
-                skin = self.parser.get_skin_from_item_name(item_name)
-            if skin and skin.souvenir and not row.get("souvenir"):
-                continue
-            elif skin and skin.stat_trak and not row.get("statTrak"):
-                continue
-
-            if skin:
-                item_price = CurrencyConverter.convert(item_price, Currencies.eur, Currencies.usd)
-                yield skin, item_price
+            item_price = CurrencyConverter.convert(item_price, Currencies.eur, Currencies.usd)
+            yield TaskTypes.ADD_PRICE, item_name, item_price, None

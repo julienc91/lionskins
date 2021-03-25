@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
 
 from abc import abstractmethod
+from enum import Enum
+
+
+class TaskTypes(Enum):
+    ADD_PRICE = "add_price"
+    REMOVE_PRICES = "remove_prices"
+    LAST_TASK = "last_task"
 
 
 class AbstractProvider:
     def __init__(self, app):
         self.app = app
-        self.parser = self.get_parser(app)
-
-    @staticmethod
-    @abstractmethod
-    def get_parser(app):
-        pass
 
     @property
     @abstractmethod
@@ -19,5 +20,5 @@ class AbstractProvider:
         pass
 
     @abstractmethod
-    def get_prices(self):
-        pass
+    def get_tasks(self):
+        raise NotImplementedError
