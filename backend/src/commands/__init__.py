@@ -55,8 +55,8 @@ def _fetch_providers(daemon: bool, provider: Optional[Providers] = None):
                 FetchProviders(p, queue).run()
             except Exception as e:
                 logging.exception(e)
+            queue.put((TaskTypes.LAST_TASK, p))
             if not daemon:
-                queue.put((TaskTypes.LAST_TASK, p))
                 return
             time.sleep(3600)
 
@@ -66,7 +66,7 @@ def _fetch_providers(daemon: bool, provider: Optional[Providers] = None):
         thread.start()
 
     # process all the price updates in the main thread, to avoid concurrency issues
-    while remaining_workers:
+    while daemon or remaining_workers > 0:
         task_type, args = queue.get()
         if task_type == TaskTypes.ADD_PRICE:
             app_, provider, item_name, price, kwargs = args
