@@ -23,7 +23,8 @@ const Categories = Object.freeze({
   smgs: 'csgo.categories.smgs',
   rifles: 'csgo.categories.rifles',
   knives: 'csgo.categories.knives',
-  gloves: 'csgo.categories.gloves'
+  gloves: 'csgo.categories.gloves',
+  agents: 'csgo.categories.agents'
 })
 
 const Weapons = Object.freeze({
@@ -92,7 +93,9 @@ const Weapons = Object.freeze({
   hydra_gloves: 'csgo.weapons.hydra_gloves',
   moto_gloves: 'csgo.weapons.moto_gloves',
   specialist_gloves: 'csgo.weapons.specialist_gloves',
-  sport_gloves: 'csgo.weapons.sport_gloves'
+  sport_gloves: 'csgo.weapons.sport_gloves',
+
+  agent: 'csgo.weapons.agent'
 })
 
 const WeaponsByCategories = Object.freeze({
@@ -119,7 +122,8 @@ const WeaponsByCategories = Object.freeze({
   gloves: [
     'bloodhound_gloves', 'broken_fang_gloves', 'driver_gloves', 'hand_wraps', 'hydra_gloves',
     'moto_gloves', 'specialist_gloves', 'sport_gloves'
-  ]
+  ],
+  agents: []
 })
 
 export {

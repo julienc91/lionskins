@@ -60,6 +60,8 @@ class TypeCSGOSkin(BaseTypeSkin):
             quality = self["quality"]
         except KeyError:
             return None
+        if quality is None:
+            return None
         return models.csgo.enums.Qualities.from_int(int(quality))
 
     def resolve_weapon(self, *args, **kwargs):

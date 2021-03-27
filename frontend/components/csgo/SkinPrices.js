@@ -13,9 +13,12 @@ const SkinPrices = ({ skins, souvenir, statTrak }) => {
   const { currency } = useSettings()
 
   const skin = skins[0]
+  const isAgent = skin.weapon.category === 'agents'
 
   let qualities
-  if (skin.quality === 'vanilla') {
+  if (isAgent) {
+    qualities = ['default']
+  } else if (skin.quality === 'vanilla') {
     qualities = ['vanilla']
   } else {
     qualities = Object.keys(Qualities).filter(quality => quality !== 'vanilla')
@@ -25,7 +28,7 @@ const SkinPrices = ({ skins, souvenir, statTrak }) => {
     <Table unstackable celled singleLine textAlign='center'>
       <Table.Header>
         <Table.Row>
-          <Table.HeaderCell>{t('csgo.skin.quality')}</Table.HeaderCell>
+          {!isAgent && <Table.HeaderCell>{t('csgo.skin.quality')}</Table.HeaderCell>}
           {Object.keys(Providers).map(provider =>
             <Table.HeaderCell key={provider}>
               {getIconFromProvider(provider)}
@@ -37,11 +40,16 @@ const SkinPrices = ({ skins, souvenir, statTrak }) => {
 
       <Table.Body>
         {qualities.map(quality => {
-          const skin = skins.find(
-            skin => skin.statTrak === statTrak &&
-            skin.souvenir === souvenir &&
-            skin.quality === quality
-          )
+          let skin
+          if (isAgent) {
+            skin = skins[0]
+          } else {
+            skin = skins.find(
+              skin => skin.statTrak === statTrak &&
+                skin.souvenir === souvenir &&
+                skin.quality === quality
+            )
+          }
           const prices = skin ? skin.prices : []
           const flatPrices = Object.keys(Providers).filter(provider => prices[provider]).map(provider => prices[provider])
           const minPrice = Math.min(...flatPrices)
@@ -49,7 +57,7 @@ const SkinPrices = ({ skins, souvenir, statTrak }) => {
 
           return (
             <Table.Row key={quality}>
-              <Table.Cell>{t(Qualities[quality])}</Table.Cell>
+              {!isAgent && <Table.Cell>{t(Qualities[quality])}</Table.Cell>}
               {Object.keys(Providers).map(provider => {
                 const price = prices[provider]
                 const url = skin ? getSkinUrlFromProvider(skin, provider) : ''
@@ -79,14 +87,18 @@ SkinPrices.propTypes = {
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       quality: PropTypes.string,
-      statTrak: PropTypes.bool.isRequired,
-      souvenir: PropTypes.bool.isRequired,
+      statTrak: PropTypes.bool,
+      souvenir: PropTypes.bool,
       prices: PropTypes.shape({
         bitskins: PropTypes.number,
         csmoney: PropTypes.number,
         skinbaron: PropTypes.number,
         skinport: PropTypes.number,
         steam: PropTypes.number
+      }),
+      weapon: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        category: PropTypes.string.isRequired
       })
     })
   ).isRequired,

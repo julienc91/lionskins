@@ -32,9 +32,9 @@ class Skin(BaseSkin):
 
     weapon = db.EnumField(Weapons, required=True)
 
-    stat_trak = db.BooleanField(required=True)
-    souvenir = db.BooleanField(required=True)
-    quality = QualityField(required=True)
+    stat_trak = db.BooleanField()
+    souvenir = db.BooleanField()
+    quality = QualityField()
     rarity = db.EnumField(Rarities)
     market_hash_name = db.StringField()
 
@@ -60,8 +60,6 @@ class Skin(BaseSkin):
 
     @property
     def fullname(self):
-        if not self.market_hash_name:
-            return self._get_market_hash_name()
         return self.market_hash_name
 
     def _get_market_hash_name(self) -> str:
@@ -71,6 +69,9 @@ class Skin(BaseSkin):
         return res
 
     def _get_partial_market_hash_name(self) -> str:
+        if self.weapon.category == Categories.agents:
+            return self.name
+
         res = ""
         if self.weapon.category == Categories.knives:
             res += "★ "

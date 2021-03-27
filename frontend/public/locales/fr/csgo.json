@@ -6,7 +6,8 @@
       "smgs": "PMs",
       "rifles": "Fusils",
       "knives": "Couteaux",
-      "gloves": "Gants"
+      "gloves": "Gants",
+      "agents": "Agents"
     },
     "filters": {
       "all": "Tout",
@@ -14,7 +15,7 @@
       "none": "Aucun",
       "stat_trak": "StatTrak",
       "souvenir": "Souvenir",
-      "weapon_label": "Arme",
+      "weapon_label": "Categorie",
       "quality_label": "Qualité",
       "rarity_label": "Rareté",
       "stat_trak_souvenir_label": "StatTrak/Souvenir",
@@ -64,7 +65,9 @@
       "vanilla": "Vanilla",
       "stat_trak": "StatTrak",
       "souvenir": "Souvenir",
-      "price_range": "Gamme de prix"
+      "type": "Type",
+      "price_range": "Gamme de prix",
+      "prices": "Prix"
     },
     "skin_list": {
       "page_title": "LionSkins - Skins pour Counter-Strike: Global Offensive",
@@ -138,7 +141,8 @@
       "hydra_gloves": "Gants Hydra",
       "moto_gloves": "Gants de moto",
       "specialist_gloves": "Gants de spécialiste",
-      "sport_gloves": "Gants de sport"
+      "sport_gloves": "Gants de sport",
+      "agent": "Agent"
     }
   }
 }

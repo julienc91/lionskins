@@ -13,8 +13,13 @@ import useSettings from '../SettingsProvider'
 const Skin = ({ skin }) => {
   const { t } = useTranslation('csgo')
   const internalUrl = getSkinInternalUrl(skin)
-  const skinName = skin.slug === 'vanilla' ? t('csgo.qualities.vanilla') : skin.name
-  const alt = `${skin.weapon.name} - ${skinName}`
+  let skinName
+  if (skin.weapon.category === 'agents') {
+    skinName = skin.name
+  } else {
+    skinName = t(Weapons[skin.weapon.name]) + ' - '
+    skinName += (skin.slug === 'vanilla') ? t('csgo.qualities.vanilla') : skin.name
+  }
   const { currency } = useSettings()
 
   return (
@@ -22,7 +27,7 @@ const Skin = ({ skin }) => {
       <Link href={internalUrl}>
         <a>
           <Image
-            alt={alt}
+            alt={skinName}
             imageSrc={skin.imageUrl}
             loaderSrc={`/images/csgo/weapons/default_skin_${skin.weapon.name}.png`}
             className='ui image'
@@ -37,7 +42,7 @@ const Skin = ({ skin }) => {
       )}
       <Card.Content>
         <Card.Header>
-          <Link href={internalUrl}><a>{t(Weapons[skin.weapon.name])} - {skinName}</a></Link>
+          <Link href={internalUrl}><a>{skinName}</a></Link>
         </Card.Header>
         <Card.Meta>
           {t(Qualities[skin.quality])}
@@ -72,10 +77,11 @@ Skin.propTypes = {
     imageUrl: PropTypes.string,
     quality: PropTypes.string,
     rarity: PropTypes.string,
-    statTrak: PropTypes.bool.isRequired,
-    souvenir: PropTypes.bool.isRequired,
+    statTrak: PropTypes.bool,
+    souvenir: PropTypes.bool,
     weapon: PropTypes.shape({
-      name: PropTypes.string.isRequired
+      name: PropTypes.string.isRequired,
+      category: PropTypes.string.isRequired
     }),
     prices: PropTypes.shape({
       bitskins: PropTypes.number,

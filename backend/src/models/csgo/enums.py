@@ -110,6 +110,7 @@ class Categories(enum.Enum):
     rifles = "Rifles"
     knives = "Knives"
     gloves = "Gloves"
+    agents = "Agents"
 
 
 class Weapons(enum.Enum):
@@ -180,6 +181,8 @@ class Weapons(enum.Enum):
     specialist_gloves = "Specialist Gloves"
     sport_gloves = "Sport Gloves"
 
+    agent = "Agent"
+
     @classmethod
     def by_category(cls, category: Categories) -> list["Weapons"]:
         return _categories_to_weapons[category]
@@ -248,6 +251,7 @@ _categories_to_weapons = {
         Weapons.specialist_gloves,
         Weapons.sport_gloves,
     ],
+    Categories.agents: [Weapons.agent],
 }
 
 _weapon_to_category = {weapon: category for category, weapons in _categories_to_weapons.items() for weapon in weapons}

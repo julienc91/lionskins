@@ -37,7 +37,7 @@ class TypePrices(graphene.ObjectType):
         if res < 0:
             return None
 
-        currency = args.get("currency") or models.enums.Currencies.usd.value
+        currency = info.variable_values.get("currency") or models.enums.Currencies.usd.value
         currency = models.enums.Currencies(currency)
         if currency != models.enums.Currencies.usd:
             res = CurrencyConverter.convert(res, models.enums.Currencies.usd, currency)
