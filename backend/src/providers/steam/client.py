@@ -63,7 +63,7 @@ class Client(AbstractProvider):
 
             result = result.json()["results"]
             if not result:
-                return
+                raise UnfinishedJob
 
             for row in result:
                 item_name = row["hash_name"]
@@ -84,6 +84,9 @@ class Client(AbstractProvider):
             start += count
             if unfinished_job:
                 raise UnfinishedJob
+
+            if len(result) < count:
+                return
 
     def get_inventory(self, steam_id):
         res = requests.get(f"https://steamcommunity.com/inventory/{steam_id}/730/2", {"l": "english", "count": 5000})
