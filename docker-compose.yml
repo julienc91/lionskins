@@ -3,6 +3,10 @@ services:
 
   db:
     image: "mongo:4.4"
+    ports:
+      - "127.0.0.1:27017:27017"
+    env_file:
+      - db/.env.local
     volumes:
       - "dbdata:/data/db"
     networks:
@@ -33,7 +37,7 @@ services:
     command: ./backoffice
 
   nginx:
-    image: "nginx:1.15"
+    image: "nginx:1"
     ports:
       - "127.0.0.1:10080:80"
     volumes:
