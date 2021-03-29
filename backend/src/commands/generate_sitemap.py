@@ -5,6 +5,7 @@ import os
 from slugify import slugify
 
 from models.csgo import Skin
+from models.csgo.enums import Types
 from utils.data import get_data_directory
 
 
@@ -33,7 +34,10 @@ class GenerateSitemap:
         all_skins = Skin.objects.all()
         already_done = set()
         for skin in all_skins:
-            weapon_slug = slugify(skin.weapon.value)
+            if skin.type == Types.agents:
+                weapon_slug = "agents"
+            else:
+                weapon_slug = slugify(skin.weapon.value)
             url = f"counter-strike-global-offensive/{weapon_slug}/{skin.slug}"
             row = [url, "daily", 0.7]
             if url in already_done:

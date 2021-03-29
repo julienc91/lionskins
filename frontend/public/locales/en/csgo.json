@@ -80,6 +80,9 @@
       "subtitle": "Browse the inventory of the best players",
       "disclaimer": "Teams shown here are the top-30 teams from HLTV's weekly ranking. Data provided by <0>globalranks.gg</0> and <1>Liquipedia.net</1>."
     },
+    "types": {
+      "agents": "Agent"
+    },
     "weapons": {
       "glock_18": "Glock-18",
       "usp_s": "USP-S",
@@ -141,8 +144,7 @@
       "hydra_gloves": "Hydra Gloves",
       "moto_gloves": "Moto Gloves",
       "specialist_gloves": "Specialist Gloves",
-      "sport_gloves": "Sport Gloves",
-      "agent": "Agent"
+      "sport_gloves": "Sport Gloves"
     }
   }
 }

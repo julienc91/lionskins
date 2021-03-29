@@ -4,7 +4,7 @@ import logging
 from datetime import datetime, timedelta
 
 from models.csgo import Skin
-from models.csgo.enums import Categories, Qualities
+from models.csgo.enums import Qualities, WeaponCategories
 
 languages = ["en", "fr"]
 
@@ -26,9 +26,9 @@ class SanityCheck:
 
             if not skin.quality:
                 logging.warning(f"Missing quality on skin {skin}")
-            if not skin.rarity and skin.weapon.category is not Categories.gloves:
+            if not skin.rarity and skin.weapon.category is not WeaponCategories.gloves:
                 logging.warning(f"Missing rarity on skin {skin}")
-            elif skin.rarity and skin.weapon.category is Categories.gloves:
+            elif skin.rarity and skin.weapon.category is WeaponCategories.gloves:
                 logging.warning(f"Rarity is set on glove skin {skin}")
             if not skin.image_url:
                 logging.warning(f"Missing image on skin {skin}")

@@ -16,10 +16,11 @@ import { Qualities, Weapons } from '../../../utils/csgo/enums'
 import Image from '../../../components/Image'
 
 const getSkinQuery = gql`
-  query ($weapon: CSGOWeapons, $slug: String, $currency: TypeCurrency, $category: CSGOCategories,
+  query ($weapon: CSGOWeapons, $slug: String, $currency: TypeCurrency, $category: CSGOCategories, $type: CSGOTypes,
          $quality: CSGOQualities, $rarity: CSGORarities, $statTrak: Boolean, $souvenir: Boolean,
          $search: String) {
-    csgo (weapon: $weapon, slug: $slug, category: $category, quality: $quality, rarity: $rarity, statTrak: $statTrak, souvenir: $souvenir, search: $search) {
+    csgo (weapon: $weapon, slug: $slug, category: $category, type: $type, quality: $quality, rarity: $rarity,
+          statTrak: $statTrak, souvenir: $souvenir, search: $search) {
       edges {
         node {
           id
@@ -39,6 +40,7 @@ const getSkinQuery = gql`
             name
             category
           }
+          type
           prices (currency: $currency) {
             bitskins
             csmoney

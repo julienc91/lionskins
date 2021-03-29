@@ -28,6 +28,7 @@ export const getInventoryQuery = gql`
             name
             category
           }
+          type
           prices (currency: $currency) {
             bitskins
             csmoney

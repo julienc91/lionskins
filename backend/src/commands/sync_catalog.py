@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from tqdm import tqdm
 
 from models.csgo import Skin
-from models.csgo.enums import Categories, Rarities, Weapons
+from models.csgo.enums import Rarities, WeaponCategories, Weapons
 
 
 class SyncCatalog:
@@ -118,14 +118,14 @@ class SyncCatalog:
             name = item["name"][languages[default_language]]
 
             update = {}
-            if weapon.category not in [Categories.gloves, Categories.knives]:
+            if weapon.category not in [WeaponCategories.gloves, WeaponCategories.knives]:
                 mapping = (
                     cls.map_csgo_rarity_to_enum_buffed
                     if weapon in cls.weapons_with_buffed_rarity
                     else cls.map_csgo_rarity_to_enum_default
                 )
                 update["set__rarity"] = mapping[item["rarity"]]
-            elif weapon.category is Categories.knives:
+            elif weapon.category is WeaponCategories.knives:
                 update["set__rarity"] = Rarities.covert
 
             descriptions = {}

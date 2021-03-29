@@ -23,7 +23,12 @@ class CSGORarities(graphene.Enum):
 
 class CSGOCategories(graphene.Enum):
     class Meta:
-        enum = models.csgo.enums.Categories
+        enum = models.csgo.enums.WeaponCategories
+
+
+class CSGOTypes(graphene.Enum):
+    class Meta:
+        enum = models.csgo.enums.Types
 
 
 class CSGOCollections(graphene.Enum):
@@ -48,6 +53,7 @@ class TypeCSGOSkin(BaseTypeSkin):
     model = models.csgo.Skin
 
     weapon = graphene.Field(TypeCSGOWeapon)
+    type = CSGOTypes()
     stat_trak = graphene.Boolean()
     souvenir = graphene.Boolean()
     quality = CSGOQualities()
@@ -65,6 +71,8 @@ class TypeCSGOSkin(BaseTypeSkin):
         return models.csgo.enums.Qualities.from_int(int(quality))
 
     def resolve_weapon(self, *args, **kwargs):
+        if not self["weapon"]:
+            return None
         weapon = models.csgo.enums.Weapons(self["weapon"])
         return TypeCSGOWeapon(name=weapon.value, category=weapon.category.value)
 

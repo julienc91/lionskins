@@ -4,12 +4,12 @@ import PropTypes from 'prop-types'
 import { Icon, Table } from 'semantic-ui-react'
 import useSettings from '../SettingsProvider'
 import { Providers } from '../../utils/enums'
-import { Categories, Rarities } from '../../utils/csgo/enums'
+import { Rarities } from '../../utils/csgo/enums'
 
 const SkinSummary = ({ skins }) => {
   const { t } = useTranslation('csgo')
   const { currency } = useSettings()
-  const isAgent = skins[0].weapon.category === 'agents'
+  const isAgent = skins[0].type === 'agents'
   const hasRarity = skins.find(s => s.rarity)
   const rarity = hasRarity ? t(Rarities[hasRarity.rarity]) : null
   const hasStatTrak = skins.some(s => s.statTrak)
@@ -41,7 +41,7 @@ const SkinSummary = ({ skins }) => {
 
       <Table.Body>
         <Table.Row>
-          {isAgent && <Table.Cell>{t(Categories[skins[0].weapon.category])}</Table.Cell>}
+          {isAgent && <Table.Cell>{t('csgo.types.agents')}</Table.Cell>}
           {rarity && <Table.Cell>{rarity}</Table.Cell>}
           {!isAgent && (<Table.Cell positive={hasStatTrak}>
             <Icon name={hasStatTrak ? 'check' : 'x'} />
@@ -73,6 +73,7 @@ SkinSummary.propTypes = {
         skinport: PropTypes.number,
         steam: PropTypes.number
       }),
+      type: PropTypes.string.isRequired,
       weapon: PropTypes.shape({
         name: PropTypes.string.isRequired,
         category: PropTypes.string.isRequired

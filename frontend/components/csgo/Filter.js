@@ -3,11 +3,11 @@ import { useTranslation } from 'next-i18next'
 import PropTypes from 'prop-types'
 import { Checkbox, Form, Select } from 'semantic-ui-react'
 import SearchInput from '../SearchInput'
-import { WeaponsByCategories, Rarities, Qualities, Weapons, Categories } from '../../utils/csgo/enums'
+import { WeaponsByCategories, Rarities, Qualities, Weapons, WeaponCategories } from '../../utils/csgo/enums'
 
 const Filter = ({ filters, onFilterChanged }) => {
   const { t } = useTranslation('csgo')
-  const { category, group, quality, rarity, search, souvenir, statTrak, weapon } = filters
+  const { category, group, quality, rarity, search, souvenir, statTrak, type, weapon } = filters
 
   const getChoicesFromEnum = enum_ => {
     const res = [{ key: 'all', text: t('csgo.filters.all'), value: 'all' }]
@@ -24,13 +24,14 @@ const Filter = ({ filters, onFilterChanged }) => {
   const getChoicesForWeapons = () => {
     const res = [{ key: 'all', text: t('csgo.filters.all'), value: 'all' }]
     Object.keys(WeaponsByCategories).map(category => {
-      res.push({ key: `C${category}`, text: t(Categories[category]), value: `C${category}` })
+      res.push({ key: `C${category}`, text: t(WeaponCategories[category]), value: `C${category}` })
       WeaponsByCategories[category].map(weapon => {
         res.push({ key: `W${weapon}`, text: t(Weapons[weapon]), value: `W${weapon}`, icon: 'caret right' })
         return null
       })
       return null
     })
+    res.push({ key: `Tagents`, text: t('csgo.types.agents'), value: `Tagents` })
     return res
   }
 
@@ -39,6 +40,8 @@ const Filter = ({ filters, onFilterChanged }) => {
     defaultWeaponValue = `W${weapon}`
   } else if (category) {
     defaultWeaponValue = `C${category}`
+  } else if (type) {
+    defaultWeaponValue = `T${type}`
   }
 
   let defaultStatTrakValue = 'all'
@@ -60,11 +63,13 @@ const Filter = ({ filters, onFilterChanged }) => {
           value={defaultWeaponValue}
           onChange={(e, { value }) => {
             if (value === 'all') {
-              onFilterChanged({ weapon: null, category: null })
+              onFilterChanged({ weapon: null, category: null, type: null })
             } else if (value[0] === 'W') {
-              onFilterChanged({ weapon: value.substring(1), category: null })
+              onFilterChanged({ weapon: value.substring(1), category: null, type: null })
             } else if (value[0] === 'C') {
-              onFilterChanged({ weapon: null, category: value.substring(1) })
+              onFilterChanged({ weapon: null, category: value.substring(1), type: null })
+            } else if (value[0] === 'T') {
+              onFilterChanged({ weapon: null, category: null, type: value.substring(1) })
             }
           }}
           search
@@ -126,6 +131,7 @@ Filter.propTypes = {
     quality: PropTypes.string,
     weapon: PropTypes.string,
     category: PropTypes.string,
+    type: PropTypes.string,
     group: PropTypes.bool
   }),
   onFilterChanged: PropTypes.func.isRequired

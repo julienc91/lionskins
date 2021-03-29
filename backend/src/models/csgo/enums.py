@@ -103,14 +103,18 @@ class Rarities(enum.Enum):
     contraband = "Contraband"
 
 
-class Categories(enum.Enum):
+class Types(enum.Enum):
+    weapons = "Weapons"
+    agents = "Agents"
+
+
+class WeaponCategories(enum.Enum):
     pistols = "Pistols"
     heavy = "Heavy"
     smgs = "SMGs"
     rifles = "Rifles"
     knives = "Knives"
     gloves = "Gloves"
-    agents = "Agents"
 
 
 class Weapons(enum.Enum):
@@ -181,19 +185,17 @@ class Weapons(enum.Enum):
     specialist_gloves = "Specialist Gloves"
     sport_gloves = "Sport Gloves"
 
-    agent = "Agent"
-
     @classmethod
-    def by_category(cls, category: Categories) -> list["Weapons"]:
+    def by_category(cls, category: WeaponCategories) -> list["Weapons"]:
         return _categories_to_weapons[category]
 
     @property
-    def category(self) -> Categories:
+    def category(self) -> WeaponCategories:
         return _weapon_to_category[self]
 
 
 _categories_to_weapons = {
-    Categories.pistols: [
+    WeaponCategories.pistols: [
         Weapons.glock_18,
         Weapons.usp_s,
         Weapons.p2000,
@@ -205,9 +207,17 @@ _categories_to_weapons = {
         Weapons.desert_eagle,
         Weapons.r8_revolver,
     ],
-    Categories.heavy: [Weapons.sawed_off, Weapons.mag_7, Weapons.nova, Weapons.xm1014, Weapons.m249, Weapons.negev],
-    Categories.smgs: [Weapons.mac_10, Weapons.mp9, Weapons.pp_bizon, Weapons.mp7, Weapons.mp5_sd, Weapons.ump_45, Weapons.p90],
-    Categories.rifles: [
+    WeaponCategories.heavy: [Weapons.sawed_off, Weapons.mag_7, Weapons.nova, Weapons.xm1014, Weapons.m249, Weapons.negev],
+    WeaponCategories.smgs: [
+        Weapons.mac_10,
+        Weapons.mp9,
+        Weapons.pp_bizon,
+        Weapons.mp7,
+        Weapons.mp5_sd,
+        Weapons.ump_45,
+        Weapons.p90,
+    ],
+    WeaponCategories.rifles: [
         Weapons.galil_ar,
         Weapons.famas,
         Weapons.ak_47,
@@ -220,7 +230,7 @@ _categories_to_weapons = {
         Weapons.ssg_08,
         Weapons.awp,
     ],
-    Categories.knives: [
+    WeaponCategories.knives: [
         Weapons.bayonet,
         Weapons.bowie_knife,
         Weapons.butterfly_knife,
@@ -241,7 +251,7 @@ _categories_to_weapons = {
         Weapons.talon_knife,
         Weapons.ursus_knife,
     ],
-    Categories.gloves: [
+    WeaponCategories.gloves: [
         Weapons.bloodhound_gloves,
         Weapons.broken_fang_gloves,
         Weapons.driver_gloves,
@@ -251,7 +261,6 @@ _categories_to_weapons = {
         Weapons.specialist_gloves,
         Weapons.sport_gloves,
     ],
-    Categories.agents: [Weapons.agent],
 }
 
 _weapon_to_category = {weapon: category for category, weapons in _categories_to_weapons.items() for weapon in weapons}

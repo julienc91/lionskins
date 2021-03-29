@@ -6,7 +6,7 @@ import pytest
 
 from commands.sync_catalog import SyncCatalog
 from models.csgo import Skin
-from models.csgo.enums import Categories, Qualities, Rarities, Weapons
+from models.csgo.enums import Qualities, Rarities, WeaponCategories, Weapons
 from tests.factories import SkinFactory
 
 
@@ -41,9 +41,9 @@ def test_sync_catalog(skins):
             assert skin.description["en"]
             assert skin.description["fr"]
 
-            if skin.weapon.category is Categories.gloves:
+            if skin.weapon.category is WeaponCategories.gloves:
                 assert skin.rarity is None
-            elif skin.weapon.category is Categories.knives:
+            elif skin.weapon.category is WeaponCategories.knives:
                 assert skin.rarity is Rarities.covert
             else:
                 assert skin.rarity

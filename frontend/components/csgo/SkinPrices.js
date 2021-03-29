@@ -13,7 +13,7 @@ const SkinPrices = ({ skins, souvenir, statTrak }) => {
   const { currency } = useSettings()
 
   const skin = skins[0]
-  const isAgent = skin.weapon.category === 'agents'
+  const isAgent = skin.type === 'agents'
 
   let qualities
   if (isAgent) {
@@ -96,6 +96,7 @@ SkinPrices.propTypes = {
         skinport: PropTypes.number,
         steam: PropTypes.number
       }),
+      type: PropTypes.string.isRequired,
       weapon: PropTypes.shape({
         name: PropTypes.string.isRequired,
         category: PropTypes.string.isRequired

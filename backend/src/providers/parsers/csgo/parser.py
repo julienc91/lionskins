@@ -5,7 +5,7 @@ from typing import Optional
 
 from models import Apps
 from models.csgo import Skin
-from models.csgo.enums import Categories, Qualities, Rarities, Weapons
+from models.csgo.enums import Qualities, Rarities, Types, WeaponCategories, Weapons
 
 
 class Parser:
@@ -27,29 +27,6 @@ class Parser:
             if r in rarity:
                 return agent_rarities[r]
         raise ValueError
-
-    @classmethod
-    def _parse_agent(cls, weapon: str) -> Weapons:
-        agents_families = {
-            "Elite Crew",
-            "FBI",
-            "FBI HRT",
-            "FBI Sniper",
-            "FBI SWAT",
-            "KSK",
-            "NSWC SEAL",
-            "Phoenix",
-            "Sabre",
-            "Sabre Footsoldier",
-            "SAS",
-            "SWAT",
-            "TACP Cavalry",
-            "The professionals",
-            "USAF TACP",
-        }
-        if weapon in agents_families:
-            return Weapons.agent
-        raise ValueError(weapon)
 
     @classmethod
     def _validate_item_name(cls, item_name: str) -> bool:
@@ -77,12 +54,19 @@ class Parser:
             except (ValueError, AttributeError):
                 return None
             skin_name = right_split.replace(f"({quality.value})", "").strip()
-        elif weapon.category is not Categories.knives:
+        elif weapon.category is not WeaponCategories.knives:
             return None
         else:
             skin_name = "Vanilla"
             quality = Qualities.vanilla
-        return {"name": skin_name, "weapon": weapon, "quality": quality, "stat_trak": stat_trak, "souvenir": souvenir}
+        return {
+            "name": skin_name,
+            "type": Types.weapons,
+            "weapon": weapon,
+            "quality": quality,
+            "stat_trak": stat_trak,
+            "souvenir": souvenir,
+        }
 
     @classmethod
     def _parse_agent_item(cls, item_name: str) -> Optional[dict]:
@@ -109,7 +93,7 @@ class Parser:
         }
         if right_split.strip() not in agents_families:
             return None
-        return {"name": item_name, "weapon": Weapons.agent}
+        return {"name": item_name, "type": Types.agents}
 
     @classmethod
     def _parse_item_name(cls, item_name: str) -> Optional[dict]:

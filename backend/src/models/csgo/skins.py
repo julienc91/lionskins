@@ -1,7 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from init import db
-from models.csgo.enums import Categories, Collections, Qualities, Rarities, Weapons
+from models.csgo.enums import (
+    Collections,
+    Qualities,
+    Rarities,
+    Types,
+    WeaponCategories,
+    Weapons,
+)
 from models.enums import Apps
 from models.skins import Skin as BaseSkin
 
@@ -30,7 +37,8 @@ class Skin(BaseSkin):
     def __str__(self) -> str:
         return f"<Skin {self.id} - {self.market_hash_name}>"
 
-    weapon = db.EnumField(Weapons, required=True)
+    type = db.EnumField(Types)
+    weapon = db.EnumField(Weapons)
 
     stat_trak = db.BooleanField()
     souvenir = db.BooleanField()
@@ -43,6 +51,7 @@ class Skin(BaseSkin):
 
     meta = {
         "indexes": [
+            "type",
             "weapon",
             "stat_trak",
             "souvenir",
@@ -69,11 +78,11 @@ class Skin(BaseSkin):
         return res
 
     def _get_partial_market_hash_name(self) -> str:
-        if self.weapon.category == Categories.agents:
+        if self.type == Types.agents:
             return self.name
 
         res = ""
-        if self.weapon.category == Categories.knives:
+        if self.weapon.category == WeaponCategories.knives:
             res += "★ "
         if self.souvenir:
             res += "Souvenir "

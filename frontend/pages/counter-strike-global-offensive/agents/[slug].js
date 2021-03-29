@@ -11,14 +11,14 @@ import useSettings from '../../../components/SettingsProvider'
 import SkinSummary from '../../../components/csgo/SkinSummary'
 import SkinPrices from '../../../components/csgo/SkinPrices'
 import { Providers } from '../../../utils/enums'
-import { Weapons } from '../../../utils/csgo/enums'
 import Image from '../../../components/Image'
 
 const getSkinQuery = gql`
-  query ($weapon: CSGOWeapons, $slug: String, $currency: TypeCurrency, $category: CSGOCategories,
+  query ($weapon: CSGOWeapons, $slug: String, $currency: TypeCurrency, $category: CSGOCategories, $type: CSGOTypes,
          $quality: CSGOQualities, $rarity: CSGORarities, $statTrak: Boolean, $souvenir: Boolean,
          $search: String) {
-    csgo (weapon: $weapon, slug: $slug, category: $category, quality: $quality, rarity: $rarity, statTrak: $statTrak, souvenir: $souvenir, search: $search) {
+    csgo (weapon: $weapon, slug: $slug, category: $category, type: $type, quality: $quality, rarity: $rarity,
+          statTrak: $statTrak, souvenir: $souvenir, search: $search) {
       edges {
         node {
           id
@@ -34,6 +34,7 @@ const getSkinQuery = gql`
             en
             fr
           }
+          type
           weapon {
             name
             category
@@ -53,7 +54,7 @@ const getSkinQuery = gql`
 const SkinPage = ({ slug }) => {
   const { t } = useTranslation('csgo')
   const { currency } = useSettings()
-  const { data, loading } = useQuery(getSkinQuery, { variables: { currency, category: 'agents', slug }, notifyOnNetworkStatusChange: true })
+  const { data, loading } = useQuery(getSkinQuery, { variables: { currency, type: 'agents', slug }, notifyOnNetworkStatusChange: true })
 
   if (!loading && (!data || !data.csgo.edges.length)) {
     return <Page404 />
@@ -88,7 +89,7 @@ const SkinPage = ({ slug }) => {
 
       <Breadcrumb items={[
         { name: 'Counter-Strike: Global Offensive', link: '/counter-strike-global-offensive/' },
-        { name: t(Weapons.agent) },
+        { name: t('csgo.types.agents') },
         { name: skin.name }
       ]}
       />

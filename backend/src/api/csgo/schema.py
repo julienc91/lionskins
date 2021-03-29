@@ -6,6 +6,7 @@ from api.csgo.types import (
     CSGOCategories,
     CSGOQualities,
     CSGORarities,
+    CSGOTypes,
     CSGOWeapons,
     SkinConnection,
     TypeCSGOSkin,
@@ -50,6 +51,7 @@ class Query(graphene.ObjectType):
         rarity=CSGORarities(),
         weapon=CSGOWeapons(),
         category=CSGOCategories(),
+        type=CSGOTypes(),
         group=graphene.Boolean(),
     )
 
@@ -70,9 +72,11 @@ class Query(graphene.ObjectType):
         if args.get("weapon"):
             filters["weapon"] = csgo_models.enums.Weapons(args["weapon"])
         elif args.get("category"):
-            category = csgo_models.enums.Categories(args["category"])
+            category = csgo_models.enums.WeaponCategories(args["category"])
             weapons = csgo_models.enums.Weapons.by_category(category)
             filters["weapon__in"] = weapons
+        elif args.get("type"):
+            filters["type"] = csgo_models.enums.Types(args["type"])
 
         if args.get("search"):
             search = " ".join(f'"{word}"' for word in args["search"].split())
@@ -86,6 +90,7 @@ class Query(graphene.ObjectType):
                     "id": {"$first": "$_id"},
                     "name": {"$first": "$name"},
                     "slug": {"$first": "$slug"},
+                    "type": {"$first": "$type"},
                     "weapon": {"$first": "$weapon"},
                     "stat_trak": {"$max": "$stat_trak"},
                     "souvenir": {"$max": "$souvenir"},
@@ -97,7 +102,7 @@ class Query(graphene.ObjectType):
                     "prices": {"$push": "$prices"},
                 }
             },
-            {"$sort": {"weapon": 1, "slug": 1, "souvenir": 1, "stat_trak": 1, "quality": 1}},
+            {"$sort": {"type": -1, "weapon": 1, "slug": 1, "souvenir": 1, "stat_trak": 1, "quality": 1}},
         ]
         if args.get("group"):
             pipeline[0]["$group"]["_id"] = {"weapon": "$weapon", "slug": "$slug"}

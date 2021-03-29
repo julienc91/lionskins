@@ -3,7 +3,7 @@
 import enum
 import urllib.parse
 
-from models.csgo.enums import Categories
+from models.csgo.enums import Types
 
 
 class Apps(enum.Enum):
@@ -58,7 +58,7 @@ class Providers(enum.Enum):
                     parameters["wf"] = skin.quality.to_int() - 1
             elif self == self.skinport:
                 base_url = "https://skinport.com/market/730"
-                if skin.weapon.category is Categories.agents:
+                if skin.type is Types.agents:
                     parameters = {"cat": "Agent", "search": skin.name.split("|")[0].strip()}
                 else:
                     parameters = {

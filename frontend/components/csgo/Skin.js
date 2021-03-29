@@ -14,11 +14,14 @@ const Skin = ({ skin }) => {
   const { t } = useTranslation('csgo')
   const internalUrl = getSkinInternalUrl(skin)
   let skinName
-  if (skin.weapon.category === 'agents') {
+  let defaultImage
+  if (skin.type === 'agents') {
     skinName = skin.name
+    defaultImage = 'agent'
   } else {
     skinName = t(Weapons[skin.weapon.name]) + ' - '
     skinName += (skin.slug === 'vanilla') ? t('csgo.qualities.vanilla') : skin.name
+    defaultImage = skin.weapon.name
   }
   const { currency } = useSettings()
 
@@ -29,7 +32,7 @@ const Skin = ({ skin }) => {
           <Image
             alt={skinName}
             imageSrc={skin.imageUrl}
-            loaderSrc={`/images/csgo/weapons/default_skin_${skin.weapon.name}.png`}
+            loaderSrc={`/images/csgo/weapons/default_skin_${defaultImage}.png`}
             className='ui image'
           />
         </a>
@@ -79,6 +82,7 @@ Skin.propTypes = {
     rarity: PropTypes.string,
     statTrak: PropTypes.bool,
     souvenir: PropTypes.bool,
+    type: PropTypes.string.isRequired,
     weapon: PropTypes.shape({
       name: PropTypes.string.isRequired,
       category: PropTypes.string.isRequired

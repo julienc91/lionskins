@@ -15,10 +15,10 @@ import Filter from '../../components/csgo/Filter'
 import Skin from '../../components/csgo/Skin'
 
 export const getSkinsQuery = gql`
-  query ($first: Int, $after: String, $weapon: CSGOWeapons, $category: CSGOCategories,
+  query ($first: Int, $after: String, $weapon: CSGOWeapons, $category: CSGOCategories, $type: CSGOTypes,
          $quality: CSGOQualities, $rarity: CSGORarities, $statTrak: Boolean, $souvenir: Boolean,
          $search: String, $currency: TypeCurrency, $slug: String, $group: Boolean) {
-    csgo (first: $first, after: $after, weapon: $weapon, category: $category,
+    csgo (first: $first, after: $after, weapon: $weapon, category: $category, type: $type,
           quality: $quality, rarity: $rarity, statTrak: $statTrak, souvenir: $souvenir,
           search: $search, slug: $slug, group: $group) {
       pageInfo {
@@ -39,6 +39,7 @@ export const getSkinsQuery = gql`
             name
             category
           }
+          type
           prices (currency: $currency) {
             bitskins
             csmoney
@@ -52,7 +53,7 @@ export const getSkinsQuery = gql`
   }`
 
 const defaultFilters = {
-  category: null, rarity: null, quality: null, search: '', souvenir: null, statTrak: null, weapon: null, group: true
+  category: null, rarity: null, quality: null, search: '', souvenir: null, statTrak: null, type: null, weapon: null, group: true
 }
 
 const getInitialFilters = query => {
