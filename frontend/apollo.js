@@ -36,7 +36,7 @@ export const client = new ApolloClient({
       },
       Query: {
         fields: {
-          csgo: relayStylePagination(['weapon', 'slug', 'category', 'quality', 'rarity', 'statTrak', 'souvenir', 'search', 'group']),
+          csgo: relayStylePagination(['weapon', 'slug', 'category', 'type', 'quality', 'rarity', 'statTrak', 'souvenir', 'search', 'group']),
           inventory: relayStylePagination(['steamId'])
         }
       }
