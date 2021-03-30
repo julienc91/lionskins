@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from tqdm import tqdm
 
 from models.csgo import Skin
-from models.csgo.enums import Rarities, WeaponCategories, Weapons
+from models.csgo.enums import Rarities, Types, WeaponCategories, Weapons
 
 
 class SyncCatalog:
@@ -111,30 +111,43 @@ class SyncCatalog:
         default_language = "en"
 
         for item in tqdm(data):
-            if item["type"] not in (1, 3, 4):
+            if item["type"] not in (1, 2, 3, 4):
                 continue
 
-            weapon = cls.map_csgo_weapon_to_enum[item["weapon"]["id"]]
-            name = item["name"][languages[default_language]]
-
             update = {}
-            if weapon.category not in [WeaponCategories.gloves, WeaponCategories.knives]:
-                mapping = (
-                    cls.map_csgo_rarity_to_enum_buffed
-                    if weapon in cls.weapons_with_buffed_rarity
-                    else cls.map_csgo_rarity_to_enum_default
-                )
-                update["set__rarity"] = mapping[item["rarity"]]
-            elif weapon.category is WeaponCategories.knives:
-                update["set__rarity"] = Rarities.covert
+            name = item["name"][languages[default_language]]
+            filters = {"name": name}
 
-            descriptions = {}
-            for language in languages:
-                description = item["weapon"]["description"][languages[language]]
-                if item["description"][languages[language]]:
-                    description += " " + item["description"][languages[language]]
-                description = BeautifulSoup(description, "html.parser").text
-                descriptions[language] = description
-            update["set__description"] = descriptions
+            if item["type"] == 2:  # agents
+                filters["type"] = Types.agents
+                update = {"set__rarity": cls.map_csgo_rarity_to_enum_default[item["rarity"]]}
+                descriptions = {}
+                for language in languages:
+                    description = item["description"][languages[language]]
+                    description = BeautifulSoup(description, "html.parser").text
+                    descriptions[language] = description
+                update["set__description"] = descriptions
 
-            Skin.objects(weapon=weapon, name=name).update(**update)
+            else:
+                weapon = cls.map_csgo_weapon_to_enum[item["weapon"]["id"]]
+                filters["weapon"] = weapon
+                if weapon.category not in [WeaponCategories.gloves, WeaponCategories.knives]:
+                    mapping = (
+                        cls.map_csgo_rarity_to_enum_buffed
+                        if weapon in cls.weapons_with_buffed_rarity
+                        else cls.map_csgo_rarity_to_enum_default
+                    )
+                    update["set__rarity"] = mapping[item["rarity"]]
+                elif weapon.category is WeaponCategories.knives:
+                    update["set__rarity"] = Rarities.covert
+
+                descriptions = {}
+                for language in languages:
+                    description = item["weapon"]["description"][languages[language]]
+                    if item["description"][languages[language]]:
+                        description += " " + item["description"][languages[language]]
+                    description = BeautifulSoup(description, "html.parser").text
+                    descriptions[language] = description
+                update["set__description"] = descriptions
+
+            Skin.objects(**filters).update(**update)
