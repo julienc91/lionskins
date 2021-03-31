@@ -1,15 +1,18 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import PropTypes from 'prop-types'
 import { Header, Image } from 'semantic-ui-react'
 import Carousel from '../components/Carousel'
 import carouselImagesData from '../assets/data/carousel'
 import logo from '../assets/images/logo.svg'
 
-const Homepage = ({ images }) => {
+const Homepage = () => {
   const { t } = useTranslation('homepage')
+  const [images, setImages] = useState([])
+
+  useEffect(() => setImages(shuffle(carouselImagesData)), [])
+
   return (
     <div className='homepage'>
       <Head>
@@ -42,14 +45,6 @@ const Homepage = ({ images }) => {
   )
 }
 
-Homepage.propTypes = {
-  images: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    link: PropTypes.string.isRequired
-  })).isRequired
-}
-
 const shuffle = array => {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -59,8 +54,7 @@ const shuffle = array => {
 }
 
 export const getServerSideProps = async ({ locale }) => {
-  const images = shuffle(carouselImagesData).slice(0, 10)
-  return { props: { images, ...await serverSideTranslations(locale, ['common', 'homepage']) } }
+  return { props: { ...await serverSideTranslations(locale, ['common', 'homepage']) } }
 }
 
 export default Homepage
