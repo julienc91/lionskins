@@ -38,7 +38,7 @@ class CurrencyConverter:
     @classmethod
     def _update_rate(cls):
         cls.__last_update = datetime.now() - cls.UPDATE_DELAY + cls.ERROR_DELAY
-        res = requests.get("https://api.exchangeratesapi.io/latest?base=USD")
+        res = requests.get("https://api.exchangerate.host/latest?base=USD")
         if res.status_code != 200:
             return
 
