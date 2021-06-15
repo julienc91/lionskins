@@ -1,16 +1,16 @@
 repos:
   - repo: https://github.com/pre-commit/mirrors-isort
-    rev: v5.7.0
+    rev: v5.8.0
     hooks:
       - id: isort
         args: ["--profile", "black"]
   - repo: git://github.com/ambv/black
-    rev: 20.8b1
+    rev: 21.6b0
     hooks:
       - id: black
         language_version: python3
   - repo: git://github.com/pre-commit/pre-commit-hooks
-    rev: v3.4.0
+    rev: v4.0.1
     hooks:
       - id: check-merge-conflict
       - id: trailing-whitespace
@@ -20,13 +20,13 @@ repos:
       - id: check-ast
       - id: fix-encoding-pragma
   - repo: https://gitlab.com/pycqa/flake8
-    rev: 3.8.4
+    rev: 3.9.2
     hooks:
       - id: flake8
         args:
           - --max-line-length=130
   - repo: git://github.com/pre-commit/mirrors-eslint
-    rev: v7.19.0
+    rev: v7.28.0
     hooks:
       - id: eslint
   - repo: git://github.com/pre-commit/mirrors-scss-lint
