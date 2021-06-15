@@ -43,5 +43,6 @@ module.exports = {
         permanent: false
       }
     ]
-  }
+  },
+  webpack: config => config
 }
