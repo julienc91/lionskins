@@ -6,9 +6,6 @@ import useAuth from './AuthenticationProvider'
 import LoginModal from './LoginModal'
 import SettingsModal from './SettingsModal'
 
-import logo from '../assets/images/logo.svg'
-import csgoLogo from '../assets/images/csgo.svg'
-
 const Header = () => {
   const { t } = useTranslation()
   const { logout, user } = useAuth()
@@ -61,11 +58,11 @@ const Header = () => {
   return (
     <Menu as='nav' inverted>
       <Menu.Item>
-        <Link href='/'><a><img src={logo} alt='LionSkins' /></a></Link>
+        <Link href='/'><a><img src='/images/logo.svg' alt='LionSkins' /></a></Link>
       </Menu.Item>
       <Menu.Item>
         <Link href='/counter-strike-global-offensive/'>
-          <a><img src={csgoLogo} alt='Counter-Strike: Global Offensive' /></a>
+          <a><img src='/images/csgo.svg' alt='Counter-Strike: Global Offensive' /></a>
         </Link>
       </Menu.Item>
       <Menu.Menu position='right' className='menu-settings'>

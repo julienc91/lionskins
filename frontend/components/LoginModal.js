@@ -3,7 +3,6 @@ import { useTranslation } from 'next-i18next'
 import PropTypes from 'prop-types'
 import { Modal } from 'semantic-ui-react'
 import AuthencationManager from '../utils/authentication'
-import steamOpenId from '../assets/images/steam_openid.png'
 
 const LoginModal = ({ onClose, open }) => {
   const { t } = useTranslation()
@@ -20,7 +19,7 @@ const LoginModal = ({ onClose, open }) => {
       <Modal.Content>
         <p>{t('login.description')}</p>
         <span onClick={handleStartLogin} style={{ cursor: 'pointer' }}>
-          <img alt={t('login.steam_login')} src={steamOpenId} />
+          <img alt={t('login.steam_login')} src='/images/steam_openid.png' />
         </span>
       </Modal.Content>
     </Modal>

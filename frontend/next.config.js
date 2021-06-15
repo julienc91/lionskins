@@ -1,5 +1,3 @@
-const withPlugins = require('next-compose-plugins')
-const optimizedImages = require('next-optimized-images')
 const { i18n } = require('./next-i18next.config')
 
 const csp = [
@@ -12,41 +10,38 @@ const csp = [
   `connect-src 'self' ${process.env.NEXT_PUBLIC_API_DOMAIN} https://sentry.io/api/ https://analytics.lionskins.co/`
 ]
 
-module.exports = withPlugins([
-  [optimizedImages, {}],
-  {
-    i18n,
-    async headers () {
-      if (process.env !== 'production') {
-        return []
-      }
-      return [
-        {
-          source: '/(.*?)',
-          headers: [
-            {
-              key: 'Content-Security-Policy',
-              value: csp.join('; ')
-            }
-          ]
-        }
-      ]
-    },
-    async redirects () {
-      return [
-        {
-          source: '/catchAll',
-          destination: '/en',
-          locale: false,
-          permanent: false
-        },
-        {
-          source: '/catchAll/:slug*',
-          destination: '/en/:slug*',
-          locale: false,
-          permanent: false
-        }
-      ]
+module.exports = {
+  i18n,
+  async headers () {
+    if (process.env !== 'production') {
+      return []
     }
+    return [
+      {
+        source: '/(.*?)',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: csp.join('; ')
+          }
+        ]
+      }
+    ]
+  },
+  async redirects () {
+    return [
+      {
+        source: '/catchAll',
+        destination: '/en',
+        locale: false,
+        permanent: false
+      },
+      {
+        source: '/catchAll/:slug*',
+        destination: '/en/:slug*',
+        locale: false,
+        permanent: false
+      }
+    ]
   }
-])
+}

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import Script from 'react-load-script'
+import Script from 'next/script'
 
 const push = args => {
   try {
@@ -29,7 +29,7 @@ const Matomo = () => {
   }, [])
 
   return (
-    <Script url='https://analytics.lionskins.co/init.js' attributes={{ async: true, defer: true }} />
+    <Script src='https://analytics.lionskins.co/init.js' />
   )
 }
 

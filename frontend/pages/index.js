@@ -5,7 +5,6 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { Header, Image } from 'semantic-ui-react'
 import Carousel from '../components/Carousel'
 import carouselImagesData from '../assets/data/carousel'
-import logo from '../assets/images/logo.svg'
 
 const Homepage = () => {
   const { t } = useTranslation('homepage')
@@ -19,7 +18,7 @@ const Homepage = () => {
         <title>{t('homepage.page_title')}</title>
       </Head>
 
-      <Image src={logo} alt='' className='logo' />
+      <Image src='/images/logo.svg' alt='' className='logo' />
       <Header as='h1'>{t('homepage.title')}</Header>
       <Header as='h2'>
         {t('homepage.subtitle1')}<br />

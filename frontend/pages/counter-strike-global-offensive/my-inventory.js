@@ -10,7 +10,6 @@ import useSettings from '../../components/SettingsProvider'
 import Skin from '../../components/csgo/Skin'
 import AuthenticationManager from '../../utils/authentication'
 import { Providers } from '../../utils/enums'
-import steamOpenId from '../../assets/images/steam_openid.png'
 
 export const getInventoryQuery = gql`
   query ($steamId: String, $currency: TypeCurrency) {
@@ -92,7 +91,7 @@ const MyInventory = () => {
             {t('csgo.inventory.sign_in_subtitle')}
           </Header.Subheader>
           <span onClick={handleStartLogin} style={{ cursor: 'pointer' }}>
-            <img alt={t('csgo.inventory.steam_login')} src={steamOpenId} />
+            <img alt={t('csgo.inventory.steam_login')} src='/images/steam_openid.png' />
           </span>
         </Header>
       )}
