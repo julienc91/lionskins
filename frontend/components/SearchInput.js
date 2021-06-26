@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { useTranslation } from 'next-i18next'
+import { withTranslation } from 'next-i18next'
 import { Form } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 
-const SearchInput = ({ defaultValue, onChange }) => {
-  const { t } = useTranslation('csgo')
+const SearchInput = ({ defaultValue, onChange, t }) => {
   const [currentValue, setCurrentValue] = useState(defaultValue)
   const [timer, setTimer] = useState(0)
 
@@ -42,7 +41,8 @@ const SearchInput = ({ defaultValue, onChange }) => {
 
 SearchInput.propTypes = {
   onChange: PropTypes.func.isRequired,
-  defaultValue: PropTypes.string
+  defaultValue: PropTypes.string,
+  t: PropTypes.func.isRequired
 }
 
-export default SearchInput
+export default withTranslation('csgo')(SearchInput)

@@ -5,6 +5,7 @@ import { Container, Header } from 'semantic-ui-react'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Breadcrumb from '../components/Breadcrumb'
 import LinkTrans from '../components/LinkTrans'
+import nextI18NextConfig from '../next-i18next.config'
 
 const Faq = () => {
   const { t } = useTranslation('faq')
@@ -45,7 +46,7 @@ const Faq = () => {
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
-    ...await serverSideTranslations(locale, ['common', 'faq'])
+    ...(await serverSideTranslations(locale, ['common', 'faq'], nextI18NextConfig))
   }
 })
 

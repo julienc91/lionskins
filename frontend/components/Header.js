@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
-import { useTranslation } from 'next-i18next'
+import { withTranslation } from 'next-i18next'
+import PropTypes from 'prop-types'
 import { Dropdown, Icon, Menu } from 'semantic-ui-react'
 import useAuth from './AuthenticationProvider'
 import LoginModal from './LoginModal'
 import SettingsModal from './SettingsModal'
 
-const Header = () => {
-  const { t } = useTranslation()
+const Header = ({ t }) => {
   const { logout, user } = useAuth()
   const [openLoginModal, setOpenLoginModal] = useState(false)
   const [openSettingsModal, setOpenSettingsModal] = useState(false)
@@ -74,4 +74,8 @@ const Header = () => {
   )
 }
 
-export default Header
+Header.propTypes = {
+  t: PropTypes.func.isRequired
+}
+
+export default withTranslation('common')(Header)

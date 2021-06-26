@@ -13,6 +13,7 @@ import Changelog from '../../components/Changelog'
 import useSettings from '../../components/SettingsProvider'
 import Filter from '../../components/csgo/Filter'
 import Skin from '../../components/csgo/Skin'
+import nextI18NextConfig from '../../next-i18next.config'
 
 export const getSkinsQuery = gql`
   query ($first: Int, $after: String, $weapon: CSGOWeapons, $category: CSGOCategories, $type: CSGOTypes,
@@ -199,7 +200,7 @@ CsgoSkinList.propTypes = {
 export const getServerSideProps = async ({ locale, query }) => ({
   props: {
     query,
-    ...await serverSideTranslations(locale, ['common', 'skin_list', 'csgo'])
+    ...(await serverSideTranslations(locale, ['common', 'skin_list', 'csgo'], nextI18NextConfig))
   }
 })
 

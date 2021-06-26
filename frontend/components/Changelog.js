@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { useTranslation } from 'next-i18next'
+import { withTranslation } from 'next-i18next'
+import PropTypes from 'prop-types'
 import { Icon, Message } from 'semantic-ui-react'
 import { StorageManager } from '../utils'
 
@@ -14,8 +15,7 @@ const CHANGELOG = {
   '2021-03-27': 'changelog.2021_03_27_001'
 }
 
-const Changelog = () => {
-  const { t } = useTranslation()
+const Changelog = ({ t }) => {
   let defaultLastDismissDate = StorageManager.get('changelog.dismiss_date')
   if (defaultLastDismissDate) {
     defaultLastDismissDate = new Date(defaultLastDismissDate)
@@ -57,4 +57,8 @@ const Changelog = () => {
   )
 }
 
-export default Changelog
+Changelog.propTypes = {
+  t: PropTypes.func.isRequired
+}
+
+export default withTranslation('common')(Changelog)

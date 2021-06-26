@@ -6,6 +6,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import ReCAPTCHA from 'react-google-recaptcha'
 import { Button, Container, Form, Header, Message } from 'semantic-ui-react'
 import Breadcrumb from '../components/Breadcrumb'
+import nextI18NextConfig from '../next-i18next.config'
 
 const sendMessageQuery = gql`
   mutation contact($name: String, $email: String, $message: String!, $captcha: String!) {
@@ -117,7 +118,7 @@ const Contact = () => {
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
-    ...await serverSideTranslations(locale, ['common', 'contact'])
+    ...(await serverSideTranslations(locale, ['common', 'contact'], nextI18NextConfig))
   }
 })
 

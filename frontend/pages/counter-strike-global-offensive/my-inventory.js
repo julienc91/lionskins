@@ -8,6 +8,7 @@ import useAuth from '../../components/AuthenticationProvider'
 import Breadcrumb from '../../components/Breadcrumb'
 import useSettings from '../../components/SettingsProvider'
 import Skin from '../../components/csgo/Skin'
+import nextI18NextConfig from '../../next-i18next.config'
 import AuthenticationManager from '../../utils/authentication'
 import { Providers } from '../../utils/enums'
 
@@ -140,7 +141,7 @@ const MyInventory = () => {
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
-    ...await serverSideTranslations(locale, ['common', 'csgo'])
+    ...(await serverSideTranslations(locale, ['common', 'csgo'], nextI18NextConfig))
   }
 })
 

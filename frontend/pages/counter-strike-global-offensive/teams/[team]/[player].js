@@ -10,6 +10,7 @@ import slugify from 'slugify'
 import Breadcrumb from '../../../../components/Breadcrumb'
 import useSettings from '../../../../components/SettingsProvider'
 import Skin from '../../../../components/csgo/Skin'
+import nextI18NextConfig from '../../../../next-i18next.config'
 
 export const getInventoryQuery = gql`
   query ($steamId: String, $currency: TypeCurrency) {
@@ -121,7 +122,7 @@ export const getServerSideProps = async ({ locale, query }) => {
     return { notFound: true }
   }
 
-  return { props: { team, player, ...await serverSideTranslations(locale, ['common', 'csgo']) } }
+  return { props: { team, player, ...(await serverSideTranslations(locale, ['common', 'csgo'], nextI18NextConfig)) } }
 }
 
 export default Player

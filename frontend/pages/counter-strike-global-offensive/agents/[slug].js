@@ -12,6 +12,7 @@ import SkinSummary from '../../../components/csgo/SkinSummary'
 import SkinPrices from '../../../components/csgo/SkinPrices'
 import { Providers } from '../../../utils/enums'
 import Image from '../../../components/Image'
+import nextI18NextConfig from '../../../next-i18next.config'
 
 const getSkinQuery = gql`
   query ($weapon: CSGOWeapons, $slug: String, $currency: TypeCurrency, $category: CSGOCategories, $type: CSGOTypes,
@@ -160,7 +161,7 @@ export const getServerSideProps = async ({ locale, query }) => {
 
   return {
     props: {
-      ...await serverSideTranslations(locale, ['common', 'csgo']),
+      ...(await serverSideTranslations(locale, ['common', 'csgo'], nextI18NextConfig)),
       slug
     }
   }

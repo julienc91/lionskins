@@ -5,6 +5,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { Container, Header } from 'semantic-ui-react'
 import Breadcrumb from '../components/Breadcrumb'
 import LinkTrans from '../components/LinkTrans'
+import nextI18NextConfig from '../next-i18next.config'
 
 const PrivacyPolicy = () => {
   const { t } = useTranslation('privacy_policy')
@@ -81,7 +82,7 @@ const PrivacyPolicy = () => {
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
-    ...await serverSideTranslations(locale, ['common', 'privacy_policy'])
+    ...(await serverSideTranslations(locale, ['common', 'privacy_policy'], nextI18NextConfig))
   }
 })
 

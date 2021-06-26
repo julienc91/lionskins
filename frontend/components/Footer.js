@@ -1,9 +1,9 @@
 import React from 'react'
 import Link from 'next/link'
-import { useTranslation } from 'next-i18next'
+import PropTypes from 'prop-types'
+import { withTranslation } from 'next-i18next'
 
-const Footer = () => {
-  const { t } = useTranslation()
+const Footer = ({ t }) => {
   return (
     <footer key='footer'>
       <ul>
@@ -25,7 +25,11 @@ const Footer = () => {
   )
 }
 
-export default Footer
+Footer.propTypes = {
+  t: PropTypes.func.isRequired
+}
+
+export default withTranslation('common')(Footer)
 
 const getCopyright = () => {
   const startYear = 2018

@@ -7,6 +7,7 @@ import { Card, Container, Header } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 import Breadcrumb from '../../components/Breadcrumb'
 import Team from '../../components/csgo/Team'
+import nextI18NextConfig from '../../next-i18next.config'
 
 const TeamList = ({ teams }) => {
   const { t } = useTranslation('csgo')
@@ -59,7 +60,7 @@ export const getServerSideProps = async ({ locale }) => {
   const res = await axios.get(`${process.env.NEXT_PUBLIC_API_DOMAIN}/teams.json`)
 
   const teams = res.data
-  return { props: { teams, ...await serverSideTranslations(locale, ['common', 'csgo']) } }
+  return { props: { teams, ...(await serverSideTranslations(locale, ['common', 'csgo'], nextI18NextConfig)) } }
 }
 
 export default TeamList

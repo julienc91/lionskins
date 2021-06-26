@@ -1,11 +1,10 @@
 import React from 'react'
-import { useTranslation } from 'next-i18next'
+import { withTranslation } from 'next-i18next'
 import PropTypes from 'prop-types'
 import { Modal } from 'semantic-ui-react'
 import AuthencationManager from '../utils/authentication'
 
-const LoginModal = ({ onClose, open }) => {
-  const { t } = useTranslation()
+const LoginModal = ({ onClose, open, t }) => {
   const handleStartLogin = AuthencationManager.startOpenId
 
   if (!open) {
@@ -28,7 +27,8 @@ const LoginModal = ({ onClose, open }) => {
 
 LoginModal.propTypes = {
   open: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired
 }
 
-export default LoginModal
+export default withTranslation('common')(LoginModal)
