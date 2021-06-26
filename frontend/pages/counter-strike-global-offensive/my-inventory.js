@@ -58,12 +58,13 @@ const MyInventory = () => {
   useEffect(executeQuery, [user])
   useEffect(executeQuery, [currency])
 
-  let minCost
+  let minCost = 0
   if (data && data.inventory.edges.length) {
     minCost = data.inventory.edges.map(({ node }) => (
       Math.min(...Object.keys(Providers).filter(provider => node.prices[provider]).map(provider => node.prices[provider]))
     )).reduce((a, b) => a + b)
   }
+  minCost = parseFloat(minCost).toFixed(2)
 
   return (
     <Container className='page inventory'>
