@@ -3,8 +3,7 @@ import { gql, useQuery } from '@apollo/client'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import useTranslation from 'next-translate/useTranslation'
 import PropTypes from 'prop-types'
 import InfiniteScroll from 'react-infinite-scroller'
 import { Button, Card, Header, Icon, Loader, Sidebar } from 'semantic-ui-react'
@@ -13,7 +12,6 @@ import Changelog from '../../components/Changelog'
 import useSettings from '../../components/SettingsProvider'
 import Filter from '../../components/csgo/Filter'
 import Skin from '../../components/csgo/Skin'
-import nextI18NextConfig from '../../next-i18next.config'
 
 export const getSkinsQuery = gql`
   query ($first: Int, $after: String, $weapon: CSGOWeapons, $category: CSGOCategories, $type: CSGOTypes,
@@ -77,7 +75,7 @@ const getInitialFilters = query => {
 }
 
 const CsgoSkinList = ({ query }) => {
-  const { t } = useTranslation(['csgo', 'skin_list'])
+  const { t } = useTranslation('csgo')
   const router = useRouter()
   const { currency } = useSettings()
   const [showSidebar, setShowSidebar] = useState(false)
@@ -133,7 +131,7 @@ const CsgoSkinList = ({ query }) => {
   return (
     <div className='skin-list-container'>
       <Head>
-        <title>{t('csgo:csgo.skin_list.page_title')}</title>
+        <title>{t('csgo.skin_list.page_title')}</title>
       </Head>
 
       <Sidebar
@@ -154,7 +152,7 @@ const CsgoSkinList = ({ query }) => {
           <Link href='/counter-strike-global-offensive/my-inventory' passHref>
             <Button primary icon labelPosition='left'>
               <Icon name='steam' />
-              {t('csgo:csgo.skin_list.inventory_link')}
+              {t('csgo.skin_list.inventory_link')}
             </Button>
           </Link>
         </div>
@@ -197,10 +195,9 @@ CsgoSkinList.propTypes = {
   query: PropTypes.object
 }
 
-export const getServerSideProps = async ({ locale, query }) => ({
+export const getServerSideProps = async ({ query }) => ({
   props: {
-    query,
-    ...(await serverSideTranslations(locale, ['common', 'skin_list', 'csgo'], nextI18NextConfig))
+    query
   }
 })
 

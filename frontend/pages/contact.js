@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { gql, useMutation } from '@apollo/client'
 import Head from 'next/head'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import useTranslation from 'next-translate/useTranslation'
 import ReCAPTCHA from 'react-google-recaptcha'
 import { Button, Container, Form, Header, Message } from 'semantic-ui-react'
 import Breadcrumb from '../components/Breadcrumb'
-import nextI18NextConfig from '../next-i18next.config'
 
 const sendMessageQuery = gql`
   mutation contact($name: String, $email: String, $message: String!, $captcha: String!) {
@@ -115,11 +113,5 @@ const Contact = () => {
     </Container>
   )
 }
-
-export const getStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common', 'contact'], nextI18NextConfig))
-  }
-})
 
 export default Contact

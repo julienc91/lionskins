@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import Head from 'next/head'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import useTranslation from 'next-translate/useTranslation'
 import PropTypes from 'prop-types'
 import { Container, Header, Loader } from 'semantic-ui-react'
 import Page404 from '../../404'
@@ -14,7 +13,6 @@ import { getWeaponSlug } from '../../../utils/csgo/utils'
 import { Providers } from '../../../utils/enums'
 import { Qualities, Weapons } from '../../../utils/csgo/enums'
 import Image from '../../../components/Image'
-import nextI18NextConfig from '../../../next-i18next.config'
 
 const getSkinQuery = gql`
   query ($weapon: CSGOWeapons, $slug: String, $currency: TypeCurrency, $category: CSGOCategories, $type: CSGOTypes,
@@ -73,7 +71,7 @@ const SkinPage = ({ slug, weapon }) => {
   const skins = data.csgo.edges.map(({ node }) => node)
   const skin = skins[0]
   const weaponName = t(Weapons[skin.weapon.name])
-  const description = t(skin.description[t('common:current_language')])
+  const description = skin.description[t('common:current_language')]
   const skinName = skin.quality === 'vanilla' ? t('csgo.qualities.vanilla') : skin.name
   const hasStatTrak = skins.some(s => s.statTrak)
   const hasSouvenir = skins.some(s => s.souvenir)
@@ -113,7 +111,6 @@ const SkinPage = ({ slug, weapon }) => {
       <Header as='h1'>{weaponName} - {skinName}</Header>
 
       <div className='main-content'>
-
         <div className='description'>{description}</div>
 
         <div className='panels'>
@@ -190,7 +187,7 @@ SkinPage.propTypes = {
   weapon: PropTypes.string.isRequired
 }
 
-export const getServerSideProps = async ({ locale, query }) => {
+export const getServerSideProps = async ({ query }) => {
   const slug = query.slug
   const weapon = Object.keys(Weapons).find(e => getWeaponSlug(e) === query.weapon)
 
@@ -200,7 +197,6 @@ export const getServerSideProps = async ({ locale, query }) => {
 
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['common', 'csgo'], nextI18NextConfig)),
       weapon,
       slug
     }

@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import { withTranslation } from 'next-i18next'
+import useTranslation from 'next-translate/useTranslation'
 import PropTypes from 'prop-types'
 import { Card, Label } from 'semantic-ui-react'
 import Image from '../Image'
@@ -10,7 +10,8 @@ import { Qualities, Weapons } from '../../utils/csgo/enums'
 import { getColorFromRarity, getIconFromProvider, getSkinInternalUrl, getSkinUrlFromProvider } from '../../utils/csgo/utils'
 import useSettings from '../SettingsProvider'
 
-const Skin = ({ skin, t }) => {
+const Skin = ({ skin }) => {
+  const { t } = useTranslation('csgo')
   const internalUrl = getSkinInternalUrl(skin)
   let skinName
   let defaultImage
@@ -93,8 +94,7 @@ Skin.propTypes = {
       skinport: PropTypes.number,
       steam: PropTypes.number
     })
-  }),
-  t: PropTypes.func.isRequired
+  })
 }
 
-export default withTranslation('csgo')(Skin)
+export default Skin

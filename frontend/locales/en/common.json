@@ -7,9 +7,6 @@
   "breadcrumb": {
     "home": "Home"
   },
-  "carousel": {
-    "soon": "Soon"
-  },
   "changelog": {
     "title": "What's new on LionSkins:",
     "2019_10_20_001": "The new Classic Knife was added",
@@ -22,8 +19,8 @@
     "2021_03_27_001": "We now support agent skins!"
   },
   "currency": {
-    "eur": "{{price, eur}}",
-    "usd": "{{price, usd}}"
+    "eur": "€{{price}}",
+    "usd": "${{price}}"
   },
   "current_language": "en",
   "date": "{{date, date}}",

@@ -2,15 +2,14 @@ import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 import axios from 'axios'
 import Head from 'next/head'
-import { Trans, useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import useTranslation from 'next-translate/useTranslation'
+import Trans from 'next-translate/Trans'
 import PropTypes from 'prop-types'
 import { Card, Container, Header, Icon, Loader } from 'semantic-ui-react'
 import slugify from 'slugify'
 import Breadcrumb from '../../../../components/Breadcrumb'
 import useSettings from '../../../../components/SettingsProvider'
 import Skin from '../../../../components/csgo/Skin'
-import nextI18NextConfig from '../../../../next-i18next.config'
 
 export const getInventoryQuery = gql`
   query ($steamId: String, $currency: TypeCurrency) {
@@ -67,7 +66,7 @@ const Player = ({ player, team }) => {
       <Header as='h1' textAlign='center'>
         {player.name}
         <Header.Subheader>
-          <Trans i18nKey='csgo.pro_player.subtitle' ns='csgo'>{{ team: team.name }}</Trans>
+          <Trans i18nKey='csgo:csgo.pro_player.subtitle' values={{ team: team.name }} />
         </Header.Subheader>
       </Header>
 
@@ -78,14 +77,14 @@ const Player = ({ player, team }) => {
           <Icon name='frown outline' />
           {t('csgo.pro_player.no_results_title')}
           <Header.Subheader>
-            <Trans i18nKey='csgo.pro_player.no_results_subtitle' ns='csgo'>{{ player: player.name }}</Trans>
+            <Trans i18nKey='csgo:csgo.pro_player.no_results_subtitle' values={{ player: player.name }} />
           </Header.Subheader>
         </Header>
       )}
 
       {!loading && skins && skins.length > 0 && (
         <Header as='h3' textAlign='center'>
-          <Trans i18nKey='csgo.pro_player.description' ns='csgo'>{{ player: player.name }}</Trans>
+          <Trans i18nKey='csgo:csgo.pro_player.description' values={{ player: player.name }} />
         </Header>
       )}
 
@@ -122,7 +121,7 @@ export const getServerSideProps = async ({ locale, query }) => {
     return { notFound: true }
   }
 
-  return { props: { team, player, ...(await serverSideTranslations(locale, ['common', 'csgo'], nextI18NextConfig)) } }
+  return { props: { team, player } }
 }
 
 export default Player

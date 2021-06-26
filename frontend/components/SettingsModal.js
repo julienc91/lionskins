@@ -1,12 +1,13 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-import { withTranslation } from 'next-i18next'
+import useTranslation from 'next-translate/useTranslation'
 import PropTypes from 'prop-types'
 import { Form, Modal, Select } from 'semantic-ui-react'
 import { Currencies } from '../utils/enums'
 import useSettings from './SettingsProvider'
 
-const SettingsModal = ({ onClose, open, t }) => {
+const SettingsModal = ({ onClose, open }) => {
+  const { t } = useTranslation('common')
   const router = useRouter()
   const { currency, changeCurrency } = useSettings()
 
@@ -49,8 +50,7 @@ const SettingsModal = ({ onClose, open, t }) => {
 
 SettingsModal.propTypes = {
   open: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired
 }
 
-export default withTranslation('common')(SettingsModal)
+export default SettingsModal

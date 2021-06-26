@@ -22,8 +22,8 @@
     "2021_03_27_001": "Les skins d'agents sont à présent disponibles\u00A0!"
   },
   "currency": {
-    "eur": "{{price, eur}}",
-    "usd": "{{price, usd}}"
+    "eur": "{{price}}€",
+    "usd": "{{price}}$"
   },
   "current_language": "fr",
   "date": "{{date, date}}",

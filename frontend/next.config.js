@@ -1,4 +1,4 @@
-const { i18n } = require('./next-i18next.config')
+const nextTranslate = require('next-translate')
 
 const csp = [
   "default-src 'self'",
@@ -10,8 +10,7 @@ const csp = [
   `connect-src 'self' ${process.env.NEXT_PUBLIC_API_DOMAIN} https://sentry.io/api/ https://analytics.lionskins.co/`
 ]
 
-module.exports = {
-  i18n,
+module.exports = nextTranslate({
   async headers () {
     if (process.env !== 'production') {
       return []
@@ -43,6 +42,5 @@ module.exports = {
         permanent: false
       }
     ]
-  },
-  webpack: config => config
-}
+  }
+})

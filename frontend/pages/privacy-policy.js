@@ -1,11 +1,10 @@
 import React from 'react'
 import Head from 'next/head'
-import { Trans, useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import useTranslation from 'next-translate/useTranslation'
+import Trans from 'next-translate/Trans'
 import { Container, Header } from 'semantic-ui-react'
 import Breadcrumb from '../components/Breadcrumb'
 import LinkTrans from '../components/LinkTrans'
-import nextI18NextConfig from '../next-i18next.config'
 
 const PrivacyPolicy = () => {
   const { t } = useTranslation('privacy_policy')
@@ -26,7 +25,7 @@ const PrivacyPolicy = () => {
 
         <Header as='h2'>{t('privacy_policy.part1.title')}</Header>
         <p>{t('privacy_policy.part1.content1')}</p>
-        <p><Trans i18nKey='privacy_policy.part1.content2' ns='privacy_policy'><LinkTrans href='/contact/'>-</LinkTrans></Trans>
+        <p><Trans i18nKey='privacy_policy:privacy_policy.part1.content2' components={[<LinkTrans key={0} href='/contact/' />]} />
         </p>
 
         <Header as='h2'>{t('privacy_policy.part2.title')}</Header>
@@ -79,11 +78,5 @@ const PrivacyPolicy = () => {
     </Container>
   )
 }
-
-export const getStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common', 'privacy_policy'], nextI18NextConfig))
-  }
-})
 
 export default PrivacyPolicy

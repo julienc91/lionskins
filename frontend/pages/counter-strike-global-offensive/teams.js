@@ -1,13 +1,12 @@
 import React from 'react'
 import axios from 'axios'
 import Head from 'next/head'
-import { Trans, useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import useTranslation from 'next-translate/useTranslation'
+import Trans from 'next-translate/Trans'
 import { Card, Container, Header } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 import Breadcrumb from '../../components/Breadcrumb'
 import Team from '../../components/csgo/Team'
-import nextI18NextConfig from '../../next-i18next.config'
 
 const TeamList = ({ teams }) => {
   const { t } = useTranslation('csgo')
@@ -41,10 +40,10 @@ const TeamList = ({ teams }) => {
         </Card.Group>
 
         <div className='disclaimer'>
-          <Trans i18nKey='csgo.teams.disclaimer' ns='csgo'>
-            <a href='https://globalranks.gg/' target='_blank' rel='noopener noreferrer'>-</a>
-            <a href='https://liquipedia.net/counterstrike/' target='_blank' rel='noopener noreferrer'>-</a>
-          </Trans>
+          <Trans i18nKey='csgo:csgo.teams.disclaimer' components={[
+            <a href='https://globalranks.gg/' target='_blank' rel='noopener noreferrer' key={0} />,
+            <a href='https://liquipedia.net/counterstrike/' target='_blank' rel='noopener noreferrer' key={1} />
+          ]} />
         </div>
 
       </div>
@@ -56,11 +55,9 @@ TeamList.propTypes = {
   teams: PropTypes.array.isRequired
 }
 
-export const getServerSideProps = async ({ locale }) => {
+export const getServerSideProps = async () => {
   const res = await axios.get(`${process.env.NEXT_PUBLIC_API_DOMAIN}/teams.json`)
-
-  const teams = res.data
-  return { props: { teams, ...(await serverSideTranslations(locale, ['common', 'csgo'], nextI18NextConfig)) } }
+  return { props: { teams: res.data } }
 }
 
 export default TeamList

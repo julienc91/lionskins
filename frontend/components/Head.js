@@ -1,10 +1,10 @@
 import React from 'react'
 import NextHead from 'next/head'
 import { useRouter } from 'next/router'
-import { withTranslation } from 'next-i18next'
-import PropTypes from 'prop-types'
+import useTranslation from 'next-translate/useTranslation'
 
-const Head = ({ t }) => {
+const Head = () => {
+  const { t } = useTranslation('common')
   const router = useRouter()
   const locales = router.locales
   const path = router.asPath.split('?')[0].slice(4)
@@ -21,8 +21,4 @@ const Head = ({ t }) => {
   )
 }
 
-Head.propTypes = {
-  t: PropTypes.func.isRequired
-}
-
-export default withTranslation('common')(Head)
+export default Head

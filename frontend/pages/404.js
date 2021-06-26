@@ -1,12 +1,10 @@
 import React from 'react'
 import Link from 'next/link'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import useTranslation from 'next-translate/useTranslation'
 import { Container, Header, Icon, Button } from 'semantic-ui-react'
-import nextI18NextConfig from '../next-i18next.config'
 
 const Page404 = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
   return (
     <Container>
       <Header as='h1' icon className='no-results'>
@@ -24,11 +22,5 @@ const Page404 = () => {
     </Container>
   )
 }
-
-export const getStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'], nextI18NextConfig))
-  }
-})
 
 export default Page404

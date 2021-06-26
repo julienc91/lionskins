@@ -1,8 +1,7 @@
 import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 import Head from 'next/head'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import useTranslation from 'next-translate/useTranslation'
 import PropTypes from 'prop-types'
 import { Container, Header, Loader } from 'semantic-ui-react'
 import Page404 from '../../404'
@@ -12,7 +11,6 @@ import SkinSummary from '../../../components/csgo/SkinSummary'
 import SkinPrices from '../../../components/csgo/SkinPrices'
 import { Providers } from '../../../utils/enums'
 import Image from '../../../components/Image'
-import nextI18NextConfig from '../../../next-i18next.config'
 
 const getSkinQuery = gql`
   query ($weapon: CSGOWeapons, $slug: String, $currency: TypeCurrency, $category: CSGOCategories, $type: CSGOTypes,
@@ -152,7 +150,7 @@ SkinPage.propTypes = {
   slug: PropTypes.string.isRequired
 }
 
-export const getServerSideProps = async ({ locale, query }) => {
+export const getServerSideProps = async ({ query }) => {
   const slug = query.slug
 
   if (!slug) {
@@ -161,7 +159,6 @@ export const getServerSideProps = async ({ locale, query }) => {
 
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['common', 'csgo'], nextI18NextConfig)),
       slug
     }
   }

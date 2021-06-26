@@ -1,11 +1,10 @@
 import React from 'react'
 import Head from 'next/head'
-import { Trans, useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import useTranslation from 'next-translate/useTranslation'
+import Trans from 'next-translate/Trans'
 import { Container, Header } from 'semantic-ui-react'
 import Breadcrumb from '../components/Breadcrumb'
 import LinkTrans from '../components/LinkTrans'
-import nextI18NextConfig from '../next-i18next.config'
 
 const About = () => {
   const { t } = useTranslation('about')
@@ -29,17 +28,11 @@ const About = () => {
         <p>{t('about.part1.content1')}</p>
         <p>{t('about.part1.content2')}</p>
         <p>{t('about.part1.content3')}</p>
-        <p><Trans i18nKey='about.part1.content4' ns='about'><LinkTrans href='/contact/'>-</LinkTrans></Trans></p>
+        <p><Trans i18nKey='about:about.part1.content4' components={[<LinkTrans href='/contact/' key={0} />]} /></p>
 
       </Container>
     </Container>
   )
 }
-
-export const getStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common', 'about'], nextI18NextConfig))
-  }
-})
 
 export default About

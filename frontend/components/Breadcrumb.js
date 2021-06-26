@@ -1,10 +1,11 @@
 import React from 'react'
 import Link from 'next/link'
-import { withTranslation } from 'next-i18next'
+import useTranslation from 'next-translate/useTranslation'
 import { Breadcrumb as SemanticUIBreadcrumb } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 
-const Breadcrumb = ({ items, t }) => {
+const Breadcrumb = ({ items }) => {
+  const { t } = useTranslation('common')
   return (
     <SemanticUIBreadcrumb>
       <SemanticUIBreadcrumb.Section><Link href='/'><a>{t('breadcrumb.home')}</a></Link></SemanticUIBreadcrumb.Section>
@@ -24,8 +25,7 @@ Breadcrumb.propTypes = {
       name: PropTypes.string.isRequired,
       link: PropTypes.string
     })
-  ),
-  t: PropTypes.func.isRequired
+  )
 }
 
-export default withTranslation('common')(Breadcrumb)
+export default Breadcrumb

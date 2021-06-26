@@ -1,0 +1,18 @@
+{
+  "locales": ["en", "fr", "catchAll"],
+  "defaultLocale": "catchAll",
+  "pages": {
+    "*": ["common"],
+    "/": ["homepage"],
+    "/about": ["about"],
+    "/contact": ["contact"],
+    "/counter-strike-global-offensive": ["csgo", "skin_list"],
+    "/counter-strike-global-offensive/agents/[slug]": ["csgo"],
+    "/counter-strike-global-offensive/my-inventory": ["csgo"],
+    "/counter-strike-global-offensive/teams": ["csgo"],
+    "/counter-strike-global-offensive/teams/[team]/[player]": ["csgo"],
+    "/counter-strike-global-offensive/[weapon]/[slug]": ["csgo"],
+    "/faq": ["faq"],
+    "/privacy-policy": ["privacy_policy"]
+  }
+}

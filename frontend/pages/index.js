@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import useTranslation from 'next-translate/useTranslation'
 import { Header, Image } from 'semantic-ui-react'
 import Carousel from '../components/Carousel'
 import carouselImagesData from '../assets/data/carousel'
-import nextI18NextConfig from '../next-i18next.config'
 
 const Homepage = () => {
   const { t } = useTranslation('homepage')
@@ -51,10 +49,6 @@ const shuffle = array => {
     [array[i], array[j]] = [array[j], array[i]]
   }
   return array
-}
-
-export const getServerSideProps = async ({ locale }) => {
-  return { props: { ...(await serverSideTranslations(locale, ['common', 'homepage'], nextI18NextConfig)) } }
 }
 
 export default Homepage

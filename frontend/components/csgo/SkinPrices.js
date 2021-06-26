@@ -1,5 +1,5 @@
 import React from 'react'
-import { withTranslation } from 'next-i18next'
+import useTranslation from 'next-translate/useTranslation'
 import PropTypes from 'prop-types'
 import { Table } from 'semantic-ui-react'
 import useSettings from '../SettingsProvider'
@@ -8,7 +8,8 @@ import { Providers } from '../../utils/enums'
 import { Qualities } from '../../utils/csgo/enums'
 import { getIconFromProvider, getSkinUrlFromProvider } from '../../utils/csgo/utils'
 
-const SkinPrices = ({ skins, souvenir, statTrak, t }) => {
+const SkinPrices = ({ skins, souvenir, statTrak }) => {
+  const { t } = useTranslation('csgo')
   const { currency } = useSettings()
 
   const skin = skins[0]
@@ -103,8 +104,7 @@ SkinPrices.propTypes = {
     })
   ).isRequired,
   statTrak: PropTypes.bool.isRequired,
-  souvenir: PropTypes.bool.isRequired,
-  t: PropTypes.func.isRequired
+  souvenir: PropTypes.bool.isRequired
 }
 
-export default withTranslation('csgo')(SkinPrices)
+export default SkinPrices

@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react'
 import { gql, useLazyQuery } from '@apollo/client'
 import Head from 'next/head'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import useTranslation from 'next-translate/useTranslation'
 import { Card, Container, Header, Icon, Loader } from 'semantic-ui-react'
 import useAuth from '../../components/AuthenticationProvider'
 import Breadcrumb from '../../components/Breadcrumb'
 import useSettings from '../../components/SettingsProvider'
 import Skin from '../../components/csgo/Skin'
-import nextI18NextConfig from '../../next-i18next.config'
 import AuthenticationManager from '../../utils/authentication'
 import { Providers } from '../../utils/enums'
 
@@ -138,11 +136,5 @@ const MyInventory = () => {
     </Container>
   )
 }
-
-export const getStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common', 'csgo'], nextI18NextConfig))
-  }
-})
 
 export default MyInventory

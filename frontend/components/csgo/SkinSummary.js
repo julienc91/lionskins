@@ -1,12 +1,13 @@
 import React from 'react'
-import { withTranslation } from 'next-i18next'
+import useTranslation from 'next-translate/useTranslation'
 import PropTypes from 'prop-types'
 import { Icon, Table } from 'semantic-ui-react'
 import useSettings from '../SettingsProvider'
 import { Providers } from '../../utils/enums'
 import { Rarities } from '../../utils/csgo/enums'
 
-const SkinSummary = ({ skins, t }) => {
+const SkinSummary = ({ skins }) => {
+  const { t } = useTranslation('csgo')
   const { currency } = useSettings()
   const isAgent = skins[0].type === 'agents'
   const hasRarity = skins.find(s => s.rarity)
@@ -78,8 +79,7 @@ SkinSummary.propTypes = {
         category: PropTypes.string.isRequired
       })
     })
-  ).isRequired,
-  t: PropTypes.func.isRequired
+  ).isRequired
 }
 
-export default withTranslation('csgo')(SkinSummary)
+export default SkinSummary
