@@ -67,7 +67,7 @@ const SkinPage = ({ slug }) => {
 
   const skins = data.csgo.edges.map(({ node }) => node)
   const skin = skins[0]
-  const description = t(skin.description[t('common:current_language')])
+  const description = skin.description[t('common:current_language')]
   const defaultImage = '/images/csgo/weapons/default_skin_agent.png'
   const image = skin.imageUrl || defaultImage
 

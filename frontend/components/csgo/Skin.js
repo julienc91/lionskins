@@ -48,7 +48,7 @@ const Skin = ({ skin }) => {
           <Link href={internalUrl}><a>{skinName}</a></Link>
         </Card.Header>
         <Card.Meta>
-          {t(Qualities[skin.quality])}
+          {skin.quality ? t(Qualities[skin.quality]) : ''}
         </Card.Meta>
       </Card.Content>
       <Card.Content extra>
