@@ -55,12 +55,14 @@ class FetchPlayers:
     @classmethod
     def _get_players(cls, team: str):
         team = {
+            "1win": "1win",
             "hard legion": "Hard Legion Esports",
             "navi": "Natus Vincere",
             "nemiga": "Nemiga Gaming",
             "ninjas in pyjamas": "Ninjas in Pyjamas",
             "nip": "Ninjas in Pyjamas",
             "saw": "SAw (Portuguese team)",
+            "sinners": "Sinners Esports",
             "spirit": "Team Spirit",
             "teamone": "Team One",
         }.get(team.lower(), team)
