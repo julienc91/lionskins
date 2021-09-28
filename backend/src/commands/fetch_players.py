@@ -49,21 +49,24 @@ class FetchPlayers:
         api_data = re.search(r"var api_data = (.*)</script>", res.decode()).group(1)
         api_data = json.loads(api_data)
         ranking = api_data["content"]["list"]
+        teams = {
+            "endpoint": "Endpoint",
+            "faze clan": "FaZe",
+            "gambit esports": "Gambit",
+            "navi": "Natus Vincere",
+            "nip": "Ninjas in Pyjamas",
+        }
         for team in ranking:
-            yield team["name"]
+            yield teams.get(team["name"].lower(), team["name"])
 
     @classmethod
     def _get_players(cls, team: str):
         team = {
             "1win": "1win",
             "hard legion": "Hard Legion Esports",
-            "navi": "Natus Vincere",
             "nemiga": "Nemiga Gaming",
-            "ninjas in pyjamas": "Ninjas in Pyjamas",
-            "nip": "Ninjas in Pyjamas",
             "saw": "SAw (Portuguese team)",
             "sinners": "Sinners Esports",
-            "spirit": "Team Spirit",
             "teamone": "Team One",
         }.get(team.lower(), team)
 
