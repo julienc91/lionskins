@@ -39,10 +39,18 @@ class FetchPlayers:
         # for div in soup.select(".ranking .ranked-team"):
         #     yield div.select_one(".ranking-header .name").text
 
-        soup = cls._get_soup("https://globalranks.gg/")
-        for div in soup.select(".hltv .ranking"):
-            team = div.select_one(".team").select_one("b").text
-            yield {"navi": "Natus Vincere", "nip": "Ninjas in Pyjamas"}.get(team.lower(), team)
+        # globaranks.gg is no longer active
+        # soup = cls._get_soup("https://globalranks.gg/")
+        # for div in soup.select(".hltv .ranking"):
+        #     team = div.select_one(".team").select_one("b").text
+        #     yield {"navi": "Natus Vincere", "nip": "Ninjas in Pyjamas"}.get(team.lower(), team)
+
+        res = cls._get_content("https://egamersworld.com/counterstrike/team/ranking/hltv")
+        api_data = re.search(r"var api_data = (.*)</script>", res.decode()).group(1)
+        api_data = json.loads(api_data)
+        ranking = api_data["content"]["list"]
+        for team in ranking:
+            yield team["name"]
 
     @classmethod
     def _get_players(cls, team: str):
