@@ -41,7 +41,7 @@ const TeamList = ({ teams }) => {
 
         <div className='disclaimer'>
           <Trans i18nKey='csgo:csgo.teams.disclaimer' components={[
-            <a href='https://globalranks.gg/' target='_blank' rel='noopener noreferrer' key={0} />,
+            <a href='https://egamersworld.com/' target='_blank' rel='noopener noreferrer' key={0} />,
             <a href='https://liquipedia.net/counterstrike/' target='_blank' rel='noopener noreferrer' key={1} />
           ]} />
         </div>
