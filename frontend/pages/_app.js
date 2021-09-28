@@ -10,7 +10,7 @@ import Header from '../components/Header'
 import Matomo from '../components/Matomo'
 
 import 'semantic-ui-css/semantic.min.css'
-import 'swiper/swiper.scss'
+import 'swiper/scss'
 import '../assets/css/index.scss'
 
 const MyApp = ({ Component, pageProps }) => {
