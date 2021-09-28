@@ -1,4 +1,5 @@
 const nextTranslate = require('next-translate')
+const { withSentryConfig } = require('@sentry/nextjs')
 
 const csp = [
   "default-src 'self'",
@@ -10,7 +11,7 @@ const csp = [
   `connect-src 'self' ${process.env.NEXT_PUBLIC_API_DOMAIN} https://sentry.io/api/ https://analytics.lionskins.co/`
 ]
 
-module.exports = nextTranslate({
+const moduleExports = nextTranslate({
   async headers () {
     if (process.env !== 'production') {
       return []
@@ -44,3 +45,11 @@ module.exports = nextTranslate({
     ]
   }
 })
+
+const SentryWebpackPluginOptions = {
+  silent: true
+}
+
+// Make sure adding Sentry options is the last code to run before exporting, to
+// ensure that your source maps include changes from all other Webpack plugins
+module.exports = withSentryConfig(moduleExports, SentryWebpackPluginOptions)
