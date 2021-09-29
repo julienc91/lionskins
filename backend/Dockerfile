@@ -1,12 +1,20 @@
-FROM python:3
+FROM python:3-alpine
 
-WORKDIR /opt/services/backend/
-COPY requirements.txt /opt/services/backend/
+RUN \
+  addgroup -S group && \
+  adduser -S user -G group
+
+WORKDIR /home/user/backend
+
+USER user
+ENV PATH="/home/user/.local/bin:${PATH}"
+
+COPY --chown=user:group requirements.txt .
 RUN pip install -r requirements.txt
-COPY . /opt/services/backend/
+COPY --chown=user:group . .
 
 EXPOSE 5000
 
-WORKDIR /opt/services/backend/src/
+WORKDIR /home/user/backend/src
 
 CMD ["./startup.sh"]
