@@ -34,10 +34,36 @@ class Client(AbstractProvider):
                 pass
         return None
 
+    def _get_market_listings_with_retry(self, params):
+        max_retries = 3
+        retry = 0
+        while retry < max_retries:
+            result = self.__get(params)
+            if result.status_code >= 500:
+                retry += 1
+                continue
+            elif result.status_code >= 400:
+                logger.exception(
+                    f"Unexpected response from {self.provider}:\n"
+                    f"* params: {params}\n"
+                    f"* status: {result.status_code}\n"
+                    f"* response: {result.content}"
+                )
+                raise UnfinishedJob
+
+            data = result.json()["results"]
+            if not data:
+                retry += 1
+                continue
+
+            return data
+
+        logger.warning("Could not list market listings despite retries")
+        raise UnfinishedJob
+
     def get_tasks(self):
         start = 0
         count = 100
-        unfinished_job = False
 
         while True:
             params = {
@@ -50,35 +76,7 @@ class Client(AbstractProvider):
                 "currency": 3,
                 "start": start,
             }
-            result = self.__get(params)
-            if result.status_code >= 500:
-                unfinished_job = True
-                logger.warning(
-                    f"Unexpected response from {self.provider}:\n"
-                    f"* params: {params}\n"
-                    f"* status: {result.status_code}\n"
-                    f"* response: {result.content}"
-                )
-                continue
-            if result.status_code >= 400:
-                logger.exception(
-                    f"Unexpected response from {self.provider}:\n"
-                    f"* params: {params}\n"
-                    f"* status: {result.status_code}\n"
-                    f"* response: {result.content}"
-                )
-                unfinished_job = True
-                continue
-
-            data = result.json()["results"]
-            if not data:
-                logger.warning(
-                    f"Unexpected response from {self.provider}:\n"
-                    f"* params: {params}\n"
-                    f"* status: {result.status_code}\n"
-                    f"* response: {result.content}"
-                )
-                raise UnfinishedJob
+            data = self._get_market_listings_with_retry(params)
 
             for row in data:
                 item_name = row["hash_name"]
@@ -97,9 +95,6 @@ class Client(AbstractProvider):
                 yield TaskTypes.ADD_PRICE, item_name, item_price, kwargs
 
             start += count
-            if unfinished_job:
-                raise UnfinishedJob
-
             if len(data) < count:
                 return
 
