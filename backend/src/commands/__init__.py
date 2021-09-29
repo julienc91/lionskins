@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
-import logging
 import time
 from queue import Queue
 from threading import Thread
 from typing import Optional
 
 import click
+import structlog
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 
@@ -19,6 +19,8 @@ from commands.sync_catalog import SyncCatalog
 from models import Skin
 from models.enums import Providers
 from providers.parsers import get_parser
+
+logger = structlog.get_logger()
 
 
 @app.cli.command("backoffice")
@@ -54,7 +56,7 @@ def _fetch_providers(daemon: bool, provider: Optional[Providers] = None):
             try:
                 FetchProviders(p, queue).run()
             except Exception as e:
-                logging.exception(e)
+                logger.exception(e)
             queue.put((TaskTypes.LAST_TASK, p))
             if not daemon:
                 return
@@ -97,7 +99,7 @@ def _fetch_providers(daemon: bool, provider: Optional[Providers] = None):
         elif task_type == TaskTypes.LAST_TASK:
             provider = args
             remaining_workers -= 1
-            logging.info(f"Received last task for provider {provider}")
+            logger.info(f"Received last task for provider {provider}")
 
         queue.task_done()
 

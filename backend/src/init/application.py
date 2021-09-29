@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 
-import logging
 import os
 import sys
 
 import sentry_sdk
+import structlog
 from flask import Flask
 from sentry_sdk.integrations.flask import FlaskIntegration
 
 from init import cache, cors, db, jwt, oid
+
+logger = structlog.get_logger()
 
 
 def create_application():
@@ -34,7 +36,7 @@ def create_application():
             JWT_REFRESH_TOKEN_EXPIRES=False,
         )
     except KeyError as e:
-        logging.error(f"Bad configuration, some environment variables are not set: {e.args[0]}")
+        logger.error(f"Bad configuration, some environment variables are not set: {e.args[0]}")
         sys.exit(2)
 
     cache.init_app(application)

@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import logging
-
 import graphene
+import structlog
 from flask import request
 from flask_jwt_extended import jwt_required
 from graphql import GraphQLError
@@ -10,6 +9,8 @@ from graphql import GraphQLError
 from models import Contact
 from utils.captcha import check_captcha
 from utils.users import get_current_user
+
+logger = structlog.get_logger()
 
 
 class ContactMessage(graphene.Mutation):
@@ -43,7 +44,7 @@ class ContactMessage(graphene.Mutation):
         try:
             res.send()
         except Exception as e:
-            logging.exception(e)
+            logger.exception(e)
         return cls(message_id=res.id)
 
 

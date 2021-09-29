@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 
 import json
-import logging
 import os
 import re
 from typing import Any, Optional
 
 import requests
+import structlog
 from bs4 import BeautifulSoup
 from ratelimit import limits, sleep_and_retry
 
 from utils.data import get_data_directory
+
+logger = structlog.get_logger()
 
 
 class FetchPlayers:
@@ -88,7 +90,7 @@ class FetchPlayers:
         res = json.loads(res)
         pages = res["query"]["pages"]
         if pages.get("-1"):
-            logging.error(f"Team not found on Liquipedia: {team}")
+            logger.error(f"Team not found on Liquipedia: {team}")
             return
 
         page = list(pages.values())[0]
@@ -97,7 +99,7 @@ class FetchPlayers:
         try:
             active_squad = re.search(r"{{ActiveSquad\|(\n{{SquadPlayer.*}}\s*)+\n}}", content)[0].split("\n")[1:-1]
         except Exception as e:
-            logging.exception(e)
+            logger.exception(e)
             return
 
         # Retrieve player names and countries from team page

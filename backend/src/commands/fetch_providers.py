@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
 
-import logging
 from datetime import datetime
 from queue import Queue
 from typing import Type
 
+import structlog
+
 from models import Apps, Providers
 from providers import AbstractProvider, TaskTypes, clients
 from providers.exceptions import UnfinishedJob
+
+logger = structlog.get_logger()
 
 
 class FetchProviders:
@@ -16,7 +19,7 @@ class FetchProviders:
         self.queue = queue
 
     def fetch_provider(self, client: Type[AbstractProvider], app: Apps):
-        logging.info("Fetching data from provider {} for app {}".format(client.provider, app))
+        logger.info("Fetching data from provider {} for app {}".format(client.provider, app))
         client = client(app)
 
         start_date = datetime.now()
@@ -24,7 +27,7 @@ class FetchProviders:
             for task_type, *args in client.get_tasks():
                 self.queue.put((task_type, [app, client.provider, *args]))
         except UnfinishedJob:
-            logging.info(f"Fetching interrupted for provider {client.provider}")
+            logger.info(f"Fetching interrupted for provider {client.provider}")
             return
 
         # delete prices that were not updated

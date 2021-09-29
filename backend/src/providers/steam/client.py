@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import logging
 import re
 
 import requests
+import structlog
 from ratelimit import limits, sleep_and_retry
 
 from init import cache
@@ -11,6 +11,8 @@ from models import Apps, Providers
 from providers.abstract_provider import AbstractProvider, TaskTypes
 from providers.exceptions import UnfinishedJob
 from providers.parsers import get_parser
+
+logger = structlog.get_logger()
 
 
 class Client(AbstractProvider):
@@ -51,7 +53,7 @@ class Client(AbstractProvider):
             result = self.__get(params)
             if result.status_code >= 500:
                 unfinished_job = True
-                logging.warning(
+                logger.warning(
                     f"Unexpected response from {self.provider}:\n"
                     f"* params: {params}\n"
                     f"* status: {result.status_code}\n"
@@ -59,7 +61,7 @@ class Client(AbstractProvider):
                 )
                 continue
             if result.status_code >= 400:
-                logging.exception(
+                logger.exception(
                     f"Unexpected response from {self.provider}:\n"
                     f"* params: {params}\n"
                     f"* status: {result.status_code}\n"
@@ -68,11 +70,17 @@ class Client(AbstractProvider):
                 unfinished_job = True
                 continue
 
-            result = result.json()["results"]
-            if not result:
+            data = result.json()["results"]
+            if not data:
+                logger.warning(
+                    f"Unexpected response from {self.provider}:\n"
+                    f"* params: {params}\n"
+                    f"* status: {result.status_code}\n"
+                    f"* response: {result.content}"
+                )
                 raise UnfinishedJob
 
-            for row in result:
+            for row in data:
                 item_name = row["hash_name"]
                 item_price = float(row["sell_price"]) / 100
 
@@ -92,7 +100,7 @@ class Client(AbstractProvider):
             if unfinished_job:
                 raise UnfinishedJob
 
-            if len(result) < count:
+            if len(data) < count:
                 return
 
     @cache.memoize()
