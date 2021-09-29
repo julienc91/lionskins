@@ -66,7 +66,7 @@ const Player = ({ player, team }) => {
       <Header as='h1' textAlign='center'>
         {player.name}
         <Header.Subheader>
-          <Trans i18nKey='csgo:csgo.pro_player.subtitle' values={{ team: team.name }} />
+          <Trans i18nKey='csgo:csgo.pro_player.subtitle' values={{ player: player.name, role: t(`csgo.pro_player.role.${player.role}`), team: team.name }} />
         </Header.Subheader>
       </Header>
 
@@ -79,12 +79,6 @@ const Player = ({ player, team }) => {
           <Header.Subheader>
             <Trans i18nKey='csgo:csgo.pro_player.no_results_subtitle' values={{ player: player.name }} />
           </Header.Subheader>
-        </Header>
-      )}
-
-      {!loading && skins && skins.length > 0 && (
-        <Header as='h3' textAlign='center'>
-          <Trans i18nKey='csgo:csgo.pro_player.description' values={{ player: player.name }} />
         </Header>
       )}
 

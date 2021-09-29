@@ -35,10 +35,20 @@
     },
     "pro_player": {
       "page_title": "LionSkins - Counter-Strike: Global Offensive",
-      "subtitle": "Player for team {{team}}",
+      "subtitle": "Skin inventory of {{player}}, {{role}} at {{team}}",
       "no_results_title": "No result",
       "no_results_subtitle": "No skin was found on {{player}}'s inventory, this is probably because it is not public",
-      "description": "This is the skin inventory of {{player}}, one of the top players in the world!"
+      "role": {
+        "awp": "sniper",
+        "entry": "entry fragger",
+        "igl": "in-game leader",
+        "lurk": "lurker",
+        "lurker": "lurker",
+        "rifle": "rifler",
+        "rifler": "rifler",
+        "sniper": "sniper",
+        "support": "support"
+      }
     },
     "qualities": {
       "vanilla": "Not painted",
