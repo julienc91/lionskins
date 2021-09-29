@@ -6,6 +6,7 @@ import re
 import requests
 from ratelimit import limits, sleep_and_retry
 
+from init import cache
 from models import Apps, Providers
 from providers.abstract_provider import AbstractProvider, TaskTypes
 from providers.exceptions import UnfinishedJob
@@ -88,6 +89,6 @@ class Client(AbstractProvider):
             if len(result) < count:
                 return
 
+    @cache.memoize()
     def get_inventory(self, steam_id):
-        res = requests.get(f"https://steamcommunity.com/inventory/{steam_id}/730/2", {"l": "english", "count": 5000})
-        assert res.status_code == 200
+        return requests.get(f"https://steamcommunity.com/inventory/{steam_id}/730/2", params={"l": "english", "count": 5000})

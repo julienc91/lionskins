@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import graphene
-import requests
 from flask_jwt_extended import jwt_required
 
 from api.csgo.schema import Query as csgoQuery
 from api.csgo.types import SkinConnection
+from models import Apps
+from providers.steam.client import Client as SteamClient
 from utils.users import get_current_user
 
 
@@ -21,7 +22,8 @@ class Query(graphene.ObjectType):
                 return []
             steam_id = user.steam_id
 
-        res = requests.get(f"https://steamcommunity.com/inventory/{steam_id}/730/2?l=english&count=5000")
+        client = SteamClient(Apps.csgo)
+        res = client.get_inventory(steam_id)
         if res.status_code == 403:
             return []
         elif res.status_code >= 500:

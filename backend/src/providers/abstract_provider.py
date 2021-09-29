@@ -22,3 +22,6 @@ class AbstractProvider:
     @abstractmethod
     def get_tasks(self):
         raise NotImplementedError
+
+    def __repr__(self):
+        return f"<{self.__class__.__name__} - {self.app}>"
