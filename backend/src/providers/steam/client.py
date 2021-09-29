@@ -51,6 +51,12 @@ class Client(AbstractProvider):
             result = self.__get(params)
             if result.status_code >= 500:
                 unfinished_job = True
+                logging.warning(
+                    f"Unexpected response from {self.provider}:\n"
+                    f"* params: {params}\n"
+                    f"* status: {result.status_code}\n"
+                    f"* response: {result.content}"
+                )
                 continue
             if result.status_code >= 400:
                 logging.exception(
