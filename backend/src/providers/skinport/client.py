@@ -27,7 +27,7 @@ class Client(AbstractProvider):
     @limits(calls=1, period=10)
     def __get(self, method, params=None):
         params = params or {}
-        params["app_id"] = 730
+        params["app_id"] = self._steam_app_id
         return requests.get(
             self.base_url + method,
             params=params,

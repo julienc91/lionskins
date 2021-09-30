@@ -71,7 +71,7 @@ class Client(AbstractProvider):
 
         while True:
             params = {
-                "appid": 730,
+                "appid": self._steam_app_id,
                 "search_description": 0,
                 "sort_dir": "asc",
                 "sort_column": "name",
@@ -103,5 +103,5 @@ class Client(AbstractProvider):
                 return
 
     @cache.memoize()
-    def get_inventory(self, steam_id):
+    def get_inventory(self, steam_id: str):
         return requests.get(f"https://steamcommunity.com/inventory/{steam_id}/730/2", params={"l": "english", "count": 5000})

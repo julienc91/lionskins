@@ -9,7 +9,6 @@ from models.csgo.enums import Qualities, Rarities, Types, WeaponCategories, Weap
 
 
 class Parser:
-    app_id = 730
     model = Skin
 
     @classmethod
@@ -75,17 +74,22 @@ class Parser:
             return None
 
         agents_families = {
+            "Brazilian 1st Battalion",
             "Elite Crew",
             "FBI",
             "FBI HRT",
             "FBI Sniper",
             "FBI SWAT",
+            "Gendarmerie Nationale",
+            "Guerrilla Warfare",
             "KSK",
             "NSWC SEAL",
+            "NZSAS",
             "Phoenix",
             "Sabre",
             "Sabre Footsoldier",
             "SAS",
+            "SEAL Frogman",
             "SWAT",
             "TACP Cavalry",
             "The Professionals",

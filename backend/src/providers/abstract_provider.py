@@ -3,6 +3,8 @@
 from abc import abstractmethod
 from enum import Enum
 
+from models import Apps
+
 
 class TaskTypes(Enum):
     ADD_PRICE = "add_price"
@@ -11,8 +13,14 @@ class TaskTypes(Enum):
 
 
 class AbstractProvider:
-    def __init__(self, app):
+    def __init__(self, app: Apps):
         self.app = app
+
+    @property
+    def _steam_app_id(self):
+        if self.app == Apps.csgo:
+            return 730
+        raise ValueError(f"No steam id for app {self.app}")
 
     @property
     @abstractmethod

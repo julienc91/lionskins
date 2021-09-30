@@ -43,7 +43,7 @@ class Client(AbstractProvider):
         return requests.get(self.base_url + method + "/", params)
 
     def get_tasks(self):
-        result = self.__get("get_price_data_for_items_on_sale", params={"app_id": 730})
+        result = self.__get("get_price_data_for_items_on_sale", params={"app_id": self._steam_app_id})
         if result.status_code >= 500:
             raise UnfinishedJob
 

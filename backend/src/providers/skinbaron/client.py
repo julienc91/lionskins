@@ -21,7 +21,7 @@ class Client(AbstractProvider):
     def __get(self, method, params=None):
         params = params or {}
         params["apikey"] = os.environ["SKINBARON_API_KEY"]
-        params["appId"] = 730
+        params["appId"] = self._steam_app_id
         return requests.post(
             self.base_url + method,
             json=params,
