@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
+import time
 
 import requests
 import structlog
@@ -41,24 +42,27 @@ class Client(AbstractProvider):
             result = self.__get(params)
             if result.status_code >= 500:
                 retry += 1
+                time.sleep(120)
                 continue
             elif result.status_code >= 400:
                 logger.exception(
-                    f"Unexpected response from {self.provider}:\n"
-                    f"* params: {params}\n"
-                    f"* status: {result.status_code}\n"
-                    f"* response: {result.content}"
+                    "Unexpected response",
+                    provider=self.provider,
+                    params=params,
+                    status_code=result.status_code,
+                    response=result.content,
                 )
                 raise UnfinishedJob
 
             data = result.json()["results"]
             if not data:
                 retry += 1
+                time.sleep(300)
                 continue
 
             return data
 
-        logger.warning("Could not list market listings despite retries")
+        logger.warning("Could not list market listings despite retries", provider=self.provider, params=params)
         raise UnfinishedJob
 
     def get_tasks(self):

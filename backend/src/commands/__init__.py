@@ -99,7 +99,7 @@ def _fetch_providers(daemon: bool, provider: Optional[Providers] = None):
         elif task_type == TaskTypes.LAST_TASK:
             provider = args
             remaining_workers -= 1
-            logger.info(f"Received last task for provider {provider}")
+            logger.info("Last task received", provider=provider)
 
         queue.task_done()
 

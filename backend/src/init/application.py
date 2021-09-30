@@ -36,7 +36,7 @@ def create_application():
             JWT_REFRESH_TOKEN_EXPIRES=False,
         )
     except KeyError as e:
-        logger.error(f"Bad configuration, some environment variables are not set: {e.args[0]}")
+        logger.error("Bad configuration, some environment variables are not set", arg=e.args[0])
         sys.exit(2)
 
     cache.init_app(application)

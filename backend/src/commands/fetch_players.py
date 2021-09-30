@@ -12,7 +12,7 @@ from ratelimit import limits, sleep_and_retry
 
 from utils.data import get_data_directory
 
-logger = structlog.get_logger()
+logger = structlog.get_logger("fetch_players")
 
 
 class FetchPlayers:
@@ -90,7 +90,7 @@ class FetchPlayers:
         res = json.loads(res)
         pages = res["query"]["pages"]
         if pages.get("-1"):
-            logger.error(f"Team not found on Liquipedia: {team}")
+            logger.error("Team not found on Liquipedia", team=team)
             return
 
         page = list(pages.values())[0]

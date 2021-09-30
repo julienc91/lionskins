@@ -20,40 +20,40 @@ class SanityCheck:
             if not skin.description:
                 skin.description = {}
             if not skin.name:
-                logger.error(f"Missing name info on skin {skin}")
+                logger.error("Missing name info", skin=skin)
             if not skin.weapon:
-                logger.error(f"Missing weapon info on skin {skin}")
+                logger.error("Missing weapon info", skin=skin)
             if skin.souvenir and skin.stat_trak:
-                logger.error(f"Unexpected StatTrak with souvenir on skin {skin}")
+                logger.error("Unexpected StatTrak with souvenir", skin=skin)
 
             if not skin.quality:
-                logger.warning(f"Missing quality on skin {skin}")
+                logger.warning("Missing quality", skin=skin)
             if not skin.rarity and skin.weapon.category is not WeaponCategories.gloves:
-                logger.warning(f"Missing rarity on skin {skin}")
+                logger.warning("Missing rarity", skin=skin)
             elif skin.rarity and skin.weapon.category is WeaponCategories.gloves:
-                logger.warning(f"Rarity is set on glove skin {skin}")
+                logger.warning("Rarity is set on glove skin", skin=skin)
             if not skin.image_url:
-                logger.warning(f"Missing image on skin {skin}")
+                logger.warning("Missing image", skin=skin)
 
             price_providers = {price.provider for price in skin.prices}
             if len(price_providers) != len(skin.prices):
-                logger.error(f"Duplicated provider prices on skin {skin}")
+                logger.error("Duplicated provider prices", skin=skin)
 
             for price in skin.prices:
                 if not price.price or price.price < 0:
-                    logger.error(f"Invalid price on skin {skin} for provider {price.provider}")
+                    logger.error("Invalid price", skin=skin, provider=price.provider)
                 if price.update_date < datetime.now() - timedelta(days=7):
-                    logger.warning(f"Old price on skin {skin} for provider {price.provider}")
+                    logger.warning("Old price", skin=skin, provider=price.provider)
 
             if len([1 for language in languages if skin.description.get(language)]) != len(languages):
                 if skin.quality is not Qualities.vanilla:
-                    logger.warning(f"Missing description on skin {skin}")
+                    logger.warning("Missing description", skin=skin)
 
             duplicate_skins = Skin.filter(
                 name=skin.name, weapon=skin.weapon, stat_trak=skin.stat_trak, souvenir=skin.souvenir, quality=skin.quality
             )
             if duplicate_skins.count() != 1:
-                logger.error(f"Duplicated skin {skin}")
+                logger.error("Duplicated skin", skin=skin)
 
             similar_skins = Skin.filter(name=skin.name, weapon=skin.weapon)
             for similar_skin in similar_skins:
@@ -64,7 +64,7 @@ class SanityCheck:
                         skin.rarity = similar_skin.rarity
                         skin.save()
                     else:
-                        logger.error(f"Inconsistent skin rarity between {skin} and {similar_skin}")
+                        logger.error("Inconsistent skin rarity", skin1=skin, skin2=similar_skin)
                 if not similar_skin.description:
                     continue
                 for language in languages:
@@ -73,7 +73,7 @@ class SanityCheck:
                             skin.description[language] = similar_skin.description[language]
                             skin.save()
                         else:
-                            logger.error(f"Inconsistent skin description between {skin} and {similar_skin}")
+                            logger.error("Inconsistent skin description", skin1=skin, skin2=similar_skin)
 
     @classmethod
     def run(cls):

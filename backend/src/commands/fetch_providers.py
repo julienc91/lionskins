@@ -19,7 +19,7 @@ class FetchProviders:
         self.queue = queue
 
     def fetch_provider(self, client: Type[AbstractProvider], app: Apps):
-        logger.info("Fetching data from provider {} for app {}".format(client.provider, app))
+        logger.info("Fetching data", provider=client.provider, app=app)
         client = client(app)
 
         start_date = datetime.now()
@@ -27,7 +27,7 @@ class FetchProviders:
             for task_type, *args in client.get_tasks():
                 self.queue.put((task_type, [app, client.provider, *args]))
         except UnfinishedJob:
-            logger.info(f"Fetching interrupted for provider {client.provider}")
+            logger.warning("Fetching interrupted", provider=client.provider, app=app)
             return
 
         # delete prices that were not updated
