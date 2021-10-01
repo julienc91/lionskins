@@ -37,10 +37,9 @@ class FetchProviders:
                         self.queue.put((task_type, [app, provider, *args]))
                 except UnfinishedJob:
                     logger.warning("Fetching interrupted", provider=provider, app=app)
-                    return
-
-                # delete prices that were not updated
-                self.queue.put((TaskTypes.REMOVE_PRICES, [app, client.provider, start_date]))
+                else:
+                    # delete prices that were not updated
+                    self.queue.put((TaskTypes.REMOVE_PRICES, [app, client.provider, start_date]))
 
             except Exception as e:
                 logger.exception(e)
