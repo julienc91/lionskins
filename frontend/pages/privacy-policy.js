@@ -64,13 +64,17 @@ const PrivacyPolicy = () => {
             {t('privacy_policy.part3.item2.description')}
           </li>
           <li>
+            <a href='https://sentry.io/' target='_blank' rel='noopener noreferrer'>{t('privacy_policy.part3.item3.name')}</a>
+            {t('privacy_policy.part3.item3.description')}
+          </li>
+          <li>
             <a
               href='https://www.google.com/recaptcha/' target='_blank'
               rel='noopener noreferrer'
             >
-              {t('privacy_policy.part3.item3.name')}
+              {t('privacy_policy.part3.item4.name')}
             </a>
-            {t('privacy_policy.part3.item3.description')}
+            {t('privacy_policy.part3.item4.description')}
           </li>
         </ul>
 

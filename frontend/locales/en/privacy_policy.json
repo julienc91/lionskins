@@ -37,6 +37,10 @@
         "description": ": an open-source analytics platform that is known for being especially privacy-protection friendly. We need this tool to know how our visitors interact with our service in order to continuously improve their experience"
       },
       "item3": {
+        "name": "Sentry",
+        "description": ": a service to report issues you may encounter during your visit on our website. This is to inform us of existing bugs so that we can fix them as soon as possible"
+      },
+      "item4": {
         "name": "Recaptcha",
         "description": ": Google's captcha solution. This is only used on the contact form to prevent spam"
       }

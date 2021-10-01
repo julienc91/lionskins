@@ -37,6 +37,10 @@
         "description": "\u00A0: un outil d'analyse de données open-source particulièrement connu pour son respect de la vie privée. Nous utilisons ce logiciel pour savoir comment nos visiteurs interagissent avec notre service afin d'améliorer continuellement leur expérience"
       },
       "item3": {
+        "name": "Sentry",
+        "description": "\u00A0: un service permettant de remonter les problèmes que vous pourriez rencontrer durant votre navigation. Cela nous permet de prendre connaissances de bugs et de les corriger au plus vite"
+      },
+      "item4": {
         "name": "Recaptcha",
         "description": "\u00A0: la solution de protection contre le spam par Google, utilisée uniquement sur le formulaire de contact"
       }
