@@ -15,9 +15,9 @@ const Skin = ({ skin }) => {
   const internalUrl = getSkinInternalUrl(skin)
   let skinName
   let defaultImage
-  if (skin.type === 'agents') {
+  if (skin.type === 'agents' || skin.type === 'music_kits') {
     skinName = skin.name
-    defaultImage = 'agent'
+    defaultImage = skin.type
   } else {
     skinName = t(Weapons[skin.weapon.name]) + ' - '
     skinName += (skin.slug === 'vanilla') ? t('csgo.qualities.vanilla') : skin.name

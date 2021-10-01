@@ -106,6 +106,7 @@ class Rarities(enum.Enum):
 class Types(enum.Enum):
     weapons = "Weapons"
     agents = "Agents"
+    music_kits = "Music Kits"
 
 
 class WeaponCategories(enum.Enum):

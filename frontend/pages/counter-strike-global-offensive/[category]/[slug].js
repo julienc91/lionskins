@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import Head from 'next/head'
 import useTranslation from 'next-translate/useTranslation'
@@ -9,7 +9,9 @@ import Breadcrumb from '../../../components/Breadcrumb'
 import useSettings from '../../../components/SettingsProvider'
 import SkinSummary from '../../../components/csgo/SkinSummary'
 import SkinPrices from '../../../components/csgo/SkinPrices'
+import { getWeaponSlug } from '../../../utils/csgo/utils'
 import { Providers } from '../../../utils/enums'
+import { Qualities, Weapons } from '../../../utils/csgo/enums'
 import Image from '../../../components/Image'
 
 const getSkinQuery = gql`
@@ -33,11 +35,11 @@ const getSkinQuery = gql`
             en
             fr
           }
-          type
           weapon {
             name
             category
           }
+          type
           prices (currency: $currency) {
             bitskins
             csmoney
@@ -50,10 +52,18 @@ const getSkinQuery = gql`
     }
   }`
 
-const SkinPage = ({ slug }) => {
+const SkinPage = ({ category, slug, weapon }) => {
   const { t } = useTranslation('csgo')
   const { currency } = useSettings()
-  const { data, loading } = useQuery(getSkinQuery, { variables: { currency, type: 'agents', slug }, notifyOnNetworkStatusChange: true })
+
+  const variables = { currency, slug }
+  if (weapon) {
+    variables.weapon = weapon
+  } else {
+    variables.type = category
+  }
+  const { data, loading } = useQuery(getSkinQuery, { variables, notifyOnNetworkStatusChange: true })
+  const [quality, setQuality] = useState(Object.keys(Qualities)[0])
 
   if (!loading && (!data || !data.csgo.edges.length)) {
     return <Page404 />
@@ -67,9 +77,23 @@ const SkinPage = ({ slug }) => {
 
   const skins = data.csgo.edges.map(({ node }) => node)
   const skin = skins[0]
+  const weaponName = weapon ? t(Weapons[skin.weapon.name]) : ''
   const description = skin.description[t('common:current_language')]
-  const defaultImage = '/images/csgo/weapons/default_skin_agent.png'
-  const image = skin.imageUrl || defaultImage
+  const skinName = (weapon && skin.quality === 'vanilla') ? t('csgo.qualities.vanilla') : skin.name
+  const fullName = weapon ? `${weaponName} - ${skinName}` : skin.name
+  const hasStatTrak = skins.some(s => s.statTrak)
+  const hasSouvenir = skins.some(s => s.souvenir)
+
+  let qualities
+  if (skin.quality === 'vanilla') {
+    qualities = ['vanilla']
+  } else {
+    qualities = Object.keys(Qualities).filter(q => q !== 'vanilla')
+  }
+
+  const defaultSkin = weapon ? skins.find(s => s.quality === quality && s.imageUrl) : skins[0]
+  const defaultImage = `/images/csgo/weapons/default_skin_${weapon ? skin.weapon.name : category}.png`
+  const image = (defaultSkin && defaultSkin.imageUrl) ? defaultSkin.imageUrl : defaultImage
 
   const allPrices = []
   skins.forEach(skin => {
@@ -83,19 +107,18 @@ const SkinPage = ({ slug }) => {
   return (
     <Container className='skin-page'>
       <Head>
-        <title>{`${t('csgo.skin.page_title')} - ${skin.name}`}</title>
+        <title>{`${t('csgo.skin.page_title')} - ${fullName}`}</title>
       </Head>
 
       <Breadcrumb items={[
         { name: 'Counter-Strike: Global Offensive', link: '/counter-strike-global-offensive/' },
-        { name: t('csgo.types.agents') },
-        { name: skin.name }
+        { name: weapon ? weaponName : t(`csgo.types.${category}`) },
+        { name: skinName }
       ]}
       />
-      <Header as='h1'>{skin.name}</Header>
+      <Header as='h1'>{fullName}</Header>
 
       <div className='main-content'>
-
         <div className='description'>{description}</div>
 
         <div className='panels'>
@@ -106,17 +129,40 @@ const SkinPage = ({ slug }) => {
 
             <div className='skin-image'>
               <Image
-                alt={skin.name}
+                alt={fullName}
                 imageSrc={image}
                 loaderSrc={defaultImage}
               />
             </div>
+
+            {weapon && (
+              <div className='select-quality'>
+                {qualities.map(key => (
+                  <div
+                    key={key}
+                    className={quality === key ? 'active' : ''}
+                    onClick={() => setQuality(key)}
+                  >
+                    {t(Qualities[key])}
+                  </div>
+                ))}
+              </div>
+            )}
           </section>
 
           <section className='right-panel'>
             <div className='skin-prices'>
-              <Header as='h3'>{t('csgo.skin.prices')}</Header>
+              <Header as='h3'>{(hasStatTrak || hasSouvenir) ? t('csgo.skin.vanilla') : t('csgo.skin.prices')}</Header>
               <SkinPrices skins={skins} statTrak={false} souvenir={false} />
+
+              {hasStatTrak && [
+                <Header as='h3' key='header'>{t('csgo.skin.stat_trak')}</Header>,
+                <SkinPrices skins={skins} statTrak souvenir={false} key='prices' />
+              ]}
+              {hasSouvenir && [
+                <Header as='h3' key='header'>{t('csgo.skin.souvenir')}</Header>,
+                <SkinPrices skins={skins} statTrak={false} souvenir key='prices' />
+              ]}
             </div>
           </section>
         </div>
@@ -128,7 +174,7 @@ const SkinPage = ({ slug }) => {
           __html: JSON.stringify({
             '@context': 'https://schema.org/',
             '@type': 'Product',
-            name: skin.name,
+            name: `${weaponName} - ${skinName}`,
             image,
             description,
             offers: {
@@ -147,18 +193,30 @@ const SkinPage = ({ slug }) => {
 }
 
 SkinPage.propTypes = {
-  slug: PropTypes.string.isRequired
+  category: PropTypes.string,
+  slug: PropTypes.string.isRequired,
+  weapon: PropTypes.string
 }
 
 export const getServerSideProps = async ({ query }) => {
   const slug = query.slug
+  let category, weapon
+  if (query.category === 'agents' || query.category === 'music-kits') {
+    weapon = null
+    category = query.category.replace('-', '_')
+  } else {
+    weapon = Object.keys(Weapons).find(e => getWeaponSlug(e) === query.category)
+    category = 'weapon'
+  }
 
-  if (!slug) {
+  if ((!category && !weapon) || !slug) {
     return { notFound: true }
   }
 
   return {
     props: {
+      category,
+      weapon,
       slug
     }
   }

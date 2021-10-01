@@ -14,9 +14,11 @@ const SkinPrices = ({ skins, souvenir, statTrak }) => {
 
   const skin = skins[0]
   const isAgent = skin.type === 'agents'
+  const isMusicKit = skin.type === 'music_kits'
+  const isWeapon = !isAgent && !isMusicKit
 
   let qualities
-  if (isAgent) {
+  if (!isWeapon) {
     qualities = ['default']
   } else if (skin.quality === 'vanilla') {
     qualities = ['vanilla']
@@ -28,7 +30,7 @@ const SkinPrices = ({ skins, souvenir, statTrak }) => {
     <Table unstackable celled singleLine textAlign='center'>
       <Table.Header>
         <Table.Row>
-          {!isAgent && <Table.HeaderCell>{t('csgo.skin.quality')}</Table.HeaderCell>}
+          {isWeapon && <Table.HeaderCell>{t('csgo.skin.quality')}</Table.HeaderCell>}
           {Object.keys(Providers).map(provider =>
             <Table.HeaderCell key={provider}>
               {getIconFromProvider(provider)}
@@ -43,6 +45,8 @@ const SkinPrices = ({ skins, souvenir, statTrak }) => {
           let skin
           if (isAgent) {
             skin = skins[0]
+          } else if (isMusicKit) {
+            skin = skins.find(skin => skin.statTrak === statTrak)
           } else {
             skin = skins.find(
               skin => skin.statTrak === statTrak &&
@@ -57,7 +61,7 @@ const SkinPrices = ({ skins, souvenir, statTrak }) => {
 
           return (
             <Table.Row key={quality}>
-              {!isAgent && <Table.Cell>{t(Qualities[quality])}</Table.Cell>}
+              {isWeapon && <Table.Cell>{t(Qualities[quality])}</Table.Cell>}
               {Object.keys(Providers).map(provider => {
                 const price = prices[provider]
                 const url = skin ? getSkinUrlFromProvider(skin, provider) : ''

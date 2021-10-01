@@ -32,6 +32,7 @@ const Filter = ({ filters, onFilterChanged }) => {
       return null
     })
     res.push({ key: 'Tagents', text: t('csgo.types.agents'), value: 'Tagents' })
+    res.push({ key: 'Tmusic_kits', text: t('csgo.types.music_kits'), value: 'Tmusic_kits' })
     return res
   }
 

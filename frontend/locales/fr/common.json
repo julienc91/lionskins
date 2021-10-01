@@ -19,14 +19,14 @@
     "2020_05_09_001": "Les prix de la plateforme CS.Money sont à présent disponibles\u00A0!",
     "2020_05_22_001": "Visualisez les skins que vous possédez et estimez la valeur de votre inventaire Steam\u00A0!",
     "2021_02_12_001": "Les prix de la plateforme Skinport sont à présent disponibles\u00A0!",
-    "2021_03_27_001": "Les skins d'agents sont à présent disponibles\u00A0!"
+    "2021_03_27_001": "Les skins d'agents sont à présent disponibles\u00A0!",
+    "2021_10_01_001": "Les kits de musiques sont à présent disponibles\u00A0!"
   },
   "currency": {
     "eur": "{{price}}€",
     "usd": "{{price}}$"
   },
   "current_language": "fr",
-  "date": "{{date, date}}",
   "footer": {
     "about": "À propos",
     "contact": "Contact",

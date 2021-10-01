@@ -7,7 +7,8 @@
       "rifles": "Rifles",
       "knives": "Knives",
       "gloves": "Gloves",
-      "agents": "Agents"
+      "agents": "Agents",
+      "music_kits": "Music Kits"
     },
     "filters": {
       "all": "All",
@@ -91,7 +92,8 @@
       "disclaimer": "Teams shown here are the top-30 teams from HLTV's weekly ranking. Data provided by <0>egamersworld.com</0> and <1>Liquipedia.net</1>."
     },
     "types": {
-      "agents": "Agents"
+      "agents": "Agents",
+      "music_kits": "Music Kits"
     },
     "weapons": {
       "glock_18": "Glock-18",

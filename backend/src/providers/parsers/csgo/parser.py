@@ -100,13 +100,24 @@ class Parser:
         return {"name": item_name, "type": Types.agents}
 
     @classmethod
+    def _parse_music_kit_item(cls, item_name: str) -> Optional[dict]:
+        left_split, _, right_split = item_name.partition("|")
+        if "Music Kit" not in left_split or not right_split:
+            return None
+
+        stat_trak = "StatTrak" in left_split
+        return {"name": right_split, "type": Types.music_kits, "stat_trak": stat_trak, "souvenir": False}
+
+    @classmethod
     def _parse_item_name(cls, item_name: str) -> Optional[dict]:
-        if item_name.startswith(("Music Kit", "Patch", "Sealed Graffiti", "Sticker")):
+        if item_name.startswith(("Patch", "Sealed Graffiti", "Sticker")):
             return None
 
         data = cls._parse_weapon_item(item_name)
         if data is None:
             data = cls._parse_agent_item(item_name)
+        if data is None:
+            data = cls._parse_music_kit_item(item_name)
         return data
 
     @classmethod

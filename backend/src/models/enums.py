@@ -60,6 +60,8 @@ class Providers(enum.Enum):
                 base_url = "https://skinport.com/market/730"
                 if skin.type is Types.agents:
                     parameters = {"cat": "Agent", "search": skin.name.split("|")[0].strip()}
+                elif skin.type is Types.music_kits:
+                    parameters = {"cat": "Music Kit", "search": skin.name, "stattrak": int(skin.stat_trak)}
                 else:
                     parameters = {
                         "type": skin.weapon.value,

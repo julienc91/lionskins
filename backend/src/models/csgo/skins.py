@@ -80,6 +80,11 @@ class Skin(BaseSkin):
     def _get_partial_market_hash_name(self) -> str:
         if self.type == Types.agents:
             return self.name
+        elif self.type == Types.music_kits:
+            prefix = "Music Kit"
+            if self.stat_trak:
+                prefix = "StatTrak™ " + prefix
+            return f"{prefix} | {self.name}"
 
         res = ""
         if self.weapon.category == WeaponCategories.knives:

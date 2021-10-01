@@ -11,7 +11,8 @@ const CHANGELOG = {
   '2020-05-09': 'changelog.2020_05_09_001',
   '2020-08-22': 'changelog.2020_05_22_001',
   '2021-02-12': 'changelog.2021_02_12_001',
-  '2021-03-27': 'changelog.2021_03_27_001'
+  '2021-03-27': 'changelog.2021_03_27_001',
+  '2021-10-01': 'changelog.2021_10_01_001'
 }
 
 const Changelog = () => {
@@ -49,7 +50,7 @@ const Changelog = () => {
         <Message.Header>{t('changelog.title')}</Message.Header>
         <ul>
           {messages.map((date, i) => (
-            <li key={i}>{t('common:date', { date })} - {t(CHANGELOG[date])}</li>
+            <li key={i}>{new Date(date).toLocaleDateString()} - {t(CHANGELOG[date])}</li>
           ))}
         </ul>
       </Message.Content>

@@ -9,7 +9,11 @@ import { Rarities } from '../../utils/csgo/enums'
 const SkinSummary = ({ skins }) => {
   const { t } = useTranslation('csgo')
   const { currency } = useSettings()
+
   const isAgent = skins[0].type === 'agents'
+  const isMusicKit = skins[0].type === 'music_kits'
+  const isWeaponSkin = !isAgent && !isMusicKit
+
   const hasRarity = skins.find(s => s.rarity)
   const rarity = hasRarity ? t(Rarities[hasRarity.rarity]) : null
   const hasStatTrak = skins.some(s => s.statTrak)
@@ -31,22 +35,22 @@ const SkinSummary = ({ skins }) => {
     <Table unstackable celled textAlign='center' className='skin-summary'>
       <Table.Header>
         <Table.Row>
-          {isAgent && <Table.HeaderCell>{t('csgo.skin.type')}</Table.HeaderCell>}
+          {(isAgent || isMusicKit) && <Table.HeaderCell>{t('csgo.skin.type')}</Table.HeaderCell>}
           {rarity && <Table.HeaderCell>{t('csgo.skin.rarity')}</Table.HeaderCell>}
-          {!isAgent && <Table.HeaderCell>{t('csgo.skin.stat_trak')}</Table.HeaderCell>}
-          {!isAgent && <Table.HeaderCell>{t('csgo.skin.souvenir')}</Table.HeaderCell>}
+          {isWeaponSkin && <Table.HeaderCell>{t('csgo.skin.stat_trak')}</Table.HeaderCell>}
+          {isWeaponSkin && <Table.HeaderCell>{t('csgo.skin.souvenir')}</Table.HeaderCell>}
           <Table.HeaderCell>{t('csgo.skin.price_range')}</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
 
       <Table.Body>
         <Table.Row>
-          {isAgent && <Table.Cell>{t('csgo.types.agents')}</Table.Cell>}
+          {(isAgent || isMusicKit) && <Table.Cell>{t(`csgo.types.${skins[0].type}`)}</Table.Cell>}
           {rarity && <Table.Cell>{rarity}</Table.Cell>}
-          {!isAgent && (<Table.Cell positive={hasStatTrak}>
+          {isWeaponSkin && (<Table.Cell positive={hasStatTrak}>
             <Icon name={hasStatTrak ? 'check' : 'x'} />
           </Table.Cell>)}
-          {!isAgent && (<Table.Cell positive={hasSouvenir}>
+          {isWeaponSkin && (<Table.Cell positive={hasSouvenir}>
             <Icon name={hasSouvenir ? 'check' : 'x'} />
           </Table.Cell>)}
           <Table.Cell>
