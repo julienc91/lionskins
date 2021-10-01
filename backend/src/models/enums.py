@@ -43,8 +43,22 @@ class Providers(enum.Enum):
                     parameters["is_souvenir"] = 1 if skin.souvenir else -1
 
             elif self == self.csmoney:
-                # there are no per-skin url on this site
                 base_url = "https://cs.money/csgo/store/"
+                parameters = {"sort": "price", "order": "asc", "search": skin.market_hash_name}
+                if skin.quality and skin.quality != Qualities.vanilla:
+                    parameters["exterior"] = {
+                        Qualities.factory_new: "Factory New",
+                        Qualities.minimal_wear: "Minimal Wear",
+                        Qualities.field_tested: "Field-Tested",
+                        Qualities.well_worn: "Well-Word",  # sic
+                        Qualities.battle_scarred: "Battle-Scared",  # re-sic
+                    }
+                elif skin.quality == Qualities.vanilla:
+                    parameters["search"] += " vanilla"
+                if skin.stat_trak is not None:
+                    parameters["isStatTrak"] = "true" if skin.stat_trak else "false"
+                if skin.souvenir is not None:
+                    parameters["isSouvenir"] = "true" if skin.souvenir else "false"
             elif self == self.skinbaron:
                 base_url = "https://skinbaron.de/?affiliateId=393#!"
                 parameters = {"appId": 730, "sort": "CF", "str": skin.market_hash_name}
