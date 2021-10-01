@@ -29,25 +29,30 @@ const PrivacyPolicy = () => {
         </p>
 
         <Header as='h2'>{t('privacy_policy.part2.title')}</Header>
-        <p>{t('privacy_policy.part2.content1')}</p>
+        <p><Trans i18nKey='privacy_policy:privacy_policy.part2.content1'
+                  components={[<LinkTrans key={0} href='https://vercel.com/' />,
+                    <LinkTrans key={1} href='https://www.ovh.com/' />]} /></p>
+
+        <Header as='h2'>{t('privacy_policy.part3.title')}</Header>
+        <p>{t('privacy_policy.part3.content1')}</p>
 
         <ul>
           <li>
-            <strong>{t('privacy_policy.part2.item1.name')}</strong>
+            <strong>{t('privacy_policy.part3.item1.name')}</strong>
             {t('privacy_policy.part2.item1.description')}
           </li>
           <li>
-            <strong>{t('privacy_policy.part2.item2.name')}</strong>
+            <strong>{t('privacy_policy.part3.item2.name')}</strong>
             {t('privacy_policy.part2.item2.description')}
           </li>
           <li>
-            <strong>{t('privacy_policy.part2.item3.name')}</strong>
+            <strong>{t('privacy_policy.part3.item3.name')}</strong>
             {t('privacy_policy.part2.item3.description')}
           </li>
         </ul>
 
-        <Header as='h2'>{t('privacy_policy.part3.title')}</Header>
-        <p>{t('privacy_policy.part3.content1')}</p>
+        <Header as='h2'>{t('privacy_policy.part4.title')}</Header>
+        <p>{t('privacy_policy.part4.content1')}</p>
 
         <ul>
           <li>
@@ -55,26 +60,26 @@ const PrivacyPolicy = () => {
               href='https://store.steampowered.com/' target='_blank'
               rel='noopener noreferrer'
             >
-              {t('privacy_policy.part3.item1.name')}
+              {t('privacy_policy.part4.item1.name')}
             </a>
-            {t('privacy_policy.part3.item1.description')}
+            {t('privacy_policy.part4.item1.description')}
           </li>
           <li>
-            <a href='https://matomo.org/' target='_blank' rel='noopener noreferrer'>{t('privacy_policy.part3.item2.name')}</a>
-            {t('privacy_policy.part3.item2.description')}
+            <a href='https://matomo.org/' target='_blank' rel='noopener noreferrer'>{t('privacy_policy.part4.item2.name')}</a>
+            {t('privacy_policy.part4.item2.description')}
           </li>
           <li>
-            <a href='https://sentry.io/' target='_blank' rel='noopener noreferrer'>{t('privacy_policy.part3.item3.name')}</a>
-            {t('privacy_policy.part3.item3.description')}
+            <a href='https://sentry.io/' target='_blank' rel='noopener noreferrer'>{t('privacy_policy.part4.item3.name')}</a>
+            {t('privacy_policy.part4.item3.description')}
           </li>
           <li>
             <a
               href='https://www.google.com/recaptcha/' target='_blank'
               rel='noopener noreferrer'
             >
-              {t('privacy_policy.part3.item4.name')}
+              {t('privacy_policy.part4.item4.name')}
             </a>
-            {t('privacy_policy.part3.item4.description')}
+            {t('privacy_policy.part4.item4.description')}
           </li>
         </ul>
 

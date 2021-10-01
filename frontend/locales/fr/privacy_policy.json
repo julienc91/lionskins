@@ -10,6 +10,10 @@
       "content2": "Pour toute question concernant cette politique de confidentialité, n'hésitez pas à <0>nous contacter</0>."
     },
     "part2": {
+      "title": "Où nous sommes",
+      "content1": "Une partir de notre infrastructure est hébergée par <0>Vercel</0>, tandis que le reste est hébergé par <1>OVHcloud</1>."
+    },
+    "part3": {
       "title": "Ce que nous collectons",
       "content1": "Pas grand chose...",
       "item1": {
@@ -25,7 +29,7 @@
         "description": "\u00A0: à chaque fois que vous cliquez sur un lien vous redirigeant vers une marketplace, nous générons un identifiant unique et totalement aléatoire dans le but d'avoir une estimation approximative de la manière dont nos visiteurs interagissent avec les marketplaces que nous suggérons. Cet identifiant est automatiquement supprimé à la fin de votre visite, et ne peut être utilisé pour retrouver vous-même ou votre appareil"
       }
     },
-    "part3": {
+    "part4": {
       "title": "Les services tiers que nous utilisons",
       "content1": "Nous utilisons des services tiers pour que notre site fonctionne comme nous le souhaitons. En voici la liste\u00A0:",
       "item1": {

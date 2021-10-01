@@ -10,6 +10,10 @@
       "content2": "If you have any question regarding this privacy policy, feel free to <0>contact us</0>."
     },
     "part2": {
+      "title": "Where we are",
+      "content1": "A part of our infrastructure is hosted by <0>Vercel</0>, and the rest is hosted by <1>OVHcloud</1>."
+    },
+    "part3": {
       "title": "What we collect",
       "content1": "Not much actually...",
       "item1": {
@@ -25,7 +29,7 @@
         "description": ": everytime you click on one of the links that redirects you to a skin marketplace, we generate a unique and totally random id in order to have a rough idea of how our visitors interact with the marketplaces we suggest. This id is automatically deleted at the end of your visit, and cannot be linked back to your device or your person"
       }
     },
-    "part3": {
+    "part4": {
       "title": "Third party services we use",
       "content1": "We also use third-party services to make our site work like we want it to. Here's the list:",
       "item1": {
