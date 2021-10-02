@@ -92,7 +92,7 @@ class Client(AbstractProvider):
                 if image_id:
                     if "Music Kit |" in item_name:
                         dimensions = "360fx360f"
-                    elif "Sealed Graffiti |" in item_name:
+                    elif "Sealed Graffiti |" in item_name or "Sticker |" in item_name:
                         dimensions = "300fx300f"
                     else:
                         dimensions = "720fx720f"

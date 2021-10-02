@@ -78,6 +78,8 @@ class Providers(enum.Enum):
                     parameters = {"cat": "Music Kit", "search": skin.name, "stattrak": int(skin.stat_trak)}
                 elif skin.type is Types.graffitis:
                     parameters = {"cat": "Graffiti"}
+                elif skin.type is Types.stickers:
+                    parameters = {"cat": "Sticker"}
                 else:
                     parameters = {
                         "type": skin.weapon.value,

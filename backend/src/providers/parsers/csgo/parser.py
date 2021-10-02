@@ -18,15 +18,20 @@ class Parser:
                 return r
         other_rarities = {
             # Agents
-            "Master": Rarities.covert,
-            "Superior": Rarities.classified,
-            "Exceptional": Rarities.restricted,
-            "Distinguished": Rarities.mil_spec,
+            "Master Agent": Rarities.covert,
+            "Superior Agent": Rarities.classified,
+            "Exceptional Agent": Rarities.restricted,
+            "Distinguished Agent": Rarities.mil_spec,
             # Graffitis
-            "Exotic": Rarities.classified,
-            "Remarkable": Rarities.restricted,
-            "High Grade": Rarities.mil_spec,
-            "Base Grade": Rarities.consumer_grade,
+            "Exotic Graffiti": Rarities.classified,
+            "Remarkable Graffiti": Rarities.restricted,
+            "High Grade Graffiti": Rarities.mil_spec,
+            "Base Grade Graffiti": Rarities.consumer_grade,
+            # Stickers
+            "Extraordinary Sticker": Rarities.covert,
+            "Exotic Sticker": Rarities.classified,
+            "Remarkable Sticker": Rarities.restricted,
+            "High Grade Sticker": Rarities.mil_spec,
         }
         for r in other_rarities:
             if r in rarity:
@@ -122,8 +127,15 @@ class Parser:
         return {"name": right_split.strip(), "type": Types.graffitis}
 
     @classmethod
+    def _parse_sticker_item(cls, item_name: str) -> Optional[dict]:
+        left_split, _, right_split = item_name.partition("|")
+        if "Sticker" not in left_split or not right_split:
+            return None
+        return {"name": right_split.strip(), "type": Types.stickers}
+
+    @classmethod
     def _parse_item_name(cls, item_name: str) -> Optional[dict]:
-        if item_name.startswith(("Patch", "Sticker")):
+        if item_name.startswith(("Patch",)):
             return None
 
         data = cls._parse_weapon_item(item_name)
@@ -131,6 +143,8 @@ class Parser:
             data = cls._parse_music_kit_item(item_name)
         if data is None:
             data = cls._parse_graffiti_item(item_name)
+        if data is None:
+            data = cls._parse_sticker_item(item_name)
         if data is None:
             data = cls._parse_agent_item(item_name)
         return data

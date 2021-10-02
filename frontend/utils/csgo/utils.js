@@ -46,18 +46,10 @@ const getIconFromProvider = provider => {
 
 const getSkinInternalUrl = skin => {
   let weaponSlug
-  switch (skin.type) {
-    case 'agents':
-      weaponSlug = 'agents'
-      break
-    case 'music_kits':
-      weaponSlug = 'music-kits'
-      break
-    case 'graffitis':
-      weaponSlug = 'graffitis'
-      break
-    default:
-      weaponSlug = getWeaponSlug(skin.weapon.name)
+  if (['agents', 'music_kits', 'graffitis', 'stickers'].indexOf(skin.type) >= 0) {
+    weaponSlug = skin.type.replace('_', '-')
+  } else {
+    weaponSlug = getWeaponSlug(skin.weapon.name)
   }
   return `/counter-strike-global-offensive/${weaponSlug}/${skin.slug}/`
 }

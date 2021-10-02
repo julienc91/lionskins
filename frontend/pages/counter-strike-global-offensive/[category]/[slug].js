@@ -203,7 +203,7 @@ SkinPage.propTypes = {
 export const getServerSideProps = async ({ query }) => {
   const slug = query.slug
   let category, weapon
-  if (query.category === 'agents' || query.category === 'music-kits' || query.category === 'graffitis') {
+  if (query.category === 'agents' || query.category === 'music-kits' || query.category === 'graffitis' || query.category === 'stickers') {
     weapon = null
     category = query.category.replace('-', '_')
   } else {

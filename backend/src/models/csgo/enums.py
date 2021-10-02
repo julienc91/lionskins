@@ -108,6 +108,7 @@ class Types(enum.Enum):
     agents = "Agents"
     music_kits = "Music Kits"
     graffitis = "Graffitis"
+    stickers = "Stickers"
 
 
 class WeaponCategories(enum.Enum):

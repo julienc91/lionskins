@@ -87,6 +87,8 @@ class Skin(BaseSkin):
             return f"{prefix} | {self.name}"
         elif self.type == Types.graffitis:
             return f"Sealed Graffiti | {self.name}"
+        elif self.type == Types.stickers:
+            return f"Sticker | {self.name}"
 
         res = ""
         if self.weapon.category == WeaponCategories.knives:

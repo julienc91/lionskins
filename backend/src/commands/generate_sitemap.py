@@ -40,6 +40,8 @@ class GenerateSitemap:
                 weapon_slug = "music-kits"
             elif skin.type == Types.graffitis:
                 weapon_slug = "graffitis"
+            elif skin.type == Types.stickers:
+                weapon_slug = "stickers"
             else:
                 weapon_slug = slugify(skin.weapon.value)
             url = f"counter-strike-global-offensive/{weapon_slug}/{skin.slug}"
