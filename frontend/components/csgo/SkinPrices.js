@@ -15,7 +15,8 @@ const SkinPrices = ({ skins, souvenir, statTrak }) => {
   const skin = skins[0]
   const isAgent = skin.type === 'agents'
   const isMusicKit = skin.type === 'music_kits'
-  const isWeapon = !isAgent && !isMusicKit
+  const isGraffiti = skin.type === 'graffitis'
+  const isWeapon = !isAgent && !isMusicKit && !isGraffiti
 
   let qualities
   if (!isWeapon) {
@@ -43,7 +44,7 @@ const SkinPrices = ({ skins, souvenir, statTrak }) => {
       <Table.Body>
         {qualities.map(quality => {
           let skin
-          if (isAgent) {
+          if (isAgent || isGraffiti) {
             skin = skins[0]
           } else if (isMusicKit) {
             skin = skins.find(skin => skin.statTrak === statTrak)

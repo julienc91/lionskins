@@ -17,7 +17,8 @@
     "2020_05_22_001": "Visualize the skins you own and evaluate the price of your Steam inventory!",
     "2021_02_12_001": "Prices from the Skinport platform are now available!",
     "2021_03_27_001": "We now support agent skins!",
-    "2021_10_01_001": "We now support music kits!"
+    "2021_10_01_001": "We now support music kits!",
+    "2021_10_02_001": "Graffitis are listed as well"
   },
   "currency": {
     "eur": "€{{price}}",

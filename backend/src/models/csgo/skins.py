@@ -85,6 +85,8 @@ class Skin(BaseSkin):
             if self.stat_trak:
                 prefix = "StatTrak™ " + prefix
             return f"{prefix} | {self.name}"
+        elif self.type == Types.graffitis:
+            return f"Sealed Graffiti | ${self.name}"
 
         res = ""
         if self.weapon.category == WeaponCategories.knives:

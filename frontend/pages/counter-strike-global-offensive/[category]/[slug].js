@@ -127,27 +127,29 @@ const SkinPage = ({ category, slug, weapon }) => {
             <Header as='h3' key='header'>{t('csgo.skin.summary')}</Header>
             <SkinSummary skins={skins} />
 
-            <div className='skin-image'>
-              <Image
-                alt={fullName}
-                imageSrc={image}
-                loaderSrc={defaultImage}
-              />
-            </div>
-
-            {weapon && (
-              <div className='select-quality'>
-                {qualities.map(key => (
-                  <div
-                    key={key}
-                    className={quality === key ? 'active' : ''}
-                    onClick={() => setQuality(key)}
-                  >
-                    {t(Qualities[key])}
-                  </div>
-                ))}
+            <div>
+              <div className='skin-image'>
+                <Image
+                  alt={fullName}
+                  imageSrc={image}
+                  loaderSrc={defaultImage}
+                />
               </div>
-            )}
+
+              {weapon && (
+                <div className='select-quality'>
+                  {qualities.map(key => (
+                    <div
+                      key={key}
+                      className={quality === key ? 'active' : ''}
+                      onClick={() => setQuality(key)}
+                    >
+                      {t(Qualities[key])}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </section>
 
           <section className='right-panel'>
@@ -201,7 +203,7 @@ SkinPage.propTypes = {
 export const getServerSideProps = async ({ query }) => {
   const slug = query.slug
   let category, weapon
-  if (query.category === 'agents' || query.category === 'music-kits') {
+  if (query.category === 'agents' || query.category === 'music-kits' || query.category === 'graffitis') {
     weapon = null
     category = query.category.replace('-', '_')
   } else {

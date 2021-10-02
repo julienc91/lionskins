@@ -53,6 +53,9 @@ const getSkinInternalUrl = skin => {
     case 'music_kits':
       weaponSlug = 'music-kits'
       break
+    case 'graffitis':
+      weaponSlug = 'graffitis'
+      break
     default:
       weaponSlug = getWeaponSlug(skin.weapon.name)
   }

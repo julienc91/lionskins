@@ -79,6 +79,7 @@ class Client(AbstractProvider):
                 "count": count,
                 "currency": 3,
                 "start": start,
+                "query": "Music Kit",
             }
             data = self._get_market_listings_with_retry(params)
 
@@ -90,7 +91,13 @@ class Client(AbstractProvider):
 
                 image_id = row.get("asset_description", {}).get("icon_url", "")
                 if image_id:
-                    kwargs["image_url"] = f"https://steamcommunity-a.akamaihd.net/economy/image/{image_id}/720fx720f"
+                    if "Music Kit |" in item_name:
+                        dimensions = "360fx360f"
+                    elif "Sealed Graffiti |" in item_name:
+                        dimensions = "300fx300f"
+                    else:
+                        dimensions = "720fx720f"
+                    kwargs["image_url"] = f"https://steamcommunity-a.akamaihd.net/economy/image/{image_id}/{dimensions}"
 
                 rarity = self._parse_rarity(row)
                 if rarity:

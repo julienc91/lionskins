@@ -16,15 +16,21 @@ class Parser:
         for r in Rarities:
             if r.value in rarity:
                 return r
-        agent_rarities = {
+        other_rarities = {
+            # Agents
             "Master": Rarities.covert,
             "Superior": Rarities.classified,
             "Exceptional": Rarities.restricted,
             "Distinguished": Rarities.mil_spec,
+            # Graffitis
+            "Exotic": Rarities.classified,
+            "Remarkable": Rarities.restricted,
+            "High Grade": Rarities.mil_spec,
+            "Base Grade": Rarities.consumer_grade,
         }
-        for r in agent_rarities:
+        for r in other_rarities:
             if r in rarity:
-                return agent_rarities[r]
+                return other_rarities[r]
         raise ValueError
 
     @classmethod
@@ -109,8 +115,15 @@ class Parser:
         return {"name": right_split, "type": Types.music_kits, "stat_trak": stat_trak, "souvenir": False}
 
     @classmethod
+    def _parse_graffiti_item(cls, item_name: str) -> Optional[dict]:
+        left_split, _, right_split = item_name.partition("|")
+        if "Sealed Graffiti" not in left_split or not right_split:
+            return None
+        return {"name": right_split, "type": Types.graffitis}
+
+    @classmethod
     def _parse_item_name(cls, item_name: str) -> Optional[dict]:
-        if item_name.startswith(("Patch", "Sealed Graffiti", "Sticker")):
+        if item_name.startswith(("Patch", "Sticker")):
             return None
 
         data = cls._parse_weapon_item(item_name)
@@ -118,6 +131,8 @@ class Parser:
             data = cls._parse_agent_item(item_name)
         if data is None:
             data = cls._parse_music_kit_item(item_name)
+        if data is None:
+            data = cls._parse_graffiti_item(item_name)
         return data
 
     @classmethod

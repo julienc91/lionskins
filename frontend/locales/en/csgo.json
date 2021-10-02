@@ -8,7 +8,8 @@
       "knives": "Knives",
       "gloves": "Gloves",
       "agents": "Agents",
-      "music_kits": "Music Kits"
+      "music_kits": "Music Kits",
+      "graffitis": "Graffitis"
     },
     "filters": {
       "all": "All",
@@ -93,7 +94,8 @@
     },
     "types": {
       "agents": "Agents",
-      "music_kits": "Music Kits"
+      "music_kits": "Music Kits",
+      "graffitis": "Graffitis"
     },
     "weapons": {
       "glock_18": "Glock-18",
