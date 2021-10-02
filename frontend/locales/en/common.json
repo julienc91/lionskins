@@ -20,10 +20,6 @@
     "2021_10_01_001": "We now support music kits!",
     "2021_10_02_001": "Graffitis are listed as well"
   },
-  "currency": {
-    "eur": "€{{price}}",
-    "usd": "${{price}}"
-  },
   "current_language": "en",
   "footer": {
     "about": "About",

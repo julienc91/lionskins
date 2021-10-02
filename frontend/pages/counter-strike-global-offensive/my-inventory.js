@@ -9,6 +9,7 @@ import useSettings from '../../components/SettingsProvider'
 import Skin from '../../components/csgo/Skin'
 import AuthenticationManager from '../../utils/authentication'
 import { Providers } from '../../utils/enums'
+import { formatPrice } from '../../utils/i18n'
 
 export const getInventoryQuery = gql`
   query ($steamId: String, $currency: TypeCurrency) {
@@ -41,7 +42,7 @@ export const getInventoryQuery = gql`
   }`
 
 const MyInventory = () => {
-  const { t } = useTranslation('csgo')
+  const { t, lang } = useTranslation('csgo')
   const { user, loading: userLoading } = useAuth()
   const [loadInventory, { data, loading: dataLoading }] = useLazyQuery(getInventoryQuery, { notifyOnNetworkStatusChange: true })
   const { currency } = useSettings()
@@ -112,7 +113,7 @@ const MyInventory = () => {
               <>
                 <Header as='h2' icon textAlign='center'>
                   <Icon name={currency} />
-                  {t(`common:currency.${currency}`, { price: minCost })}<br />{t('csgo.inventory.summary_title')}
+                  {formatPrice(minCost, lang)}<br />{t('csgo.inventory.summary_title')}
                   <Header.Subheader>
                     {t('csgo.inventory.summary_subtitle')}
                   </Header.Subheader>

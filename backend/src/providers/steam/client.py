@@ -79,7 +79,6 @@ class Client(AbstractProvider):
                 "count": count,
                 "currency": 3,
                 "start": start,
-                "query": "Music Kit",
             }
             data = self._get_market_listings_with_retry(params)
 

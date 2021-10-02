@@ -23,10 +23,6 @@
     "2021_10_01_001": "Les kits de musiques sont à présent disponibles\u00A0!",
     "2021_10_02_001": "Les graffitis sont désormais répertoriés"
   },
-  "currency": {
-    "eur": "{{price}}€",
-    "usd": "{{price}}$"
-  },
   "current_language": "fr",
   "footer": {
     "about": "À propos",

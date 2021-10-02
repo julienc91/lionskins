@@ -2,15 +2,14 @@ import React from 'react'
 import useTranslation from 'next-translate/useTranslation'
 import PropTypes from 'prop-types'
 import { Table } from 'semantic-ui-react'
-import useSettings from '../SettingsProvider'
 import TrackedLink from '../TrackedLink'
 import { Providers } from '../../utils/enums'
 import { Qualities } from '../../utils/csgo/enums'
 import { getIconFromProvider, getSkinUrlFromProvider } from '../../utils/csgo/utils'
+import { formatPrice } from '../../utils/i18n'
 
 const SkinPrices = ({ skins, souvenir, statTrak }) => {
-  const { t } = useTranslation('csgo')
-  const { currency } = useSettings()
+  const { t, lang } = useTranslation('csgo')
 
   const skin = skins[0]
   const isAgent = skin.type === 'agents'
@@ -74,7 +73,7 @@ const SkinPrices = ({ skins, souvenir, statTrak }) => {
                     negative={price && minPrice < maxPrice && price === maxPrice}
                   >
                     {price
-                      ? <TrackedLink href={url}>{t(`common:currency.${currency}`, { price })}</TrackedLink>
+                      ? <TrackedLink href={url}>{formatPrice(price, lang)}</TrackedLink>
                       : ''}
                   </Table.Cell>
                 )

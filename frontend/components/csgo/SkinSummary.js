@@ -2,13 +2,12 @@ import React from 'react'
 import useTranslation from 'next-translate/useTranslation'
 import PropTypes from 'prop-types'
 import { Icon, Table } from 'semantic-ui-react'
-import useSettings from '../SettingsProvider'
 import { Providers } from '../../utils/enums'
 import { Rarities } from '../../utils/csgo/enums'
+import { formatPrice } from '../../utils/i18n'
 
 const SkinSummary = ({ skins }) => {
-  const { t } = useTranslation('csgo')
-  const { currency } = useSettings()
+  const { t, lang } = useTranslation('csgo')
 
   const isAgent = skins[0].type === 'agents'
   const isMusicKit = skins[0].type === 'music_kits'
@@ -55,9 +54,9 @@ const SkinSummary = ({ skins }) => {
             <Icon name={hasSouvenir ? 'check' : 'x'} />
           </Table.Cell>)}
           <Table.Cell>
-            {t(`common:currency.${currency}`, { price: minPrice })}
+            {formatPrice(minPrice, lang)}
             <span> - </span>
-            {t(`common:currency.${currency}`, { price: maxPrice })}
+            {formatPrice(maxPrice, lang)}
           </Table.Cell>
         </Table.Row>
       </Table.Body>

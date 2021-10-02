@@ -8,10 +8,10 @@ import TrackedLink from '../TrackedLink'
 import { Providers } from '../../utils/enums'
 import { Qualities, Weapons } from '../../utils/csgo/enums'
 import { getColorFromRarity, getIconFromProvider, getSkinInternalUrl, getSkinUrlFromProvider } from '../../utils/csgo/utils'
-import useSettings from '../SettingsProvider'
+import { formatPrice } from '../../utils/i18n'
 
 const Skin = ({ skin }) => {
-  const { t } = useTranslation('csgo')
+  const { t, lang } = useTranslation('csgo')
   const internalUrl = getSkinInternalUrl(skin)
   let skinName
   let defaultImage
@@ -23,7 +23,6 @@ const Skin = ({ skin }) => {
     skinName += (skin.slug === 'vanilla') ? t('csgo.qualities.vanilla') : skin.name
     defaultImage = skin.weapon.name
   }
-  const { currency } = useSettings()
 
   return (
     <Card color={getColorFromRarity(skin.rarity)} className='skin item'>
@@ -54,14 +53,14 @@ const Skin = ({ skin }) => {
       <Card.Content extra>
         <div className='prices'>
           {Object.keys(Providers).sort().map(provider => {
-            if (!skin.prices[provider]) {
+            if (!skin || !skin.prices || !skin.prices[provider]) {
               return null
             }
             return (
               <div className='price' key={provider}>
                 <TrackedLink href={getSkinUrlFromProvider(skin, provider)}>
                   {getIconFromProvider(provider)}
-                  {t(`common:currency.${currency}`, { price: skin.prices[provider] })}
+                  {formatPrice(skin.prices[provider], lang)}
                 </TrackedLink>
               </div>
             )
