@@ -112,14 +112,14 @@ class Parser:
             return None
 
         stat_trak = "StatTrak" in left_split
-        return {"name": right_split, "type": Types.music_kits, "stat_trak": stat_trak, "souvenir": False}
+        return {"name": right_split.strip(), "type": Types.music_kits, "stat_trak": stat_trak, "souvenir": False}
 
     @classmethod
     def _parse_graffiti_item(cls, item_name: str) -> Optional[dict]:
         left_split, _, right_split = item_name.partition("|")
         if "Sealed Graffiti" not in left_split or not right_split:
             return None
-        return {"name": right_split, "type": Types.graffitis}
+        return {"name": right_split.strip(), "type": Types.graffitis}
 
     @classmethod
     def _parse_item_name(cls, item_name: str) -> Optional[dict]:
