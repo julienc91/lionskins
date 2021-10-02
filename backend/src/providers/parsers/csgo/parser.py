@@ -128,11 +128,11 @@ class Parser:
 
         data = cls._parse_weapon_item(item_name)
         if data is None:
-            data = cls._parse_agent_item(item_name)
-        if data is None:
             data = cls._parse_music_kit_item(item_name)
         if data is None:
             data = cls._parse_graffiti_item(item_name)
+        if data is None:
+            data = cls._parse_agent_item(item_name)
         return data
 
     @classmethod
