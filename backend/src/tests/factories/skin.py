@@ -5,7 +5,7 @@ from faker import Faker
 
 from models import Apps
 from models.csgo import Skin
-from models.csgo.enums import Qualities, Rarities, Weapons
+from models.csgo.enums import Qualities, Rarities, Types, Weapons
 
 faker = Faker()
 
@@ -24,6 +24,7 @@ class SkinFactory(factory.mongoengine.MongoEngineFactory):
     souvenir = False
     quality = factory.Faker("random_element", elements=Qualities)
     rarity = factory.Faker("random_element", elements=Rarities)
+    type = Types.weapons
 
     @factory.post_generation
     def post_generation(self: Skin, create, extracted, **kwargs):
