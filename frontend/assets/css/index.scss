@@ -240,6 +240,7 @@ $xlarge-down: 'only screen and (max-width : 1439px)' !default;
         img {
           background-color: $light-grey;
           cursor: pointer;
+          width: 100%;
         }
 
         .stattrak,
