@@ -9,11 +9,7 @@ import { formatPrice } from '../../utils/i18n'
 const SkinSummary = ({ skins }) => {
   const { t, lang } = useTranslation('csgo')
 
-  const isAgent = skins[0].type === 'agents'
-  const isMusicKit = skins[0].type === 'music_kits'
-  const isGraffiti = skins[0].type === 'graffitis'
-  const isSticker = skins[0].type === 'stickers'
-  const isWeaponSkin = !isAgent && !isMusicKit && !isGraffiti && !isSticker
+  const isWeaponSkin = skins[0].type === 'weapons'
 
   const hasRarity = skins.find(s => s.rarity)
   const rarity = hasRarity ? t(Rarities[hasRarity.rarity]) : null
@@ -36,7 +32,7 @@ const SkinSummary = ({ skins }) => {
     <Table unstackable celled textAlign='center' className='skin-summary'>
       <Table.Header>
         <Table.Row>
-          {(isAgent || isMusicKit || isGraffiti || isSticker) && <Table.HeaderCell>{t('csgo.skin.type')}</Table.HeaderCell>}
+          {!isWeaponSkin && <Table.HeaderCell>{t('csgo.skin.type')}</Table.HeaderCell>}
           {rarity && <Table.HeaderCell>{t('csgo.skin.rarity')}</Table.HeaderCell>}
           {isWeaponSkin && <Table.HeaderCell>{t('csgo.skin.stat_trak')}</Table.HeaderCell>}
           {isWeaponSkin && <Table.HeaderCell>{t('csgo.skin.souvenir')}</Table.HeaderCell>}
@@ -46,7 +42,7 @@ const SkinSummary = ({ skins }) => {
 
       <Table.Body>
         <Table.Row>
-          {(isAgent || isMusicKit || isGraffiti || isSticker) && <Table.Cell>{t(`csgo.types.${skins[0].type}`)}</Table.Cell>}
+          {!isWeaponSkin && <Table.Cell>{t(`csgo.types.${skins[0].type}`)}</Table.Cell>}
           {rarity && <Table.Cell>{rarity}</Table.Cell>}
           {isWeaponSkin && (<Table.Cell positive={hasStatTrak}>
             <Icon name={hasStatTrak ? 'check' : 'x'} />

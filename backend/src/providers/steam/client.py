@@ -90,7 +90,7 @@ class Client(AbstractProvider):
 
                 image_id = row.get("asset_description", {}).get("icon_url", "")
                 if image_id:
-                    if "Music Kit |" in item_name:
+                    if "Music Kit |" in item_name or "Patch | " in item_name:
                         dimensions = "360fx360f"
                     elif "Sealed Graffiti |" in item_name or "Sticker |" in item_name:
                         dimensions = "300fx300f"

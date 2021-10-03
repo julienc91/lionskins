@@ -31,10 +31,13 @@ const Filter = ({ filters, onFilterChanged }) => {
       })
       return null
     })
-    res.push({ key: 'Tagents', text: t('csgo.types.agents'), value: 'Tagents' })
-    res.push({ key: 'Tmusic_kits', text: t('csgo.types.music_kits'), value: 'Tmusic_kits' })
-    res.push({ key: 'Tgraffitis', text: t('csgo.types.graffitis'), value: 'Tgraffitis' })
-    res.push({ key: 'Tstickers', text: t('csgo.types.stickers'), value: 'Tstickers' })
+    res.push({ key: 'other', text: t('csgo.types.other'), value: '-', disabled: true })
+    res.push({ key: 'Tagents', text: t('csgo.types.agents'), value: 'Tagents', icon: 'caret right' })
+    res.push({ key: 'Tmusic_kits', text: t('csgo.types.music_kits'), value: 'Tmusic_kits', icon: 'caret right' })
+    res.push({ key: 'Tgraffitis', text: t('csgo.types.graffitis'), value: 'Tgraffitis', icon: 'caret right' })
+    res.push({ key: 'Tstickers', text: t('csgo.types.stickers'), value: 'Tstickers', icon: 'caret right' })
+    res.push({ key: 'Tpins', text: t('csgo.types.pins'), value: 'Tpins', icon: 'caret right' })
+    res.push({ key: 'Tpatches', text: t('csgo.types.patches'), value: 'Tpatches', icon: 'caret right' })
     return res
   }
 

@@ -15,7 +15,7 @@ const Skin = ({ skin }) => {
   const internalUrl = getSkinInternalUrl(skin)
   let skinName
   let defaultImage
-  if (skin.type === 'agents' || skin.type === 'music_kits' || skin.type === 'graffitis' || skin.type === 'stickers') {
+  if (skin.type !== 'weapons') {
     skinName = skin.name
     defaultImage = skin.type
   } else {

@@ -12,11 +12,8 @@ const SkinPrices = ({ skins, souvenir, statTrak }) => {
   const { t, lang } = useTranslation('csgo')
 
   const skin = skins[0]
-  const isAgent = skin.type === 'agents'
   const isMusicKit = skin.type === 'music_kits'
-  const isGraffiti = skin.type === 'graffitis'
-  const isSticker = skin.type === 'stickers'
-  const isWeapon = !isAgent && !isMusicKit && !isGraffiti && !isSticker
+  const isWeapon = skin.type === 'weapons'
 
   let qualities
   if (!isWeapon) {
@@ -44,7 +41,7 @@ const SkinPrices = ({ skins, souvenir, statTrak }) => {
       <Table.Body>
         {qualities.map(quality => {
           let skin
-          if (isAgent || isGraffiti || isSticker) {
+          if (!isWeapon && !isMusicKit) {
             skin = skins[0]
           } else if (isMusicKit) {
             skin = skins.find(skin => skin.statTrak === statTrak)

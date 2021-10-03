@@ -134,10 +134,20 @@ class Parser:
         return {"name": right_split.strip(), "type": Types.stickers}
 
     @classmethod
-    def _parse_item_name(cls, item_name: str) -> Optional[dict]:
-        if item_name.startswith(("Patch",)):
+    def _parse_pin_item(cls, item_name: str) -> Optional[dict]:
+        if not item_name.endswith(" Pin"):
             return None
+        return {"name": item_name, "type": Types.pins}
 
+    @classmethod
+    def _parse_patch_item(cls, item_name: str) -> Optional[dict]:
+        left_split, _, right_split = item_name.partition("|")
+        if "Patch" not in left_split or not right_split:
+            return None
+        return {"name": right_split.strip(), "type": Types.patches}
+
+    @classmethod
+    def _parse_item_name(cls, item_name: str) -> Optional[dict]:
         data = cls._parse_weapon_item(item_name)
         if data is None:
             data = cls._parse_music_kit_item(item_name)
@@ -145,6 +155,10 @@ class Parser:
             data = cls._parse_graffiti_item(item_name)
         if data is None:
             data = cls._parse_sticker_item(item_name)
+        if data is None:
+            data = cls._parse_patch_item(item_name)
+        if data is None:
+            data = cls._parse_pin_item(item_name)
         if data is None:
             data = cls._parse_agent_item(item_name)
         return data

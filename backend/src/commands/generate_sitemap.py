@@ -34,16 +34,10 @@ class GenerateSitemap:
         all_skins = Skin.objects.all()
         already_done = set()
         for skin in all_skins:
-            if skin.type == Types.agents:
-                weapon_slug = "agents"
-            elif skin.type == Types.music_kits:
-                weapon_slug = "music-kits"
-            elif skin.type == Types.graffitis:
-                weapon_slug = "graffitis"
-            elif skin.type == Types.stickers:
-                weapon_slug = "stickers"
-            else:
+            if skin.type == Types.weapons:
                 weapon_slug = slugify(skin.weapon.value)
+            else:
+                weapon_slug = skin.type.name.lower().replace("_", "-")
             url = f"counter-strike-global-offensive/{weapon_slug}/{skin.slug}"
             row = [url, "daily", 0.7]
             if url in already_done:

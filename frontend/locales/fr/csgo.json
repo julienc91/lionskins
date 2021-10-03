@@ -10,7 +10,9 @@
       "agents": "Agents",
       "music_kits": "Kits de musique",
       "graffitis": "Graffitis",
-      "stickers": "Stickers"
+      "stickers": "Stickers",
+      "pins": "Pin's",
+      "patches": "Écussons"
     },
     "filters": {
       "all": "Tout",
@@ -94,10 +96,13 @@
       "disclaimer": "Les équipes affichées sont les équipes du top 30 du classement hebdomadaire de HLTV. Données issues de <0>egamersworld.com</0> et <1>Liquipedia.net</1>."
     },
     "types": {
+      "other": "Autres",
       "agents": "Agents",
       "music_kits": "Kits de musique",
       "graffitis": "Graffitis",
-      "stickers": "Stickers"
+      "stickers": "Stickers",
+      "pins": "Pin's",
+      "patches": "Écussons"
     },
     "weapons": {
       "glock_18": "Glock-18",

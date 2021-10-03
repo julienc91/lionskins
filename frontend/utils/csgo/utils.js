@@ -46,7 +46,7 @@ const getIconFromProvider = provider => {
 
 const getSkinInternalUrl = skin => {
   let weaponSlug
-  if (['agents', 'music_kits', 'graffitis', 'stickers'].indexOf(skin.type) >= 0) {
+  if (skin.type !== 'weapons') {
     weaponSlug = skin.type.replace('_', '-')
   } else {
     weaponSlug = getWeaponSlug(skin.weapon.name)
