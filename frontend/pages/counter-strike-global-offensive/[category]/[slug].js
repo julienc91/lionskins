@@ -202,16 +202,16 @@ SkinPage.propTypes = {
 
 export const getServerSideProps = async ({ query }) => {
   const slug = query.slug
-  let category, weapon
-  if (query.category !== 'weapons') {
-    weapon = null
+
+  let category
+  const weapon = Object.keys(Weapons).find(e => getWeaponSlug(e) === query.category) || null
+  if (!weapon) {
     category = query.category.replace('-', '_')
   } else {
-    weapon = Object.keys(Weapons).find(e => getWeaponSlug(e) === query.category)
-    category = 'weapon'
+    category = 'weapons'
   }
 
-  if ((!category && !weapon) || !slug) {
+  if (!category || !slug) {
     return { notFound: true }
   }
 
