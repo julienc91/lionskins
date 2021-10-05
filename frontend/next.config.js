@@ -28,6 +28,14 @@ const moduleExports = nextTranslate({
       }
     ]
   },
+  async rewrites () {
+    return [
+      {
+        source: '/sitemap.xml',
+        destination: `${process.env.NEXT_PUBLIC_API_DOMAIN}/sitemap.xml`
+      }
+    ]
+  },
   async redirects () {
     return [
       {
