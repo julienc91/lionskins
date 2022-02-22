@@ -103,7 +103,7 @@ class SyncCatalog:
     }
 
     @classmethod
-    def run(cls, data_path):
+    def run(cls, data_path: str) -> None:
         with open(data_path) as f:
             data = json.load(f)
 

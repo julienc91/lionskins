@@ -2,6 +2,7 @@
 
 import base64
 import os
+from typing import Any, Generator
 
 import requests
 from ratelimit import limits, sleep_and_retry
@@ -25,7 +26,7 @@ class Client(AbstractProvider):
 
     @sleep_and_retry
     @limits(calls=1, period=10)
-    def __get(self, method, params=None):
+    def __get(self, method: str, params: Any = None) -> requests.Response:
         params = params or {}
         params["app_id"] = self._steam_app_id
         return requests.get(
@@ -34,7 +35,7 @@ class Client(AbstractProvider):
             headers={"Content-Type": "application/json", "Authorization": f"Basic {self.token}"},
         )
 
-    def get_tasks(self):
+    def get_tasks(self) -> Generator[tuple[TaskTypes, str, float, None], None, None]:
         result = self.__get("items")
         if result.status_code >= 500:
             raise UnfinishedJob

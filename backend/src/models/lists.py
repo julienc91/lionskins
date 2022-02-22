@@ -28,5 +28,5 @@ class List(ModelMixin, db.Document):
     item_containers = db.EmbeddedDocumentListField(ItemContainer)
 
     @classmethod
-    def generate_slug(cls, user, name):
+    def generate_slug(cls, user: str, name: str) -> str:
         return slugify(name) or "list"

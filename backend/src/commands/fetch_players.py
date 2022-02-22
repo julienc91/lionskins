@@ -64,7 +64,7 @@ class FetchPlayers:
             yield teams.get(team["name"].lower(), team["name"])
 
     @classmethod
-    def _get_team_players(cls, team: str):
+    def _get_team_players(cls, team: str) -> Optional[dict[str, Any]]:
         team = {  # Convert team name to liquipedia convention
             "1win": "1win",
             "hard legion": "Hard Legion Esports",
@@ -91,7 +91,7 @@ class FetchPlayers:
         pages = res["query"]["pages"]
         if pages.get("-1"):
             logger.error("Team not found on Liquipedia", team=team)
-            return
+            return None
 
         page = list(pages.values())[0]
         content = page["revisions"][0]["slots"]["main"]["*"]
@@ -100,7 +100,7 @@ class FetchPlayers:
             active_squad = re.search(r"{{ActiveSquad\|(\n{{SquadPlayer.*}}\s*)+\n}}", content)[0].split("\n")[1:-1]
         except Exception as e:
             logger.exception(e)
-            return
+            return None
 
         # Retrieve player names and countries from team page
         players = {}
