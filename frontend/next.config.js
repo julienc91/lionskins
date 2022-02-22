@@ -35,22 +35,6 @@ const moduleExports = nextTranslate({
         destination: `${process.env.NEXT_PUBLIC_API_DOMAIN}/sitemap.xml`
       }
     ]
-  },
-  async redirects () {
-    return [
-      {
-        source: '/catchAll',
-        destination: '/en',
-        locale: false,
-        permanent: false
-      },
-      {
-        source: '/catchAll/:slug*',
-        destination: '/en/:slug*',
-        locale: false,
-        permanent: false
-      }
-    ]
   }
 })
 

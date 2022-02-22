@@ -10,7 +10,7 @@
   "dependencies": {
     "@apollo/client": "^3.2.1",
     "@sentry/nextjs": "^6.13.2",
-    "axios": "^0.21.0",
+    "axios": "^0.26.0",
     "graphql": "^15.3.0",
     "js-cookie": "^3.0.1",
     "next": "^12.1.0",
@@ -31,14 +31,14 @@
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "eslint": "^7.22.0",
-    "eslint-config-next": "^11.0.0",
+    "eslint-config-next": "^12.1.0",
     "eslint-config-standard": "^16.0.1",
     "eslint-config-standard-react": "^11.0.1",
     "eslint-plugin-cypress": "^2.11.1",
     "eslint-plugin-graphql": "^4.0.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.21.2",
     "eslint-plugin-standard": "^5.0.0"
   }

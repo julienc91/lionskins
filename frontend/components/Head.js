@@ -10,7 +10,7 @@ const Head = () => {
   const path = router.asPath.split('?')[0].slice(4)
   return (
     <NextHead>
-      {locales.filter(locale => locale !== 'catchAll').map(locale => (
+      {locales.filter(locale => locale !== 'default').map(locale => (
         <link
           key={`alternate-${locale}`} rel='alternate' hrefLang={locale}
           href={`${process.env.NEXT_PUBLIC_FRONTEND_DOMAIN}/${locale}/${path}`}
