@@ -8,6 +8,13 @@ line-length = 130
 [tool.mypy]
 mypy_path = "src/"
 
+[tool.pytest.ini_options]
+env = [
+    "MONGO_HOST=mongomock://localhost/test",
+    "FLASK_SECRET_KEY=secret",
+    "RECAPTCHA_SECRET=secret"
+]
+
 [tool.poetry]
 name = "lionskins"
 version = "1.0.0"
