@@ -42,6 +42,7 @@ $xlarge-down: 'only screen and (max-width : 1439px)' !default;
   }
 }
 
+// scss-lint:disable SelectorFormat
 #__next {
 
   $topbar-height: 60px;
