@@ -39,11 +39,8 @@ class FetchPlayers:
         res = cls._get_content("https://raw.githubusercontent.com/julienc91/hltv-ranking/rankings/latest.json")
         api_data = json.loads(res)
         ranking = api_data["teams"]
-        teams = {
-            "nip": "Ninjas in Pyjamas",
-        }
         for team in ranking:
-            yield teams.get(team["name"].lower(), team["name"])
+            yield team["name"]
 
     @classmethod
     def _get_team_players(cls, team: str) -> Optional[dict[str, Any]]:
@@ -51,8 +48,10 @@ class FetchPlayers:
             "1win": "1win",
             "hard legion": "Hard Legion Esports",
             "nemiga": "Nemiga Gaming",
+            "nip": "Ninjas in Pyjamas",
             "saw": "SAw (Portuguese team)",
             "sinners": "Sinners Esports",
+            "spirit": "Team Spirit",
             "teamone": "Team One",
         }.get(team.lower(), team)
 
