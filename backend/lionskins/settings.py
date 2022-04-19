@@ -35,7 +35,6 @@ DEBUG = os.environ.get("DJANGO_DEBUG", "false") == "true"
 ALLOWED_HOSTS = [os.environ["BACKEND_DOMAIN"]]
 
 if os.environ.get("ENVIRONMENT") != "development":
-    SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
 
 
@@ -89,6 +88,9 @@ TEMPLATES = [
         },
     },
 ]
+
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 WSGI_APPLICATION = "lionskins.wsgi.application"
 

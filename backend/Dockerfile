@@ -3,7 +3,7 @@ FROM python:3-alpine
 RUN \
   addgroup -S group && \
   adduser -S user -G group && \
-  apk add --no-cache gcc libffi-dev musl-dev
+  apk add --no-cache gcc libffi-dev musl-dev cargo libressl-dev postgresql-dev
 
 WORKDIR /home/user/backend
 
@@ -17,8 +17,6 @@ RUN poetry config virtualenvs.create false \
   && poetry install --no-dev --no-interaction --no-ansi
 COPY --chown=user:group . .
 
-EXPOSE 5000
-
-WORKDIR /home/user/backend/
+EXPOSE 8000
 
 CMD ["gunicorn", "--config", "gunicorn.py", "lionskins.wsgi"]
