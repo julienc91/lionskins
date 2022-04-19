@@ -2,20 +2,20 @@ version: '3'
 services:
 
   db:
-    image: "mongo:5.0"
+    image: "postgres:14"
     ports:
-      - "127.0.0.1:27017:27017"
+      - "127.0.0.1:5432:5432"
     env_file:
-      - db/.env.local
+      - db/.env
     volumes:
-      - "dbdata:/data/db"
+      - "dbdata:/var/lib/postgresql/data"
     networks:
       - db_network
 
   backend:
     build: backend
     env_file:
-      - backend/.env.local
+      - backend/.env
     networks:
       - db_network
       - web_network
@@ -27,14 +27,14 @@ services:
   backoffice:
     build: backend
     env_file:
-      - backend/.env.local
+      - backend/.env
     networks:
       - db_network
     volumes:
       - "backenddata:/data/backend"
     depends_on:
       - db
-    command: ./backoffice
+    command: python manage.py runscheduler
 
   nginx:
     image: "nginx:1"

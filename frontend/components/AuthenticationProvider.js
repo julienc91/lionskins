@@ -2,15 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react'
 import { gql } from '@apollo/client'
 import axios from 'axios'
 import PropTypes from 'prop-types'
-import { client, refreshClient } from '../apollo'
-import AuthenticationManager from '../utils/authentication'
-
-const refreshTokenQuery = gql`
-  mutation {
-    refreshToken {
-      accessToken
-    }
-  }`
+import { client } from '../apollo'
 
 export const getUserQuery = gql`
   query {
@@ -28,59 +20,32 @@ export const AuthenticationProvider = ({ children }) => {
   const [loading, setLoading] = useState(true)
 
   const getUser = async () => {
-    const token = AuthenticationManager.getToken()
-    if (token) {
-      const res = await client.query({ query: getUserQuery })
-      const user = res.data.currentUser
-      if (user) {
-        setUser(user)
-      }
-    }
-  }
-
-  const refreshToken = async () => {
-    const token = AuthenticationManager.getRefreshToken()
-    if (!token) {
+    let res
+    try {
+      res = await client.query({ query: getUserQuery })
+    } catch (err) {
       return
     }
-
-    try {
-      const response = await refreshClient.mutate({ mutation: refreshTokenQuery })
-      AuthenticationManager.setToken(response.data.refreshToken.accessToken)
-    } catch {
-      AuthenticationManager.setToken(null)
-      AuthenticationManager.setRefreshToken(null)
+    const user = res.data.currentUser
+    if (user) {
+      setUser(user)
     }
-
-    setTimeout(refreshToken, 5 * 60 * 1000)
   }
 
   const login = async () => {
     setLoading(true)
-    const res = await axios.post(`${process.env.NEXT_PUBLIC_API_DOMAIN}/rest/jwt/`, null, { withCredentials: true })
-    if (res.status === 200) {
-      const { accessToken, refreshToken } = res.data
-      AuthenticationManager.setToken(accessToken)
-      AuthenticationManager.setRefreshToken(refreshToken)
-      await getUser()
-      setLoading(false)
-    }
+    await getUser()
+    setLoading(false)
   }
 
   const logout = () => {
-    axios.delete(`${process.env.NEXT_PUBLIC_API_DOMAIN}/rest/jwt/`, { withCredentials: true })
-    AuthenticationManager.setRefreshToken(null)
-    AuthenticationManager.setToken(null)
+    axios.get(`${process.env.NEXT_PUBLIC_API_DOMAIN}/logout/`, { withCredentials: true })
     setUser(null)
   }
 
   useEffect(() => {
     (async () => {
-      const token = AuthenticationManager.getRefreshToken()
-      if (token) {
-        await refreshToken()
-        await getUser()
-      }
+      await getUser()
       setLoading(false)
     })()
   }, [])

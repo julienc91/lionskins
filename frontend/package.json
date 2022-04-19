@@ -25,8 +25,7 @@
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.0.0",
     "slugify": "^1.4.5",
-    "swiper": "^7.0.6",
-    "uuid": "^8.3.0"
+    "swiper": "^7.0.6"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",

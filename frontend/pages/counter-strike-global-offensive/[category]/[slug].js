@@ -15,8 +15,8 @@ import { Qualities, Weapons } from '../../../utils/csgo/enums'
 import Image from '../../../components/Image'
 
 const getSkinQuery = gql`
-  query ($weapon: CSGOWeapons, $slug: String, $currency: TypeCurrency, $category: CSGOCategories, $type: CSGOTypes,
-         $quality: CSGOQualities, $rarity: CSGORarities, $statTrak: Boolean, $souvenir: Boolean,
+  query ($weapon: String, $slug: String, $currency: TypeCurrency, $category: String, $type: String,
+         $quality: String, $rarity: String, $statTrak: Boolean, $souvenir: Boolean,
          $search: String) {
     csgo (weapon: $weapon, slug: $slug, category: $category, type: $type, quality: $quality, rarity: $rarity,
           statTrak: $statTrak, souvenir: $souvenir, search: $search) {

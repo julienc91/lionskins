@@ -14,8 +14,8 @@ import Filter from '../../components/csgo/Filter'
 import Skin from '../../components/csgo/Skin'
 
 export const getSkinsQuery = gql`
-  query ($first: Int, $after: String, $weapon: CSGOWeapons, $category: CSGOCategories, $type: CSGOTypes,
-         $quality: CSGOQualities, $rarity: CSGORarities, $statTrak: Boolean, $souvenir: Boolean,
+  query ($first: Int, $after: String, $weapon: String, $category: String, $type: String,
+         $quality: String, $rarity: String, $statTrak: Boolean, $souvenir: Boolean,
          $search: String, $currency: TypeCurrency, $slug: String, $group: Boolean) {
     csgo (first: $first, after: $after, weapon: $weapon, category: $category, type: $type,
           quality: $quality, rarity: $rarity, statTrak: $statTrak, souvenir: $souvenir,

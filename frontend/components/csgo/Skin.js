@@ -4,7 +4,7 @@ import useTranslation from 'next-translate/useTranslation'
 import PropTypes from 'prop-types'
 import { Card, Label } from 'semantic-ui-react'
 import Image from '../Image'
-import TrackedLink from '../TrackedLink'
+import MarketplaceLink from '../MarketplaceLink'
 import { Providers } from '../../utils/enums'
 import { Qualities, Weapons } from '../../utils/csgo/enums'
 import { getColorFromRarity, getIconFromProvider, getSkinInternalUrl, getSkinUrlFromProvider } from '../../utils/csgo/utils'
@@ -58,10 +58,10 @@ const Skin = ({ skin }) => {
             }
             return (
               <div className='price' key={provider}>
-                <TrackedLink href={getSkinUrlFromProvider(skin, provider)}>
+                <MarketplaceLink href={getSkinUrlFromProvider(skin, provider)}>
                   {getIconFromProvider(provider)}
                   {formatPrice(skin.prices[provider], lang)}
-                </TrackedLink>
+                </MarketplaceLink>
               </div>
             )
           })}
