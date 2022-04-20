@@ -11,7 +11,7 @@ from .enums import Collections, Qualities, Rarities, Types, WeaponCategories, We
 
 class Skin(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
-    object_id = models.CharField(max_length=24, db_index=True, unique=True)
+    object_id = models.CharField(max_length=24, null=True, db_index=True)
     type = models.CharField(max_length=32, db_index=True, choices=Types.choices)
     market_hash_name = models.CharField(max_length=255, db_index=True, unique=True)
     group_name = models.CharField(max_length=255)
@@ -34,6 +34,17 @@ class Skin(models.Model):
 
     class Meta:
         ordering = ["-type", "weapon", "group_slug", "souvenir", "stat_trak", "quality"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["market_hash_name"],
+                name="unique_market_hash_name",
+            ),
+            models.UniqueConstraint(
+                fields=["object_id"],
+                condition=models.Q(object_id__isnull=False),
+                name="unique_object_id",
+            ),
+        ]
 
     def _get_market_hash_name(self) -> str:
         res = self.get_partial_market_hash_name()
@@ -57,7 +68,10 @@ class Skin(models.Model):
             return f"Patch | {self.group_name}"
 
         res = ""
-        if Weapons(self.weapon).category == WeaponCategories.knives:
+        if Weapons(self.weapon).category in (
+            WeaponCategories.knives,
+            WeaponCategories.gloves,
+        ):
             res += "★ "
         if self.souvenir:
             res += "Souvenir "
