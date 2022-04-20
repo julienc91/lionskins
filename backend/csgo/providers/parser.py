@@ -10,10 +10,22 @@ from csgo.models.skin import Skin
 class Parser:
     model = Skin
 
+    __reverse_enums = {
+        Qualities: {quality.label: quality for quality in Qualities},
+        Weapons: {weapon.label: weapon for weapon in Weapons},
+    }
+
+    @classmethod
+    def _get_enum_by_label(cls, enum_type, label: str):
+        reverse_dict = cls.__reverse_enums.get(enum_type)
+        if label in reverse_dict:
+            return reverse_dict[label]
+        raise ValueError(f"{label} is not a valid {enum_type.__name__}")
+
     @classmethod
     def parse_rarity(cls, rarity: str) -> Rarities:
         for r in Rarities:
-            if r.value in rarity:
+            if r.label in rarity:
                 return r
         other_rarities = {
             # Agents
@@ -52,18 +64,18 @@ class Parser:
         left_split = re.sub(r"^Souvenir", "", left_split).strip()
 
         try:
-            weapon = Weapons(left_split)
+            weapon = cls._get_enum_by_label(Weapons, left_split)
         except ValueError:
             return None
 
         if right_split:
             try:
                 quality = re.search(r"\(([\w\s-]+)\)$", right_split).group(1)
-                quality = Qualities(quality)
+                quality = cls._get_enum_by_label(Qualities, quality)
             except (ValueError, AttributeError):
                 return None
             skin_name = right_split.replace(f"({quality.value})", "").strip()
-        elif weapon.category is not WeaponCategories.knives:
+        elif weapon.category != WeaponCategories.knives:
             return None
         else:
             skin_name = "Vanilla"
