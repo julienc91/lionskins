@@ -53,7 +53,9 @@ class Command(BaseCommand):
                 res += f"<changefreq>{frequency}</changefreq>"
                 res += f"<priority>{priority}</priority>"
                 for other_language in self.languages:
-                    res += f"""<xhtml:link rel="alternate" hreflang="{other_language}" """
+                    res += (
+                        f"""<xhtml:link rel="alternate" hreflang="{other_language}" """
+                    )
                     res += f"""href="{self.base_url}/{language}/{url}" />"""
                 res += "</url>"
         res += "</urlset>"

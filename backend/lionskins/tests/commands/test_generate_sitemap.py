@@ -9,7 +9,9 @@ from lionskins.management.commands.generate_sitemap import Command
 
 @pytest.fixture(autouse=True)
 def patch_output_file(monkeypatch, tmp_path):
-    monkeypatch.setattr(Command, "output_file", lambda *_: str(tmp_path / "sitemap.xml"))
+    monkeypatch.setattr(
+        Command, "output_file", lambda *_: str(tmp_path / "sitemap.xml")
+    )
 
 
 @pytest.mark.django_db
@@ -24,8 +26,14 @@ def test_generate_sitemap_static_urls(client, skin):
     assert "<loc>https://lionskins.co/en/privacy-policy</loc>" in res
 
     weapon = slugify(skin.weapon.value)
-    assert f"<loc>https://lionskins.co/fr/counter-strike-global-offensive/{weapon}/{skin.group_slug}</loc>" in res
-    assert f"<loc>https://lionskins.co/en/counter-strike-global-offensive/{weapon}/{skin.group_slug}</loc>" in res
+    assert (
+        f"<loc>https://lionskins.co/fr/counter-strike-global-offensive/{weapon}/{skin.group_slug}</loc>"
+        in res
+    )
+    assert (
+        f"<loc>https://lionskins.co/en/counter-strike-global-offensive/{weapon}/{skin.group_slug}</loc>"
+        in res
+    )
 
     res2 = client.get("/sitemap.xml")
     assert res2.status_code == 200

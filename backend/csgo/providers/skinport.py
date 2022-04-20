@@ -29,7 +29,10 @@ class SkinportClient(AbstractClient):
         return requests.get(
             self.base_url + method,
             params=params,
-            headers={"Content-Type": "application/json", "Authorization": f"Basic {self.token}"},
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": f"Basic {self.token}",
+            },
         )
 
     def get_prices(self):
@@ -44,5 +47,7 @@ class SkinportClient(AbstractClient):
                 continue
 
             item_name = row.get("market_hash_name")
-            item_price = CurrencyConverter.convert(item_price, Currencies.eur, Currencies.usd)
+            item_price = CurrencyConverter.convert(
+                item_price, Currencies.eur, Currencies.usd
+            )
             yield item_name, item_price, None

@@ -27,14 +27,21 @@ class Command(BaseCommand):
 
             if not skin.quality:
                 logger.warning("Missing quality", skin=skin)
-            if not skin.rarity and Weapons(skin.weapon).category != WeaponCategories.gloves:
+            if (
+                not skin.rarity
+                and Weapons(skin.weapon).category != WeaponCategories.gloves
+            ):
                 logger.warning("Missing rarity", skin=skin)
-            elif skin.rarity and Weapons(skin.weapon).category == WeaponCategories.gloves:
+            elif (
+                skin.rarity and Weapons(skin.weapon).category == WeaponCategories.gloves
+            ):
                 logger.warning("Rarity is set on glove skin", skin=skin)
             if not skin.image_url:
                 logger.warning("Missing image", skin=skin)
 
-            if len([1 for language in languages if skin.description.get(language)]) != len(languages):
+            if len(
+                [1 for language in languages if skin.description.get(language)]
+            ) != len(languages):
                 if skin.quality != Qualities.vanilla:
                     logger.warning("Missing description", skin=skin)
 
@@ -48,7 +55,9 @@ class Command(BaseCommand):
             if duplicate_skins.count() != 1:
                 logger.error("Duplicated skin", skin=skin)
 
-            similar_skins = Skin.objects.filter(group_name=skin.group_name, weapon=skin.weapon)
+            similar_skins = Skin.objects.filter(
+                group_name=skin.group_name, weapon=skin.weapon
+            )
             for similar_skin in similar_skins:
                 if similar_skin.id == skin.id:
                     continue
@@ -57,18 +66,30 @@ class Command(BaseCommand):
                         skin.rarity = similar_skin.rarity
                         skin.save()
                     else:
-                        logger.error("Inconsistent skin rarity", skin1=skin, skin2=similar_skin)
+                        logger.error(
+                            "Inconsistent skin rarity", skin1=skin, skin2=similar_skin
+                        )
                 if not similar_skin.description:
                     continue
                 for language in languages:
-                    if skin.description.get(language) != similar_skin.description.get(language):
+                    if skin.description.get(language) != similar_skin.description.get(
+                        language
+                    ):
                         if not skin.description.get(language):
-                            skin.description[language] = similar_skin.description[language]
+                            skin.description[language] = similar_skin.description[
+                                language
+                            ]
                             skin.save()
                         else:
-                            logger.error("Inconsistent skin description", skin1=skin, skin2=similar_skin)
+                            logger.error(
+                                "Inconsistent skin description",
+                                skin1=skin,
+                                skin2=similar_skin,
+                            )
 
-            for price in Price.objects.filter(update_date__lt=timezone.now() - timedelta(days=7)).select_related("skin"):
+            for price in Price.objects.filter(
+                update_date__lt=timezone.now() - timedelta(days=7)
+            ).select_related("skin"):
                 logger.warning("Old price", skin=price.skin, provider=price.provider)
 
     def handle(self, *args, **options):

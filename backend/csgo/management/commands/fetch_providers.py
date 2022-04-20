@@ -12,7 +12,9 @@ logger = structlog.get_logger()
 
 class Command(BaseCommand):
     def add_arguments(self, parser):
-        parser.add_argument("--provider", type=str, required=True, help="provider to fetch")
+        parser.add_argument(
+            "--provider", type=str, required=True, help="provider to fetch"
+        )
 
     def handle(self, *args, **options):
         provider = options["provider"]
@@ -48,6 +50,13 @@ class Command(BaseCommand):
         except UnfinishedJob:
             logger.warning("Fetching interrupted", provider=provider)
         else:
-            prices_deleted, _ = Price.objects.filter(provider=provider, update_date__lt=now).delete()
+            prices_deleted, _ = Price.objects.filter(
+                provider=provider, update_date__lt=now
+            ).delete()
 
-        logger.info("Fetching finished", provider=provider, nb_updated=prices_updated, nb_deleted=prices_deleted)
+        logger.info(
+            "Fetching finished",
+            provider=provider,
+            nb_updated=prices_updated,
+            nb_deleted=prices_deleted,
+        )

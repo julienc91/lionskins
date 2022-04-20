@@ -22,7 +22,11 @@ class CurrencyConverter:
             return Decimal(1.0)
 
         with cls.__lock:
-            if not cls.__rate or not cls.__last_update or (datetime.now() - cls.__last_update) > cls.UPDATE_DELAY:
+            if (
+                not cls.__rate
+                or not cls.__last_update
+                or (datetime.now() - cls.__last_update) > cls.UPDATE_DELAY
+            ):
                 cls._update_rate()
 
             try:
@@ -42,10 +46,17 @@ class CurrencyConverter:
             return
 
         updated_rates = res.json()["rates"]
-        cls.__rate = {Currencies.usd: {Currencies.eur: Decimal(updated_rates["EUR"]), Currencies.usd: Decimal(1.0)}}
+        cls.__rate = {
+            Currencies.usd: {
+                Currencies.eur: Decimal(updated_rates["EUR"]),
+                Currencies.usd: Decimal(1.0),
+            }
+        }
         cls.__last_update = datetime.now()
 
     @classmethod
-    def convert(cls, amount: Decimal, from_currency: Currencies, to_currency: Currencies) -> Decimal:
+    def convert(
+        cls, amount: Decimal, from_currency: Currencies, to_currency: Currencies
+    ) -> Decimal:
         rate = cls._get_rate(from_currency, to_currency)
         return Decimal(round(amount * rate, 2))

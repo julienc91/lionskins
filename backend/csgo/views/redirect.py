@@ -27,10 +27,16 @@ def redirect_view(request, provider, skin_id):
             return Response(None, status=status.HTTP_404_NOT_FOUND)
 
     user_agent = request.headers.get("User-Agent")
-    if user_agent and not user_agents.parse(user_agent).is_bot and not request.user.is_staff:
+    if (
+        user_agent
+        and not user_agents.parse(user_agent).is_bot
+        and not request.user.is_staff
+    ):
         if not request.session.session_key:
             request.session.save()
-        Redirect.objects.create(skin=skin, provider=provider, tracker=request.session.session_key)
+        Redirect.objects.create(
+            skin=skin, provider=provider, tracker=request.session.session_key
+        )
 
     url = skin.get_skin_url(provider)
     return HttpResponseRedirect(url, status=status.HTTP_302_FOUND)

@@ -210,7 +210,14 @@ _categories_to_weapons = {
         Weapons.desert_eagle,
         Weapons.r8_revolver,
     ],
-    WeaponCategories.heavy: [Weapons.sawed_off, Weapons.mag_7, Weapons.nova, Weapons.xm1014, Weapons.m249, Weapons.negev],
+    WeaponCategories.heavy: [
+        Weapons.sawed_off,
+        Weapons.mag_7,
+        Weapons.nova,
+        Weapons.xm1014,
+        Weapons.m249,
+        Weapons.negev,
+    ],
     WeaponCategories.smgs: [
         Weapons.mac_10,
         Weapons.mp9,
@@ -266,4 +273,8 @@ _categories_to_weapons = {
     ],
 }
 
-_weapon_to_category = {weapon: category for category, weapons in _categories_to_weapons.items() for weapon in weapons}
+_weapon_to_category = {
+    weapon: category
+    for category, weapons in _categories_to_weapons.items()
+    for weapon in weapons
+}

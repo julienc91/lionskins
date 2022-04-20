@@ -17,8 +17,16 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="Skin",
             fields=[
-                ("id", models.UUIDField(default=uuid.uuid4, primary_key=True, serialize=False)),
-                ("object_id", models.CharField(db_index=True, max_length=24, unique=True)),
+                (
+                    "id",
+                    models.UUIDField(
+                        default=uuid.uuid4, primary_key=True, serialize=False
+                    ),
+                ),
+                (
+                    "object_id",
+                    models.CharField(db_index=True, max_length=24, unique=True),
+                ),
                 (
                     "type",
                     models.CharField(
@@ -35,12 +43,21 @@ class Migration(migrations.Migration):
                         max_length=32,
                     ),
                 ),
-                ("market_hash_name", models.CharField(db_index=True, max_length=255, unique=True)),
+                (
+                    "market_hash_name",
+                    models.CharField(db_index=True, max_length=255, unique=True),
+                ),
                 ("group_name", models.CharField(max_length=255)),
                 ("group_slug", models.CharField(db_index=True, max_length=255)),
                 ("image_url", models.URLField(blank=True, max_length=512, null=True)),
-                ("creation_date", models.DateTimeField(default=django.utils.timezone.now)),
-                ("update_date", models.DateTimeField(default=django.utils.timezone.now)),
+                (
+                    "creation_date",
+                    models.DateTimeField(default=django.utils.timezone.now),
+                ),
+                (
+                    "update_date",
+                    models.DateTimeField(default=django.utils.timezone.now),
+                ),
                 (
                     "weapon",
                     models.CharField(
@@ -172,8 +189,14 @@ class Migration(migrations.Migration):
                             ("dust", "The Dust Collection"),
                             ("dust2", "The Dust 2 Collection"),
                             ("esports_2013", "The eSports 2013 Collection"),
-                            ("esports_2013_winter", "The eSports 2013 Winter Collection"),
-                            ("esports_2014_summer", "The eSports 2014 Summer Collection"),
+                            (
+                                "esports_2013_winter",
+                                "The eSports 2013 Winter Collection",
+                            ),
+                            (
+                                "esports_2014_summer",
+                                "The eSports 2014 Summer Collection",
+                            ),
                             ("falchion", "The Falchion Collection"),
                             ("gamma", "The Gamma Collection"),
                             ("gamma_2", "The Gamma 2 Collection"),
@@ -217,7 +240,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="Price",
             fields=[
-                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 (
                     "provider",
                     models.CharField(
@@ -233,13 +264,28 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("price", models.DecimalField(decimal_places=2, max_digits=10)),
-                ("creation_date", models.DateTimeField(default=django.utils.timezone.now)),
-                ("update_date", models.DateTimeField(default=django.utils.timezone.now)),
-                ("skin", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name="prices", to="csgo.skin")),
+                (
+                    "creation_date",
+                    models.DateTimeField(default=django.utils.timezone.now),
+                ),
+                (
+                    "update_date",
+                    models.DateTimeField(default=django.utils.timezone.now),
+                ),
+                (
+                    "skin",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="prices",
+                        to="csgo.skin",
+                    ),
+                ),
             ],
         ),
         migrations.AddConstraint(
             model_name="price",
-            constraint=models.UniqueConstraint(fields=("skin", "provider"), name="unique_price_per_provider"),
+            constraint=models.UniqueConstraint(
+                fields=("skin", "provider"), name="unique_price_per_provider"
+            ),
         ),
     ]

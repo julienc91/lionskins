@@ -29,7 +29,15 @@ def test_send_message(monkeypatch, client, user, name, email, authenticated):
     message = "message content"
     res = client.post(
         url,
-        data={"query": send_message_query, "variables": {"name": name, "email": email, "message": message, "captcha": "captcha"}},
+        data={
+            "query": send_message_query,
+            "variables": {
+                "name": name,
+                "email": email,
+                "message": message,
+                "captcha": "captcha",
+            },
+        },
         content_type="application/json",
     )
 
@@ -50,16 +58,25 @@ def test_send_message(monkeypatch, client, user, name, email, authenticated):
 
 @pytest.mark.parametrize(
     "message, email, captcha",
-    [("", "", "captcha"), ("foo", "", "bad_captcha"), ("foo", "bar", "captcha")],  # empty message  # bad captcha  # bad email
+    [
+        ("", "", "captcha"),
+        ("foo", "", "bad_captcha"),
+        ("foo", "bar", "captcha"),
+    ],  # empty message  # bad captcha  # bad email
 )
 @pytest.mark.django_db
 def test_send_message_invalid_parameter(monkeypatch, client, captcha, email, message):
-    monkeypatch.setattr("users.serializers.contact.check_captcha", lambda *_: captcha == "captcha")
+    monkeypatch.setattr(
+        "users.serializers.contact.check_captcha", lambda *_: captcha == "captcha"
+    )
 
     url = reverse("graphql")
     res = client.post(
         url,
-        data={"query": send_message_query, "variables": {"email": email, "message": message, "captcha": captcha}},
+        data={
+            "query": send_message_query,
+            "variables": {"email": email, "message": message, "captcha": captcha},
+        },
         content_type="application/json",
     )
 

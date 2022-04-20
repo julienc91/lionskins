@@ -22,7 +22,10 @@ class SkinBaronClient(AbstractClient):
         return requests.post(
             self.base_url + method,
             json=params,
-            headers={"Content-Type": "application/json", "X-Requested-With": "XMLHttpRequest"},
+            headers={
+                "Content-Type": "application/json",
+                "X-Requested-With": "XMLHttpRequest",
+            },
         )
 
     def get_prices(self):
@@ -44,5 +47,7 @@ class SkinBaronClient(AbstractClient):
                 # fix api inconsistency
                 item_name = item_name.replace("Souvenir ", "")
 
-            item_price = CurrencyConverter.convert(item_price, Currencies.eur, Currencies.usd)
+            item_price = CurrencyConverter.convert(
+                item_price, Currencies.eur, Currencies.usd
+            )
             yield item_name, item_price, None

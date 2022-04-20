@@ -116,7 +116,12 @@ class Parser:
             return None
 
         stat_trak = "StatTrak" in left_split
-        return {"group_name": right_split.strip(), "type": Types.music_kits, "stat_trak": stat_trak, "souvenir": False}
+        return {
+            "group_name": right_split.strip(),
+            "type": Types.music_kits,
+            "stat_trak": stat_trak,
+            "souvenir": False,
+        }
 
     @classmethod
     def _parse_graffiti_item(cls, item_name: str) -> Optional[dict]:
@@ -165,11 +170,15 @@ class Parser:
         return data
 
     @classmethod
-    def get_or_create_skin_from_item_name(cls, item_name: str, **kwargs) -> Optional[Skin]:
+    def get_or_create_skin_from_item_name(
+        cls, item_name: str, **kwargs
+    ) -> Optional[Skin]:
         fields = cls._parse_item_name(item_name)
         if not fields:
             return None
 
         fields.update(kwargs)
-        skin, _ = Skin.objects.get_or_create(market_hash_name=item_name, defaults=fields)
+        skin, _ = Skin.objects.get_or_create(
+            market_hash_name=item_name, defaults=fields
+        )
         return skin

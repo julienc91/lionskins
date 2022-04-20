@@ -23,7 +23,7 @@ repos:
     hooks:
       - id: flake8
         args:
-          - --max-line-length=130
+          - --config=backend/.flake8
   - repo: https://github.com/pre-commit/mirrors-eslint
     rev: v8.13.0
     hooks:

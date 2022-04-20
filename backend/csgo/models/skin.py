@@ -20,10 +20,14 @@ class Skin(models.Model):
     creation_date = models.DateTimeField(default=timezone.now)
     update_date = models.DateTimeField(default=timezone.now)
 
-    weapon = models.CharField(max_length=32, db_index=True, choices=Weapons.choices, null=True)
+    weapon = models.CharField(
+        max_length=32, db_index=True, choices=Weapons.choices, null=True
+    )
     stat_trak = models.BooleanField(null=True)
     souvenir = models.BooleanField(null=True)
-    quality = models.PositiveSmallIntegerField(db_index=True, choices=Qualities.choices, null=True)
+    quality = models.PositiveSmallIntegerField(
+        db_index=True, choices=Qualities.choices, null=True
+    )
     rarity = models.CharField(max_length=32, choices=Rarities.choices, null=True)
     collection = models.CharField(max_length=64, choices=Collections.choices, null=True)
     description = models.JSONField(null=True)
@@ -87,7 +91,11 @@ class Skin(models.Model):
 
         elif provider == Providers.csmoney:
             base_url = "https://cs.money/csgo/store/"
-            parameters = {"sort": "price", "order": "asc", "search": self.get_partial_market_hash_name()}
+            parameters = {
+                "sort": "price",
+                "order": "asc",
+                "search": self.get_partial_market_hash_name(),
+            }
             if self.quality and self.quality != Qualities.vanilla:
                 parameters["exterior"] = {
                     Qualities.factory_new: "Factory New",
@@ -104,7 +112,11 @@ class Skin(models.Model):
                 parameters["isSouvenir"] = "true" if self.souvenir else "false"
         elif provider == Providers.skinbaron:
             base_url = "https://skinbaron.de/?affiliateId=393#!"
-            parameters = {"appId": 730, "sort": "CF", "str": self.get_partial_market_hash_name()}
+            parameters = {
+                "appId": 730,
+                "sort": "CF",
+                "str": self.get_partial_market_hash_name(),
+            }
             if self.souvenir:
                 parameters["souvenir"] = 1
             if self.stat_trak:
@@ -116,9 +128,16 @@ class Skin(models.Model):
         elif provider == Providers.skinport:
             base_url = "https://skinport.com/market/730"
             if self.type == Types.agents:
-                parameters = {"cat": "Agent", "search": self.group_name.split("|")[0].strip()}
+                parameters = {
+                    "cat": "Agent",
+                    "search": self.group_name.split("|")[0].strip(),
+                }
             elif self.type == Types.music_kits:
-                parameters = {"cat": "Music Kit", "search": self.group_name, "stattrak": int(self.stat_trak)}
+                parameters = {
+                    "cat": "Music Kit",
+                    "search": self.group_name,
+                    "stattrak": int(self.stat_trak),
+                }
             elif self.type == Types.graffitis:
                 parameters = {"cat": "Graffiti", "search": self.group_name}
             elif self.type == Types.stickers:

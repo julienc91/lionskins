@@ -122,7 +122,9 @@ class Command(BaseCommand):
 
             if item["type"] == 2:  # agents
                 filters["type"] = Types.agents
-                update = {"rarity": self.map_csgo_rarity_to_enum_default[item["rarity"]]}
+                update = {
+                    "rarity": self.map_csgo_rarity_to_enum_default[item["rarity"]]
+                }
                 descriptions = {}
                 for language in languages:
                     description = item["description"][languages[language]]
@@ -133,7 +135,10 @@ class Command(BaseCommand):
             else:
                 weapon = self.map_csgo_weapon_to_enum[item["weapon"]["id"]]
                 filters["weapon"] = weapon
-                if weapon.category not in [WeaponCategories.gloves, WeaponCategories.knives]:
+                if weapon.category not in [
+                    WeaponCategories.gloves,
+                    WeaponCategories.knives,
+                ]:
                     mapping = (
                         self.map_csgo_rarity_to_enum_buffed
                         if weapon in self.weapons_with_buffed_rarity

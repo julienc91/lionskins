@@ -56,7 +56,11 @@ class SteamClient(AbstractClient):
 
             return data
 
-        logger.warning("Could not list market listings despite retries", provider=self.provider, params=params)
+        logger.warning(
+            "Could not list market listings despite retries",
+            provider=self.provider,
+            params=params,
+        )
         raise UnfinishedJob
 
     def get_prices(self):
@@ -90,7 +94,9 @@ class SteamClient(AbstractClient):
                         dimensions = "300fx300f"
                     else:
                         dimensions = "720fx720f"
-                    kwargs["image_url"] = f"https://steamcommunity-a.akamaihd.net/economy/image/{image_id}/{dimensions}"
+                    kwargs[
+                        "image_url"
+                    ] = f"https://steamcommunity-a.akamaihd.net/economy/image/{image_id}/{dimensions}"
 
                 rarity = self._parse_rarity(row)
                 if rarity:
@@ -107,7 +113,10 @@ def get_inventory(steam_id: str):
     cache_key = f"steam_inventory_{steam_id}"
     inventory = cache.get(cache_key)
     if inventory is None:
-        res = requests.get(f"https://steamcommunity.com/inventory/{steam_id}/730/2", params={"l": "english", "count": 5000})
+        res = requests.get(
+            f"https://steamcommunity.com/inventory/{steam_id}/730/2",
+            params={"l": "english", "count": 5000},
+        )
         if res.status_code != 200:
             return None
 

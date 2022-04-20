@@ -43,7 +43,11 @@ class CSMoneyClient(AbstractClient):
                 continue
 
             item_name = skin["m"]
-            item_name = re.sub(r" Doppler ((Phase \d+)|Sapphire|Ruby|Black Pearl|Emerald)", " Doppler", item_name)
+            item_name = re.sub(
+                r" Doppler ((Phase \d+)|Sapphire|Ruby|Black Pearl|Emerald)",
+                " Doppler",
+                item_name,
+            )
             if item_name not in skins or skins[item_name] > item_price:
                 skins[item_name] = item_price
 

@@ -20,14 +20,18 @@ class Command(BaseCommand):
         return os.path.join(get_data_directory(), "teams.json")
 
     @classmethod
-    def _get_soup(cls, url: str, params: Optional[dict[str, Any]] = None) -> BeautifulSoup:
+    def _get_soup(
+        cls, url: str, params: Optional[dict[str, Any]] = None
+    ) -> BeautifulSoup:
         html = cls._get_content(url, params=params)
         return BeautifulSoup(html, features="html.parser")
 
     @classmethod
     @sleep_and_retry
     @limits(calls=1, period=5)
-    def _get_content(cls, url: str, params: Optional[dict[str, Any]] = None) -> Optional[bytes]:
+    def _get_content(
+        cls, url: str, params: Optional[dict[str, Any]] = None
+    ) -> Optional[bytes]:
         res = requests.get(url, params=params, headers={"User-Agent": "LionSkins/1.0"})
         if res.status_code != 200:
             return None
@@ -35,7 +39,9 @@ class Command(BaseCommand):
 
     @classmethod
     def _get_top_teams(cls):
-        res = cls._get_content("https://raw.githubusercontent.com/julienc91/hltv-ranking/rankings/latest.json")
+        res = cls._get_content(
+            "https://raw.githubusercontent.com/julienc91/hltv-ranking/rankings/latest.json"
+        )
         api_data = json.loads(res)
         ranking = api_data["teams"]
         for team in ranking:
@@ -77,7 +83,9 @@ class Command(BaseCommand):
         content = page["revisions"][0]["slots"]["main"]["*"]
 
         try:
-            active_squad = re.search(r"{{ActiveSquad\|(\n{{SquadPlayer.*}}\s*)+\n}}", content)[0].split("\n")[1:-1]
+            active_squad = re.search(
+                r"{{ActiveSquad\|(\n{{SquadPlayer.*}}\s*)+\n}}", content
+            )[0].split("\n")[1:-1]
         except Exception as e:
             logger.exception(e)
             return None
@@ -116,7 +124,9 @@ class Command(BaseCommand):
         res = res.decode()
         res = json.loads(res)["query"]
 
-        redirects = {redirect["to"]: redirect["from"] for redirect in res.get("normalized", [])}
+        redirects = {
+            redirect["to"]: redirect["from"] for redirect in res.get("normalized", [])
+        }
         pages = res["pages"]
 
         for page_id, page in pages.items():

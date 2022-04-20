@@ -15,7 +15,10 @@ EPSILON = 10e-8
 def patch_rate(monkeypatch):
     monkeypatch.setattr(
         "requests.get",
-        lambda _: Mock(status_code=200, json=lambda: {"rates": test_rates, "base": "USD", "date": "2020-10-02"}),
+        lambda _: Mock(
+            status_code=200,
+            json=lambda: {"rates": test_rates, "base": "USD", "date": "2020-10-02"},
+        ),
     )
 
 

@@ -19,7 +19,10 @@ def associate_by_steam_id(strategy, uid, user=None, *args, **kwargs):
 def create_user(strategy, uid, username, user=None, *args, **kwargs):
     if user:
         return {"is_new": False}
-    return {"is_new": True, "user": strategy.create_user(username=username, steam_id=uid)}
+    return {
+        "is_new": True,
+        "user": strategy.create_user(username=username, steam_id=uid),
+    }
 
 
 def user_details(strategy, username, user, *args, **kwargs):

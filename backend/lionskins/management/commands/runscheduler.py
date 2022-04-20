@@ -59,10 +59,16 @@ class Command(BaseCommand):
 
         for provider in Providers.active():
             self.add_job(
-                scheduler, IntervalTrigger(hours=1), fetch_provider, job_id=f"fetch_provider_{provider}", provider=provider
+                scheduler,
+                IntervalTrigger(hours=1),
+                fetch_provider,
+                job_id=f"fetch_provider_{provider}",
+                provider=provider,
             )
 
-        self.add_job(scheduler, CronTrigger(minute="00", hour="00"), delete_old_job_executions)
+        self.add_job(
+            scheduler, CronTrigger(minute="00", hour="00"), delete_old_job_executions
+        )
 
         try:
             logger.info("Starting scheduler...")

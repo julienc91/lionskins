@@ -1,9 +1,6 @@
 [tool.isort]
 profile = "black"
 
-[tool.black]
-line-length = 130
-
 [tool.mypy]
 mypy_path = "src/"
 

@@ -24,11 +24,25 @@ class SkinFilter(FilterSet):
     category = CharFilter(method="filter_category")
     group = BooleanFilter(method="filter_group")
     search = CharFilter(method="filter_search")
-    quality = ChoiceFilter(method="filter_quality", choices=[(name, name) for name in enums.Qualities.names])
+    quality = ChoiceFilter(
+        method="filter_quality",
+        choices=[(name, name) for name in enums.Qualities.names],
+    )
 
     class Meta:
         model = Skin
-        fields = ["slug", "stat_trak", "souvenir", "quality", "rarity", "weapon", "category", "type", "group", "search"]
+        fields = [
+            "slug",
+            "stat_trak",
+            "souvenir",
+            "quality",
+            "rarity",
+            "weapon",
+            "category",
+            "type",
+            "group",
+            "search",
+        ]
 
     def filter_category(self, queryset, name, value):
         weapons = enums.Weapons.by_category(value)
@@ -101,8 +115,16 @@ class SkinNode(DjangoObjectType):
         prices = self.all_prices
         kwargs = {}
         for provider in Providers.active():
-            provider_prices = [price for price in prices if price.provider == provider and price.price > 0]
-            kwargs[provider] = min(provider_prices, key=lambda p: p.price).convert(currency) if provider_prices else None
+            provider_prices = [
+                price
+                for price in prices
+                if price.provider == provider and price.price > 0
+            ]
+            kwargs[provider] = (
+                min(provider_prices, key=lambda p: p.price).convert(currency)
+                if provider_prices
+                else None
+            )
         return TypePrices(**kwargs)
 
 
@@ -120,7 +142,11 @@ class SkinQuerysetWrapper:
 
     @staticmethod
     def _is_same_group(first, second) -> bool:
-        return first.type == second.type and first.weapon == second.weapon and first.group_slug == second.group_slug
+        return (
+            first.type == second.type
+            and first.weapon == second.weapon
+            and first.group_slug == second.group_slug
+        )
 
     @staticmethod
     def _aggregate(*skins) -> Skin | None:
@@ -152,7 +178,8 @@ class SkinQuerysetWrapper:
             .annotate(
                 count=Count("id"),
                 total=Window(
-                    expression=Sum(Func("id", function="COUNT")), order_by=(F("type").desc(), F("weapon"), F("group_slug"))
+                    expression=Sum(Func("id", function="COUNT")),
+                    order_by=(F("type").desc(), F("weapon"), F("group_slug")),
                 ),
             )
         )
@@ -172,7 +199,11 @@ class SkinQuerysetWrapper:
             if self._end_index == 0:
                 fetched_results = []
             else:
-                group_cache = list(self.__group_cache[self._start_index : self._start_index + self._end_index])
+                group_cache = list(
+                    self.__group_cache[
+                        self._start_index : self._start_index + self._end_index
+                    ]
+                )
                 try:
                     start_group = group_cache[0]
                     real_start_index = start_group["total"] - start_group["count"]
@@ -186,7 +217,9 @@ class SkinQuerysetWrapper:
                     real_end_index = None
 
                 fetched_results = list(
-                    self.queryset[real_start_index:real_end_index].prefetch_related(Prefetch("prices", to_attr="all_prices"))
+                    self.queryset[real_start_index:real_end_index].prefetch_related(
+                        Prefetch("prices", to_attr="all_prices")
+                    )
                 )
             self._aggregated_results = self.aggregate_results(fetched_results)
         return res
@@ -209,4 +242,6 @@ class SkinQuerysetWrapper:
 
 
 class Query(graphene.ObjectType):
-    csgo = DjangoFilterConnectionField(SkinNode, filterset_class=SkinFilter, max_limit=100)
+    csgo = DjangoFilterConnectionField(
+        SkinNode, filterset_class=SkinFilter, max_limit=100
+    )

@@ -7,7 +7,9 @@ from csgo.schema.skin import SkinNode
 
 
 class Query(graphene.ObjectType):
-    inventory = DjangoFilterConnectionField(SkinNode, steam_id=graphene.String(), max_limit=100)
+    inventory = DjangoFilterConnectionField(
+        SkinNode, steam_id=graphene.String(), max_limit=100
+    )
 
     def resolve_inventory(self, info, **args):
         steam_id = args.get("steam_id")
@@ -24,4 +26,6 @@ class Query(graphene.ObjectType):
         data = inventory.get("descriptions", [])
         market_hash_names = {item["market_hash_name"] for item in data}
 
-        return SkinNode.get_queryset(Skin.objects.filter(market_hash_name__in=market_hash_names), info)
+        return SkinNode.get_queryset(
+            Skin.objects.filter(market_hash_name__in=market_hash_names), info
+        )

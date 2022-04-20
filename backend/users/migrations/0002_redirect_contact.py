@@ -19,7 +19,12 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="Redirect",
             fields=[
-                ("id", models.UUIDField(default=uuid.uuid4, primary_key=True, serialize=False)),
+                (
+                    "id",
+                    models.UUIDField(
+                        default=uuid.uuid4, primary_key=True, serialize=False
+                    ),
+                ),
                 (
                     "provider",
                     models.CharField(
@@ -34,19 +39,42 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("tracker", models.CharField(max_length=64)),
-                ("creation_date", models.DateTimeField(default=django.utils.timezone.now)),
-                ("skin", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="csgo.skin")),
+                (
+                    "creation_date",
+                    models.DateTimeField(default=django.utils.timezone.now),
+                ),
+                (
+                    "skin",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="csgo.skin"
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
             name="Contact",
             fields=[
-                ("id", models.UUIDField(default=uuid.uuid4, primary_key=True, serialize=False)),
+                (
+                    "id",
+                    models.UUIDField(
+                        default=uuid.uuid4, primary_key=True, serialize=False
+                    ),
+                ),
                 ("name", models.CharField(blank=True, max_length=255)),
                 ("email", models.EmailField(blank=True, max_length=255)),
                 ("message", models.TextField()),
-                ("creation_date", models.DateTimeField(default=django.utils.timezone.now)),
-                ("user", models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
+                (
+                    "creation_date",
+                    models.DateTimeField(default=django.utils.timezone.now),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]
