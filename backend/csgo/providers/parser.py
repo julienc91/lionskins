@@ -182,12 +182,24 @@ class Parser:
         return data
 
     @classmethod
+    def repair_item_name(cls, item_name: str, kwargs) -> str:
+        item_name = item_name.strip()
+        if kwargs.get("weapon") in (
+            WeaponCategories.knives,
+            WeaponCategories.gloves,
+        ) and not item_name.startswith("★ "):
+            item_name = "★ " + item_name
+        return item_name
+
+    @classmethod
     def get_or_create_skin_from_item_name(
         cls, item_name: str, **kwargs
     ) -> Optional[Skin]:
         fields = cls._parse_item_name(item_name)
         if not fields:
             return None
+
+        item_name = cls.repair_item_name(item_name, fields)
 
         fields.update(kwargs)
         skin, _ = Skin.objects.get_or_create(
