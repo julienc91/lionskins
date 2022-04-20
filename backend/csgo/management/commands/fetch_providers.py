@@ -36,7 +36,7 @@ class Command(BaseCommand):
                         update_fields.append(field)
 
                 if update_fields:
-                    skin.save(update_fields)
+                    skin.save(update_fields=update_fields)
 
                 Price.objects.update_or_create(
                     skin=skin,
