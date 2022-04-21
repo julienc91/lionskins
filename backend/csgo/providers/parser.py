@@ -184,11 +184,12 @@ class Parser:
     @classmethod
     def repair_item_name(cls, item_name: str, kwargs) -> str:
         item_name = item_name.strip()
-        if kwargs.get("weapon") in (
-            WeaponCategories.knives,
-            WeaponCategories.gloves,
-        ) and not item_name.startswith("★ "):
-            item_name = "★ " + item_name
+        if weapon := kwargs.get("weapon"):
+            if weapon.category in (
+                WeaponCategories.knives,
+                WeaponCategories.gloves,
+            ) and not item_name.startswith("★ "):
+                item_name = "★ " + item_name
         return item_name
 
     @classmethod
