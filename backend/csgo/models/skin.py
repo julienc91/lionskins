@@ -30,7 +30,7 @@ class Skin(models.Model):
     )
     rarity = models.CharField(max_length=32, choices=Rarities.choices, null=True)
     collection = models.CharField(max_length=64, choices=Collections.choices, null=True)
-    description = models.JSONField(null=True)
+    description = models.JSONField(default=dict)
 
     class Meta:
         ordering = ["-type", "weapon", "group_slug", "souvenir", "stat_trak", "quality"]
