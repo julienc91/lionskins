@@ -51,9 +51,13 @@ class Command(BaseCommand):
     def _get_team_players(cls, team: str) -> Optional[dict[str, Any]]:
         team = {  # Convert team name to liquipedia convention
             "1win": "1win",
+            "9z": "9z Team",
             "hard legion": "Hard Legion Esports",
+            "imperial": "Imperial Esports",
             "nemiga": "Nemiga Gaming",
             "nip": "Ninjas in Pyjamas",
+            "outsiders": "Virtus.pro",
+            "players": "Gambit_Esports",
             "saw": "SAw (Portuguese team)",
             "sinners": "Sinners Esports",
             "spirit": "Team Spirit",
@@ -155,8 +159,12 @@ class Command(BaseCommand):
         res = []
         for team in self._get_top_teams():
             team_data = {"name": team, "players": []}
-            for player_info in self._get_players_info(team):
-                team_data["players"].append(player_info)
+            try:
+                for player_info in self._get_players_info(team):
+                    team_data["players"].append(player_info)
+            except Exception as e:
+                logger.exception(f"Error while retrieving team data: {e}", team=team)
+
             if team_data["players"]:
                 team_data["players"].sort(key=lambda p: p["name"].lower())
                 res.append(team_data)
