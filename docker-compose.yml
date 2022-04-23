@@ -12,11 +12,13 @@ services:
       - db_network
 
   backend:
-    build: backend
+    build:
+      context: backend
+      args:
+        UID: $UID
+        GID: $GID
     ports:
       - "127.0.0.1:8000:8000"
-    env_file:
-      - backend/.env
     networks:
       - db_network
     volumes:
@@ -26,9 +28,11 @@ services:
       - db
 
   backoffice:
-    build: backend
-    env_file:
-      - backend/.env
+    build:
+      context: backend
+      args:
+        UID: $UID
+        GID: $GID
     networks:
       - db_network
     volumes:

@@ -1,9 +1,11 @@
-FROM python:3-alpine
+FROM python:3
+
+ARG UID
+ARG GID
 
 RUN \
-  addgroup -S group && \
-  adduser -S user -G group && \
-  apk add --no-cache gcc libffi-dev musl-dev cargo libressl-dev postgresql-dev
+  groupadd -g ${GID} -o group && \
+  useradd -u ${UID} -g ${GID} -o -m -s /bin/bash user
 
 WORKDIR /home/user/backend
 
@@ -13,10 +15,12 @@ ENV PATH="/home/user/.local/bin:${PATH}" \
     PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
 
-RUN pip install "poetry==1.1.13"
 COPY --chown=user:group pyproject.toml poetry.lock ./
-RUN poetry config virtualenvs.create false \
-  && poetry install --no-dev --no-interaction --no-ansi
+RUN \
+  pip install "poetry==1.1.13" && \
+  poetry config virtualenvs.create false && \
+  poetry install --no-dev --no-interaction --no-ansi
+
 COPY --chown=user:group . .
 
 EXPOSE 8000
