@@ -1,5 +1,3 @@
-import StorageManager from './StorageManager'
+import StorageManager from "./StorageManager";
 
-export {
-  StorageManager
-}
+export { StorageManager };

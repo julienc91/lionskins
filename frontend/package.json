@@ -28,17 +28,7 @@
     "swiper": "^7.0.6"
   },
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
-    "eslint": "^7.22.0",
-    "eslint-config-next": "^12.1.0",
-    "eslint-config-standard": "^16.0.1",
-    "eslint-config-standard-react": "^11.0.1",
-    "eslint-plugin-cypress": "^2.11.1",
-    "eslint-plugin-graphql": "^4.0.0",
-    "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^6.0.0",
-    "eslint-plugin-react": "^7.21.2",
-    "eslint-plugin-standard": "^5.0.0"
+    "eslint": "8.14.0",
+    "eslint-config-next": "12.1.5"
   }
 }

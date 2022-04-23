@@ -1,37 +1,37 @@
 export default class StorageManager {
   // a wrapper around localStorage and sessionStorage to handle exceptions and
   // work in best-effort
-  static _getStorage (persistent) {
+  static _getStorage(persistent) {
     try {
-      return persistent ? localStorage : sessionStorage
+      return persistent ? localStorage : sessionStorage;
     } catch {
       // ignore
     }
   }
 
-  static get (key, persistent = true) {
-    const storage = StorageManager._getStorage(persistent)
+  static get(key, persistent = true) {
+    const storage = StorageManager._getStorage(persistent);
     try {
-      return storage.getItem(key)
+      return storage.getItem(key);
     } catch {
-      return undefined
+      return undefined;
     }
   }
 
-  static set (key, value, persistent = true) {
-    const storage = StorageManager._getStorage(persistent)
-    value = value || ''
+  static set(key, value, persistent = true) {
+    const storage = StorageManager._getStorage(persistent);
+    value = value || "";
     try {
-      storage.setItem(key, value)
+      storage.setItem(key, value);
     } catch {
       // ignore
     }
   }
 
-  static remove (key, persistent = true) {
-    const storage = StorageManager._getStorage(persistent)
+  static remove(key, persistent = true) {
+    const storage = StorageManager._getStorage(persistent);
     try {
-      storage.removeItem(key)
+      storage.removeItem(key);
     } catch {
       // ignore
     }

@@ -8,12 +8,12 @@ Visit it now on https://lionskins.co/
 
 Available games:
 
-* Counter-Strike: Global Offensive
+- Counter-Strike: Global Offensive
 
 Available marketplaces:
 
-* Bitskins
-* CS.Money
-* SkinBaron
-* Skinport
-* Steam
+- Bitskins
+- CS.Money
+- SkinBaron
+- Skinport
+- Steam

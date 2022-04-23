@@ -1,22 +1,3 @@
 {
-  "parser": "babel-eslint",
-  "extends": [
-    "standard",
-    "standard-react",
-    "eslint:recommended",
-    "plugin:react/recommended"
-  ],
-  "env": {
-    "es6": true,
-    "jest": true,
-    "browser": true,
-    "cypress/globals": true
-  },
-  "plugins": [
-    "react",
-    "graphql",
-    "promise",
-    "standard",
-    "cypress"
-  ]
+  "extends": "next/core-web-vitals"
 }

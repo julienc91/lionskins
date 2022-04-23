@@ -13,24 +13,23 @@ $color4: #c3cdd7;
 $color5: #e4e9ec;
 
 $white: #fff;
-$light-grey: rgba(0, 0, 0, .05);
-$oil: rgba(0, 0, 0, .87);
+$light-grey: rgba(0, 0, 0, 0.05);
+$oil: rgba(0, 0, 0, 0.87);
 
 // media queries
-$medium-up: 'only screen and (min-width : 640px)' !default;
-$large-up: 'only screen and (min-width : 1024px)' !default;
-$xlarge-up: 'only screen and (min-width : 1440px)' !default;
-$xxlarge-up: 'only screen and (min-width : 1800px)' !default;
+$medium-up: "only screen and (min-width : 640px)" !default;
+$large-up: "only screen and (min-width : 1024px)" !default;
+$xlarge-up: "only screen and (min-width : 1440px)" !default;
+$xxlarge-up: "only screen and (min-width : 1800px)" !default;
 
-$medium-down: 'only screen and (max-width : 639px)' !default;
-$large-down: 'only screen and (max-width : 1023px)' !default;
-$xlarge-down: 'only screen and (max-width : 1439px)' !default;
+$medium-down: "only screen and (max-width : 639px)" !default;
+$large-down: "only screen and (max-width : 1023px)" !default;
+$xlarge-down: "only screen and (max-width : 1439px)" !default;
 
-@import './fontello';
+@import "./fontello";
 
 .modal {
   .ui.loader.active {
-
     ::before {
       // https://github.com/Semantic-Org/Semantic-UI-React/issues/3133
       border-color: $color5 !important;
@@ -44,7 +43,6 @@ $xlarge-down: 'only screen and (max-width : 1439px)' !default;
 
 // scss-lint:disable SelectorFormat
 #__next {
-
   $topbar-height: 60px;
   $footer-height: 90px;
   $padding-main: 30px;
@@ -65,7 +63,6 @@ $xlarge-down: 'only screen and (max-width : 1439px)' !default;
     z-index: 100;
 
     .item {
-
       img {
         height: 2.5rem;
         width: auto;
@@ -180,7 +177,7 @@ $xlarge-down: 'only screen and (max-width : 1439px)' !default;
 
     h1 {
       font-size: 3rem;
-      letter-spacing: .5rem;
+      letter-spacing: 0.5rem;
 
       @media #{$medium-down} {
         font-size: 2rem;
@@ -204,7 +201,7 @@ $xlarge-down: 'only screen and (max-width : 1439px)' !default;
 
     .carousel {
       img {
-        transition: transform .2s;
+        transition: transform 0.2s;
 
         &:hover {
           transform: scale(1.05);
@@ -274,7 +271,6 @@ $xlarge-down: 'only screen and (max-width : 1439px)' !default;
   }
 
   .skin-list-container {
-
     .skin-list-filter-container {
       background-color: $color0;
       overflow-x: hidden;
@@ -309,7 +305,7 @@ $xlarge-down: 'only screen and (max-width : 1439px)' !default;
     @media #{$large-down} {
       .skin-list-filter-container {
         margin-left: -#{$sidebar-width} !important;
-        transition: margin-left .2s;
+        transition: margin-left 0.2s;
         width: $sidebar-width + $sidebar-offset;
 
         .fields {
@@ -328,7 +324,7 @@ $xlarge-down: 'only screen and (max-width : 1439px)' !default;
           right: 0;
           text-align: center;
           top: 0;
-          transition: transform .2s;
+          transition: transform 0.2s;
           width: $sidebar-offset;
           z-index: 100;
         }
@@ -377,10 +373,10 @@ $xlarge-down: 'only screen and (max-width : 1439px)' !default;
         border-radius: 4px;
         color: $white;
         cursor: pointer;
-        font-size: .9rem;
-        margin-bottom: .5rem;
-        margin-right: .5rem;
-        padding: .2rem .5rem;
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+        margin-right: 0.5rem;
+        padding: 0.2rem 0.5rem;
 
         &.active {
           background-color: $color1;
@@ -527,7 +523,6 @@ $xlarge-down: 'only screen and (max-width : 1439px)' !default;
       float: right;
       margin-top: $padding-main;
     }
-
   }
 
   a {

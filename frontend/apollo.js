@@ -1,22 +1,40 @@
-import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client'
-import { relayStylePagination } from '@apollo/client/utilities'
+import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
+import { relayStylePagination } from "@apollo/client/utilities";
 
 export const client = new ApolloClient({
   link: createHttpLink({
     uri: `${process.env.NEXT_PUBLIC_API_DOMAIN}/graphql`,
-    credentials: 'include'
+    credentials: "include",
   }),
   cache: new InMemoryCache({
     typePolicies: {
       TypeCSGOSkin: {
-        keyFields: ['weapon', 'slug', 'quality', 'statTrak', 'souvenir', 'prices']
+        keyFields: [
+          "weapon",
+          "slug",
+          "quality",
+          "statTrak",
+          "souvenir",
+          "prices",
+        ],
       },
       Query: {
         fields: {
-          csgo: relayStylePagination(['weapon', 'slug', 'category', 'type', 'quality', 'rarity', 'statTrak', 'souvenir', 'search', 'group']),
-          inventory: relayStylePagination(['steamId'])
-        }
-      }
-    }
-  })
-})
+          csgo: relayStylePagination([
+            "weapon",
+            "slug",
+            "category",
+            "type",
+            "quality",
+            "rarity",
+            "statTrak",
+            "souvenir",
+            "search",
+            "group",
+          ]),
+          inventory: relayStylePagination(["steamId"]),
+        },
+      },
+    },
+  }),
+});

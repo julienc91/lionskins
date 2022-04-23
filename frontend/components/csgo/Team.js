@@ -1,17 +1,21 @@
-import React from 'react'
-import Link from 'next/link'
-import PropTypes from 'prop-types'
-import { Card, Flag, List, Reveal } from 'semantic-ui-react'
-import slugify from 'slugify'
-import Image from '../Image'
+import React from "react";
+import Link from "next/link";
+import PropTypes from "prop-types";
+import { Card, Flag, List, Reveal } from "semantic-ui-react";
+import slugify from "slugify";
+import Image from "../Image";
 
 const Team = ({ team }) => {
-  const teamSlug = slugify(team.name, { lower: true })
+  const teamSlug = slugify(team.name, { lower: true });
   return (
-    <Card key={teamSlug} className='team item'>
-      <Reveal animated='move'>
+    <Card key={teamSlug} className="team item">
+      <Reveal animated="move">
         <Reveal.Content visible>
-          <Image alt={team.name} imageSrc={`/images/csgo/teams/${teamSlug}.png`} loaderSrc='/images/csgo/teams/default.png' />
+          <Image
+            alt={team.name}
+            imageSrc={`/images/csgo/teams/${teamSlug}.png`}
+            loaderSrc="/images/csgo/teams/default.png"
+          />
         </Reveal.Content>
         <Reveal.Content hidden>
           <List selection>
@@ -21,7 +25,12 @@ const Team = ({ team }) => {
                   <Flag name={player.country} />
                 </List.Icon>
                 <List.Content>
-                  <Link href={`/counter-strike-global-offensive/teams/${teamSlug}/${slugify(player.name, { lower: true })}/`}>
+                  <Link
+                    href={`/counter-strike-global-offensive/teams/${teamSlug}/${slugify(
+                      player.name,
+                      { lower: true }
+                    )}/`}
+                  >
                     <a>{player.name}</a>
                   </Link>
                 </List.Content>
@@ -34,14 +43,14 @@ const Team = ({ team }) => {
         <Card.Header>{team.name}</Card.Header>
       </Card.Content>
     </Card>
-  )
-}
+  );
+};
 
 Team.propTypes = {
   team: PropTypes.shape({
     name: PropTypes.string,
-    players: PropTypes.array
-  })
-}
+    players: PropTypes.array,
+  }),
+};
 
-export default Team
+export default Team;

@@ -1,39 +1,39 @@
-import React, { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
-import { Container, Loader } from 'semantic-ui-react'
-import useAuth from '../components/AuthenticationProvider'
-import { StorageManager } from '../utils'
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { Container, Loader } from "semantic-ui-react";
+import useAuth from "../components/AuthenticationProvider";
+import { StorageManager } from "../utils";
 
 const Authentication = () => {
-  const { user, loading, login } = useAuth()
-  const router = useRouter()
-  const [called, setCalled] = useState(false)
+  const { user, loading, login } = useAuth();
+  const router = useRouter();
+  const [called, setCalled] = useState(false);
 
   useEffect(() => {
     if (!called && !loading) {
-      setCalled(true)
+      setCalled(true);
       if (!user) {
-        login()
+        login();
       }
     }
-  }, [called, loading, user])
+  }, [called, loading, user]);
 
   useEffect(() => {
     if (called && !loading) {
-      const redirect = StorageManager.get('openid.redirect', false)
+      const redirect = StorageManager.get("openid.redirect", false);
       if (redirect) {
-        StorageManager.remove('openid.redirect', false)
-        router.push(redirect)
+        StorageManager.remove("openid.redirect", false);
+        router.push(redirect);
       } else {
-        router.push('/')
+        router.push("/");
       }
     }
-  }, [called, loading])
+  }, [called, loading]);
   return (
     <Container>
-      <Loader active inline='centered' key='loader' />
+      <Loader active inline="centered" key="loader" />
     </Container>
-  )
-}
+  );
+};
 
-export default Authentication
+export default Authentication;

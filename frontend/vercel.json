@@ -1,5 +1,8 @@
 {
   "rewrites": [
-    { "source": "/sitemap.xml", "destination": "https://api.lionskins.co/sitemap.xml" }
+    {
+      "source": "/sitemap.xml",
+      "destination": "https://api.lionskins.co/sitemap.xml"
+    }
   ]
 }
