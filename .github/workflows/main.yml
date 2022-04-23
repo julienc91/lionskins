@@ -7,8 +7,22 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_DB: lionskins_test
+          POSTGRES_USER: lionskins_test
+          POSTGRES_PASSWORD: test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports: ["5432:5432"]
 
     defaults:
       run:
@@ -29,14 +43,15 @@ jobs:
           python -m pip install --upgrade pip poetry
           poetry config virtualenvs.create false
           poetry install
-      - name: Run black
-        run: |
-          pip install black
-          black --check .
-      - name: Run flake8
-        run: |
-          pip install flake8
-          flake8 .
+      - name: Run pre-commit checks
+        run: poetry run pre-commit run --all-files
+        env:
+          GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
       - name: Run pytest
-        run: |
-          pytest .
+        run: poetry run pytest .
+        env:
+          POSTGRES_DB: lionskins_test
+          POSTGRES_USER: lionskins_test
+          POSTGRES_PASSWORD: test
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432

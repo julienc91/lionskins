@@ -6,8 +6,16 @@ mypy_path = "src/"
 
 [tool.pytest.ini_options]
 env = [
-    "DJANGO_SECRET_KEY=secret",
-    "RECAPTCHA_SECRET=secret"
+  "DJANGO_SECRET_KEY=test",
+  "RECAPTCHA_SECRET=test",
+  "BACKEND_DOMAIN=api.lionskins.dev",
+  "FRONTEND_DOMAIN=https://lionskins.dev",
+  "STEAM_API_KEY=test",
+  "BITSKINS_2FA_KEY=test",
+  "BITSKINS_API_KEY=test",
+  "SKINBARON_API_KEY=test",
+  "SKINPORT_CLIENT_ID=test",
+  "SKINPORT_CLIENT_SECRET=test",
 ]
 DJANGO_SETTINGS_MODULE = "lionskins.settings"
 
