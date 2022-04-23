@@ -21,7 +21,7 @@ services:
       - db_network
     volumes:
       - "backenddata:/data/backend:ro"
-      - "./staticfiles:/home/user/backend/staticfiles"
+      - "./backend/staticfiles:/home/user/backend/staticfiles"
     depends_on:
       - db
 
