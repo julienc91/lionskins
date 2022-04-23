@@ -34,9 +34,7 @@ DEBUG = os.environ.get("DJANGO_DEBUG", "false") == "true"
 
 ALLOWED_HOSTS = [os.environ["BACKEND_DOMAIN"]]
 
-if os.environ.get("ENVIRONMENT") != "development":
-    SESSION_COOKIE_SECURE = True
-
+SESSION_COOKIE_SECURE = os.environ.get("ENVIRONMENT") != "development"
 
 ADMIN_PREFIX = os.environ.get("ADMIN_PREFIX", "admin")
 

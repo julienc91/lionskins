@@ -16,6 +16,9 @@ def patch_output_file(monkeypatch, tmp_path):
 
 @pytest.mark.django_db
 def test_generate_sitemap_static_urls(client, skin):
+    res2 = client.get("/sitemap.xml")
+    assert res2.status_code == 404
+
     res = call_command("generate_sitemap")
     with open(Command.output_file()) as f:
         assert f.read() == res

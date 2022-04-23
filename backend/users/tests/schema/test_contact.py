@@ -59,10 +59,10 @@ def test_send_message(monkeypatch, client, user, name, email, authenticated):
 @pytest.mark.parametrize(
     "message, email, captcha",
     [
-        ("", "", "captcha"),
-        ("foo", "", "bad_captcha"),
-        ("foo", "bar", "captcha"),
-    ],  # empty message  # bad captcha  # bad email
+        ("", "", "captcha"),  # empty message
+        ("foo", "", "bad_captcha"),  # bad captcha
+        ("foo", "bar", "captcha"),  # bad email
+    ],
 )
 @pytest.mark.django_db
 def test_send_message_invalid_parameter(monkeypatch, client, captcha, email, message):

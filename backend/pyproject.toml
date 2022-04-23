@@ -8,6 +8,7 @@ omit = [
 profile = "black"
 
 [tool.pytest.ini_options]
+addopts = "--allow-hosts=127.0.0.1"
 env = [
   "DJANGO_SECRET_KEY=test",
   "RECAPTCHA_SECRET=test",
@@ -64,10 +65,11 @@ mypy                        = "*"
 pre-commit                  = "*"
 factory_boy                 = "~3.2"
 pytest                      = "~7.1"
-pytest-cov                  = "~3.0"
+pytest-cov                  = "*"
 pytest-env                  = "~0.6"
 pytest-factoryboy           = "~2.1"
 pytest-django               = "~4.5"
+pytest-socket               = "*"
 
 [build-system]
 requires = ["poetry>=1.0.0"]
