@@ -9,7 +9,9 @@ WORKDIR /home/user/backend
 
 USER user
 ENV PATH="/home/user/.local/bin:${PATH}" \
-    POETRY_VERSION=1.1.13
+    POETRY_VERSION=1.1.13 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
 
 RUN pip install "poetry==1.1.13"
 COPY --chown=user:group pyproject.toml poetry.lock ./
@@ -19,4 +21,4 @@ COPY --chown=user:group . .
 
 EXPOSE 8000
 
-CMD ["gunicorn", "--config", "gunicorn.py", "lionskins.wsgi"]
+CMD ["./entrypoint.sh"]
