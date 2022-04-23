@@ -38,6 +38,9 @@ if os.environ.get("ENVIRONMENT") != "development":
     SESSION_COOKIE_SECURE = True
 
 
+ADMIN_PREFIX = os.environ.get("ADMIN_PREFIX", "admin")
+
+
 # Application definition
 INSTALLED_APPS = [
     "django.contrib.admin",
