@@ -1,4 +1,4 @@
-import user_agents
+from device_detector import DeviceDetector
 from django.core.exceptions import ValidationError
 from django.http.response import HttpResponseRedirect
 from graphql_relay import from_global_id
@@ -38,10 +38,10 @@ def redirect_view(request, provider, skin_id):
     return HttpResponseRedirect(url, status=status.HTTP_302_FOUND)
 
 
-def should_create_redirect_object(request):
+def should_create_redirect_object(request) -> bool:
     user_agent = request.headers.get("User-Agent")
     return (
         user_agent
-        and not user_agents.parse(user_agent).is_bot
+        and not DeviceDetector(user_agent).parse().is_bot()
         and not request.user.is_staff
     )

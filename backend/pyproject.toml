@@ -32,6 +32,7 @@ authors = ["Julien <contact@lionskins.co>"]
 [tool.poetry.dependencies]
 python                        = "^3.10"
 beautifulsoup4                = "~4.10.0"
+device-detector               = "~5.0.1"
 django                        = "~4.0.0"
 djangorestframework           = "~3.13.1"
 django-apscheduler            = "~0.6.2"
@@ -46,7 +47,6 @@ requests                      = "~2.27"
 social-auth-app-django        = "~5.0.0"
 structlog                     = "~21.5"
 tqdm                          = "~4.63"
-user-agents                   = "~2.2.0"
 
 # backoffice
 apscheduler                 = "~3.9.1"
