@@ -13,6 +13,10 @@ def associate_by_steam_id(strategy, uid, user=None, *args, **kwargs):
         user = User.objects.get(steam_id=uid)
     except User.DoesNotExist:
         return None
+    if not user.is_active:
+        user.is_active = True
+        user.save(update_fields=["is_active"])
+
     return {"is_new": False, "user": user}
 
 
@@ -28,5 +32,5 @@ def create_user(strategy, uid, username, user=None, *args, **kwargs):
 def user_details(strategy, username, user, *args, **kwargs):
     if user.username != username:
         user.username = username
-        user.save()
+        user.save(update_fields=["username"])
     return None
