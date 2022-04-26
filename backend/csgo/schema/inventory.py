@@ -8,7 +8,7 @@ from csgo.schema.skin import SkinNode
 
 class Query(graphene.ObjectType):
     inventory = DjangoFilterConnectionField(
-        SkinNode, steam_id=graphene.String(), max_limit=100
+        SkinNode, steam_id=graphene.String(), max_limit=5000
     )
 
     def resolve_inventory(self, info, **args):

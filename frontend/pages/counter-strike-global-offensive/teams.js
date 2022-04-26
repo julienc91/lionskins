@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import Head from "next/head";
 import useTranslation from "next-translate/useTranslation";
 import Trans from "next-translate/Trans";
@@ -7,6 +6,29 @@ import { Card, Container, Header } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import Breadcrumb from "../../components/Breadcrumb";
 import Team from "../../components/csgo/Team";
+import { gql, useQuery } from "@apollo/client";
+import { client } from "../../apollo";
+
+const getTeamsQuery = gql`
+  query {
+    teams {
+      edges {
+        node {
+          id
+          name
+          slug
+          players {
+            nickname
+            slug
+            countryCode
+            role
+            steamId
+          }
+        }
+      }
+    }
+  }
+`;
 
 const TeamList = ({ teams }) => {
   const { t } = useTranslation("csgo");
@@ -47,7 +69,7 @@ const TeamList = ({ teams }) => {
             i18nKey="csgo:csgo.teams.disclaimer"
             components={[
               <a
-                href="https://egamersworld.com/"
+                href="https://hltv.com/"
                 target="_blank"
                 rel="noopener noreferrer"
                 key={0}
@@ -71,10 +93,10 @@ TeamList.propTypes = {
 };
 
 export const getServerSideProps = async () => {
-  const res = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_DOMAIN}/teams.json`
-  );
-  return { props: { teams: res.data } };
+  const { data } = await client.query({
+    query: getTeamsQuery,
+  });
+  return { props: { teams: data.teams.edges.map(({ node }) => node) } };
 };
 
 export default TeamList;

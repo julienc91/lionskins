@@ -2,18 +2,16 @@ import React from "react";
 import Link from "next/link";
 import PropTypes from "prop-types";
 import { Card, Flag, List, Reveal } from "semantic-ui-react";
-import slugify from "slugify";
 import Image from "../Image";
 
 const Team = ({ team }) => {
-  const teamSlug = slugify(team.name, { lower: true });
   return (
-    <Card key={teamSlug} className="team item">
+    <Card key={team.slug} className="team item">
       <Reveal animated="move">
         <Reveal.Content visible>
           <Image
             alt={team.name}
-            imageSrc={`/images/csgo/teams/${teamSlug}.png`}
+            imageSrc={`/images/csgo/teams/${team.slug}.png`}
             loaderSrc="/images/csgo/teams/default.png"
           />
         </Reveal.Content>
@@ -22,16 +20,13 @@ const Team = ({ team }) => {
             {team.players.map((player, i) => (
               <List.Item key={i}>
                 <List.Icon>
-                  <Flag name={player.country} />
+                  <Flag name={player.countryCode} />
                 </List.Icon>
                 <List.Content>
                   <Link
-                    href={`/counter-strike-global-offensive/teams/${teamSlug}/${slugify(
-                      player.name,
-                      { lower: true }
-                    )}/`}
+                    href={`/counter-strike-global-offensive/teams/${team.slug}/${player.slug}/`}
                   >
-                    <a>{player.name}</a>
+                    <a>{player.nickname}</a>
                   </Link>
                 </List.Content>
               </List.Item>
@@ -49,7 +44,16 @@ const Team = ({ team }) => {
 Team.propTypes = {
   team: PropTypes.shape({
     name: PropTypes.string,
-    players: PropTypes.array,
+    slug: PropTypes.string,
+    players: PropTypes.arrayOf(
+      PropTypes.shape({
+        nickname: PropTypes.string,
+        slug: PropTypes.string,
+        countryCode: PropTypes.string,
+        role: PropTypes.string,
+        steamId: PropTypes.string,
+      })
+    ),
   }),
 };
 

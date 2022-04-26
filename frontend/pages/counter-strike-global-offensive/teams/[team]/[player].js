@@ -10,6 +10,28 @@ import slugify from "slugify";
 import Breadcrumb from "../../../../components/Breadcrumb";
 import useSettings from "../../../../components/SettingsProvider";
 import Skin from "../../../../components/csgo/Skin";
+import { client } from "../../../../apollo";
+
+const getTeamQuery = gql`
+  query ($slug: String!) {
+    teams(slug: $slug) {
+      edges {
+        node {
+          id
+          name
+          slug
+          players {
+            nickname
+            slug
+            countryCode
+            role
+            steamId
+          }
+        }
+      }
+    }
+  }
+`;
 
 export const getInventoryQuery = gql`
   query ($steamId: String, $currency: TypeCurrency) {
@@ -56,7 +78,7 @@ const Player = ({ player, team }) => {
   return (
     <Container className="page inventory">
       <Head>
-        <title>{`${t("csgo.pro_player.page_title")} - ${player.name} (${
+        <title>{`${t("csgo.pro_player.page_title")} - ${player.nickname} (${
           team.name
         })`}</title>
       </Head>
@@ -72,17 +94,17 @@ const Player = ({ player, team }) => {
             link: "/counter-strike-global-offensive/teams/",
           },
           { name: team.name },
-          { name: player.name },
+          { name: player.nickname },
         ]}
       />
 
       <Header as="h1" textAlign="center">
-        {player.name}
+        {player.nickname}
         <Header.Subheader>
           <Trans
             i18nKey="csgo:csgo.pro_player.subtitle"
             values={{
-              player: player.name,
+              player: player.nickname,
               role: t(`csgo.pro_player.role.${player.role}`),
               team: team.name,
             }}
@@ -99,7 +121,7 @@ const Player = ({ player, team }) => {
           <Header.Subheader>
             <Trans
               i18nKey="csgo:csgo.pro_player.no_results_subtitle"
-              values={{ player: player.name }}
+              values={{ player: player.nickname }}
             />
           </Header.Subheader>
         </Header>
@@ -128,20 +150,18 @@ Player.propTypes = {
   team: PropTypes.object.isRequired,
 };
 
-export const getServerSideProps = async ({ locale, query }) => {
-  const { data } = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_DOMAIN}/teams.json`
-  );
-  const team = data.find(
-    (t) => slugify(t.name, { lower: true }) === query.team
-  );
-  if (!team) {
+export const getServerSideProps = async ({ query }) => {
+  const { data } = await client.query({
+    query: getTeamQuery,
+    variables: { slug: query.team },
+  });
+
+  if (!data.teams.edges.length) {
     return { notFound: true };
   }
 
-  const player = team.players.find(
-    (p) => slugify(p.name, { lower: true }) === query.player
-  );
+  const team = data.teams.edges[0].node;
+  const player = team.players.find((p) => p.slug === query.player);
   if (!player) {
     return { notFound: true };
   }

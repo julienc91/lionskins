@@ -1,28 +1,24 @@
 import json
-import os
 import re
-from typing import Any, Optional
+from typing import Any, Iterator
 
 import requests
 import structlog
 from bs4 import BeautifulSoup
 from django.core.management.base import BaseCommand
+from django.db import transaction
+from django.utils import timezone
 from ratelimit import limits, sleep_and_retry
+from slugify import slugify
 
-from lionskins.utils.data import get_data_directory
+from users.models import ProPlayer, ProTeam, User
 
 logger = structlog.get_logger("fetch_players")
 
 
 class Command(BaseCommand):
     @classmethod
-    def output_file(cls) -> str:
-        return os.path.join(get_data_directory(), "teams.json")
-
-    @classmethod
-    def _get_soup(
-        cls, url: str, params: Optional[dict[str, Any]] = None
-    ) -> BeautifulSoup:
+    def _get_soup(cls, url: str, params: dict[str, Any] | None = None) -> BeautifulSoup:
         html = cls._get_content(url, params=params)
         return BeautifulSoup(html, features="html.parser")
 
@@ -30,45 +26,36 @@ class Command(BaseCommand):
     @sleep_and_retry
     @limits(calls=1, period=5)
     def _get_content(
-        cls, url: str, params: Optional[dict[str, Any]] = None
-    ) -> Optional[bytes]:
+        cls, url: str, params: dict[str, Any] | None = None
+    ) -> bytes | None:
         res = requests.get(url, params=params, headers={"User-Agent": "LionSkins/1.0"})
         if res.status_code != 200:
             return None
         return res.content
 
     @classmethod
-    def _get_top_teams(cls):
+    def get_top_teams(cls) -> Iterator[ProTeam]:
         res = cls._get_content(
             "https://raw.githubusercontent.com/julienc91/hltv-ranking/rankings/latest.json"
         )
         api_data = json.loads(res)
         ranking = api_data["teams"]
-        for team in ranking:
-            yield team["name"]
+        for team_data in ranking:
+            team_name = team_data["name"]
+            team_slug = slugify(team_name)
+            team, _ = ProTeam.objects.update_or_create(name=team_name, slug=team_slug)
+            yield team
 
     @classmethod
-    def _get_team_players(cls, team: str) -> Optional[dict[str, Any]]:
-        team = {  # Convert team name to liquipedia convention
-            "1win": "1win",
-            "9z": "9z Team",
-            "hard legion": "Hard Legion Esports",
-            "imperial": "Imperial Esports",
-            "nemiga": "Nemiga Gaming",
-            "nip": "Ninjas in Pyjamas",
-            "outsiders": "Virtus.pro",
-            "players": "Gambit_Esports",
-            "saw": "SAw (Portuguese team)",
-            "sinners": "Sinners Esports",
-            "spirit": "Team Spirit",
-            "teamone": "Team One",
-        }.get(team.lower(), team)
-
+    def _get_team_players_base_info_from_liquipedia(
+        cls, team: ProTeam
+    ) -> dict[str, Any]:
+        page_name = team.liquipedia_id or team.name
         res = cls._get_content(  # Fetch the team's page on liquipedia
             "https://liquipedia.net/counterstrike/api.php?",
             {
                 "action": "query",
-                "titles": team,
+                "titles": page_name,
                 "prop": "revisions",
                 "rvprop": "content",
                 "format": "json",
@@ -80,8 +67,10 @@ class Command(BaseCommand):
         res = json.loads(res)
         pages = res["query"]["pages"]
         if pages.get("-1"):
-            logger.error("Team not found on Liquipedia", team=team)
-            return None
+            logger.error(
+                "Team not found on Liquipedia", team_id=team.pk, team_name=team.name
+            )
+            return {}
 
         page = list(pages.values())[0]
         content = page["revisions"][0]["slots"]["main"]["*"]
@@ -91,29 +80,44 @@ class Command(BaseCommand):
                 r"{{ActiveSquad\|(\n{{SquadPlayer.*}}\s*)+\n}}", content
             )[0].split("\n")[1:-1]
         except Exception as e:
-            logger.exception(e)
-            return None
+            logger.exception(
+                "Unexpected liquipedia page parsing",
+                team_id=team.pk,
+                team_name=team.name,
+                exc_info=e,
+            )
+            return {}
 
-        # Retrieve player names and countries from team page
-        players = {}
+        players_info = {}
         for player in active_squad:
             if re.search(r"\|\s*[^|]*\bcoach\b\s*\|", player, re.IGNORECASE):
                 continue
 
-            country = re.search(r"flag=(\w+)", player).groups()[0]
-            player_name = re.search(r"player=([^|]+)\|", player).groups()[0]
+            country_code = re.search(r"flag=(\w+)", player).groups()[0]
+            nickname = re.search(r"player=([^|]+)\|", player).groups()[0]
             try:
                 page_name = re.search(r"link=([^|]+)\|", player).groups()[0]
             except AttributeError:
-                page_name = player_name
+                page_name = nickname
+            players_info[page_name] = {
+                "nickname": nickname,
+                "country_code": country_code,
+            }
 
-            players[page_name] = {"name": player_name, "country": country}
-        return players
+        page_title = page["title"]
+        if page_title != team.liquipedia_id:
+            team.liquipedia_id = page_title
+            team.save(update_fields=["liquipedia_id"])
+
+        return players_info
 
     @classmethod
-    def _get_players_info(cls, team: str):
-        players = cls._get_team_players(team)
-        page_names = players.keys()
+    def get_team_players(cls, team: ProTeam) -> list[ProPlayer]:
+        players_info = cls._get_team_players_base_info_from_liquipedia(team)
+        if not players_info:
+            return []
+
+        page_names = players_info.keys()
         res = cls._get_content(
             "https://liquipedia.net/counterstrike/api.php",
             {
@@ -134,7 +138,7 @@ class Command(BaseCommand):
         pages = res["pages"]
 
         for page_id, page in pages.items():
-            if page_id == "-1":
+            if int(page_id) < 0:
                 continue
 
             page_name = page["title"]
@@ -143,7 +147,8 @@ class Command(BaseCommand):
             content = page["revisions"][0]["slots"]["main"]["*"]
 
             for key, regex, post_process in [
-                ("steamId", r"\|\s*steam=(\d+)\s*\|", None),
+                ("name", r"\|\s*name\s*=\s*([^|]+)\s*\|", None),
+                ("steam_id", r"\|\s*steam=(\d+)\s*\|", None),
                 ("role", r"\|\s*role=(\w+)\s*\|", str.lower),
             ]:
                 value = re.search(regex, content) or None
@@ -151,25 +156,47 @@ class Command(BaseCommand):
                     value = value.groups()[0]
                     if post_process:
                         value = post_process(value)
-                players[page_name][key] = value
+                players_info[page_name][key] = value
 
-        return list(players.values())
+        players = []
+        for player_info in players_info.values():
+            if not player_info.get("steam_id"):
+                continue
 
-    def handle(self, *args, **options):
-        res = []
-        for team in self._get_top_teams():
-            team_data = {"name": team, "players": []}
-            try:
-                for player_info in self._get_players_info(team):
-                    team_data["players"].append(player_info)
-            except Exception as e:
-                logger.exception(f"Error while retrieving team data: {e}", team=team)
+            user, _ = User.objects.get_or_create(
+                steam_id=player_info["steam_id"],
+                defaults={"is_active": False, "username": player_info["nickname"]},
+            )
+            player, _ = ProPlayer.objects.update_or_create(
+                user=user,
+                defaults={
+                    "nickname": player_info["nickname"],
+                    "role": player_info.get("role", ""),
+                    "slug": slugify(player_info["nickname"]),
+                    "country_code": player_info["country_code"],
+                },
+            )
+            players.append(player)
+        return players
 
-            if team_data["players"]:
-                team_data["players"].sort(key=lambda p: p["name"].lower())
-                res.append(team_data)
+    def handle(self, *args, **options) -> None:
+        teams = []
+        now = timezone.now()
 
-        res = json.dumps(res, indent=4)
-        with open(self.output_file(), "w") as f:
-            f.write(res)
-        return res
+        for team in self.get_top_teams():
+            players = self.get_team_players(team)
+
+            with transaction.atomic():
+                ProPlayer.objects.filter(team=team).update(team=None, update_date=now)
+                ProPlayer.objects.filter(
+                    pk__in=[player.pk for player in players]
+                ).update(team=team, update_date=now)
+
+            teams.append(team)
+
+        with transaction.atomic():
+            ProTeam.objects.update(rank=None, update_date=now)
+            for i, team in enumerate(teams):
+                team.rank = i + 1
+                team.update_date = now
+                team.save(update_fields=["rank", "update_date"])

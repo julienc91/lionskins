@@ -20,7 +20,6 @@ from django.views.decorators.csrf import csrf_exempt
 from graphene_django.views import GraphQLView
 
 from csgo.views.redirect import redirect_view
-from csgo.views.teams import teams_view
 from lionskins.views.sitemap import sitemap_view
 from users.views.authentication import logout_view
 
@@ -28,7 +27,6 @@ urlpatterns = [
     path(f"{settings.ADMIN_PREFIX}/", admin.site.urls),
     path("graphql", csrf_exempt(GraphQLView.as_view(graphiql=True)), name="graphql"),
     path("sitemap.xml", sitemap_view, name="sitemap"),
-    path("teams.json", teams_view, name="teams"),
     path("redirect/<str:provider>/<str:skin_id>/", redirect_view, name="redirect"),
     path("logout/", logout_view, name="logout"),
     path("authentication/", include("social_django.urls", namespace="authentication")),
