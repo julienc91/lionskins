@@ -51,7 +51,6 @@ Team.propTypes = {
         slug: PropTypes.string,
         countryCode: PropTypes.string,
         role: PropTypes.string,
-        steamId: PropTypes.string,
       })
     ),
   }),

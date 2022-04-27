@@ -18,11 +18,11 @@ const getTeamsQuery = gql`
           name
           slug
           players {
+            id
             nickname
             slug
             countryCode
             role
-            steamId
           }
         }
       }

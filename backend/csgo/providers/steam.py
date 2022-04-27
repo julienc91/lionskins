@@ -3,7 +3,6 @@ import time
 
 import requests
 import structlog
-from django.core.cache import cache
 from ratelimit import limits, sleep_and_retry
 
 from csgo.providers.abstract_client import AbstractClient, UnfinishedJob
@@ -109,17 +108,21 @@ class SteamClient(AbstractClient):
                 return
 
 
-def get_inventory(steam_id: str):
-    cache_key = f"steam_inventory_{steam_id}"
-    inventory = cache.get(cache_key)
-    if inventory is None:
+def get_inventory(steam_id: str) -> tuple[list | None, bool]:
+    inventory = []
+    params = {"l": "english", "count": 5000}
+    while True:
         res = requests.get(
-            f"https://steamcommunity.com/inventory/{steam_id}/730/2",
-            params={"l": "english", "count": 5000},
+            f"https://steamcommunity.com/inventory/{steam_id}/730/2", params=params
         )
         if res.status_code != 200:
-            return None
+            return None, False
 
-        inventory = res.json()
-        cache.set(cache_key, inventory)
-    return inventory
+        data = res.json()
+        inventory += data.get("descriptions") or []
+        if not data.get("more_items") or not data.get("last_assetid"):
+            break
+
+        params["start_assetid"] = data["last_assetid"]
+
+    return inventory, True

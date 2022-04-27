@@ -12,8 +12,8 @@ import { Providers } from "../../utils/enums";
 import { formatPrice } from "../../utils/i18n";
 
 export const getInventoryQuery = gql`
-  query ($steamId: String, $currency: TypeCurrency) {
-    inventory(steamId: $steamId) {
+  query ($currency: TypeCurrency) {
+    inventory {
       edges {
         node {
           id
@@ -52,10 +52,10 @@ const MyInventory = () => {
   const { currency } = useSettings();
 
   const executeQuery = () => {
-    if (!user || !user.steamId) {
+    if (!user) {
       return;
     }
-    loadInventory({ variables: { currency, steamId: user.steamId } });
+    loadInventory({ variables: { currency } });
   };
 
   const handleStartLogin = AuthenticationManager.startOpenId;

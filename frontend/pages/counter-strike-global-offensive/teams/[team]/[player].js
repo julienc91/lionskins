@@ -21,11 +21,11 @@ const getTeamQuery = gql`
           name
           slug
           players {
+            id
             nickname
             slug
             countryCode
             role
-            steamId
           }
         }
       }
@@ -34,8 +34,8 @@ const getTeamQuery = gql`
 `;
 
 export const getInventoryQuery = gql`
-  query ($steamId: String, $currency: TypeCurrency) {
-    inventory(steamId: $steamId) {
+  query ($proPlayerId: ID!, $currency: TypeCurrency) {
+    inventory(proPlayerId: $proPlayerId) {
       edges {
         node {
           id
@@ -68,7 +68,7 @@ const Player = ({ player, team }) => {
   const { t } = useTranslation("csgo");
   const { currency } = useSettings();
   const { data, loading } = useQuery(getInventoryQuery, {
-    variables: { steamId: player.steamId, currency },
+    variables: { proPlayerId: player.id, currency },
     notifyOnNetworkStatusChange: true,
   });
 

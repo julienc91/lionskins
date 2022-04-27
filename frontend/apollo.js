@@ -8,7 +8,7 @@ export const client = new ApolloClient({
   }),
   cache: new InMemoryCache({
     typePolicies: {
-      TypeCSGOSkin: {
+      SkinNode: {
         keyFields: [
           "weapon",
           "slug",
@@ -32,7 +32,7 @@ export const client = new ApolloClient({
             "search",
             "group",
           ]),
-          inventory: relayStylePagination(["steamId"]),
+          inventory: relayStylePagination(["proPlayerId"]),
         },
       },
     },

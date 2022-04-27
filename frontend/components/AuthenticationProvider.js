@@ -9,7 +9,6 @@ export const getUserQuery = gql`
     currentUser {
       id
       username
-      steamId
     }
   }
 `;
