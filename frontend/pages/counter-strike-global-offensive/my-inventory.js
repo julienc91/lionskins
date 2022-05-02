@@ -1,19 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { gql, useLazyQuery } from "@apollo/client";
 import Head from "next/head";
 import useTranslation from "next-translate/useTranslation";
-import { Card, Container, Header, Icon, Loader } from "semantic-ui-react";
+import { Container, Header, Icon, Loader } from "semantic-ui-react";
 import useAuth from "../../components/AuthenticationProvider";
 import Breadcrumb from "../../components/Breadcrumb";
 import useSettings from "../../components/SettingsProvider";
-import Skin from "../../components/csgo/Skin";
 import AuthenticationManager from "../../utils/authentication";
-import { Providers } from "../../utils/enums";
 import { formatPrice } from "../../utils/i18n";
+import SkinList from "../../components/csgo/SkinList";
 
 export const getInventoryQuery = gql`
-  query ($currency: TypeCurrency) {
-    inventory {
+  query ($first: Int, $after: String, $currency: TypeCurrency) {
+    inventoryCost(currency: $currency)
+    inventory(first: $first, after: $after) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
       edges {
         node {
           id
@@ -44,38 +48,43 @@ export const getInventoryQuery = gql`
 
 const MyInventory = () => {
   const { t, lang } = useTranslation("csgo");
-  const { user, loading: userLoading } = useAuth();
-  const [loadInventory, { data, loading: dataLoading }] = useLazyQuery(
-    getInventoryQuery,
-    { notifyOnNetworkStatusChange: true }
-  );
   const { currency } = useSettings();
+  const [hasMore, setHasMore] = useState(true);
+  const [variables, setVariables] = useState({ first: 30, currency });
+  const { user, loading: userLoading } = useAuth();
 
-  const executeQuery = () => {
-    if (!user) {
-      return;
-    }
-    loadInventory({ variables: { currency } });
+  const [loadInventory, { data, fetchMore, loading: dataLoading }] =
+    useLazyQuery(getInventoryQuery, {
+      variables,
+      notifyOnNetworkStatusChange: true,
+    });
+
+  const getMoreSkins = () => {
+    fetchMore({
+      variables: {
+        ...variables,
+        after: data.inventory.pageInfo.endCursor,
+      },
+    });
   };
 
+  useEffect(() => setVariables((v) => ({ ...v, currency })), [currency]);
+
+  useEffect(
+    () =>
+      data && data.inventory && setHasMore(data.inventory.pageInfo.hasNextPage),
+    [data]
+  );
+
+  useEffect(() => {
+    if (user) {
+      loadInventory();
+    }
+  }, [user, currency]);
+
+  const inventoryCost = data?.inventoryCost;
+  const skins = (data?.inventory?.edges || []).map(({ node }) => node);
   const handleStartLogin = AuthenticationManager.startOpenId;
-
-  useEffect(executeQuery, [user]);
-  useEffect(executeQuery, [currency]);
-
-  let minCost = 0;
-  if (data && data.inventory.edges.length) {
-    minCost = data.inventory.edges
-      .map(({ node }) =>
-        Math.min(
-          ...Object.keys(Providers)
-            .filter((provider) => node.prices[provider])
-            .map((provider) => node.prices[provider])
-        )
-      )
-      .reduce((a, b) => a + b);
-  }
-  minCost = parseFloat(minCost).toFixed(2);
 
   return (
     <Container className="page inventory">
@@ -97,7 +106,7 @@ const MyInventory = () => {
         {t("csgo.inventory.title")}
       </Header>
 
-      {(userLoading || dataLoading) && (
+      {(userLoading || (dataLoading && !data)) && (
         <Loader active inline="centered" key="loader" />
       )}
 
@@ -117,42 +126,36 @@ const MyInventory = () => {
         </Header>
       )}
 
-      {!userLoading && user && !dataLoading && (
-        <>
-          {!data || !data.inventory.edges.length ? (
-            <Header as="h2" icon textAlign="center">
-              <Icon name="frown outline" />
-              {t("csgo.inventory.no_results_title")}
-              <Header.Subheader>
-                {t("csgo.inventory.no_results_subtitle")}
-              </Header.Subheader>
-            </Header>
-          ) : (
-            <>
-              <Header as="h2" icon textAlign="center">
-                <Icon name={currency} />
-                {formatPrice(minCost, lang)}
-                <br />
-                {t("csgo.inventory.summary_title")}
-                <Header.Subheader>
-                  {t("csgo.inventory.summary_subtitle")}
-                </Header.Subheader>
-              </Header>
+      {user && !dataLoading && !skins.length && (
+        <Header as="h2" icon textAlign="center">
+          <Icon name="frown outline" />
+          {t("csgo.inventory.no_results_title")}
+          <Header.Subheader>
+            {t("csgo.inventory.no_results_subtitle")}
+          </Header.Subheader>
+        </Header>
+      )}
 
-              <div className="skin-list">
-                <Card.Group className="item-list">
-                  {data.inventory.edges.map(({ node }) => (
-                    <Skin key={node.id} skin={node} />
-                  ))}
-                  <div className="padding-item" />
-                  <div className="padding-item" />
-                  <div className="padding-item" />
-                  <div className="padding-item" />
-                  <div className="padding-item" />
-                </Card.Group>
-              </div>
-            </>
-          )}
+      {user && skins.length && (
+        <>
+          <Header as="h2" icon textAlign="center">
+            <Icon name={currency} />
+            {formatPrice(inventoryCost, lang)}
+            <br />
+            {t("csgo.inventory.summary_title")}
+            <Header.Subheader>
+              {t("csgo.inventory.summary_subtitle")}
+            </Header.Subheader>
+          </Header>
+
+          <div className="skin-list">
+            <SkinList
+              hasMore={hasMore}
+              loading={dataLoading}
+              getMoreSkins={getMoreSkins}
+              skins={skins}
+            />
+          </div>
         </>
       )}
     </Container>

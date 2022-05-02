@@ -6,11 +6,7 @@ import StorageManager from "../utils/StorageManager";
 const SettingsContext = createContext({});
 
 export const SettingsProvider = ({ children }) => {
-  const [currency, setCurrency] = useState(Currencies.eur);
-
-  useEffect(() => {
-    setCurrency(SettingsManager.getCurrency());
-  }, []);
+  const [currency, setCurrency] = useState(SettingsManager.getCurrency());
 
   const changeCurrency = (value) => {
     setCurrency(value);

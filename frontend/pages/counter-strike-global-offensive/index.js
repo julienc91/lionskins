@@ -5,13 +5,12 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 import PropTypes from "prop-types";
-import InfiniteScroll from "react-infinite-scroller";
-import { Button, Card, Header, Icon, Loader, Sidebar } from "semantic-ui-react";
+import { Button, Header, Icon, Sidebar } from "semantic-ui-react";
 import Breadcrumb from "../../components/Breadcrumb";
 import Changelog from "../../components/Changelog";
 import useSettings from "../../components/SettingsProvider";
 import Filter from "../../components/csgo/Filter";
-import Skin from "../../components/csgo/Skin";
+import SkinList from "../../components/csgo/SkinList";
 
 export const getSkinsQuery = gql`
   query (
@@ -170,11 +169,7 @@ const CsgoSkinList = ({ query }) => {
     }
   };
 
-  const renderSkins = () => {
-    return data.csgo.edges.map(({ node: skin }) => (
-      <Skin key={skin.id} skin={skin} />
-    ));
-  };
+  const skins = (data?.csgo?.edges || []).map(({ node }) => node);
 
   return (
     <div className="skin-list-container">
@@ -210,7 +205,7 @@ const CsgoSkinList = ({ query }) => {
 
         <Changelog />
 
-        {!loading && data && data.csgo && data.csgo.edges.length === 0 && (
+        {!loading && skins.length === 0 && (
           <Header as="h2" icon className="no-results">
             <Icon name="frown outline" />
             {t("skin_list:skin_list.no_results.title")}
@@ -220,24 +215,12 @@ const CsgoSkinList = ({ query }) => {
           </Header>
         )}
 
-        {data && data.csgo && !!data.csgo.edges.length && (
-          <InfiniteScroll
-            initialLoad={false}
-            hasMore={hasMore}
-            loadMore={getMoreSkins}
-          >
-            <Card.Group className="item-list">
-              {renderSkins()}
-              <div className="padding-item" />
-              <div className="padding-item" />
-              <div className="padding-item" />
-              <div className="padding-item" />
-              <div className="padding-item" />
-            </Card.Group>
-          </InfiniteScroll>
-        )}
-
-        {loading && <Loader active inline="centered" key="loader" />}
+        <SkinList
+          skins={skins}
+          loading={loading}
+          getMoreSkins={getMoreSkins}
+          hasMore={hasMore}
+        />
       </div>
     </div>
   );

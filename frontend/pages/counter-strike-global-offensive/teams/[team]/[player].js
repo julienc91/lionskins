@@ -1,16 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { gql, useQuery } from "@apollo/client";
-import axios from "axios";
 import Head from "next/head";
 import useTranslation from "next-translate/useTranslation";
 import Trans from "next-translate/Trans";
 import PropTypes from "prop-types";
-import { Card, Container, Header, Icon, Loader } from "semantic-ui-react";
-import slugify from "slugify";
+import { Container, Header, Icon } from "semantic-ui-react";
 import Breadcrumb from "../../../../components/Breadcrumb";
 import useSettings from "../../../../components/SettingsProvider";
-import Skin from "../../../../components/csgo/Skin";
 import { client } from "../../../../apollo";
+import SkinList from "../../../../components/csgo/SkinList";
 
 const getTeamQuery = gql`
   query ($slug: String!) {
@@ -34,8 +32,17 @@ const getTeamQuery = gql`
 `;
 
 export const getInventoryQuery = gql`
-  query ($proPlayerId: ID!, $currency: TypeCurrency) {
-    inventory(proPlayerId: $proPlayerId) {
+  query (
+    $first: Int
+    $after: String
+    $proPlayerId: ID!
+    $currency: TypeCurrency
+  ) {
+    inventory(first: $first, after: $after, proPlayerId: $proPlayerId) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
       edges {
         node {
           id
@@ -67,13 +74,36 @@ export const getInventoryQuery = gql`
 const Player = ({ player, team }) => {
   const { t } = useTranslation("csgo");
   const { currency } = useSettings();
-  const { data, loading } = useQuery(getInventoryQuery, {
-    variables: { proPlayerId: player.id, currency },
+  const [hasMore, setHasMore] = useState(true);
+  const [variables, setVariables] = useState({
+    first: 30,
+    proPlayerId: player.id,
+    currency,
+  });
+
+  const { data, fetchMore, loading } = useQuery(getInventoryQuery, {
+    variables,
     notifyOnNetworkStatusChange: true,
   });
 
-  const skins =
-    loading || !data ? [] : data.inventory.edges.map(({ node }) => node);
+  const getMoreSkins = () => {
+    fetchMore({
+      variables: {
+        ...variables,
+        after: data.inventory.pageInfo.endCursor,
+      },
+    });
+  };
+
+  const skins = (data?.inventory?.edges || []).map(({ node }) => node);
+
+  useEffect(() => setVariables((v) => ({ ...v, currency })), [currency]);
+
+  useEffect(
+    () =>
+      data && data.inventory && setHasMore(data.inventory.pageInfo.hasNextPage),
+    [data]
+  );
 
   return (
     <Container className="page inventory">
@@ -112,9 +142,7 @@ const Player = ({ player, team }) => {
         </Header.Subheader>
       </Header>
 
-      {loading && <Loader active inline="centered" />}
-
-      {!loading && (!skins || skins.length === 0) && (
+      {!loading && !skins.length && (
         <Header as="h2" icon textAlign="center">
           <Icon name="frown outline" />
           {t("csgo.pro_player.no_results_title")}
@@ -126,21 +154,14 @@ const Player = ({ player, team }) => {
           </Header.Subheader>
         </Header>
       )}
-
-      {!loading && skins && skins.length > 0 && (
-        <div className="skin-list">
-          <Card.Group className="item-list">
-            {skins.map((skin) => (
-              <Skin key={skin.id} skin={skin} />
-            ))}
-            <div className="padding-item" />
-            <div className="padding-item" />
-            <div className="padding-item" />
-            <div className="padding-item" />
-            <div className="padding-item" />
-          </Card.Group>
-        </div>
-      )}
+      <div className="skin-list">
+        <SkinList
+          skins={skins}
+          loading={loading}
+          hasMore={hasMore}
+          getMoreSkins={getMoreSkins}
+        />
+      </div>
     </Container>
   );
 };
