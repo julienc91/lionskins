@@ -1,5 +1,5 @@
 import re
-from typing import Optional
+from typing import Callable
 
 from slugify import slugify
 
@@ -54,7 +54,7 @@ class Parser:
         return bool(cls._parse_item_name(item_name))
 
     @classmethod
-    def _parse_weapon_item(cls, item_name: str) -> Optional[dict]:
+    def _parse_weapon_item(cls, item_name: str) -> dict | None:
         left_split, _, right_split = item_name.partition("|")
 
         stat_trak = "StatTrak" in left_split
@@ -90,7 +90,7 @@ class Parser:
         }
 
     @classmethod
-    def _parse_agent_item(cls, item_name: str) -> Optional[dict]:
+    def _parse_agent_item(cls, item_name: str) -> dict | None:
         left_split, _, right_split = item_name.partition("|")
         if not left_split or not right_split:
             return None
@@ -122,7 +122,7 @@ class Parser:
         return {"group_name": item_name, "type": Types.agents}
 
     @classmethod
-    def _parse_music_kit_item(cls, item_name: str) -> Optional[dict]:
+    def _parse_music_kit_item(cls, item_name: str) -> dict | None:
         left_split, _, right_split = item_name.partition("|")
         if "Music Kit" not in left_split or not right_split:
             return None
@@ -136,34 +136,34 @@ class Parser:
         }
 
     @classmethod
-    def _parse_graffiti_item(cls, item_name: str) -> Optional[dict]:
+    def _parse_graffiti_item(cls, item_name: str) -> dict | None:
         left_split, _, right_split = item_name.partition("|")
         if "Sealed Graffiti" not in left_split or not right_split:
             return None
         return {"group_name": right_split.strip(), "type": Types.graffitis}
 
     @classmethod
-    def _parse_sticker_item(cls, item_name: str) -> Optional[dict]:
+    def _parse_sticker_item(cls, item_name: str) -> dict | None:
         left_split, _, right_split = item_name.partition("|")
         if "Sticker" not in left_split or not right_split:
             return None
         return {"group_name": right_split.strip(), "type": Types.stickers}
 
     @classmethod
-    def _parse_pin_item(cls, item_name: str) -> Optional[dict]:
+    def _parse_pin_item(cls, item_name: str) -> dict | None:
         if not item_name.endswith(" Pin"):
             return None
         return {"group_name": item_name, "type": Types.pins}
 
     @classmethod
-    def _parse_patch_item(cls, item_name: str) -> Optional[dict]:
+    def _parse_patch_item(cls, item_name: str) -> dict | None:
         left_split, _, right_split = item_name.partition("|")
         if "Patch" not in left_split or not right_split:
             return None
         return {"group_name": right_split.strip(), "type": Types.patches}
 
     @classmethod
-    def _parse_item_name(cls, item_name: str) -> Optional[dict]:
+    def _parse_item_name(cls, item_name: str) -> dict | None:
         data = cls._parse_weapon_item(item_name)
         if data is None:
             data = cls._parse_music_kit_item(item_name)
@@ -194,8 +194,8 @@ class Parser:
 
     @classmethod
     def get_or_create_skin_from_item_name(
-        cls, item_name: str, **kwargs
-    ) -> Optional[Skin]:
+        cls, item_name: str, confirm: Callable[[str], bool] | None = None, **kwargs
+    ) -> Skin | None:
         fields = cls._parse_item_name(item_name)
         if not fields:
             return None
@@ -203,6 +203,10 @@ class Parser:
         item_name = cls.repair_item_name(item_name, fields)
 
         fields.update(kwargs)
+        skin = Skin.objects.get(market_hash_name=item_name)
+        if not skin and confirm and not confirm(item_name):
+            return None
+
         skin, _ = Skin.objects.get_or_create(
             market_hash_name=item_name, defaults=fields
         )

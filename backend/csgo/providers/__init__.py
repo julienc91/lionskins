@@ -1,15 +1,15 @@
 from lionskins.models.enums import Providers
 
-from .bitskins import BitSkinsClient
-from .csmoney import CSMoneyClient
-from .skinbaron import SkinBaronClient
-from .skinport import SkinportClient
-from .steam import SteamClient
+from .bitskins import client as bitskins_client
+from .csmoney import client as csmoney_client
+from .skinbaron import client as skinbaron_client
+from .skinport import client as skinport_client
+from .steam import client as steam_client
 
 client_by_provider = {
-    Providers.bitskins: BitSkinsClient,
-    Providers.csmoney: CSMoneyClient,
-    Providers.skinport: SkinportClient,
-    Providers.skinbaron: SkinBaronClient,
-    Providers.steam: SteamClient,
+    Providers.bitskins: bitskins_client,
+    Providers.csmoney: csmoney_client,
+    Providers.skinport: skinport_client,
+    Providers.skinbaron: skinbaron_client,
+    Providers.steam: steam_client,
 }

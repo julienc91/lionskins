@@ -6,6 +6,8 @@ from csgo.models import Price
 from csgo.providers import client_by_provider
 from csgo.providers.abstract_client import UnfinishedJob
 from csgo.providers.parser import Parser
+from csgo.providers.steam import client as steam_client
+from lionskins.models.enums import Providers
 
 logger = structlog.get_logger()
 
@@ -18,7 +20,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         provider = options["provider"]
-        client = client_by_provider[provider]()
+        client = client_by_provider[provider]
+        confirmation_function = (
+            None if provider == Providers.steam else steam_client.confirm_skin_exists
+        )
 
         logger.info("Fetching data for provider", provider=provider)
 
@@ -26,7 +31,9 @@ class Command(BaseCommand):
         prices_updated, prices_deleted = 0, 0
         try:
             for item_name, price, kwargs in client.get_prices():
-                skin = Parser.get_or_create_skin_from_item_name(item_name)
+                skin = Parser.get_or_create_skin_from_item_name(
+                    item_name, confirm=confirmation_function
+                )
                 if not skin:
                     continue
 

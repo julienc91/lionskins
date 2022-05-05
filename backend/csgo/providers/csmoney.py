@@ -53,3 +53,6 @@ class CSMoneyClient(AbstractClient):
 
         for item_name, item_price in skins.items():
             yield item_name, item_price, None
+
+
+client = CSMoneyClient()

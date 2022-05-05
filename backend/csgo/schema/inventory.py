@@ -8,7 +8,7 @@ from django.utils import timezone
 from graphene_django.filter.fields import DjangoFilterConnectionField
 
 from csgo.models.skin import Skin
-from csgo.providers.steam import get_inventory
+from csgo.providers.steam import client as steam_client
 from csgo.schema.skin import SkinNode
 from lionskins.models.enums import Currencies
 from lionskins.schema.types import TypeCurrency
@@ -81,7 +81,7 @@ def should_refresh_inventory(
 
 
 def refresh_inventory(user: User, inventory: Inventory) -> bool:
-    raw_inventory, ok = get_inventory(steam_id=user.steam_id)
+    raw_inventory, ok = steam_client.get_inventory(steam_id=user.steam_id)
     inventory.update_date = timezone.now()
     inventory.in_error = not ok
     inventory.save()

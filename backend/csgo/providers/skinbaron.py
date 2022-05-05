@@ -51,3 +51,6 @@ class SkinBaronClient(AbstractClient):
                 item_price, Currencies.eur, Currencies.usd
             )
             yield item_name, item_price, None
+
+
+client = SkinBaronClient()

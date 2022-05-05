@@ -40,3 +40,6 @@ class BitSkinsClient(AbstractClient):
             item_name = row["market_hash_name"]
             item_price = float(row["lowest_price"])
             yield item_name, item_price, None
+
+
+client = BitSkinsClient()

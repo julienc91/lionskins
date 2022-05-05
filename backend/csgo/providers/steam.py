@@ -1,5 +1,6 @@
 import re
 import time
+from functools import lru_cache
 
 import requests
 import structlog
@@ -12,13 +13,13 @@ logger = structlog.get_logger()
 
 
 class SteamClient(AbstractClient):
-    base_url = "https://steamcommunity.com/market/search/render/"
+    base_url = "https://steamcommunity.com"
     provider = Providers.steam
 
     @sleep_and_retry
     @limits(calls=1, period=45)
-    def __get(self, params=None):
-        return requests.get(self.base_url, params)
+    def get(self, endpoint, params=None):
+        return requests.get(self.base_url + endpoint, params)
 
     def _parse_rarity(self, row):
         try:
@@ -32,7 +33,7 @@ class SteamClient(AbstractClient):
         max_retries = 3
         retry = 0
         while retry < max_retries:
-            result = self.__get(params)
+            result = self.get("/market/search/render", params)
             if result.status_code >= 500:
                 retry += 1
                 time.sleep(120)
@@ -107,22 +108,29 @@ class SteamClient(AbstractClient):
             if len(data) < count:
                 return
 
+    def get_inventory(self, steam_id: str) -> tuple[list | None, bool]:
+        inventory = []
+        params = {"l": "english", "count": 5000}
+        while True:
+            res = self.get(f"/inventory/{steam_id}/730/2", params=params)
+            if res.status_code != 200:
+                return None, False
 
-def get_inventory(steam_id: str) -> tuple[list | None, bool]:
-    inventory = []
-    params = {"l": "english", "count": 5000}
-    while True:
-        res = requests.get(
-            f"https://steamcommunity.com/inventory/{steam_id}/730/2", params=params
+            data = res.json()
+            inventory += data.get("descriptions") or []
+            if not data.get("more_items") or not data.get("last_assetid"):
+                break
+
+            params["start_assetid"] = data["last_assetid"]
+
+        return inventory, True
+
+    @lru_cache(maxsize=1000)
+    def confirm_skin_exists(self, item_id: str) -> bool:
+        res = self.get(
+            "/market/priceoverview/", {"appid": 730, "market_hash_name": item_id}
         )
-        if res.status_code != 200:
-            return None, False
+        return res.status_code == 200
 
-        data = res.json()
-        inventory += data.get("descriptions") or []
-        if not data.get("more_items") or not data.get("last_assetid"):
-            break
 
-        params["start_assetid"] = data["last_assetid"]
-
-    return inventory, True
+client = SteamClient()
