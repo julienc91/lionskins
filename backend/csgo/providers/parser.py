@@ -203,11 +203,13 @@ class Parser:
         item_name = cls.repair_item_name(item_name, fields)
 
         fields.update(kwargs)
-        skin = Skin.objects.get(market_hash_name=item_name)
-        if not skin and confirm and not confirm(item_name):
-            return None
+        try:
+            skin = Skin.objects.get(market_hash_name=item_name)
+        except Skin.DoesNotExist:
+            if confirm and not confirm(item_name):
+                return None
 
-        skin, _ = Skin.objects.get_or_create(
-            market_hash_name=item_name, defaults=fields
-        )
+            skin, _ = Skin.objects.get_or_create(
+                market_hash_name=item_name, defaults=fields
+            )
         return skin
