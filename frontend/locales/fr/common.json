@@ -80,7 +80,8 @@
     "language": {
       "label": "Langue",
       "en": "English",
-      "fr": "Français"
+      "fr": "Français",
+      "pl": "Polski"
     },
     "currency": {
       "label": "Devise",

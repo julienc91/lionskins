@@ -52,6 +52,7 @@ const getSkinQuery = gql`
           description {
             en
             fr
+            pl
           }
           weapon {
             name

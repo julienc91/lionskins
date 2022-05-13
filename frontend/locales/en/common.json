@@ -77,7 +77,8 @@
     "language": {
       "label": "Language",
       "en": "English",
-      "fr": "Français"
+      "fr": "Français",
+      "pl": "Polski"
     },
     "currency": {
       "label": "Currency",

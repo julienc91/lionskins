@@ -1,0 +1,100 @@
+{
+  "404": {
+    "title": "Nie znaleziono strony",
+    "subtitle": "Strona, której szukasz, nie istnieje",
+    "homepage": "Wróć na stronę główną"
+  },
+  "breadcrumb": {
+    "home": "Strona główna"
+  },
+  "changelog": {
+    "title": "Co nowego na LionSkins:",
+    "2019_10_20_001": "Dodano do oferty Klasyczny Nóz",
+    "2019_10_21_001": "Od teraz możesz sprawdzić ceny skinów do rękawic!",
+    "2019_11_19_001": "Dodano nowe noże z kolekcji Shattered Web",
+    "2020_05_08_001": "Dodano Noże Vanilla",
+    "2020_05_09_001": "Od teraz możesz sprawdzać ceny przedmiotów z serwisu CS.Money!",
+    "2020_05_22_001": "Zobacz, jakie skórki posiadasz i określ cenę twojego ekwipunku Steam.!",
+    "2021_02_12_001": "Ceny przedmiotów z platformy Skinport zostały dodane!",
+    "2021_03_27_001": "Obsługujemy teraz skórki agentów!",
+    "2021_10_01_001": "Dodaliśmy obsługę zestawów muzycznych!",
+    "2021_10_02_001": "Od teraz dostępne są również graffiti",
+    "2021_10_02_002": "Zostały dodane naklejki",
+    "2021_10_03_001": "Dodano również kolekcjonerskie piny i naszywki"
+  },
+  "current_language": "pl",
+  "footer": {
+    "about": "O nas",
+    "contact": "Kontakt",
+    "faq": "FAQ",
+    "privacy_policy": "Polityka prywatności"
+  },
+  "head": {
+    "title": "LionSkins - Porównaj ceny tysięcy skinów do swoich ulubionych gier",
+    "description": "Porównaj ceny tysięcy skinów do swoich ulubionych gier wideo na najbardziej zaufanych rynkach."
+  },
+  "header": {
+    "list_management": "Moje Listy",
+    "logout": "Wyloguj się",
+    "login": "Zaloguj się",
+    "settings": "Ustawienia"
+  },
+  "lists": {
+    "creation": {
+      "cancel_button": "Anuluj",
+      "confirm_button": "Zatwierdź",
+      "name_label": "Nazwa",
+      "description_label": "Opis",
+      "title": "Nowa lista"
+    },
+    "deletion": {
+      "confirm_description": "Czy na pewno chcesz usunąć tę listę?",
+      "cancel_button": "Anuluj",
+      "confirm_button": "Potwierdź"
+    },
+    "edition": {
+      "cancel_button": "Anuluj",
+      "confirm_button": "Zatwierdź",
+      "name_label": "Nazwa",
+      "description_label": "Opis",
+      "title": "Edycja listy"
+    },
+    "lists": {
+      "title": "Moje Listy",
+      "last_update_tooltip": "Ostatnio aktualizowane",
+      "number_of_items_tooltip": "Liczba elementów",
+      "no_items": "Nie posiadasz żadnych list",
+      "create_list": "Stwórz nową listę"
+    }
+  },
+  "login": {
+    "title": "Zaloguj się",
+    "description": "Zaloguj się za pomocą swojego konta Steam",
+    "steam_login": "Zaloguj się przez Steam"
+  },
+  "settings": {
+    "title": "Ustawienia",
+    "language": {
+      "label": "Język",
+      "en": "English",
+      "fr": "Français",
+      "pl": "Polski"
+    },
+    "currency": {
+      "label": "Waluta",
+      "usd": "US Dollar",
+      "eur": "Euro"
+    }
+  },
+  "skin": {
+    "prices_history": {
+      "header": "Historia",
+      "options": "Ustawienia",
+      "mode": "Wyświetlanie cen",
+      "mode_average": "Średnia cena",
+      "mode_min": "Najmniejsza cena",
+      "group": "Grupuj oferty",
+      "skins": "Filtruj oferty"
+    }
+  }
+}
