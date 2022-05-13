@@ -1,0 +1,53 @@
+{
+  "privacy_policy": {
+    "page_title": "LionSkins - Polityka prywatności",
+    "breadcrumb": "Polityka prywatności",
+    "title": "Polityka prywatności",
+    "subtitle": "Ponieważ cenimy sobie Twoją prywatność",
+    "part1": {
+      "title": "Kim jesteśmy?",
+      "content1": "LionSkins został stworzony przez graczy i dla graczy. Cieszymy się, że korzystasz z naszego serwisu i możesz być pewien, że nigdy nie wykorzystamy żadnych Twoich danych osobowych dla zysku lub do czegokolwiek, co nie wiąże się z polepszaniem doświadczenia użytkownika.",
+      "content2": "Jeśli masz jakiekolwiek pytania dotyczące niniejszej polityki prywatności, prosimy o kontakt poprzez <0>formularz kontaktowy</0>."
+    },
+    "part2": {
+      "title": "Gdzie jesteśmy?",
+      "content1": "Część naszej infrastruktury jest obsługiwana przez <0>Vercel</0>, a reszta znajduje się na hostingu <1>OVHcloud</1>."
+    },
+    "part3": {
+      "title": "Co zbieramy?",
+      "content1": "Niewiele...",
+      "item1": {
+        "name": "Twój Steam ID oraz nazwa użytkownika",
+        "description": ": tylko wtedy, gdy użytkownik zdecyduje się na rejestrację w naszym serwisie za pośrednictwem Steam"
+      },
+      "item2": {
+        "name": "Adres e-mail",
+        "description": ": tylko wtedy, gdy chcesz się z nami skontaktować za pomocą formularza kontaktowego i oczekujesz odpowiedzi"
+      },
+      "item3": {
+        "name": "Kliknięcia na linki do zewnętrznych rynków",
+        "description": ": za każdym razem, gdy klikasz na jeden z linków przekierowujących cię na rynek przedmiotów, generujemy unikalny i całkowicie przypadkowy identyfikator, aby mieć ogólne pojęcie o tym, jak nasi goście wchodzą w interakcje z proponowanymi przez nas rynkami. Identyfikator ten jest automatycznie usuwany po zakończeniu wizyty i nie można go powiązać z urządzeniem użytkownika ani jego osobą."
+      }
+    },
+    "part4": {
+      "title": "Usługi stron trzecich, z których korzystamy",
+      "content1": "Korzystamy także z usług innych firm, aby nasza witryna działała tak, jak chcemy. Oto ich lista:",
+      "item1": {
+        "name": "Steam",
+        "description": ": Znany sklep z cyfrowymi grami wideo firmy Valve. Używamy ich usługi OpenID do uwierzytelniania użytkowników po naszej stronie"
+      },
+      "item2": {
+        "name": "Matomo",
+        "description": ": to platforma analityczna typu open-source, która jest znana z tego, że jest szczególnie przyjazna dla ochrony prywatności. Potrzebujemy tego narzędzia, aby dowiedzieć się, w jaki sposób odwiedzający korzystają z naszych usług, co pozwoli nam stale poprawiać ich jakość."
+      },
+      "item3": {
+        "name": "Sentry",
+        "description": ": usługa umożliwiająca zgłaszanie problemów, które możesz napotkać podczas odwiedzania naszej witryny. Ma to na celu poinformowanie nas o istniejących błędach, abyśmy mogli je jak najszybciej naprawić."
+      },
+      "item4": {
+        "name": "Recaptcha",
+        "description": ": Rozwiązanie captcha firmy Google. Jest ono używane tylko w formularzu kontaktowym, aby zapobiec spamowi."
+      }
+    }
+  }
+}

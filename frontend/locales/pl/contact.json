@@ -1,0 +1,21 @@
+{
+  "contact": {
+    "page_title": "LionSkins - Kontakt",
+    "breadcrumb": "Kontakt",
+    "title": "Kontakt",
+    "subtitle1": "Masz pytanie? sugestie?",
+    "subtitle2": "Skontaktuj się z nami!",
+    "error": {
+      "title": "Coś poszło nie tak...",
+      "content": "Wystąpił problem i nie udało się wysłać wiadomości, przepraszamy. Spróbuj ponownie."
+    },
+    "success": {
+      "title": "Twoja wiadomość została wysłana!",
+      "content": "Życzymy miłego dnia!"
+    },
+    "name_label": "Twoje imię, pseudonim lub inna nazwa, którą chcesz się posługiwać",
+    "email_label": "Twój adres e-mail, jeśli chcesz, abyśmy się do Ciebie odezwali",
+    "message_label": "Wiadomość",
+    "submit": "Wyślij"
+  }
+}

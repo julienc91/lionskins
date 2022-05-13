@@ -36,6 +36,12 @@ const SettingsModal = ({ onClose, open }) => {
                 text: t("settings.language.fr"),
                 value: "fr",
               },
+              {
+                key: "pl",
+                flag: "pl",
+                text: t("settings.language.pl"),
+                value: "pl",
+              },
             ]}
             value={router.locale}
             onChange={(_, { value }) =>
