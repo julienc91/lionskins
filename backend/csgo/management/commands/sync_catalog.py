@@ -109,7 +109,7 @@ class Command(BaseCommand):
         with open(data_path) as f:
             data = json.load(f)
 
-        languages = {"en": "english", "fr": "french"}
+        languages = {"en": "english", "fr": "french", "pl": "polish"}
         default_language = "en"
 
         for item in tqdm(data):
@@ -118,7 +118,7 @@ class Command(BaseCommand):
 
             update = {}
             name = item["name"][languages[default_language]]
-            filters = {"name": name}
+            filters = {"group_name": name}
 
             if item["type"] == 2:  # agents
                 filters["type"] = Types.agents

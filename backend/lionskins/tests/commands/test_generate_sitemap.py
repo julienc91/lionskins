@@ -26,6 +26,7 @@ def test_generate_sitemap_static_urls(client, skin):
     assert parseString(res)
 
     assert "<loc>https://lionskins.co/fr/faq</loc>" in res
+    assert "<loc>https://lionskins.co/pl/faq</loc>" in res
     assert "<loc>https://lionskins.co/en/privacy-policy</loc>" in res
 
     weapon = slugify(skin.weapon.value)

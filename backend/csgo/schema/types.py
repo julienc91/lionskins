@@ -39,6 +39,7 @@ class TypeWeapon(graphene.ObjectType):
 class TypeDescription(graphene.ObjectType):
     en = graphene.String()
     fr = graphene.String()
+    pl = graphene.String()
 
 
 class TypePrices(graphene.ObjectType):

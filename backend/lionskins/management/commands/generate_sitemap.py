@@ -11,7 +11,7 @@ from lionskins.utils.data import get_data_directory
 class Command(BaseCommand):
 
     base_url = "https://lionskins.co"
-    languages = ["en", "fr"]
+    languages = ["en", "fr", "pl"]
     static_pages = [
         ["", "monthly", 0.9],
         ["about", "never", 0.3],

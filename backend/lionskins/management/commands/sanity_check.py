@@ -7,7 +7,7 @@ from django.utils import timezone
 from csgo.models import Price, Skin
 from csgo.models.enums import Qualities, WeaponCategories, Weapons
 
-languages = ["en", "fr"]
+languages = ["en", "fr", "pl"]
 logger = structlog.get_logger()
 
 

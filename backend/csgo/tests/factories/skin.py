@@ -26,4 +26,8 @@ class SkinFactory(factory.django.DjangoModelFactory):
     def post_generation(self: Skin, create, extracted, **kwargs):
         self.market_hash_name = self._get_market_hash_name()
         self.group_slug = slugify(self.group_name)
-        self.description = {"en": faker.paragraph(), "fr": faker.paragraph()}
+        self.description = {
+            "en": faker.paragraph(),
+            "fr": faker.paragraph(),
+            "pl": faker.paragraph(),
+        }
