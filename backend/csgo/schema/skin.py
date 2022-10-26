@@ -28,6 +28,9 @@ class SkinFilter(FilterSet):
         method="filter_quality",
         choices=[(name, name) for name in enums.Qualities.names],
     )
+    weapon = ChoiceFilter(
+        method="filter_weapon", choices=[(name, name) for name in enums.Weapons.names]
+    )
 
     class Meta:
         model = Skin
@@ -57,6 +60,9 @@ class SkinFilter(FilterSet):
 
     def filter_group(self, queryset, name, value):
         return queryset
+
+    def filter_weapon(self, queryset, name, value):
+        return queryset.filter(weapon=value)
 
     def filter_queryset(self, queryset):
         queryset = super().filter_queryset(queryset)

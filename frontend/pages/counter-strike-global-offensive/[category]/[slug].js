@@ -20,9 +20,9 @@ const getSkinQuery = gql`
     $slug: String
     $currency: TypeCurrency
     $category: String
-    $type: String
+    $type: TypeField
     $quality: String
-    $rarity: String
+    $rarity: RarityField
     $statTrak: Boolean
     $souvenir: Boolean
     $search: String

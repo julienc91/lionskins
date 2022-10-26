@@ -18,9 +18,9 @@ export const getSkinsQuery = gql`
     $after: String
     $weapon: String
     $category: String
-    $type: String
+    $type: TypeField
     $quality: String
-    $rarity: String
+    $rarity: RarityField
     $statTrak: Boolean
     $souvenir: Boolean
     $search: String
