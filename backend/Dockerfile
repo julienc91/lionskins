@@ -9,7 +9,6 @@ RUN \
 
 WORKDIR /home/user/backend
 
-USER user
 ENV PATH="/home/user/.local/bin:${PATH}" \
     POETRY_VERSION=1.1.13 \
     PYTHONDONTWRITEBYTECODE=1 \
@@ -17,12 +16,13 @@ ENV PATH="/home/user/.local/bin:${PATH}" \
 
 COPY --chown=user:group pyproject.toml poetry.lock ./
 RUN \
-  pip install "poetry==1.1.13" && \
+  pip install "poetry==1.2.2" && \
   poetry config virtualenvs.create false && \
-  poetry install --no-dev --no-interaction --no-ansi
+  poetry install --only main --no-interaction --no-ansi
 
 COPY --chown=user:group . .
 
+USER user
 EXPOSE 8000
 
 CMD ["./entrypoint.sh"]
