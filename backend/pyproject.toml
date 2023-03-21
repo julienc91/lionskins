@@ -58,7 +58,7 @@ pyotp                       = "~2.6.0"
 gunicorn                    = "~20.1.0"
 
 # sentry
-sentry-sdk                  = {version = "~1.5", extras = ["django"]}
+sentry-sdk                  = {version = "~1.14", extras = ["django"]}
 
 [tool.poetry.dev-dependencies]
 mypy                        = "*"
