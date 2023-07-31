@@ -1,24 +1,11 @@
-import React from "react";
-import Link from "next/link";
-import useTranslation from "next-translate/useTranslation";
-import { Container, Header, Icon, Button } from "semantic-ui-react";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+export default function Custom404() {
+  const router = useRouter();
 
-const Page404 = () => {
-  const { t } = useTranslation("common");
-  return (
-    <Container>
-      <Header as="h1" icon className="no-results">
-        <Icon name="frown outline" />
-        {t("404.title")}
-        <Header.Subheader>{t("404.subtitle")}</Header.Subheader>
-        <Header.Subheader>
-          <Link href="/">
-            <Button primary>{t("404.homepage")}</Button>
-          </Link>
-        </Header.Subheader>
-      </Header>
-    </Container>
-  );
-};
+  useEffect(() => {
+    router.replace("/");
+  });
 
-export default Page404;
+  return null;
+}

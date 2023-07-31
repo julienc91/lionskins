@@ -2,8 +2,6 @@
 
 A website providing price comparison for video game skins.
 
-Visit it now on https://lionskins.co/
-
 ---
 
 Available games:
