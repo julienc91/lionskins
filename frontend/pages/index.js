@@ -1,56 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Head from "next/head";
-import useTranslation from "next-translate/useTranslation";
-import { Header, Image } from "semantic-ui-react";
-import Carousel from "../components/Carousel";
-import carouselImagesData from "../assets/data/carousel";
+import Image from "next/image";
 
 const Homepage = () => {
-  const { t } = useTranslation("homepage");
-  const [images, setImages] = useState([]);
-
-  useEffect(() => setImages(shuffle(carouselImagesData)), []);
-
   return (
-    <div className="homepage">
+    <>
       <Head>
-        <title>{t("homepage.page_title")}</title>
+        <title>Lionskins</title>
       </Head>
 
-      <Image src="/images/logo.svg" alt="" className="logo" />
-      <Header as="h1">{t("homepage.title")}</Header>
-      <Header as="h2">
-        {t("homepage.subtitle1")}
-        <br />
-        {t("homepage.subtitle2")}
-      </Header>
-      <Carousel images={images} />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            url: "https://lionskins.co/",
-            potentialAction: {
-              "@type": "SearchAction",
-              target:
-                "https://lionskins.co/counter-strike-global-offensive/#search={search_term_string}",
-              "query-input": "required name=search_term_string",
-            },
-          }),
-        }}
-      />
-    </div>
-  );
-};
+      <img src="/images/logo.svg" alt="" className="logo" />
+      <h1>Lionskins has come to an end</h1>
+      <p>
+        After five years of activity, it is time to end the adventure. Lionskins
+        was never made with the intent of making a profit, but the cost of
+        maintenance was too high in comparison to the number of visitors we
+        received. There are many similar websites, way better ranked on search
+        engines, and we never managed to have an audience large enough to
+        compensate for the costs.
+      </p>
 
-const shuffle = (array) => {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
+      <p>Thank you for staying with us during that time!</p>
+
+      <p>The Lionskins Team</p>
+    </>
+  );
 };
 
 export default Homepage;
